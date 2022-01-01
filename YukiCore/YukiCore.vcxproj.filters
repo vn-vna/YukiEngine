@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{3fce5339-9093-46fe-821d-c59cc314655d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs">
+      <UniqueIdentifier>{286b905f-e292-427c-8291-a7c5da299b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\YukiCore">
+      <UniqueIdentifier>{dd4317c3-8200-467b-8d23-c6b45347c4f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Srcs\YukiVE.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\Application.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\GraphicsCtrl.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\InputCtrl.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\WindowCtrl.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\Error.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\Logger.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiChrono.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\YukiCore\Application.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\Graphics.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\InputCtrl.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\Window.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\YukiObject.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\YukiVE.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\Error.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\Logger.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\Chrono.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.clang-format" />
+  </ItemGroup>
+</Project>
