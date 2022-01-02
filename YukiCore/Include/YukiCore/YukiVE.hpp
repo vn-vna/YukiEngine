@@ -10,12 +10,12 @@
 
 // Window manager
 #define VK_USE_PLATFORM_WIN32_KHR // Specific Win32 KHR platform
-#define GLFW_INCLUDE_VULKAN       // Make GLFW Compatible for vulkan
-#define GLFW_EXPOSE_NATIVE_WIN32  // Use GLFW Native Win32
+#define GLFW_INCLUDE_VULKAN       // Make GLFW compatible with vulkan
+#define GLFW_EXPOSE_NATIVE_WIN32  // Use GLFW native Win32
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-// C++ standard
+// C++ standards
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -28,7 +28,7 @@
 #include <vector>
 #include <map>
 #include <set>
-#include <fstream>
+#include <iosfwd>
 
 #ifdef YUKICORE_EXPORTS
 #  define YUKIAPI __declspec(dllexport)

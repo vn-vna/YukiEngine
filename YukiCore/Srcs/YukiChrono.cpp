@@ -60,4 +60,29 @@ const String DateTimeString(const DateTimeFormat& format)
   return {std::move(wss.str())};
 }
 
+const AsciiString DateTimeAsciiString(const AsciiDateTimeFormat& format)
+{
+  AsciiStringStream asstr{};
+  asstr << format.year
+        << format.dateSeperator
+        << format.dateSeperator
+        << format.month
+        << format.day
+        << format.timeDateSeperator
+        << format.hour
+        << format.timeSeperator
+        << format.minute
+        << format.timeSeperator
+        << format.second;
+
+  AsciiString tformat = asstr.str();
+  asstr.str("");
+
+  AutoType crrTMTime = CurrentTimePointTM();
+
+  asstr << std::put_time(&crrTMTime, tformat.c_str());
+
+  return {std::move(asstr.str())};
+}
+
 } // namespace Yuki::Chrono

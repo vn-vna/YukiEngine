@@ -3,6 +3,7 @@
 #include "YukiCore/Window.hpp"
 #include "YukiCore/Graphics.hpp"
 #include "YukiCore/Error.hpp"
+#include "YukiCore/Logger.hpp"
 
 namespace Yuki::Core
 {
@@ -13,15 +14,10 @@ YukiApp::YukiApp()
     : m_bAlive(false),
       m_pGfxController(nullptr),
       m_pInputManager(nullptr),
-      m_pWindow(nullptr)
+      m_pWindow(nullptr),
+      m_pLogger(nullptr)
 {
-#ifndef NDEBUG
-  //OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
-  std::cout << "[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n";
-#else
-  std::cout << "[YUKI CONFIGURATION REPORT] Application is running in RELASE MODE\n";
-#endif // NDEBUG
-
+  m_pLogger        = Debug::YukiLogger::CreateYukiLogger();
   m_pWindow        = YukiWindow::CreateNewWindow();
   m_pGfxController = YukiGfxControl::CreateYukiGfxController();
 }
@@ -29,6 +25,11 @@ YukiApp::YukiApp()
 SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
 {
   return m_pGfxController;
+}
+
+SharedPtr<Debug::IYukiLogger>& YukiApp::GetLogger()
+{
+  return m_pLogger;
 }
 
 SharedPtr<IYukiWindow>& YukiApp::GetWindow()
@@ -50,7 +51,7 @@ void YukiApp::RunApp()
   }
   catch (const Yuki::Debug::YukiError& yer)
   {
-    std::wcerr << yer.getErrorMessage() << std::endl;
+    GetLogger()->PushErrorMessage(yer.getErrorMessage());
   }
 
   try
@@ -59,12 +60,13 @@ void YukiApp::RunApp()
   }
   catch (const Yuki::Debug::YukiError& yer)
   {
-    std::wcerr << yer.getErrorMessage() << std::endl;
+    GetLogger()->PushErrorMessage(yer.getErrorMessage());
   }
 }
 
 void YukiApp::Create()
 {
+  GetLogger()->Create();
   GetWindow()->Create();
   GetGraphicsController()->Create();
 }
@@ -88,7 +90,9 @@ void YukiApp::Update()
 
 void YukiApp::Destroy()
 {
+  GetGraphicsController()->Destroy();
   GetWindow()->Destroy();
+  GetLogger()->Destroy();
 }
 
 SharedPtr<IYukiApp> CreateYukiApp()

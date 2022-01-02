@@ -3,7 +3,7 @@
 
 int main(int, char**)
 {
-  //std::wcout << Yuki::Chrono::DateTimeString() << L"\n";
+  //std::cout << Yuki::Chrono::DateTimeAsciiString() << "\n";
   AutoType yukiApp = Yuki::Core::CreateYukiApp();
   yukiApp->RunApp();
   return 0;
