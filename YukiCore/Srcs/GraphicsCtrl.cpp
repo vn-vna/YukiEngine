@@ -7,6 +7,10 @@
 // std
 #include <algorithm>
 
+#define YUKI_HANDLE_PTRIF_NNULL(ptr, action) \
+  if (!ptr)                                  \
+  action
+
 constexpr const char* g_pCreateDebugUtilsMessengerFuncName  = "vkCreateDebugUtilsMessengerEXT";
 constexpr const char* g_pDestroyDebugUtilsMessengerFuncName = "vkDestroyDebugUtilsMessengerEXT";
 
@@ -44,8 +48,9 @@ VKAPI_ATTR VkBool32 VKAPI_CALL YukiVulkanDebugCallback(
 {
   if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
   {
-    std::cout << "[VULKAN ERROR REPORT]:\n\t"
-              << pCallbackData->pMessage << std::endl;
+    Yuki::StringStream sstr{};
+    sstr << pCallbackData->pMessage;
+    Yuki::Core::GetYukiApp()->GetLogger()->PushErrorMessage(sstr.str());
   }
 
   return VK_FALSE;
@@ -273,11 +278,13 @@ void YukiGfxControl::CreateVulkanInstance()
   vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
 #ifndef NDEBUG
-  std::cout << "[YUKI DEBUG REPORT]: " << extensionCount << " Available vulkan extension(s) found:\n";
+  StringStream sstr{};
+  sstr << extensionCount << " Available vulkan extension(s) found:\n";
   for (const auto& extension : extensions)
   {
-    std::cout << '\t' << extension.extensionName << '\n';
+    sstr << '\t' << extension.extensionName << '\n';
   }
+  GetYukiApp()->GetLogger()->PushDebugMessage(sstr.str());
 #endif // !NDEBUG
 }
 
@@ -358,7 +365,7 @@ void YukiGfxControl::CreateWin32Surface()
   }
 
 #ifndef NDEBUG
-  std::cout << "[YUKI DEBUG REPORT]: Create Vulkan Win32 Surface KHR successfully\n";
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Create Vulkan Win32 Surface KHR successfully\n");
 #endif // !NDEBUG
 }
 
@@ -465,12 +472,14 @@ void YukiGfxControl::SelectPhysicalDevice()
   // Report selected device
   VkPhysicalDeviceProperties deviceProperties = {};
   vkGetPhysicalDeviceProperties(m_pSelectedPhysicalDevice, &deviceProperties);
-  std::cout << "[YUKI DEBUG REPORT]: Selected Physical device"
-            << "\n\tSelected device " << deviceProperties.deviceName
-            << "\n\tAPI Version: " << deviceProperties.apiVersion
-            << "\n\tDriver version: " << deviceProperties.driverVersion
-            << "\n\tDevice rating: " << deviceWillSelect->second
-            << "\n";
+  StringStream sstr{};
+  sstr << "Selected Physical device"
+       << "\n\tSelected device " << deviceProperties.deviceName
+       << "\n\tAPI Version: " << deviceProperties.apiVersion
+       << "\n\tDriver version: " << deviceProperties.driverVersion
+       << "\n\tDevice rating: " << deviceWillSelect->second
+       << "\n";
+  GetYukiApp()->GetLogger()->PushDebugMessage(sstr.str());
 #endif // !NDEBUG
 }
 
@@ -520,7 +529,7 @@ void YukiGfxControl::CreateVulkanLogicalDevice()
   }
 
 #ifndef NDEBUG
-  std::cout << "[YUKI DEBUG REPORT]: Create Vulkan Logical device successfully\n";
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Create Vulkan Logical device successfully\n");
 #endif // !NDEBUG
 
   vkGetDeviceQueue(m_pLogicalDevice, m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME), 0, &m_pGraphicsQueue);
@@ -575,7 +584,7 @@ void YukiGfxControl::CreateVulkanSwapChain()
     THROW_YUKI_ERROR(Debug::YukiVulkanCreateSwapChainError);
   }
 #ifndef NDEBUG
-  std::cout << "[YUKI DEBUG REPORT]: Created Vulkan Swapchain\n";
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Created Vulkan Swapchain\n");
 #endif // !NDEBUG
 }
 
@@ -585,6 +594,30 @@ void YukiGfxControl::GetSwapChainImage()
   vkGetSwapchainImagesKHR(m_pLogicalDevice, m_pVkSwapChain, &imageCount, nullptr);
   m_apSwapChainImages.resize(imageCount);
   vkGetSwapchainImagesKHR(m_pLogicalDevice, m_pVkSwapChain, &imageCount, m_apSwapChainImages.data());
+}
+
+void YukiGfxControl::DestroyVkSwapChainKHR()
+{
+  if (!m_pLogicalDevice && !m_pVkSwapChain)
+    vkDestroySwapchainKHR(m_pLogicalDevice, m_pVkSwapChain, nullptr);
+}
+
+void YukiGfxControl::DestroyVkLogicalDevice()
+{
+  if (!m_pLogicalDevice)
+    vkDestroyDevice(m_pLogicalDevice, nullptr);
+}
+
+void YukiGfxControl::DestroyVkSurfaceKHR()
+{
+  if (!m_pVkWin32Surface && !m_pVkInstance)
+    vkDestroySurfaceKHR(m_pVkInstance, m_pVkWin32Surface, nullptr);
+}
+
+void YukiGfxControl::DestroyVkInstance()
+{
+  if (!m_pVkInstance)
+    vkDestroyInstance(m_pVkInstance, nullptr);
 }
 
 void YukiGfxControl::Create()
@@ -615,11 +648,11 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
-  vkDestroySwapchainKHR(m_pLogicalDevice, m_pVkSwapChain, nullptr);
-  vkDestroyDevice(m_pLogicalDevice, nullptr);
-  vkDestroySurfaceKHR(m_pVkInstance, m_pVkWin32Surface, nullptr);
+  DestroyVkSwapChainKHR();
+  DestroyVkLogicalDevice();
+  DestroyVkSurfaceKHR();
   DestroyVulkanDebugMessenger();
-  vkDestroyInstance(m_pVkInstance, nullptr);
+  DestroyVkInstance();
 }
 
 SharedPtr<IYukiGfxControl> YukiGfxControl::CreateYukiGfxController()

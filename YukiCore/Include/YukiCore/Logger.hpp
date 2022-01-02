@@ -2,30 +2,46 @@
 #include "YukiCore/YukiVE.hpp"
 #include "YukiCore/YukiObject.hpp"
 
+#define YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL  L"DEBUG"
+#define YUKI_DEBUG_MESSAGE_PRIOTY_WARNING L"WARNING"
+#define YUKI_DEBUG_MESSAGE_PRIOTY_ERROR   L"ERROR"
+
 namespace Yuki::Debug
 {
 
-using OutputLogFileType = std::ofstream;
+using OutputLogFileType = std::wofstream;
 
-class YUKIAPI ILogger : public Core::IYukiObject
+class YUKIAPI IYukiLogger : public Core::IYukiObject
 {
 public:
-  ILogger()          = default;
-  virtual ~ILogger() = default;
+  IYukiLogger()          = default;
+  virtual ~IYukiLogger() = default;
 
-  virtual void PushDebugMessage(const String& message)   = 0;
-  virtual void PushWarningMessage(const String& message) = 0;
-  virtual void PushErrorMessage(const String& message)   = 0;
+  virtual void               PushMessage(const String& message, const String& prioty) = 0;
+  virtual void               PushDebugMessage(const String& message)                  = 0;
+  virtual void               PushWarningMessage(const String& message)                = 0;
+  virtual void               PushErrorMessage(const String& message)                  = 0;
+  virtual OutputLogFileType& GetOutFileStream()                                       = 0;
 };
 
-class YUKIAPI Logger : public ILogger
+class YUKIAPI YukiLogger : public IYukiLogger
 {
 protected:
-  OutputLogFileType m_OutFile;
+  SharedPtr<OutputLogFileType> m_pOutFileStream;
 
 public:
-  Logger();
-  virtual ~Logger();
+  YukiLogger();
+  virtual ~YukiLogger() = default;
+
+  void               PushMessage(const String& message, const String& prioty);
+  void               PushDebugMessage(const String& message) override;
+  void               PushWarningMessage(const String& message) override;
+  void               PushErrorMessage(const String& message) override;
+  OutputLogFileType& GetOutFileStream() override;
+  void               Create() override;
+  void               Destroy() override;
+
+  static SharedPtr<IYukiLogger> CreateYukiLogger();
 };
 
 } // namespace Yuki::Debug

@@ -17,6 +17,7 @@ namespace Yuki::Debug
 
 enum class YUKIAPI YukiErrCode
 {
+  YUKI_LOGGER_CREATE_LOGFILE_ERROR,
   GLFW_INITIALIZATION_FAILED,
   GLFW_WINDOW_CREATION_FAILED,
   VULKAN_CREATE_INSTANCE_FAILED,
@@ -45,6 +46,7 @@ public:
   const YukiErrCode& getErrorCode() const;
 };
 
+DECLARE_YUKI_ERROR(YukiCreateLogFileError);
 DECLARE_YUKI_ERROR(YukiGLFWInitError);
 DECLARE_YUKI_ERROR(YukiWindowCreationError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateInstanceError);

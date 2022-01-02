@@ -6,6 +6,7 @@
       : YukiError(YukiErrCode::__err_code##, file, line)           \
   {}
 
+#define YUKI_SELF_ERROR   L"[YUKI]"
 #define YUKI_GLFW_ERROR   L"[GLFW]"
 #define YUKI_VULKAN_ERROR L"[VULKAN]"
 
@@ -30,6 +31,7 @@ String YukiError::getErrorMessage() const
   sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line " << m_nLine << "] -> ";
   switch (m_ErrCode)
   {
+    CHECK_CASE_OF_ERROR(YUKI_LOGGER_CREATE_LOGFILE_ERROR, YUKI_SELF_ERROR);
     CHECK_CASE_OF_ERROR(GLFW_INITIALIZATION_FAILED, YUKI_GLFW_ERROR);
     CHECK_CASE_OF_ERROR(GLFW_WINDOW_CREATION_FAILED, YUKI_GLFW_ERROR);
     CHECK_CASE_OF_ERROR(VULKAN_CREATE_INSTANCE_FAILED, YUKI_VULKAN_ERROR);
@@ -50,6 +52,7 @@ const YukiErrCode& YukiError::getErrorCode() const
   return m_ErrCode;
 }
 
+MAKE_ERROR_DEFINATION(YukiCreateLogFileError, YUKI_LOGGER_CREATE_LOGFILE_ERROR)
 MAKE_ERROR_DEFINATION(YukiGLFWInitError, GLFW_INITIALIZATION_FAILED)
 MAKE_ERROR_DEFINATION(YukiWindowCreationError, GLFW_WINDOW_CREATION_FAILED)
 MAKE_ERROR_DEFINATION(YukiVulkanCreateInstanceError, VULKAN_CREATE_INSTANCE_FAILED)

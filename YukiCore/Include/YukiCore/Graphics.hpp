@@ -2,6 +2,7 @@
 
 #include "YukiCore/YukiVE.hpp"
 #include "YukiCore/YukiObject.hpp"
+#include "Logger.hpp"
 
 namespace Yuki::Core
 {
@@ -30,19 +31,23 @@ typedef struct YUKIAPI StYukiSwapChainDetails
 class YUKIAPI IYukiGfxControl : public IYukiObject
 {
 protected:
-  virtual void CreateVulkanInstance()             = 0;
+  virtual void CreateVulkanInstance()         = 0;
   virtual void CheckValidationLayerSupport()  = 0;
   virtual void SetupVulkanDebugMessenger()    = 0;
-  virtual void DestroyVulkanDebugMessenger()  = 0;
   virtual void CreateWin32Surface()           = 0;
   virtual void SelectSurfaceSwapChainFormat() = 0;
   virtual void SelectCompatiblePresentMode()  = 0;
   virtual void SelectSwapExtent()             = 0;
   virtual void CreatePhysicalDeviceList()     = 0;
   virtual void SelectPhysicalDevice()         = 0;
-  virtual void CreateVulkanLogicalDevice()          = 0;
-  virtual void CreateVulkanSwapChain()              = 0;
+  virtual void CreateVulkanLogicalDevice()    = 0;
+  virtual void CreateVulkanSwapChain()        = 0;
   virtual void GetSwapChainImage()            = 0;
+  virtual void DestroyVkSwapChainKHR()        = 0;
+  virtual void DestroyVkLogicalDevice()       = 0;
+  virtual void DestroyVkSurfaceKHR()          = 0;
+  virtual void DestroyVulkanDebugMessenger()  = 0;
+  virtual void DestroyVkInstance()            = 0;
 
 public:
   IYukiGfxControl()          = default;
@@ -71,7 +76,6 @@ protected:
   void CreateVulkanInstance() override;
   void CheckValidationLayerSupport() override;
   void SetupVulkanDebugMessenger() override;
-  void DestroyVulkanDebugMessenger() override;
   void CreateWin32Surface() override;
   void SelectSurfaceSwapChainFormat() override;
   void SelectCompatiblePresentMode() override;
@@ -81,6 +85,11 @@ protected:
   void CreateVulkanLogicalDevice() override;
   void CreateVulkanSwapChain() override;
   void GetSwapChainImage() override;
+  void DestroyVkSwapChainKHR() override;
+  void DestroyVkLogicalDevice() override;
+  void DestroyVkSurfaceKHR() override;
+  void DestroyVulkanDebugMessenger() override;
+  void DestroyVkInstance() override;
 
 public:
   YukiGfxControl();
