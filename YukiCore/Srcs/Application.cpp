@@ -6,6 +6,30 @@
 #include "YukiCore/Error.hpp"
 #include "YukiCore/Logger.hpp"
 
+// TEST
+// class TestKeyInp : public Yuki::Core::IYukiInpKeyboardCallback
+// {
+// public:
+//   void invoke(int key, int scancode, int action, int modifiers) override
+//   {
+//     Yuki::StringStream sstr;
+//     sstr << "Pressed ke code " << key << " action code " << action << "\n";
+//     Yuki::Core::GetYukiApp()->GetLogger()->PushDebugMessage(sstr.str());
+//   }
+// };
+//
+// class TestCursorPosInp : public Yuki::Core::IYukiInpCursorCallback
+// {
+// public:
+//   void invoke(int x, int y) override
+//   {
+//     Yuki::StringStream sstr;
+//     sstr << "Cursor position (" << x << ";" << y << ")";
+//     Yuki::Core::GetYukiApp()->GetLogger()->PushDebugMessage(sstr.str());
+//   }
+// };
+// TEST
+
 namespace Yuki::Core
 {
 
@@ -18,9 +42,10 @@ YukiApp::YukiApp()
       m_pWindow(nullptr),
       m_pLogger(nullptr)
 {
-  m_pLogger        = Debug::YukiLogger::CreateYukiLogger();
-  m_pWindow        = YukiWindow::CreateNewWindow();
-  m_pGfxController = YukiGfxControl::CreateYukiGfxController();
+  m_pLogger          = Debug::YukiLogger::CreateYukiLogger();
+  m_pWindow          = YukiWindow::CreateNewWindow();
+  m_pGfxController   = YukiGfxControl::CreateYukiGfxController();
+  m_pInputController = YukiInpControl::CreateNewInputControl();
 }
 
 SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
@@ -81,6 +106,13 @@ void YukiApp::Awake()
 {
   GetWindow()->Awake();
   GetGraphicsController()->Awake();
+
+  // TEST
+  // SharedPtr<IYukiInpKeyboardCallback> callback{new TestKeyInp};
+  // GetInputController()->AddKeyboardInputCallback(L"Test::TestInpKey", callback);
+  // SharedPtr<IYukiInpCursorCallback> callback{new TestCursorPosInp};
+  // GetInputController()->AddCursorInputCallback(L"Test::TestInpCursorPos", callback);
+  // TEST
 }
 
 void YukiApp::Update()

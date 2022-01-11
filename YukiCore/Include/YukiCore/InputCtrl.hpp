@@ -15,7 +15,7 @@ public:
 class YUKIAPI IYukiInpKeyboardCallback
 {
 public:
-  virtual void invoke(int key, int scancode, int action, int modifier) = 0;
+  virtual void invoke(const int& key, const int& scancode, const int& action, const int& modifier) = 0;
 };
 
 class YUKIAPI IYukiInpControl : public IYukiObject
@@ -24,10 +24,10 @@ public:
   IYukiInpControl()          = default;
   virtual ~IYukiInpControl() = default;
 
-  virtual void AddCursorInputCallback(const String& name, SharedPtr<IYukiInpCursorCallback>& pcallback)          = 0;
-  virtual void AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback)      = 0;
-  virtual void ExecuteKeyCallbacks(const int& key, const int& scancode, const int& action, const int& modifiers) = 0;
-  virtual void ExecuteCursorPosCallback(const int& x, const int& y)                                              = 0;
+  virtual void AddCursorInputCallback(const String& name, SharedPtr<IYukiInpCursorCallback>& pcallback)     = 0;
+  virtual void AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback) = 0;
+  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                        = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)                                                       = 0;
 };
 
 
@@ -43,8 +43,10 @@ public:
 
   void AddCursorInputCallback(const String& name, SharedPtr<IYukiInpCursorCallback>& pcallback) override;
   void AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback) override;
-  void ExecuteKeyCallbacks(const int& key, const int& scancode, const int& action, const int& modifiers) override;
-  void ExecuteCursorPosCallback(const int& x, const int& y) override;
+  void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) override;
+  void ExecuteCursorPosCallback(int x, int y) override;
+
+  static SharedPtr<IYukiInpControl> CreateNewInputControl();
 };
 
 } // namespace Yuki::Core
