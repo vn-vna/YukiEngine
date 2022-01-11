@@ -6,11 +6,6 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI IYukiApp;
-class YUKIAPI IYukiInputManager;
-class YUKIAPI IYukiGfxControl;
-class YUKIAPI IYukiWindow;
-
 extern bool YUKIAPI g_bGLFWInited;
 
 class YUKIAPI IYukiWindow : public IYukiObject

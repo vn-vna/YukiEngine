@@ -55,11 +55,10 @@ using StringStream      = std::wstringstream;
 using AsciiString       = std::string;
 using AsciiStringStream = std::stringstream;
 
-typedef char           AsciiChar;
-typedef char*          AsciiCharPtr;
+typedef char           AsciiChar, *AsciiCharPtr, &AsciiCharRef;
 typedef const char*    ConstAsciiCharPtr;
-typedef wchar_t        WChar;
-typedef wchar_t*       WCharPtr;
+typedef wchar_t        WChar, *WCharPtr, &WCharRef;
 typedef const wchar_t* WConstCharPtr;
 
 } // namespace Yuki
+

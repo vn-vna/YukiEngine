@@ -1,0 +1,42 @@
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:33 <<
+	Application is running in DEBUG MODE
+[YUKI ERROR REPORT] - >> 2022-01-11 04:14:35 <<
+	loader_get_json: Failed to open JSON file C:\Program Files (x86)\Epic Games\Launcher\Portal\Extras\Overlay\EOSOverlayVkLayer-Win32.json
+[YUKI ERROR REPORT] - >> 2022-01-11 04:14:35 <<
+	loader_get_json: Failed to open JSON file C:\Program Files (x86)\Epic Games\Launcher\Portal\Extras\Overlay\EOSOverlayVkLayer-Win64.json
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:36 <<
+	15 Available vulkan extension(s) found:
+	VK_KHR_device_group_creation
+	VK_KHR_display
+	VK_KHR_external_fence_capabilities
+	VK_KHR_external_memory_capabilities
+	VK_KHR_external_semaphore_capabilities
+	VK_KHR_get_display_properties2
+	VK_KHR_get_physical_device_properties2
+	VK_KHR_get_surface_capabilities2
+	VK_KHR_surface
+	VK_KHR_surface_protected_capabilities
+	VK_KHR_win32_surface
+	VK_EXT_debug_report
+	VK_EXT_debug_utils
+	VK_EXT_swapchain_colorspace
+	VK_NV_external_memory_capabilities
+
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:36 <<
+	Create Vulkan Win32 Surface KHR successfully
+
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:36 <<
+	Selected Physical device
+	Selected device NVIDIA GeForce RTX 3050 Laptop GPU
+	API Version: 4202682
+	Driver version: 2085044224
+	Device rating: 33968
+
+[YUKI ERROR REPORT] - >> 2022-01-11 04:14:36 <<
+	Validation Error: [ VUID-VkDeviceCreateInfo-queueFamilyIndex-02802 ] Object 0: handle = 0x240a6089210, type = VK_OBJECT_TYPE_PHYSICAL_DEVICE; | MessageID = 0x29498778 | CreateDevice(): pCreateInfo->pQueueCreateInfos[1].queueFamilyIndex (=0) is not unique and was also used in pCreateInfo->pQueueCreateInfos[0]. The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCreateInfos must be unique within pQueueCreateInfos, except that two members can share the same queueFamilyIndex if one is a protected-capable queue and one is not a protected-capable queue (https://vulkan.lunarg.com/doc/view/1.2.198.1/windows/1.2-extensions/vkspec.html#VUID-VkDeviceCreateInfo-queueFamilyIndex-02802)
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:36 <<
+	Create Vulkan Logical device successfully
+
+[YUKI DEBUG REPORT] - >> 2022-01-11 04:14:37 <<
+	Created Vulkan Swapchain
+

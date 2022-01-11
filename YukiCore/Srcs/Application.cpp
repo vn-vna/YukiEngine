@@ -2,6 +2,7 @@
 #include "YukiCore/Application.hpp"
 #include "YukiCore/Window.hpp"
 #include "YukiCore/Graphics.hpp"
+#include "YukiCore/InputCtrl.hpp"
 #include "YukiCore/Error.hpp"
 #include "YukiCore/Logger.hpp"
 
@@ -13,7 +14,7 @@ SharedPtr<IYukiApp> g_pGlobalApplication(nullptr);
 YukiApp::YukiApp()
     : m_bAlive(false),
       m_pGfxController(nullptr),
-      m_pInputManager(nullptr),
+      m_pInputController(nullptr),
       m_pWindow(nullptr),
       m_pLogger(nullptr)
 {
@@ -25,6 +26,11 @@ YukiApp::YukiApp()
 SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
 {
   return m_pGfxController;
+}
+
+SharedPtr<IYukiInpControl>& YukiApp::GetInputController()
+{
+  return m_pInputController;
 }
 
 SharedPtr<Debug::IYukiLogger>& YukiApp::GetLogger()

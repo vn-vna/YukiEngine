@@ -85,7 +85,10 @@ TMType YUKIAPI            CurrentTimePointTM();
 const String YUKIAPI      DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
 const AsciiString YUKIAPI DateTimeAsciiString(const AsciiDateTimeFormat& format = AsciiDateTimeFormat{});
 
-class YUKIAPI YukiTimer
+class YUKIAPI IYukiTimer
+{};
+
+class YUKIAPI YukiTimer : public IYukiTimer
 {
 protected:
   const float m_nStartTimePoint;

@@ -7,12 +7,6 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI  IYukiApp;
-class YUKIAPI  IYukiInputManager;
-class YUKIAPI  IYukiGfxControl;
-class YUKIAPI  IYukiWindow;
-struct YUKIAPI StYukiSwapChainDetails;
-
 constexpr AutoType YUKI_VK_GRAPHICS_FAMILY_NAME = "YUKI_VK_GRAPHICS_FAMILY_NAME";
 constexpr AutoType YUKI_VK_PRESENT_FAMILY_NAME  = "YUKI_VK_PRESENT_FAMILY_NAME";
 

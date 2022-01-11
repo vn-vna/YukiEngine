@@ -7,11 +7,6 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI IYukiApp;
-class YUKIAPI IYukiInputManager;
-class YUKIAPI IYukiGfxControl;
-class YUKIAPI IYukiWindow;
-
 class YUKIAPI IYukiApp : public IYukiObject
 {
 public:
@@ -22,6 +17,7 @@ public:
 
   //virtual IYukiInputManager& getInputManager() = 0;
   virtual SharedPtr<IYukiGfxControl>&    GetGraphicsController() = 0;
+  virtual SharedPtr<IYukiInpControl>&    GetInputController()    = 0;
   virtual SharedPtr<IYukiWindow>&        GetWindow()             = 0;
   virtual SharedPtr<Debug::IYukiLogger>& GetLogger()             = 0;
 };
@@ -30,8 +26,8 @@ class YUKIAPI YukiApp : IYukiApp
 {
 protected:
   SharedPtr<IYukiWindow>        m_pWindow;
-  SharedPtr<IYukiInputManager>  m_pInputManager;
   SharedPtr<IYukiGfxControl>    m_pGfxController;
+  SharedPtr<IYukiInpControl>    m_pInputController;
   SharedPtr<Debug::IYukiLogger> m_pLogger;
   bool                          m_bAlive;
 
@@ -40,6 +36,7 @@ public:
   virtual ~YukiApp() = default;
 
   SharedPtr<IYukiGfxControl>&    GetGraphicsController() override;
+  SharedPtr<IYukiInpControl>&    GetInputController() override;
   SharedPtr<IYukiWindow>&        GetWindow() override;
   SharedPtr<Debug::IYukiLogger>& GetLogger() override;
 

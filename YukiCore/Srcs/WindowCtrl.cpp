@@ -1,12 +1,24 @@
 #include "YukiCore/YukiVE.hpp"
 #include "YukiCore/YukiVE.hpp"
+#include "YukiCore/Application.hpp"
 #include "YukiCore/Window.hpp"
+#include "YukiCore/InputCtrl.hpp"
 #include "YukiCore/Error.hpp"
 
 #define YUKI_DEFAULT_WINDOW_WIDTH  1366
 #define YUKI_DEFAULT_WINDOW_HEIGHT 768
 #define YUKI_DEFAULT_WINDOW_TITLE  "Window"
 #define YUKI_WINDOW_SAMPLES        4
+
+void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers)
+{
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(key, scancode, action, modifiers);
+}
+
+void funcGLFWCursorCallback(GLFWwindow* window, double x, double y)
+{
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback((int) x, (int) y);
+}
 
 namespace Yuki::Core
 {
@@ -91,6 +103,9 @@ void YukiWindow::Create()
   {
     THROW_YUKI_ERROR(Yuki::Debug::YukiWindowCreationError);
   }
+
+  glfwSetKeyCallback(m_pGLFWWindow, funcGLFWKeyCallback);
+  glfwSetCursorPosCallback(m_pGLFWWindow, funcGLFWCursorCallback);
 }
 
 void YukiWindow::Awake()
