@@ -61,4 +61,3 @@ typedef wchar_t        WChar, *WCharPtr, &WCharRef;
 typedef const wchar_t* WConstCharPtr;
 
 } // namespace Yuki
-

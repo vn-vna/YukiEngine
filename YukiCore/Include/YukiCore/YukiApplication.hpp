@@ -1,8 +1,8 @@
 #pragma once
 
-#include "YukiCore/YukiVE.hpp"
+#include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
-#include "Logger.hpp"
+#include "YukiCore/YukiLogger.hpp"
 
 namespace Yuki::Core
 {

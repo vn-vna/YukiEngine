@@ -1,8 +1,8 @@
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/Application.hpp"
-#include "YukiCore/Window.hpp"
-#include "YukiCore/Graphics.hpp"
-#include "YukiCore/Error.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
+#include "YukiCore/YukiGraphics.hpp"
+#include "YukiCore/YukiError.hpp"
 
 // std
 #include <algorithm>

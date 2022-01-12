@@ -1,10 +1,10 @@
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/Application.hpp"
-#include "YukiCore/Window.hpp"
-#include "YukiCore/Graphics.hpp"
-#include "YukiCore/InputCtrl.hpp"
-#include "YukiCore/Error.hpp"
-#include "YukiCore/Logger.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
+#include "YukiCore/YukiGraphics.hpp"
+#include "YukiCore/YukiInputCtrl.hpp"
+#include "YukiCore/YukiError.hpp"
+#include "YukiCore/YukiLogger.hpp"
 
 // TEST
 // class TestKeyInp : public Yuki::Core::IYukiInpKeyboardCallback

@@ -1,6 +1,6 @@
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/InputCtrl.hpp"
-#include "YukiCore/Error.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiInputCtrl.hpp"
+#include "YukiCore/YukiError.hpp"
 
 namespace Yuki::Core
 {

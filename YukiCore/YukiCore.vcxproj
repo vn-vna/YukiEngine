@@ -19,25 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Srcs\Application.cpp" />
-    <ClCompile Include="Srcs\Error.cpp" />
-    <ClCompile Include="Srcs\GraphicsCtrl.cpp" />
-    <ClCompile Include="Srcs\InputCtrl.cpp" />
-    <ClCompile Include="Srcs\Logger.cpp" />
-    <ClCompile Include="Srcs\WindowCtrl.cpp" />
+    <ClCompile Include="Srcs\YukiApplication.cpp" />
+    <ClCompile Include="Srcs\YukiError.cpp" />
+    <ClCompile Include="Srcs\YukiGraphics.cpp" />
+    <ClCompile Include="Srcs\YukiInputCtrl.cpp" />
+    <ClCompile Include="Srcs\YukiLogger.cpp" />
+    <ClCompile Include="Srcs\YukiWindow.cpp" />
     <ClCompile Include="Srcs\YukiChrono.cpp" />
+    <ClCompile Include="Srcs\YukiThread.cpp" />
     <ClCompile Include="Srcs\YukiVE.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\YukiCore\Application.hpp" />
-    <ClInclude Include="Include\YukiCore\Error.hpp" />
-    <ClInclude Include="Include\YukiCore\Graphics.hpp" />
-    <ClInclude Include="Include\YukiCore\InputCtrl.hpp" />
-    <ClInclude Include="Include\YukiCore\Logger.hpp" />
-    <ClInclude Include="Include\YukiCore\Window.hpp" />
-    <ClInclude Include="Include\YukiCore\Chrono.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiApplication.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiError.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiGraphics.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiInputCtrl.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiLogger.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiWindow.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiChrono.hpp" />
     <ClInclude Include="Include\YukiCore\YukiObject.hpp" />
-    <ClInclude Include="Include\YukiCore\YukiVE.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiThread.hpp" />
+    <ClInclude Include="Include\YukiCore\YukiPCH.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
@@ -148,7 +150,7 @@
       <PreprocessorDefinitions>_DEBUG;YUKICORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>YukiCore/YukiVE.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>YukiCore/YukiPCH.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(ProjectDir)Include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -169,7 +171,7 @@
       <PreprocessorDefinitions>NDEBUG;YUKICORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>YukiCore/YukiVE.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>YukiCore/YukiPCH.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(ProjectDir)Include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>

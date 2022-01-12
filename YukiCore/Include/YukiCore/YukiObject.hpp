@@ -1,6 +1,6 @@
 #pragma once
 
-#include "YukiCore/YukiVE.hpp"
+#include "YukiCore/YukiPCH.hpp"
 
 namespace Yuki::Core
 {
@@ -26,10 +26,11 @@ namespace Yuki
 namespace Core
 {
 
-class YUKIAPI  IYukiApp;
-class YUKIAPI  IYukiGfxControl;
-class YUKIAPI  IYukiWindow;
-class YUKIAPI  IYukiInpControl;
+class YUKIAPI IYukiApp;
+class YUKIAPI IYukiGfxControl;
+class YUKIAPI IYukiWindow;
+class YUKIAPI IYukiInpControl;
+class YUKIAPI IYukiThread;
 
 } // namespace Core
 
@@ -44,9 +45,9 @@ class YUKIAPI      IYukiLogger;
 
 namespace Chrono
 {
-typedef struct YUKIAPI StDateTimeFormat;
-typedef struct YUKIAPI StAsciiDateTimeFormat;
-class YUKIAPI          IYukiTimer;
+struct YUKIAPI StDateTimeFormat;
+struct YUKIAPI StAsciiDateTimeFormat;
+class YUKIAPI  IYukiTimer;
 } // namespace Chrono
 
 } // namespace Yuki

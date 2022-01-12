@@ -1,7 +1,7 @@
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/Chrono.hpp"
-#include "YukiCore/Logger.hpp"
-#include "YukiCore/Error.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiChrono.hpp"
+#include "YukiCore/YukiLogger.hpp"
+#include "YukiCore/YukiError.hpp"
 
 namespace Yuki::Debug
 {

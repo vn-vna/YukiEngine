@@ -1,9 +1,9 @@
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/YukiVE.hpp"
-#include "YukiCore/Application.hpp"
-#include "YukiCore/Window.hpp"
-#include "YukiCore/InputCtrl.hpp"
-#include "YukiCore/Error.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
+#include "YukiCore/YukiInputCtrl.hpp"
+#include "YukiCore/YukiError.hpp"
 
 #define YUKI_DEFAULT_WINDOW_WIDTH  1366
 #define YUKI_DEFAULT_WINDOW_HEIGHT 768

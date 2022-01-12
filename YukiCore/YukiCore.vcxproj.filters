@@ -15,54 +15,60 @@
     <ClCompile Include="Srcs\YukiVE.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\Application.cpp">
+    <ClCompile Include="Srcs\YukiApplication.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\GraphicsCtrl.cpp">
+    <ClCompile Include="Srcs\YukiGraphics.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\InputCtrl.cpp">
+    <ClCompile Include="Srcs\YukiInputCtrl.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\WindowCtrl.cpp">
+    <ClCompile Include="Srcs\YukiWindow.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\Error.cpp">
+    <ClCompile Include="Srcs\YukiError.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\Logger.cpp">
+    <ClCompile Include="Srcs\YukiLogger.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiChrono.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
+    <ClCompile Include="Srcs\YukiThread.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\YukiCore\Application.hpp">
+    <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\Graphics.hpp">
+    <ClInclude Include="Include\YukiCore\YukiGraphics.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\InputCtrl.hpp">
+    <ClInclude Include="Include\YukiCore\YukiInputCtrl.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\Window.hpp">
+    <ClInclude Include="Include\YukiCore\YukiWindow.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiObject.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\YukiVE.hpp">
+    <ClInclude Include="Include\YukiCore\YukiPCH.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\Error.hpp">
+    <ClInclude Include="Include\YukiCore\YukiError.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\Logger.hpp">
+    <ClInclude Include="Include\YukiCore\YukiLogger.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\Chrono.hpp">
+    <ClInclude Include="Include\YukiCore\YukiChrono.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\YukiThread.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
   </ItemGroup>
