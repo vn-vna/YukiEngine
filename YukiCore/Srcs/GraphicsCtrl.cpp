@@ -226,13 +226,13 @@ namespace Yuki::Core
 
 YukiGfxControl::YukiGfxControl()
     : m_pVkInstance(nullptr),
-      m_pDebugMessenger(nullptr),
-      m_pSelectedPhysicalDevice(VK_NULL_HANDLE),
-      m_pLogicalDevice(VK_NULL_HANDLE),
-      m_pGraphicsQueue(nullptr),
+      m_pVkDebugMessenger(nullptr),
+      m_pVkSelectedPhysicalDevice(VK_NULL_HANDLE),
+      m_pVkLogicalDevice(VK_NULL_HANDLE),
+      m_pVkGraphicsQueues(nullptr),
       m_pVkWin32Surface(nullptr),
-      m_apPhysicalDeviceList(),
-      m_tSwapChainDetails()
+      m_apVkPhysicalDeviceList(),
+      m_tVkSwapChainDetails()
 {
 }
 
@@ -330,7 +330,7 @@ void YukiGfxControl::SetupVulkanDebugMessenger()
     {
       THROW_YUKI_ERROR(Debug::YukiVulkanGetFuncPtrCreateDebugMessageFuncError);
     }
-    AutoType result = createFunc(m_pVkInstance, &createInfo, nullptr, &m_pDebugMessenger);
+    AutoType result = createFunc(m_pVkInstance, &createInfo, nullptr, &m_pVkDebugMessenger);
     if (result != VK_SUCCESS)
     {
       THROW_YUKI_ERROR(Debug::YukiVulkanCreateDebugMessengerError);
@@ -347,7 +347,7 @@ void YukiGfxControl::DestroyVulkanDebugMessenger()
     {
       THROW_YUKI_ERROR(Debug::YukiVulkanGetFuncPtrDestroyDebugMessageFuncError);
     }
-    destroyFunc(m_pVkInstance, m_pDebugMessenger, nullptr);
+    destroyFunc(m_pVkInstance, m_pVkDebugMessenger, nullptr);
   }
 }
 
@@ -372,11 +372,11 @@ void YukiGfxControl::CreateWin32Surface()
 void YukiGfxControl::SelectSurfaceSwapChainFormat()
 {
   bool found_compatible = false;
-  for (const AutoType& format : m_tSwapChainDetails.aSurfaceFormat)
+  for (const AutoType& format : m_tVkSwapChainDetails.aSurfaceFormat)
   {
     if (format.format == VK_FORMAT_B8G8R8A8_SRGB && format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
     {
-      m_tCompatibleSurfaceFormat = format;
+      m_tVkCompatibleSurfaceFormat = format;
       found_compatible           = true;
       break;
     }
@@ -384,18 +384,18 @@ void YukiGfxControl::SelectSurfaceSwapChainFormat()
 
   if (!found_compatible)
   {
-    m_tCompatibleSurfaceFormat = m_tSwapChainDetails.aSurfaceFormat.at(0);
+    m_tVkCompatibleSurfaceFormat = m_tVkSwapChainDetails.aSurfaceFormat.at(0);
   }
 }
 
 void YukiGfxControl::SelectCompatiblePresentMode()
 {
   bool found_compatible = false;
-  for (const AutoType& present : m_tSwapChainDetails.aPresentModes)
+  for (const AutoType& present : m_tVkSwapChainDetails.aPresentModes)
   {
     if (present == VK_PRESENT_MODE_MAILBOX_KHR)
     {
-      m_eCompatiblePresentMode = present;
+      m_eVkCompatiblePresentMode = present;
       found_compatible         = true;
       break;
     }
@@ -403,15 +403,15 @@ void YukiGfxControl::SelectCompatiblePresentMode()
 
   if (!found_compatible)
   {
-    m_eCompatiblePresentMode = VK_PRESENT_MODE_FIFO_KHR;
+    m_eVkCompatiblePresentMode = VK_PRESENT_MODE_FIFO_KHR;
   }
 }
 
 void YukiGfxControl::SelectSwapExtent()
 {
-  if (m_tSwapChainDetails.tCapabilities.currentExtent.width != UINT32_MAX)
+  if (m_tVkSwapChainDetails.tCapabilities.currentExtent.width != UINT32_MAX)
   {
-    m_tVkExtent2D = m_tSwapChainDetails.tCapabilities.currentExtent;
+    m_tVkExtent2D = m_tVkSwapChainDetails.tCapabilities.currentExtent;
   }
   else
   {
@@ -419,14 +419,14 @@ void YukiGfxControl::SelectSwapExtent()
     glfwGetFramebufferSize(GetYukiApp()->GetWindow()->GetGLFWWindow(), &windowWidth, &windowHeight);
 
     m_tVkExtent2D.width = std::clamp(
-        m_tSwapChainDetails.tCapabilities.minImageExtent.width,
+        m_tVkSwapChainDetails.tCapabilities.minImageExtent.width,
         (uint32_t) windowWidth,
-        m_tSwapChainDetails.tCapabilities.maxImageExtent.width);
+        m_tVkSwapChainDetails.tCapabilities.maxImageExtent.width);
 
     m_tVkExtent2D.height = std::clamp(
-        m_tSwapChainDetails.tCapabilities.minImageExtent.height,
+        m_tVkSwapChainDetails.tCapabilities.minImageExtent.height,
         (uint32_t) windowWidth,
-        m_tSwapChainDetails.tCapabilities.maxImageExtent.height);
+        m_tVkSwapChainDetails.tCapabilities.maxImageExtent.height);
   }
 }
 
@@ -442,36 +442,36 @@ void YukiGfxControl::CreatePhysicalDeviceList()
   std::vector<VkPhysicalDevice> rawPhysicalDeviceList(deviceCount);
   vkEnumeratePhysicalDevices(m_pVkInstance, &deviceCount, rawPhysicalDeviceList.data());
 
-  m_apPhysicalDeviceList.reserve(deviceCount);
+  m_apVkPhysicalDeviceList.reserve(deviceCount);
 
   for (AutoType device : rawPhysicalDeviceList)
   {
-    m_apPhysicalDeviceList.emplace_back(device, getDeviceScore(device, m_pVkWin32Surface));
+    m_apVkPhysicalDeviceList.emplace_back(device, getDeviceScore(device, m_pVkWin32Surface));
   }
 
   AutoType deviceSortFunc = [](DeviceAndScoreType& pa, DeviceAndScoreType& pb) {
     return pa.second > pb.second;
   };
-  std::sort(m_apPhysicalDeviceList.data(), m_apPhysicalDeviceList.data() + m_apPhysicalDeviceList.size(), deviceSortFunc);
+  std::sort(m_apVkPhysicalDeviceList.data(), m_apVkPhysicalDeviceList.data() + m_apVkPhysicalDeviceList.size(), deviceSortFunc);
 }
 
 void YukiGfxControl::SelectPhysicalDevice()
 {
   CreatePhysicalDeviceList();
-  AutoType deviceWillSelect = m_apPhysicalDeviceList.begin();
+  AutoType deviceWillSelect = m_apVkPhysicalDeviceList.begin();
   if (deviceWillSelect->second == 0)
   {
     THROW_YUKI_ERROR(Debug::YukiVulkanNoSupportedPhysicalDeviceFoundError);
   }
-  m_pSelectedPhysicalDevice = deviceWillSelect->first;
+  m_pVkSelectedPhysicalDevice = deviceWillSelect->first;
 
-  getDeviceQueueIndices(m_pSelectedPhysicalDevice, m_pVkWin32Surface, &m_aCrrPhysicalDeviceQueueIndices);
-  querySwapChainDetails(m_pSelectedPhysicalDevice, m_pVkWin32Surface, &m_tSwapChainDetails);
+  getDeviceQueueIndices(m_pVkSelectedPhysicalDevice, m_pVkWin32Surface, &m_aVkCrrPhysicalDeviceQueueIndices);
+  querySwapChainDetails(m_pVkSelectedPhysicalDevice, m_pVkWin32Surface, &m_tVkSwapChainDetails);
 
 #ifndef NDEBUG
   // Report selected device
   VkPhysicalDeviceProperties deviceProperties = {};
-  vkGetPhysicalDeviceProperties(m_pSelectedPhysicalDevice, &deviceProperties);
+  vkGetPhysicalDeviceProperties(m_pVkSelectedPhysicalDevice, &deviceProperties);
   StringStream sstr{};
   sstr << "Selected Physical device"
        << "\n\tSelected device " << deviceProperties.deviceName
@@ -497,7 +497,7 @@ void YukiGfxControl::CreateVulkanLogicalDevice()
         VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
         nullptr,
         dqCreateFlag,
-        m_aCrrPhysicalDeviceQueueIndices.at(requiredQueueFlagBit),
+        m_aVkCrrPhysicalDeviceQueueIndices.at(requiredQueueFlagBit),
         queueCount, &queuePrioty};
     deviceQueueCreateInfo.emplace_back(dqci);
   }
@@ -522,7 +522,7 @@ void YukiGfxControl::CreateVulkanLogicalDevice()
     deviceCreateInfo.ppEnabledLayerNames = nullptr;
   }
 
-  AutoType result = vkCreateDevice(m_pSelectedPhysicalDevice, &deviceCreateInfo, nullptr, &m_pLogicalDevice);
+  AutoType result = vkCreateDevice(m_pVkSelectedPhysicalDevice, &deviceCreateInfo, nullptr, &m_pVkLogicalDevice);
   if (result != VK_SUCCESS)
   {
     THROW_YUKI_ERROR(Debug::YukiVulkanCreateLogicalDeviceError);
@@ -532,35 +532,35 @@ void YukiGfxControl::CreateVulkanLogicalDevice()
   GetYukiApp()->GetLogger()->PushDebugMessage(L"Create Vulkan Logical device successfully\n");
 #endif // !NDEBUG
 
-  vkGetDeviceQueue(m_pLogicalDevice, m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME), 0, &m_pGraphicsQueue);
-  vkGetDeviceQueue(m_pLogicalDevice, m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME), 0, &m_pPresentQueue);
+  vkGetDeviceQueue(m_pVkLogicalDevice, m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME), 0, &m_pVkGraphicsQueues);
+  vkGetDeviceQueue(m_pVkLogicalDevice, m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME), 0, &m_pVkPresentQueues);
 }
 
 void YukiGfxControl::CreateVulkanSwapChain()
 {
 
-  uint32_t minImgCount = m_tSwapChainDetails.tCapabilities.minImageCount + 1;
-  if (m_tSwapChainDetails.tCapabilities.maxImageCount > 0 &&
-      minImgCount > m_tSwapChainDetails.tCapabilities.maxImageCount)
+  uint32_t minImgCount = m_tVkSwapChainDetails.tCapabilities.minImageCount + 1;
+  if (m_tVkSwapChainDetails.tCapabilities.maxImageCount > 0 &&
+      minImgCount > m_tVkSwapChainDetails.tCapabilities.maxImageCount)
   {
-    minImgCount = m_tSwapChainDetails.tCapabilities.maxImageCount;
+    minImgCount = m_tVkSwapChainDetails.tCapabilities.maxImageCount;
   }
 
   VkSwapchainCreateInfoKHR createInfo = {};
   createInfo.sType                    = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
   createInfo.surface                  = m_pVkWin32Surface;
   createInfo.minImageCount            = minImgCount;
-  createInfo.imageFormat              = m_tCompatibleSurfaceFormat.format;
-  createInfo.imageColorSpace          = m_tCompatibleSurfaceFormat.colorSpace;
+  createInfo.imageFormat              = m_tVkCompatibleSurfaceFormat.format;
+  createInfo.imageColorSpace          = m_tVkCompatibleSurfaceFormat.colorSpace;
   createInfo.imageExtent              = m_tVkExtent2D;
   createInfo.imageArrayLayers         = 1;
   createInfo.imageUsage               = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-  if (m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME) !=
-      m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME))
+  if (m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME) !=
+      m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME))
   {
-    uint32_t queueIndices[]          = {m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME),
-        m_aCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME)};
+    uint32_t queueIndices[]          = {m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_GRAPHICS_FAMILY_NAME),
+        m_aVkCrrPhysicalDeviceQueueIndices.at(YUKI_VK_PRESENT_FAMILY_NAME)};
     createInfo.imageSharingMode      = VK_SHARING_MODE_CONCURRENT;
     createInfo.queueFamilyIndexCount = (uint32_t) ARRAYSIZE(queueIndices);
     createInfo.pQueueFamilyIndices   = queueIndices;
@@ -572,13 +572,13 @@ void YukiGfxControl::CreateVulkanSwapChain()
     createInfo.pQueueFamilyIndices   = nullptr;
   }
 
-  createInfo.preTransform   = m_tSwapChainDetails.tCapabilities.currentTransform;
+  createInfo.preTransform   = m_tVkSwapChainDetails.tCapabilities.currentTransform;
   createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-  createInfo.presentMode    = m_eCompatiblePresentMode;
+  createInfo.presentMode    = m_eVkCompatiblePresentMode;
   createInfo.clipped        = VK_TRUE;
   createInfo.oldSwapchain   = VK_NULL_HANDLE;
 
-  AutoType result = vkCreateSwapchainKHR(m_pLogicalDevice, &createInfo, nullptr, &m_pVkSwapChain);
+  AutoType result = vkCreateSwapchainKHR(m_pVkLogicalDevice, &createInfo, nullptr, &m_pVkSwapChain);
   if (result != VK_SUCCESS)
   {
     THROW_YUKI_ERROR(Debug::YukiVulkanCreateSwapChainError);
@@ -591,31 +591,74 @@ void YukiGfxControl::CreateVulkanSwapChain()
 void YukiGfxControl::GetSwapChainImage()
 {
   uint32_t imageCount = 0;
-  vkGetSwapchainImagesKHR(m_pLogicalDevice, m_pVkSwapChain, &imageCount, nullptr);
-  m_apSwapChainImages.resize(imageCount);
-  vkGetSwapchainImagesKHR(m_pLogicalDevice, m_pVkSwapChain, &imageCount, m_apSwapChainImages.data());
+  vkGetSwapchainImagesKHR(m_pVkLogicalDevice, m_pVkSwapChain, &imageCount, nullptr);
+  m_apVkSwapChainImages.resize(imageCount);
+  vkGetSwapchainImagesKHR(m_pVkLogicalDevice, m_pVkSwapChain, &imageCount, m_apVkSwapChainImages.data());
+}
+
+void YukiGfxControl::CreateImageViews()
+{
+  m_apVkSwapChainImageViews.reserve(m_apVkSwapChainImages.size());
+  for (uint32_t i = 0; i < m_apVkSwapChainImages.size(); ++i)
+  {
+    VkImageViewCreateInfo ivci           = {};
+    ivci.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+    ivci.image                           = m_apVkSwapChainImages.at(i);
+    ivci.viewType                        = VK_IMAGE_VIEW_TYPE_2D;
+    ivci.format                          = m_tVkCompatibleSurfaceFormat.format;
+    ivci.components.r                    = VK_COMPONENT_SWIZZLE_IDENTITY;
+    ivci.components.g                    = VK_COMPONENT_SWIZZLE_IDENTITY;
+    ivci.components.b                    = VK_COMPONENT_SWIZZLE_IDENTITY;
+    ivci.components.a                    = VK_COMPONENT_SWIZZLE_IDENTITY;
+    ivci.subresourceRange.aspectMask     = VK_IMAGE_ASPECT_COLOR_BIT;
+    ivci.subresourceRange.baseMipLevel   = 0;
+    ivci.subresourceRange.levelCount     = 1;
+    ivci.subresourceRange.baseArrayLayer = 0;
+    ivci.subresourceRange.layerCount     = 1;
+    if (vkCreateImageView(m_pVkLogicalDevice, &ivci, nullptr, m_apVkSwapChainImageViews.data() + i) != VK_SUCCESS)
+    {
+      THROW_YUKI_ERROR(Debug::YukiVulkanCreateSwapChainImageViewError);
+    }
+  }
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Created Vulkan Image views");
+}
+
+void YukiGfxControl::DestroyImageViews()
+{
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Destroying Vulkan Image views");
+  for (auto imageView : m_apVkSwapChainImageViews)
+  {
+    if (imageView)
+    {
+      vkDestroyImageView(m_pVkLogicalDevice, imageView, nullptr);
+    }
+  }
 }
 
 void YukiGfxControl::DestroyVkSwapChainKHR()
 {
-  if (!m_pLogicalDevice && !m_pVkSwapChain)
-    vkDestroySwapchainKHR(m_pLogicalDevice, m_pVkSwapChain, nullptr);
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Destroying Vulkan Swap chain KHR");
+  if (!m_pVkLogicalDevice && !m_pVkSwapChain)
+    vkDestroySwapchainKHR(m_pVkLogicalDevice, m_pVkSwapChain, nullptr);
 }
 
 void YukiGfxControl::DestroyVkLogicalDevice()
 {
-  if (!m_pLogicalDevice)
-    vkDestroyDevice(m_pLogicalDevice, nullptr);
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Destroying Vulkan Logical device");
+  if (!m_pVkLogicalDevice)
+    vkDestroyDevice(m_pVkLogicalDevice, nullptr);
 }
 
 void YukiGfxControl::DestroyVkSurfaceKHR()
 {
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Destroying Vulkan Surface KHR");
   if (!m_pVkWin32Surface && !m_pVkInstance)
     vkDestroySurfaceKHR(m_pVkInstance, m_pVkWin32Surface, nullptr);
 }
 
 void YukiGfxControl::DestroyVkInstance()
 {
+  GetYukiApp()->GetLogger()->PushDebugMessage(L"Destroying Vulkan Instance");
   if (!m_pVkInstance)
     vkDestroyInstance(m_pVkInstance, nullptr);
 }
@@ -632,6 +675,7 @@ void YukiGfxControl::Create()
   CreateVulkanLogicalDevice();
   CreateVulkanSwapChain();
   GetSwapChainImage();
+  CreateImageViews();
 }
 
 void YukiGfxControl::Awake()
@@ -648,6 +692,7 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
+  DestroyImageViews();
   DestroyVkSwapChainKHR();
   DestroyVkLogicalDevice();
   DestroyVkSurfaceKHR();

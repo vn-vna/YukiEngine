@@ -10,10 +10,11 @@ namespace Yuki::Core
 constexpr AutoType YUKI_VK_GRAPHICS_FAMILY_NAME = "YUKI_VK_GRAPHICS_FAMILY_NAME";
 constexpr AutoType YUKI_VK_PRESENT_FAMILY_NAME  = "YUKI_VK_PRESENT_FAMILY_NAME";
 
-using DeviceAndScoreType     = std::pair<VkPhysicalDevice, uint32_t>;
-using PhysicalDeviceListType = std::vector<DeviceAndScoreType>;
-using QueueFamilyIndicesType = std::map<const char*, uint32_t>;
-using SwapChainImgArrayType  = std::vector<VkImage>;
+using DeviceAndScoreType        = std::pair<VkPhysicalDevice, uint32_t>;
+using PhysicalDeviceListType    = std::vector<DeviceAndScoreType>;
+using QueueFamilyIndicesType    = std::map<const char*, uint32_t>;
+using SwapChainImgArrayType     = std::vector<VkImage>;
+using SwapChainImgViewArrayType = std::vector<VkImageView>;
 
 typedef struct YUKIAPI StYukiSwapChainDetails
 {
@@ -37,6 +38,8 @@ protected:
   virtual void CreateVulkanLogicalDevice()    = 0;
   virtual void CreateVulkanSwapChain()        = 0;
   virtual void GetSwapChainImage()            = 0;
+  virtual void CreateImageViews()             = 0;
+  virtual void DestroyImageViews()            = 0;
   virtual void DestroyVkSwapChainKHR()        = 0;
   virtual void DestroyVkLogicalDevice()       = 0;
   virtual void DestroyVkSurfaceKHR()          = 0;
@@ -51,21 +54,22 @@ public:
 class YUKIAPI YukiGfxControl : public IYukiGfxControl
 {
 protected:
-  VkInstance               m_pVkInstance;
-  VkDebugUtilsMessengerEXT m_pDebugMessenger;
-  VkPhysicalDevice         m_pSelectedPhysicalDevice;
-  VkDevice                 m_pLogicalDevice;
-  VkQueue                  m_pGraphicsQueue;
-  VkQueue                  m_pPresentQueue;
-  VkSurfaceKHR             m_pVkWin32Surface;
-  QueueFamilyIndicesType   m_aCrrPhysicalDeviceQueueIndices;
-  PhysicalDeviceListType   m_apPhysicalDeviceList;
-  YukiSwapChainDetailsType m_tSwapChainDetails;
-  VkSurfaceFormatKHR       m_tCompatibleSurfaceFormat;
-  VkPresentModeKHR         m_eCompatiblePresentMode;
-  VkExtent2D               m_tVkExtent2D;
-  VkSwapchainKHR           m_pVkSwapChain;
-  SwapChainImgArrayType    m_apSwapChainImages;
+  VkInstance                m_pVkInstance;
+  VkDebugUtilsMessengerEXT  m_pVkDebugMessenger;
+  VkPhysicalDevice          m_pVkSelectedPhysicalDevice;
+  VkDevice                  m_pVkLogicalDevice;
+  VkQueue                   m_pVkGraphicsQueues;
+  VkQueue                   m_pVkPresentQueues;
+  VkSurfaceKHR              m_pVkWin32Surface;
+  QueueFamilyIndicesType    m_aVkCrrPhysicalDeviceQueueIndices;
+  PhysicalDeviceListType    m_apVkPhysicalDeviceList;
+  YukiSwapChainDetailsType  m_tVkSwapChainDetails;
+  VkSurfaceFormatKHR        m_tVkCompatibleSurfaceFormat;
+  VkPresentModeKHR          m_eVkCompatiblePresentMode;
+  VkExtent2D                m_tVkExtent2D;
+  VkSwapchainKHR            m_pVkSwapChain;
+  SwapChainImgArrayType     m_apVkSwapChainImages;
+  SwapChainImgViewArrayType m_apVkSwapChainImageViews;
 
   void CreateVulkanInstance() override;
   void CheckValidationLayerSupport() override;
@@ -79,6 +83,8 @@ protected:
   void CreateVulkanLogicalDevice() override;
   void CreateVulkanSwapChain() override;
   void GetSwapChainImage() override;
+  void CreateImageViews() override;
+  void DestroyImageViews() override;
   void DestroyVkSwapChainKHR() override;
   void DestroyVkLogicalDevice() override;
   void DestroyVkSurfaceKHR() override;

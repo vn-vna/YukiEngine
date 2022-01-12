@@ -31,7 +31,8 @@ enum class YUKIAPI YukiErrCode
   VULKAN_NO_SUPPORTED_PHYSICAL_DEVICE_FOUND,
   VULKAN_CREATE_LOGICAL_DEVICE_FAILED,
   VULKAN_CREATE_WIN32_SURFACE_KHR_FAILED,
-  VULKAN_CREATE_SWAPCHAIN_FAILED
+  VULKAN_CREATE_SWAPCHAIN_FAILED,
+  VULKAN_CREATE_SWAPCHAIN_IMAGE_VIEW_FAILED
 };
 
 class YUKIAPI YukiError : public std::runtime_error
@@ -64,5 +65,6 @@ DECLARE_YUKI_ERROR(YukiVulkanNoSupportedPhysicalDeviceFoundError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateLogicalDeviceError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateWin32SurfaceKHRError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateSwapChainError);
+DECLARE_YUKI_ERROR(YukiVulkanCreateSwapChainImageViewError);
 
 } // namespace Yuki::Debug
