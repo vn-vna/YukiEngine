@@ -49,6 +49,7 @@ Một người bạn tốt bụng đã làm nó ❤️.
 ### Yêu cầu:
 
 - Visual Studio 2022
+- Vulkan SDK đã được cài.
 - VCPKG đã cài đặt glfw[core]::x64-windows, glm[core]::x64-windows.
 
 ### Mở `Yuki.sln` và boom 😌
