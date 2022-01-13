@@ -3,6 +3,7 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiLogger.hpp"
+#include "YukiCore/YukiThread.hpp"
 
 namespace Yuki::Core
 {
@@ -70,6 +71,8 @@ protected:
   VkSwapchainKHR            m_pVkSwapChain;
   SwapChainImgArrayType     m_apVkSwapChainImages;
   SwapChainImgViewArrayType m_apVkSwapChainImageViews;
+  SharedPtr<IYukiThread>    m_pVkInitThread;
+  SharedPtr<IYukiThread>    m_pVkDestroyThread;
 
   void CreateVulkanInstance() override;
   void CheckValidationLayerSupport() override;

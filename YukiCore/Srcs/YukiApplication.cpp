@@ -83,7 +83,7 @@ void YukiApp::RunApp()
   catch (const Yuki::Debug::YukiError& yer)
   {
     GetLogger()->PushErrorMessage(yer.getErrorMessage());
-  }
+  } 
 
   try
   {

@@ -234,6 +234,28 @@ YukiGfxControl::YukiGfxControl()
       m_apVkPhysicalDeviceList(),
       m_tVkSwapChainDetails()
 {
+  m_pVkInitThread = std::make_shared<YukiThread>([this]() {
+    CreateVulkanInstance();
+    SetupVulkanDebugMessenger();
+    CreateWin32Surface();
+    SelectPhysicalDevice();
+    SelectSurfaceSwapChainFormat();
+    SelectCompatiblePresentMode();
+    SelectSwapExtent();
+    CreateVulkanLogicalDevice();
+    CreateVulkanSwapChain();
+    GetSwapChainImage();
+    CreateImageViews();
+  });
+
+  m_pVkDestroyThread = std::make_shared<YukiThread>([this]() {
+    DestroyImageViews();
+    DestroyVkSwapChainKHR();
+    DestroyVkLogicalDevice();
+    DestroyVkSurfaceKHR();
+    DestroyVulkanDebugMessenger();
+    DestroyVkInstance();
+  });
 }
 
 void YukiGfxControl::CreateVulkanInstance()
@@ -377,7 +399,7 @@ void YukiGfxControl::SelectSurfaceSwapChainFormat()
     if (format.format == VK_FORMAT_B8G8R8A8_SRGB && format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
     {
       m_tVkCompatibleSurfaceFormat = format;
-      found_compatible           = true;
+      found_compatible             = true;
       break;
     }
   }
@@ -396,7 +418,7 @@ void YukiGfxControl::SelectCompatiblePresentMode()
     if (present == VK_PRESENT_MODE_MAILBOX_KHR)
     {
       m_eVkCompatiblePresentMode = present;
-      found_compatible         = true;
+      found_compatible           = true;
       break;
     }
   }
@@ -665,17 +687,9 @@ void YukiGfxControl::DestroyVkInstance()
 
 void YukiGfxControl::Create()
 {
-  CreateVulkanInstance();
-  SetupVulkanDebugMessenger();
-  CreateWin32Surface();
-  SelectPhysicalDevice();
-  SelectSurfaceSwapChainFormat();
-  SelectCompatiblePresentMode();
-  SelectSwapExtent();
-  CreateVulkanLogicalDevice();
-  CreateVulkanSwapChain();
-  GetSwapChainImage();
-  CreateImageViews();
+  m_pVkInitThread->Start();
+
+  YukiThread::WaitForThreads({m_pVkInitThread});
 }
 
 void YukiGfxControl::Awake()
@@ -692,12 +706,9 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
-  DestroyImageViews();
-  DestroyVkSwapChainKHR();
-  DestroyVkLogicalDevice();
-  DestroyVkSurfaceKHR();
-  DestroyVulkanDebugMessenger();
-  DestroyVkInstance();
+  m_pVkDestroyThread->Start();
+
+  YukiThread::WaitForThreads({m_pVkDestroyThread});
 }
 
 SharedPtr<IYukiGfxControl> YukiGfxControl::CreateYukiGfxController()
