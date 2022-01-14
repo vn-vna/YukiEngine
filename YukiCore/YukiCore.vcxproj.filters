@@ -39,6 +39,9 @@
     <ClCompile Include="Srcs\YukiThread.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
+    <ClCompile Include="Srcs\YukiGfxPipeline.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
@@ -69,6 +72,9 @@
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiThread.hpp">
+      <Filter>Include\YukiCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiCore\YukiGfxPipeline.h">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
   </ItemGroup>

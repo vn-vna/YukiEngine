@@ -2,6 +2,7 @@
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"
 #include "YukiCore/YukiGraphics.hpp"
+#include "YukiCore/YukiGfxPipeline.h"
 #include "YukiCore/YukiError.hpp"
 
 // std
@@ -234,28 +235,61 @@ YukiGfxControl::YukiGfxControl()
       m_apVkPhysicalDeviceList(),
       m_tVkSwapChainDetails()
 {
+  m_pGfxPipeline  = YukiGfxPipeline::CreateGfxPipeline(L"TestShader.vert.spv", L"TestShader.frag.spv");
   m_pVkInitThread = std::make_shared<YukiThread>([this]() {
-    CreateVulkanInstance();
-    SetupVulkanDebugMessenger();
-    CreateWin32Surface();
-    SelectPhysicalDevice();
-    SelectSurfaceSwapChainFormat();
-    SelectCompatiblePresentMode();
-    SelectSwapExtent();
-    CreateVulkanLogicalDevice();
-    CreateVulkanSwapChain();
-    GetSwapChainImage();
-    CreateImageViews();
+    this->CreateVulkanInstance();
+    this->SetupVulkanDebugMessenger();
+    this->CreateWin32Surface();
+    this->SelectPhysicalDevice();
+    this->SelectSurfaceSwapChainFormat();
+    this->SelectCompatiblePresentMode();
+    this->SelectSwapExtent();
+    this->CreateVulkanLogicalDevice();
+    this->CreateVulkanSwapChain();
+    this->GetSwapChainImage();
+    this->CreateImageViews();
+    this->CreateGfxPipeline();
   });
 
   m_pVkDestroyThread = std::make_shared<YukiThread>([this]() {
-    DestroyImageViews();
-    DestroyVkSwapChainKHR();
-    DestroyVkLogicalDevice();
-    DestroyVkSurfaceKHR();
-    DestroyVulkanDebugMessenger();
-    DestroyVkInstance();
+    this->DestroyGfxPipeline();
+    this->DestroyImageViews();
+    this->DestroyVkSwapChainKHR();
+    this->DestroyVkLogicalDevice();
+    this->DestroyVkSurfaceKHR();
+    this->DestroyVulkanDebugMessenger();
+    this->DestroyVkInstance();
   });
+}
+
+VkInstance YukiGfxControl::GetVkInstance()
+{
+  return m_pVkInstance;
+}
+
+VkDevice YukiGfxControl::GetVkLogicalDevice()
+{
+  return m_pVkLogicalDevice;
+}
+
+VkPhysicalDevice YukiGfxControl::GetVkPhysicalDevice()
+{
+  return m_pVkSelectedPhysicalDevice;
+}
+
+VkSurfaceKHR YukiGfxControl::GetVkSurfaceKHR()
+{
+  return m_pVkWin32Surface;
+}
+
+VkExtent2D& YukiGfxControl::GetVkExtent2D()
+{
+  return m_tVkExtent2D;
+}
+
+SharedPtr<IYukiGfxPipeline> YukiGfxControl::GetGfxPipeline()
+{
+  return m_pGfxPipeline;
 }
 
 void YukiGfxControl::CreateVulkanInstance()
@@ -643,6 +677,16 @@ void YukiGfxControl::CreateImageViews()
     }
   }
   GetYukiApp()->GetLogger()->PushDebugMessage(L"Created Vulkan Image views");
+}
+
+void YukiGfxControl::CreateGfxPipeline()
+{
+  m_pGfxPipeline->Create();
+}
+
+void YukiGfxControl::DestroyGfxPipeline()
+{
+  m_pGfxPipeline->Destroy();
 }
 
 void YukiGfxControl::DestroyImageViews()

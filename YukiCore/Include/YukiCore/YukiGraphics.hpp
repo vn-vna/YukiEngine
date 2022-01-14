@@ -40,6 +40,8 @@ protected:
   virtual void CreateVulkanSwapChain()        = 0;
   virtual void GetSwapChainImage()            = 0;
   virtual void CreateImageViews()             = 0;
+  virtual void CreateGfxPipeline()            = 0;
+  virtual void DestroyGfxPipeline()           = 0;
   virtual void DestroyImageViews()            = 0;
   virtual void DestroyVkSwapChainKHR()        = 0;
   virtual void DestroyVkLogicalDevice()       = 0;
@@ -50,29 +52,37 @@ protected:
 public:
   IYukiGfxControl()          = default;
   virtual ~IYukiGfxControl() = default;
+
+  virtual VkInstance                  GetVkInstance()       = 0;
+  virtual VkDevice                    GetVkLogicalDevice()  = 0;
+  virtual VkPhysicalDevice            GetVkPhysicalDevice() = 0;
+  virtual VkSurfaceKHR                GetVkSurfaceKHR()     = 0;
+  virtual VkExtent2D&                 GetVkExtent2D()       = 0;
+  virtual SharedPtr<IYukiGfxPipeline> GetGfxPipeline()      = 0;
 };
 
 class YUKIAPI YukiGfxControl : public IYukiGfxControl
 {
 protected:
-  VkInstance                m_pVkInstance;
-  VkDebugUtilsMessengerEXT  m_pVkDebugMessenger;
-  VkPhysicalDevice          m_pVkSelectedPhysicalDevice;
-  VkDevice                  m_pVkLogicalDevice;
-  VkQueue                   m_pVkGraphicsQueues;
-  VkQueue                   m_pVkPresentQueues;
-  VkSurfaceKHR              m_pVkWin32Surface;
-  QueueFamilyIndicesType    m_aVkCrrPhysicalDeviceQueueIndices;
-  PhysicalDeviceListType    m_apVkPhysicalDeviceList;
-  YukiSwapChainDetailsType  m_tVkSwapChainDetails;
-  VkSurfaceFormatKHR        m_tVkCompatibleSurfaceFormat;
-  VkPresentModeKHR          m_eVkCompatiblePresentMode;
-  VkExtent2D                m_tVkExtent2D;
-  VkSwapchainKHR            m_pVkSwapChain;
-  SwapChainImgArrayType     m_apVkSwapChainImages;
-  SwapChainImgViewArrayType m_apVkSwapChainImageViews;
-  SharedPtr<IYukiThread>    m_pVkInitThread;
-  SharedPtr<IYukiThread>    m_pVkDestroyThread;
+  VkInstance                  m_pVkInstance;
+  VkDebugUtilsMessengerEXT    m_pVkDebugMessenger;
+  VkPhysicalDevice            m_pVkSelectedPhysicalDevice;
+  VkDevice                    m_pVkLogicalDevice;
+  VkQueue                     m_pVkGraphicsQueues;
+  VkQueue                     m_pVkPresentQueues;
+  VkSurfaceKHR                m_pVkWin32Surface;
+  QueueFamilyIndicesType      m_aVkCrrPhysicalDeviceQueueIndices;
+  PhysicalDeviceListType      m_apVkPhysicalDeviceList;
+  YukiSwapChainDetailsType    m_tVkSwapChainDetails;
+  VkSurfaceFormatKHR          m_tVkCompatibleSurfaceFormat;
+  VkPresentModeKHR            m_eVkCompatiblePresentMode;
+  VkExtent2D                  m_tVkExtent2D;
+  VkSwapchainKHR              m_pVkSwapChain;
+  SwapChainImgArrayType       m_apVkSwapChainImages;
+  SwapChainImgViewArrayType   m_apVkSwapChainImageViews;
+  SharedPtr<IYukiThread>      m_pVkInitThread;
+  SharedPtr<IYukiThread>      m_pVkDestroyThread;
+  SharedPtr<IYukiGfxPipeline> m_pGfxPipeline;
 
   void CreateVulkanInstance() override;
   void CheckValidationLayerSupport() override;
@@ -87,6 +97,8 @@ protected:
   void CreateVulkanSwapChain() override;
   void GetSwapChainImage() override;
   void CreateImageViews() override;
+  void CreateGfxPipeline() override;
+  void DestroyGfxPipeline() override;
   void DestroyImageViews() override;
   void DestroyVkSwapChainKHR() override;
   void DestroyVkLogicalDevice() override;
@@ -97,6 +109,13 @@ protected:
 public:
   YukiGfxControl();
   virtual ~YukiGfxControl() = default;
+
+  VkInstance                  GetVkInstance() override;
+  VkDevice                    GetVkLogicalDevice() override;
+  VkPhysicalDevice            GetVkPhysicalDevice() override;
+  VkSurfaceKHR                GetVkSurfaceKHR() override;
+  VkExtent2D&                 GetVkExtent2D() override;
+  SharedPtr<IYukiGfxPipeline> GetGfxPipeline() override;
 
   void Create() override;
   void Awake() override;

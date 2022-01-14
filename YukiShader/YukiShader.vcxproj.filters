@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="NormalShader">
+      <UniqueIdentifier>{3491f300-3cff-4fde-80ec-6c07c5786681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestShader">
+      <UniqueIdentifier>{204d9b76-c6cf-47fa-aab4-f572e8d2b7a9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="TestShader.vert">
+      <Filter>TestShader</Filter>
+    </CustomBuild>
+    <CustomBuild Include="TestShader.frag">
+      <Filter>TestShader</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -28,6 +28,7 @@ namespace Core
 
 class YUKIAPI IYukiApp;
 class YUKIAPI IYukiGfxControl;
+class YUKIAPI IYukiGfxPipeline;
 class YUKIAPI IYukiWindow;
 class YUKIAPI IYukiInpControl;
 class YUKIAPI IYukiThread;

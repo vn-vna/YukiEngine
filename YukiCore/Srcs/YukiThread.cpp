@@ -72,6 +72,10 @@ void YukiThread::DestroyWin32Thread()
 
 void YukiThread::DetachWin32Thread()
 {
+  if (!m_pHandle)
+  {
+    return;
+  }
   if (g_mThreadManager.find(m_nThreadID) == g_mThreadManager.end())
   {
     THROW_YUKI_ERROR(Debug::YukiThreadDetachmentNotExistError);
