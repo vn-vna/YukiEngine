@@ -1,4 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiLogger.hpp"
 #include "YukiCore/YukiThread.hpp"
 #include "YukiCore/YukiError.hpp"
 
@@ -10,7 +12,14 @@ DWORD CALLBACK Win32APIThreadCallback(LPVOID args)
   AutoType pYukiThread = g_mThreadManager.at(*threadID);
   if (pYukiThread)
   {
-    pYukiThread->RunCallback();
+    try
+    {
+      pYukiThread->RunCallback();
+    }
+    catch (Yuki::Debug::YukiError& err)
+    {
+      Yuki::Core::GetYukiApp()->GetLogger()->PushDebugMessage(err.getErrorMessage());
+    }
   }
   return 0;
 }
