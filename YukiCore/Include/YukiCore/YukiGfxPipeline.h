@@ -16,11 +16,14 @@ public:
 class YUKIAPI YukiGfxPipeline : public IYukiGfxPipeline
 {
 protected:
-  VkShaderModule m_pVertexShader;
-  VkShaderModule m_pFragmentShader;
-  String         m_strVSFilePath;
-  String         m_strFSFilePath;
+  VkShaderModule   m_pVertexShader;
+  VkShaderModule   m_pFragmentShader;
+  VkPipelineLayout m_pVkPipelineLayout;
+  String           m_strVSFilePath;
+  String           m_strFSFilePath;
 
+  void CreatePipelineStage();
+  void CreateShaderModules();
 
 public:
   YukiGfxPipeline(const String& vspath, const String& fspath);
@@ -29,7 +32,7 @@ public:
   void Create() override;
   void Destroy() override;
 
-  static SharedPtr<IYukiGfxPipeline> CreateGfxPipeline(const String& vspath, const String& fspath);
+  static SharedPtr<IYukiGfxPipeline> CreateYukiGfxPipeline(const String& vspath, const String& fspath);
 };
 
 } // namespace Yuki::Core

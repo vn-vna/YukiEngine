@@ -37,7 +37,8 @@ enum class YUKIAPI YukiErrCode
   VULKAN_CREATE_LOGICAL_DEVICE_FAILED,
   VULKAN_CREATE_WIN32_SURFACE_KHR_FAILED,
   VULKAN_CREATE_SWAPCHAIN_FAILED,
-  VULKAN_CREATE_SWAPCHAIN_IMAGE_VIEW_FAILED
+  VULKAN_CREATE_SWAPCHAIN_IMAGE_VIEW_FAILED,
+  VULKAN_CREATE_PIPELINE_LAYOUT_FAILED
 };
 
 class YUKIAPI YukiError : public std::runtime_error
@@ -76,5 +77,6 @@ DECLARE_YUKI_ERROR(YukiVulkanCreateLogicalDeviceError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateWin32SurfaceKHRError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateSwapChainError);
 DECLARE_YUKI_ERROR(YukiVulkanCreateSwapChainImageViewError);
+DECLARE_YUKI_ERROR(YukiVulkanCreatePipelineLayoutError);
 
 } // namespace Yuki::Debug

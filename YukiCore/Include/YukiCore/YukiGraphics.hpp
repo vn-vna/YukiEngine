@@ -40,7 +40,7 @@ protected:
   virtual void CreateVulkanSwapChain()        = 0;
   virtual void GetSwapChainImage()            = 0;
   virtual void CreateImageViews()             = 0;
-  virtual void CreateGfxPipeline()            = 0;
+  virtual void CreateYukiGfxPipeline()            = 0;
   virtual void DestroyGfxPipeline()           = 0;
   virtual void DestroyImageViews()            = 0;
   virtual void DestroyVkSwapChainKHR()        = 0;
@@ -97,7 +97,7 @@ protected:
   void CreateVulkanSwapChain() override;
   void GetSwapChainImage() override;
   void CreateImageViews() override;
-  void CreateGfxPipeline() override;
+  void CreateYukiGfxPipeline() override;
   void DestroyGfxPipeline() override;
   void DestroyImageViews() override;
   void DestroyVkSwapChainKHR() override;

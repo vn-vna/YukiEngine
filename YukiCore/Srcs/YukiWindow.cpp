@@ -75,6 +75,13 @@ bool YukiWindow::ShouldClose()
   return glfwWindowShouldClose(m_pGLFWWindow);
 }
 
+glm::vec2 YukiWindow::GetWindowSize()
+{
+  int w, h;
+  glfwGetWindowSize(m_pGLFWWindow, &w, &h);
+  return {w, h};
+}
+
 HWND YukiWindow::GetWindowHandler()
 {
   return glfwGetWin32Window(m_pGLFWWindow);

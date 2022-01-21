@@ -3,6 +3,8 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 
+#include <glm/vec2.hpp>
+
 namespace Yuki::Core
 {
 
@@ -22,6 +24,7 @@ public:
   virtual void        SetTitle(const AsciiString& title)           = 0;
   virtual void        SetTitle(const String& title)                = 0;
   virtual bool        ShouldClose()                                = 0;
+  virtual glm::vec2   GetWindowSize()                              = 0;
   virtual HWND        GetWindowHandler()                           = 0;
   virtual GLFWwindow* GetGLFWWindow()                              = 0;
 };
@@ -43,6 +46,7 @@ public:
   void        SetTitle(const AsciiString& title) override;
   void        SetTitle(const String& title) override;
   bool        ShouldClose() override;
+  glm::vec2   GetWindowSize() override;
   HWND        GetWindowHandler() override;
   GLFWwindow* GetGLFWWindow() override;
 

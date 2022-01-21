@@ -235,7 +235,7 @@ YukiGfxControl::YukiGfxControl()
       m_apVkPhysicalDeviceList(),
       m_tVkSwapChainDetails()
 {
-  m_pGfxPipeline  = YukiGfxPipeline::CreateGfxPipeline(L"TestShader.vert.spv", L"TestShader.frag.spv");
+  m_pGfxPipeline  = YukiGfxPipeline::CreateYukiGfxPipeline(L"TestShader.vert.spv", L"TestShader.frag.spv");
   m_pVkInitThread = std::make_shared<YukiThread>([this]() {
     this->CreateVulkanInstance();
     this->SetupVulkanDebugMessenger();
@@ -248,7 +248,7 @@ YukiGfxControl::YukiGfxControl()
     this->CreateVulkanSwapChain();
     this->GetSwapChainImage();
     this->CreateImageViews();
-    this->CreateGfxPipeline();
+    this->CreateYukiGfxPipeline();
   });
 
   m_pVkDestroyThread = std::make_shared<YukiThread>([this]() {
@@ -679,7 +679,7 @@ void YukiGfxControl::CreateImageViews()
   GetYukiApp()->GetLogger()->PushDebugMessage(L"Created Vulkan Image views");
 }
 
-void YukiGfxControl::CreateGfxPipeline()
+void YukiGfxControl::CreateYukiGfxPipeline()
 {
   m_pGfxPipeline->Create();
 }
