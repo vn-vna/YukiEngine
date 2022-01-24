@@ -287,6 +287,11 @@ VkExtent2D& YukiGfxControl::GetVkExtent2D()
   return m_tVkExtent2D;
 }
 
+VkSurfaceFormatKHR& YukiGfxControl::GetVkSurfaceKHRFormat()
+{
+  return m_tVkCompatibleSurfaceFormat;
+}
+
 SharedPtr<IYukiGfxPipeline> YukiGfxControl::GetGfxPipeline()
 {
   return m_pGfxPipeline;

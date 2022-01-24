@@ -52,6 +52,30 @@ YukiGfxPipeline::YukiGfxPipeline(const String& vspath, const String& fspath)
       m_strFSFilePath(fspath)
 {}
 
+void YukiGfxPipeline::CreateRenderPass()
+{
+  VkAttachmentDescription colorAttachmentDesc{};
+  colorAttachmentDesc.format         = GetYukiApp()->GetGraphicsController()->GetVkSurfaceKHRFormat().format;
+  colorAttachmentDesc.samples        = VK_SAMPLE_COUNT_1_BIT;
+  colorAttachmentDesc.loadOp         = VK_ATTACHMENT_LOAD_OP_CLEAR;
+  colorAttachmentDesc.storeOp        = VK_ATTACHMENT_STORE_OP_STORE;
+  colorAttachmentDesc.stencilLoadOp  = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+  colorAttachmentDesc.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+  colorAttachmentDesc.initialLayout  = VK_IMAGE_LAYOUT_UNDEFINED;
+  colorAttachmentDesc.finalLayout    = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+  VkAttachmentReference colorAttachmentRef{};
+  colorAttachmentRef.attachment = 0;
+  colorAttachmentRef.layout     = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+  VkSubpassDescription subpassDesc{};
+  subpassDesc.pipelineBindPoint    = VK_PIPELINE_BIND_POINT_GRAPHICS;
+  subpassDesc.colorAttachmentCount = 1;
+  subpassDesc.pColorAttachments    = &colorAttachmentRef;
+
+
+}
+
 void YukiGfxPipeline::CreatePipelineStage()
 {
   // Vertex shader stage Ci

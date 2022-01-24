@@ -40,7 +40,7 @@ protected:
   virtual void CreateVulkanSwapChain()        = 0;
   virtual void GetSwapChainImage()            = 0;
   virtual void CreateImageViews()             = 0;
-  virtual void CreateYukiGfxPipeline()            = 0;
+  virtual void CreateYukiGfxPipeline()        = 0;
   virtual void DestroyGfxPipeline()           = 0;
   virtual void DestroyImageViews()            = 0;
   virtual void DestroyVkSwapChainKHR()        = 0;
@@ -53,12 +53,13 @@ public:
   IYukiGfxControl()          = default;
   virtual ~IYukiGfxControl() = default;
 
-  virtual VkInstance                  GetVkInstance()       = 0;
-  virtual VkDevice                    GetVkLogicalDevice()  = 0;
-  virtual VkPhysicalDevice            GetVkPhysicalDevice() = 0;
-  virtual VkSurfaceKHR                GetVkSurfaceKHR()     = 0;
-  virtual VkExtent2D&                 GetVkExtent2D()       = 0;
-  virtual SharedPtr<IYukiGfxPipeline> GetGfxPipeline()      = 0;
+  virtual VkInstance                  GetVkInstance()         = 0;
+  virtual VkDevice                    GetVkLogicalDevice()    = 0;
+  virtual VkPhysicalDevice            GetVkPhysicalDevice()   = 0;
+  virtual VkSurfaceKHR                GetVkSurfaceKHR()       = 0;
+  virtual VkExtent2D&                 GetVkExtent2D()         = 0;
+  virtual VkSurfaceFormatKHR&         GetVkSurfaceKHRFormat() = 0;
+  virtual SharedPtr<IYukiGfxPipeline> GetGfxPipeline()        = 0;
 };
 
 class YUKIAPI YukiGfxControl : public IYukiGfxControl
@@ -115,6 +116,7 @@ public:
   VkPhysicalDevice            GetVkPhysicalDevice() override;
   VkSurfaceKHR                GetVkSurfaceKHR() override;
   VkExtent2D&                 GetVkExtent2D() override;
+  VkSurfaceFormatKHR&         GetVkSurfaceKHRFormat() override;
   SharedPtr<IYukiGfxPipeline> GetGfxPipeline() override;
 
   void Create() override;

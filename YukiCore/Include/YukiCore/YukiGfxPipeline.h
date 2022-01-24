@@ -18,10 +18,12 @@ class YUKIAPI YukiGfxPipeline : public IYukiGfxPipeline
 protected:
   VkShaderModule   m_pVertexShader;
   VkShaderModule   m_pFragmentShader;
+  VkRenderPass     m_pVkRenderPass;
   VkPipelineLayout m_pVkPipelineLayout;
   String           m_strVSFilePath;
   String           m_strFSFilePath;
 
+  void CreateRenderPass();
   void CreatePipelineStage();
   void CreateShaderModules();
 
