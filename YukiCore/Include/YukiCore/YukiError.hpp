@@ -28,6 +28,7 @@ enum class YUKIAPI YukiErrCode
   YUKI_SHADER_CREATE_MODULE_FAILED,
   GLFW_INITIALIZATION_FAILED,
   GLFW_WINDOW_CREATION_FAILED,
+  GLAD_LOAD_GLLOADER_FAILED
 };
 
 class YUKIAPI YukiError : public std::runtime_error
@@ -56,5 +57,6 @@ DECLARE_YUKI_ERROR(YukiShaderCodeBadFileError);
 DECLARE_YUKI_ERROR(YukiShaderCreateModuleError);
 DECLARE_YUKI_ERROR(YukiGLFWInitError);
 DECLARE_YUKI_ERROR(YukiWindowCreationError);
+DECLARE_YUKI_ERROR(YukiGladLoadGLLoaderError);
 
 } // namespace Yuki::Debug

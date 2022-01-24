@@ -20,7 +20,6 @@ YukiApp::YukiApp()
 {
   m_pLogger          = Debug::YukiLogger::CreateYukiLogger();
   m_pWindow          = YukiWindow::CreateNewWindow();
-  m_pGfxController   = YukiGfxControl::CreateYukiGfxController();
   m_pInputController = YukiInpControl::CreateNewInputControl();
 }
 
@@ -75,19 +74,15 @@ void YukiApp::Create()
 {
   GetLogger()->Create();
   GetWindow()->Create();
-  GetGraphicsController()->Create();
 }
 
 void YukiApp::Awake()
 {
   GetWindow()->Awake();
-  GetGraphicsController()->Awake();
 }
 
 void YukiApp::Update()
 {
-  GetGraphicsController()->Render();
-  GetGraphicsController()->Update();
   GetWindow()->Update();
   if (GetWindow()->ShouldClose())
   {
@@ -97,7 +92,6 @@ void YukiApp::Update()
 
 void YukiApp::Destroy()
 {
-  GetGraphicsController()->Destroy();
   GetWindow()->Destroy();
   GetLogger()->Destroy();
 }

@@ -9,11 +9,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="TestShader.vert">
+    <CopyFileToFolders Include="TestShader.frag">
       <Filter>TestShader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="TestShader.frag">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="TestShader.vert">
       <Filter>TestShader</Filter>
-    </CustomBuild>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

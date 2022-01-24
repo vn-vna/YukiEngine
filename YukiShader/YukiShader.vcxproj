@@ -147,7 +147,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="TestShader.vert">
+    <CopyFileToFolders Include="TestShader.vert">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslc -o $(OutDir)\%(Identity).spv %(Identity)</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslc -o $(OutDir)\%(Identity).spv %(Identity)</Command>
@@ -155,10 +155,10 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\%(Identity).spv</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling vertex shader %(Identity)</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling vertex shader %(Identity)</Message>
-    </CustomBuild>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="TestShader.frag">
+    <CopyFileToFolders Include="TestShader.frag">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VULKAN_SDK)\Bin\glslc -o $(OutDir)\%(Identity).spv %(Identity)</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VULKAN_SDK)\Bin\glslc -o $(OutDir)\%(Identity).spv %(Identity)</Command>
@@ -166,7 +166,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile fragment shader %(Identity)</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)\%(Identity).spv</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)\%(Identity).spv</Outputs>
-    </CustomBuild>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

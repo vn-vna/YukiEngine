@@ -82,11 +82,6 @@ glm::vec2 YukiWindow::GetWindowSize()
   return {w, h};
 }
 
-HWND YukiWindow::GetWindowHandler()
-{
-  return glfwGetWin32Window(m_pGLFWWindow);
-}
-
 GLFWwindow* YukiWindow::GetGLFWWindow()
 {
   return m_pGLFWWindow;
@@ -94,21 +89,34 @@ GLFWwindow* YukiWindow::GetGLFWWindow()
 
 void YukiWindow::Create()
 {
-  if (!glfwInit())
+  if (!g_bGLFWInited)
   {
-    THROW_YUKI_ERROR(Yuki::Debug::YukiGLFWInitError);
+    if (!glfwInit())
+    {
+      THROW_YUKI_ERROR(Yuki::Debug::YukiGLFWInitError);
+    }
   }
   g_bGLFWInited = true;
 
   glfwDefaultWindowHints();
-  glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
   glfwWindowHint(GLFW_SAMPLES, YUKI_WINDOW_SAMPLES);
   glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
   m_pGLFWWindow = glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT, YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
   if (!m_pGLFWWindow)
   {
     THROW_YUKI_ERROR(Yuki::Debug::YukiWindowCreationError);
+  }
+
+  glfwMakeContextCurrent(m_pGLFWWindow);
+
+  if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+  {
+    THROW_YUKI_ERROR(Debug::YukiGladLoadGLLoaderError);
   }
 
   glfwSetKeyCallback(m_pGLFWWindow, funcGLFWKeyCallback);
@@ -118,18 +126,24 @@ void YukiWindow::Create()
 void YukiWindow::Awake()
 {
   glfwSwapInterval(1);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
   ShowWindow();
 }
 
 void YukiWindow::Update()
 {
+  Render();
   glfwSwapBuffers(m_pGLFWWindow);
   glfwPollEvents();
 }
 
 void YukiWindow::Render()
 {
-  // render actions
+  // Clear screen
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);     // Use Default FB
+  glClearColor(0.00f, 0.00f, 1.00f, 1.00f); // Set clear color
+  glClear(GL_COLOR_BUFFER_BIT);             // Clear screen
 }
 
 void YukiWindow::Destroy()

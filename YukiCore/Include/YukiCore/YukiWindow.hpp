@@ -25,7 +25,6 @@ public:
   virtual void        SetTitle(const String& title)                = 0;
   virtual bool        ShouldClose()                                = 0;
   virtual glm::vec2   GetWindowSize()                              = 0;
-  virtual HWND        GetWindowHandler()                           = 0;
   virtual GLFWwindow* GetGLFWWindow()                              = 0;
 };
 
@@ -47,7 +46,6 @@ public:
   void        SetTitle(const String& title) override;
   bool        ShouldClose() override;
   glm::vec2   GetWindowSize() override;
-  HWND        GetWindowHandler() override;
   GLFWwindow* GetGLFWWindow() override;
 
   void Create() override;
