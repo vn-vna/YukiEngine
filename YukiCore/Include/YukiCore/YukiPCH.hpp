@@ -8,10 +8,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+// OpenGL header
+#include <glad/glad.h>
+
 // Window manager
-#define VK_USE_PLATFORM_WIN32_KHR // Specific Win32 KHR platform
-#define GLFW_INCLUDE_VULKAN       // Make GLFW compatible with vulkan
-#define GLFW_EXPOSE_NATIVE_WIN32  // Use GLFW native Win32
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
