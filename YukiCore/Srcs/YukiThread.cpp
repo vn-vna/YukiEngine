@@ -2,9 +2,43 @@
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiLogger.hpp"
 #include "YukiCore/YukiThread.hpp"
-#include "YukiCore/YukiError.hpp"
+#include "YukiDebug/YukiError.hpp"
 
 std::map<DWORD, Yuki::Core::IYukiThread*> g_mThreadManager{};
+
+DWORD CALLBACK Win32APIThreadCallback(LPVOID args);
+
+namespace Yuki::Core
+{
+
+class YukiThread : public IYukiThread
+{
+protected:
+  SharedPtr<YukiThreadCallbackFuncType> m_pfnRunnable;
+  DWORD                                 m_nThreadID;
+  HANDLE                                m_pHandle;
+
+  void CreateWin32Thread();
+  void AttachWin32Thread();
+  void DestroyWin32Thread();
+  void DetachWin32Thread();
+
+public:
+  YukiThread();
+  YukiThread(const YukiThreadCallbackFuncType& callback);
+  YukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback);
+
+  virtual ~YukiThread();
+
+  void         Start() override;
+  void         Suspend() override;
+  void         WaitForThread(unsigned long timeOut = INFINITE) override;
+  void         RunCallback() override;
+  const DWORD& GetID() override;
+  const HANDLE GetHandler() override;
+};
+
+} // namespace Yuki::Core
 
 DWORD CALLBACK Win32APIThreadCallback(LPVOID args)
 {
@@ -133,7 +167,7 @@ const HANDLE YukiThread::GetHandler()
   return m_pHandle;
 }
 
-void YukiThread::WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll, unsigned long timeOut)
+void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll, unsigned long timeOut)
 {
   std::vector<HANDLE> handlers;
   handlers.reserve(threads.size());

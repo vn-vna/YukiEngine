@@ -1,5 +1,5 @@
 #include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiError.hpp"
+#include "YukiDebug/YukiError.hpp"
 
 #define MAKE_ERROR_DEFINATION(__err_name, __err_code)              \
   __err_name## ::__err_name##(const String& file, const int& line) \

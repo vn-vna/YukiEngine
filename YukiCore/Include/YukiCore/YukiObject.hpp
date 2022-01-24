@@ -18,14 +18,14 @@ public:
   virtual void Destroy(){};
 };
 
-class YUKIAPI IYukiProtectedResource
+class YUKIAPI IYukiProtectedObject
 {
 public:
-  IYukiProtectedResource()          = default;
-  virtual ~IYukiProtectedResource() = default;
+  IYukiProtectedObject()          = default;
+  virtual ~IYukiProtectedObject() = default;
 
-  virtual void LockRes()   = 0;
-  virtual void UnlockRes() = 0;
+  virtual void LockYukiObj()   = 0;
+  virtual void UnlockYukiObj() = 0;
 };
 
 } // namespace Yuki::Core

@@ -1,5 +1,5 @@
 #include "YukiCore/YukiApplication.hpp"
-#include "YukiCore/YukiError.hpp"
+#include "YukiDebug/YukiError.hpp"
 #include "YukiCore/YukiLogger.hpp"
 #include "YukiCore/YukiThread.hpp"
 

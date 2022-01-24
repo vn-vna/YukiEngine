@@ -2,6 +2,6 @@
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiGfxPipeline.h"
-#include "YukiCore/YukiError.hpp"
+#include "YukiDebug/YukiError.hpp"
 #include "YukiCore/YukiLogger.hpp"
 #include "YukiCore/YukiWindow.hpp"

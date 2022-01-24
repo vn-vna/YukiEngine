@@ -28,33 +28,6 @@ public:
   virtual GLFWwindow* GetGLFWWindow()                              = 0;
 };
 
-class YUKIAPI YukiWindow : public IYukiWindow
-{
-protected:
-  GLFWwindow* m_pGLFWWindow;
-
-public:
-  YukiWindow();
-  virtual ~YukiWindow();
-
-  void        ShowWindow() override;
-  void        HideWindow() override;
-  void        SetSize(const int& width, const int& height) override;
-  void        SetPosition(const int& wx, const int& wy) override;
-  void        SetCursoPos(const int& cx, const int& cy) override;
-  void        SetTitle(const AsciiString& title) override;
-  void        SetTitle(const String& title) override;
-  bool        ShouldClose() override;
-  glm::vec2   GetWindowSize() override;
-  GLFWwindow* GetGLFWWindow() override;
-
-  void Create() override;
-  void Awake() override;
-  void Update() override;
-  void Render() override;
-  void Destroy() override;
-
-  static SharedPtr<IYukiWindow> CreateNewWindow();
-};
+SharedPtr<IYukiWindow> CreateNewWindow();
 
 } // namespace Yuki::Core
