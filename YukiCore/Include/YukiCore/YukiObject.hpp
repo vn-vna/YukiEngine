@@ -39,6 +39,7 @@ class YUKIAPI IYukiThread;
 class YUKIAPI IYukiOGLObject;
 class YUKIAPI IYukiOGLVertexBuffer;
 class YUKIAPI IYukiOGLShaderProgram;
+class YUKIAPI IYukiOGLElementBuffer;
 
 } // namespace Core
 

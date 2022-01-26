@@ -19,10 +19,12 @@ public:
   void            Destroy() override;
   bool            OnUse() override;
 
-  void SetVertexBuffer(const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride) override;
   void EnableAttribute(const unsigned& attrib) override;
-  void SetAttributeFormat(const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) override;
   void AttributeBinding(const unsigned& attrib, const unsigned& binding) override;
+  void SetVertexBuffer(
+      const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride) override;
+  void SetAttributeFormat(
+      const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) override;
 };
 
 } // namespace Yuki::Core
@@ -53,7 +55,8 @@ bool YukiOGLVertexArray::OnUse()
   return crrVAO == m_nVaoID;
 }
 
-void YukiOGLVertexArray::SetVertexBuffer(const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)
+void YukiOGLVertexArray::SetVertexBuffer(
+    const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)
 {
   glVertexArrayVertexBuffer(m_nVaoID, 0, buffer->GetID(), offset, (GLsizei) stride);
 }
@@ -63,7 +66,8 @@ void YukiOGLVertexArray::EnableAttribute(const unsigned& attrib)
   glEnableVertexArrayAttrib(m_nVaoID, attrib);
 }
 
-void YukiOGLVertexArray::SetAttributeFormat(const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized)
+void YukiOGLVertexArray::SetAttributeFormat(
+    const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized)
 {
   glVertexArrayAttribFormat(m_nVaoID, attrib, size, GL_FLOAT, normalized, (GLsizei) offset);
 }

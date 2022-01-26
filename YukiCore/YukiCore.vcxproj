@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
+    <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp" />
     <ClCompile Include="Srcs\YukiOGLShaderProgram.cpp" />
     <ClCompile Include="Srcs\YukiOGLVertexArray.cpp" />
     <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp" />

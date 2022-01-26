@@ -13,40 +13,55 @@
     <Filter Include="Include\YukiDebug">
       <UniqueIdentifier>{8b1d40ed-370a-4fef-908a-8cf1b0e0e3fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Srcs\OpenGL Abstraction">
+      <UniqueIdentifier>{4735379b-5a4e-4c42-81eb-2b1a33213ec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Debug">
+      <UniqueIdentifier>{64adbb4e-0227-442a-bf56-75f59757b80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Core Components">
+      <UniqueIdentifier>{9511d341-8739-4534-a590-6910a4e31e80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Utilities">
+      <UniqueIdentifier>{b73b8102-8856-4e4e-a23d-ea8cfc6d2e83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Srcs\YukiPCH.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiApplication.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
     <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiInputCtrl.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiWindow.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiError.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiLogger.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiChrono.cpp">
-      <Filter>Srcs</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiThread.cpp">
-      <Filter>Srcs</Filter>
+      <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiOGLShaderProgram.cpp">
-      <Filter>Srcs</Filter>
+      <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiOGLVertexArray.cpp">
-      <Filter>Srcs</Filter>
+      <Filter>Srcs\OpenGL Abstraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiError.cpp">
+      <Filter>Srcs\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiLogger.cpp">
+      <Filter>Srcs\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiWindow.cpp">
+      <Filter>Srcs\Core Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiApplication.cpp">
+      <Filter>Srcs\Core Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiInputCtrl.cpp">
+      <Filter>Srcs\Core Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiPCH.cpp">
+      <Filter>Srcs\Core Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiThread.cpp">
+      <Filter>Srcs\Core Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiChrono.cpp">
+      <Filter>Srcs\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp">
+      <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

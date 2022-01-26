@@ -10,6 +10,11 @@
 namespace Yuki::Core
 {
 
+class YUKIAPI IYukiGfxControl : public IYukiObject
+{
+public:
+};
+
 class YUKIAPI IYukiOGLObject : public IYukiObject
 {
 public:
@@ -21,17 +26,26 @@ public:
 class YUKIAPI IYukiOGLVertexBuffer : public IYukiOGLObject
 {
 public:
-  virtual void SetBufferData(std::vector<float>& data)  = 0;
-  virtual void SetBufferData(float* pData, size_t size) = 0;
+  virtual void   SetBufferData(std::vector<float>& data)  = 0;
+  virtual void   SetBufferData(float* pData, size_t size) = 0;
+};
+
+class YUKIAPI IYukiOGLElementBuffer : public IYukiOGLObject
+{
+public:
+  virtual void SetBufferData(std::vector<unsigned>& data)  = 0;
+  virtual void SetBufferData(unsigned* pData, size_t size) = 0;
 };
 
 class YUKIAPI IYukiOGLVertexArray : public IYukiOGLObject
 {
 public:
-  virtual void SetVertexBuffer(const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)            = 0;
-  virtual void EnableAttribute(const unsigned& attrib)                                                                                = 0;
-  virtual void SetAttributeFormat(const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) = 0;
-  virtual void AttributeBinding(const unsigned& attrib, const unsigned& binding)                                                      = 0;
+  virtual void EnableAttribute(const unsigned& attrib)                           = 0;
+  virtual void AttributeBinding(const unsigned& attrib, const unsigned& binding) = 0;
+  virtual void SetAttributeFormat(
+      const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) = 0;
+  virtual void SetVertexBuffer(
+      const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride) = 0;
 };
 
 class YUKIAPI IYukiOGLShaderProgram : public IYukiOGLObject
@@ -51,6 +65,7 @@ public:
 };
 
 SharedPtr<IYukiOGLVertexBuffer> YUKIAPI  CreateGLVertexBuffer();
+SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer();
 SharedPtr<IYukiOGLShaderProgram> YUKIAPI CreateGLShaderProgram(const String& shaderName);
 SharedPtr<IYukiOGLVertexArray> YUKIAPI   CreateGLVertexArray();
 
