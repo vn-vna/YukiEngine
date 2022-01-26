@@ -21,14 +21,14 @@ public:
 class YUKIAPI IYukiOGLVertexBuffer : public IYukiOGLObject
 {
 public:
-  virtual void SetBufferData(std::vector<float>& data, size_t offset = 0)  = 0;
-  virtual void SetBufferData(float* pData, size_t size, size_t offset = 0) = 0;
+  virtual void SetBufferData(std::vector<float>& data)  = 0;
+  virtual void SetBufferData(float* pData, size_t size) = 0;
 };
 
 class YUKIAPI IYukiOGLVertexArray : public IYukiOGLObject
 {
 public:
-  virtual void SetVertexBuffer(const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)           = 0;
+  virtual void SetVertexBuffer(const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)            = 0;
   virtual void EnableAttribute(const unsigned& attrib)                                                                                = 0;
   virtual void SetAttributeFormat(const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) = 0;
   virtual void AttributeBinding(const unsigned& attrib, const unsigned& binding)                                                      = 0;
@@ -52,5 +52,6 @@ public:
 
 SharedPtr<IYukiOGLVertexBuffer> YUKIAPI  CreateGLVertexBuffer();
 SharedPtr<IYukiOGLShaderProgram> YUKIAPI CreateGLShaderProgram(const String& shaderName);
+SharedPtr<IYukiOGLVertexArray> YUKIAPI   CreateGLVertexArray();
 
 } // namespace Yuki::Core

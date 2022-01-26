@@ -18,8 +18,8 @@ public:
   const unsigned& GetID() override;
   void            BindObject() override;
   bool            OnUse() override;
-  void            SetBufferData(std::vector<float>& data, size_t offset = 0) override;
-  void            SetBufferData(float* pData, size_t size, size_t offset = 0) override;
+  void            SetBufferData(std::vector<float>& data) override;
+  void            SetBufferData(float* pData, size_t size) override;
   void            Create() override;
   void            Destroy() override;
 };
@@ -52,14 +52,14 @@ void YukiOGLVertexBuffer::BindObject()
   glBindBuffer(GL_ARRAY_BUFFER, m_nVboID);
 }
 
-void YukiOGLVertexBuffer::SetBufferData(std::vector<float>& data, size_t offset)
+void YukiOGLVertexBuffer::SetBufferData(std::vector<float>& data)
 {
-  SetBufferData(data.data(), data.size() * sizeof(float), offset);
+  SetBufferData(data.data(), data.size() * sizeof(float));
 }
 
-void YukiOGLVertexBuffer::SetBufferData(float* pData, size_t size, size_t offset)
+void YukiOGLVertexBuffer::SetBufferData(float* pData, size_t size)
 {
-  glGetNamedBufferSubData(m_nVboID, offset, size, pData);
+  glNamedBufferData(m_nVboID, size, pData, GL_STATIC_DRAW);
 }
 
 void YukiOGLVertexBuffer::Create()

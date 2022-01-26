@@ -1,9 +1,11 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"
 #include "YukiCore/YukiInputCtrl.hpp"
 #include "YukiDebug/YukiError.hpp"
+#include "YukiCore/YukiGraphics.hpp"
 
 #define YUKI_DEFAULT_WINDOW_WIDTH  1366
 #define YUKI_DEFAULT_WINDOW_HEIGHT 768
@@ -160,10 +162,19 @@ void YukiWindow::Create()
 
   glfwSetKeyCallback(m_pGLFWWindow, funcGLFWKeyCallback);
   glfwSetCursorPosCallback(m_pGLFWWindow, funcGLFWCursorCallback);
+
+  /// TESTCODE
+
+  shaderProgram = Yuki::Core::CreateGLShaderProgram(L"TestShader");
+  vertexBuffer  = Yuki::Core::CreateGLVertexBuffer();
+  vertexArray   = Yuki::Core::CreateGLVertexArray();
+
+  /// TESTCODE
 }
 
 void YukiWindow::Awake()
 {
+
   glfwSwapInterval(1);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -182,11 +193,12 @@ void YukiWindow::Render()
   // Clear screen
   glBindFramebuffer(GL_FRAMEBUFFER, 0);     // Use Default FB
   glClearColor(0.00f, 0.00f, 1.00f, 1.00f); // Set clear color
-  glClear(GL_COLOR_BUFFER_BIT);             // Clear screen
+  glClear(GL_COLOR_BUFFER_BIT);             // Clear
 }
 
 void YukiWindow::Destroy()
 {
+
   if (m_pGLFWWindow)
   {
     glfwDestroyWindow(m_pGLFWWindow);

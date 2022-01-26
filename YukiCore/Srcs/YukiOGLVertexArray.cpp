@@ -83,4 +83,9 @@ void YukiOGLVertexArray::Destroy()
   glDeleteVertexArrays(1, &m_nVaoID);
 }
 
+SharedPtr<IYukiOGLVertexArray> CreateGLVertexArray()
+{
+  return {(IYukiOGLVertexArray*) new YukiOGLVertexArray, std::default_delete<IYukiOGLVertexArray>()};
+}
+
 } // namespace Yuki::Core
