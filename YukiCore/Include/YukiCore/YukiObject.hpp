@@ -8,18 +8,18 @@ namespace Yuki::Core
 class YUKIAPI IYukiObject
 {
 public:
-    virtual void Create() {};
-    virtual void Awake() {};
-    virtual void Update() {};
-    virtual void Render() {};
-    virtual void Destroy() {};
+  virtual void Create(){};
+  virtual void Awake(){};
+  virtual void Update(){};
+  virtual void Render(){};
+  virtual void Destroy(){};
 };
 
 class YUKIAPI IYukiProtectedObject
 {
 public:
-    virtual void LockYukiObj()   = 0;
-    virtual void UnlockYukiObj() = 0;
+  virtual void LockYukiObj()   = 0;
+  virtual void UnlockYukiObj() = 0;
 };
 
 } // namespace Yuki::Core

@@ -17,36 +17,36 @@ namespace Yuki::Debug
 
 enum class YUKIAPI YukiErrCode
 {
-    YUKI_LOGGER_CREATE_LOGFILE_ERROR,
-    YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
-    YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
-    YUKI_INPCTRL_INVOKE_UNDEFINED_CALLBACK,
-    YUKI_THREAD_ATTACHMENT_DUPLICATE_ID,
-    YUKI_THREAD_CREATION_FAILED,
-    YUKI_THREAD_DETACHMENT_NEXIST,
-    YUKI_MUTEX_CREATION_FAILED,
-    YUKI_MUTEX_WAIT_ABANDONED,
-    YUKI_MUTEX_WAIT_FUNC_FAILED,
-    GLFW_INITIALIZATION_FAILED,
-    GLFW_WINDOW_CREATION_FAILED,
-    GLAD_LOAD_GLLOADER_FAILED,
-    OPENGL_COMPILE_SHADER_ERROR,
-    OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED
+  YUKI_LOGGER_CREATE_LOGFILE_ERROR,
+  YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
+  YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
+  YUKI_INPCTRL_INVOKE_UNDEFINED_CALLBACK,
+  YUKI_THREAD_ATTACHMENT_DUPLICATE_ID,
+  YUKI_THREAD_CREATION_FAILED,
+  YUKI_THREAD_DETACHMENT_NEXIST,
+  YUKI_MUTEX_CREATION_FAILED,
+  YUKI_MUTEX_WAIT_ABANDONED,
+  YUKI_MUTEX_WAIT_FUNC_FAILED,
+  GLFW_INITIALIZATION_FAILED,
+  GLFW_WINDOW_CREATION_FAILED,
+  GLAD_LOAD_GLLOADER_FAILED,
+  OPENGL_COMPILE_SHADER_ERROR,
+  OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED
 };
 
 class YUKIAPI YukiError : public std::runtime_error
 {
 protected:
-    YukiErrCode m_ErrCode;
-    String      m_File;
-    int         m_nLine;
+  YukiErrCode m_ErrCode;
+  String      m_File;
+  int         m_nLine;
 
 public:
-    YukiError(const YukiErrCode& code, const String& file, const int& line);
-    virtual ~YukiError() = default;
+  YukiError(const YukiErrCode& code, const String& file, const int& line);
+  virtual ~YukiError() = default;
 
-    String             getErrorMessage() const;
-    const YukiErrCode& getErrorCode() const;
+  String             getErrorMessage() const;
+  const YukiErrCode& getErrorCode() const;
 };
 
 DECLARE_YUKI_ERROR(YukiCreateLogFileError);
