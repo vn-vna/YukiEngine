@@ -21,27 +21,27 @@
   <ItemGroup>
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
-    <ClCompile Include="Srcs\YukiGfxPipeline.cpp" />
-    <ClCompile Include="Srcs\YukiGraphics.cpp" />
+    <ClCompile Include="Srcs\YukiOGLShaderProgram.cpp" />
+    <ClCompile Include="Srcs\YukiOGLVertexArray.cpp" />
+    <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp" />
     <ClCompile Include="Srcs\YukiInputCtrl.cpp" />
     <ClCompile Include="Srcs\YukiLogger.cpp" />
     <ClCompile Include="Srcs\YukiWindow.cpp" />
     <ClCompile Include="Srcs\YukiChrono.cpp" />
     <ClCompile Include="Srcs\YukiThread.cpp" />
-    <ClCompile Include="Srcs\YukiVE.cpp" />
+    <ClCompile Include="Srcs\YukiPCH.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp" />
-    <ClInclude Include="Include\YukiCore\YukiError.hpp" />
-    <ClInclude Include="Include\YukiCore\YukiGfxPipeline.h" />
     <ClInclude Include="Include\YukiCore\YukiGraphics.hpp" />
     <ClInclude Include="Include\YukiCore\YukiInputCtrl.hpp" />
-    <ClInclude Include="Include\YukiCore\YukiLogger.hpp" />
     <ClInclude Include="Include\YukiCore\YukiWindow.hpp" />
     <ClInclude Include="Include\YukiCore\YukiChrono.hpp" />
     <ClInclude Include="Include\YukiCore\YukiObject.hpp" />
     <ClInclude Include="Include\YukiCore\YukiThread.hpp" />
     <ClInclude Include="Include\YukiCore\YukiPCH.hpp" />
+    <ClInclude Include="Include\YukiDebug\YukiError.hpp" />
+    <ClInclude Include="Include\YukiDebug\YukiLogger.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />

@@ -4,7 +4,7 @@
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiInputCtrl.hpp"
 #include "YukiDebug/YukiError.hpp"
-#include "YukiCore/YukiLogger.hpp"
+#include "YukiDebug/YukiLogger.hpp"
 
 namespace Yuki::Core
 {
@@ -128,7 +128,7 @@ void YukiApp::Destroy()
 
 SharedPtr<IYukiApp> CreateYukiApp()
 {
-  g_pGlobalApplication.reset(reinterpret_cast<IYukiApp*>(new YukiApp()));
+  g_pGlobalApplication.reset((IYukiApp*) new YukiApp());
   return g_pGlobalApplication;
 }
 

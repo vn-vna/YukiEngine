@@ -1,6 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
-#include "YukiCore/YukiLogger.hpp"
+#include "YukiDebug/YukiLogger.hpp"
 #include "YukiCore/YukiThread.hpp"
 #include "YukiDebug/YukiError.hpp"
 
@@ -36,6 +36,20 @@ public:
   void         RunCallback() override;
   const DWORD& GetID() override;
   const HANDLE GetHandler() override;
+};
+
+class YukiMutex : public IYukiMutex
+{
+protected:
+  HANDLE m_pMutexHandler;
+
+public:
+  YukiMutex();
+  virtual ~YukiMutex();
+
+  void   LockMutex() override;
+  void   UnlockMutex() override;
+  HANDLE GetHandler() override;
 };
 
 } // namespace Yuki::Core
@@ -165,6 +179,69 @@ const DWORD& YukiThread::GetID()
 const HANDLE YukiThread::GetHandler()
 {
   return m_pHandle;
+}
+
+YukiMutex::YukiMutex()
+{
+  m_pMutexHandler = CreateMutexW(NULL, FALSE, NULL);
+  if (!m_pMutexHandler)
+  {
+    THROW_YUKI_ERROR(Debug::YukiMutexCreationError);
+  }
+}
+
+YukiMutex::~YukiMutex()
+{
+  if (m_pMutexHandler)
+  {
+    CloseHandle(m_pMutexHandler);
+  }
+}
+
+void YukiMutex::LockMutex()
+{
+  DWORD mutexWaitResult = WaitForSingleObject(m_pMutexHandler, INFINITE);
+  switch (mutexWaitResult)
+  {
+  case WAIT_OBJECT_0:
+    break;
+  case WAIT_ABANDONED:
+    THROW_YUKI_ERROR(Debug::YukiMutexWaitAbandoned);
+  case WAIT_FAILED:
+    THROW_YUKI_ERROR(Debug::YukiMutexWaitFunctionFailed);
+  default:
+    break;
+  }
+}
+
+void YukiMutex::UnlockMutex()
+{
+  ReleaseMutex(m_pMutexHandler);
+}
+
+HANDLE YukiMutex::GetHandler()
+{
+  return m_pMutexHandler;
+}
+
+SharedPtr<IYukiThread> CreateYukiThread()
+{
+  return {(IYukiThread*) new YukiThread(), std::default_delete<IYukiThread>()};
+}
+
+SharedPtr<IYukiThread> CreateYukiThread(const YukiThreadCallbackFuncType& callback)
+{
+  return {(IYukiThread*) new YukiThread(callback), std::default_delete<IYukiThread>()};
+}
+
+SharedPtr<IYukiThread> CreateYukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback)
+{
+  return {(IYukiThread*) new YukiThread(pcallback), std::default_delete<IYukiThread>()};
+}
+
+SharedPtr<IYukiMutex> CreateYukiMutex()
+{
+  return {(IYukiMutex*) new YukiMutex(), std::default_delete<IYukiMutex>()};
 }
 
 void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll, unsigned long timeOut)

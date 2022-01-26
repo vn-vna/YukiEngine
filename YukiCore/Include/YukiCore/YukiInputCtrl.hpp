@@ -21,9 +21,6 @@ public:
 class YUKIAPI IYukiInpControl : public IYukiObject
 {
 public:
-  IYukiInpControl()          = default;
-  virtual ~IYukiInpControl() = default;
-
   virtual void AddCursorInputCallback(const String& name, SharedPtr<IYukiInpCursorCallback>& pcallback)     = 0;
   virtual void AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback) = 0;
   virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                        = 0;

@@ -1,6 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiChrono.hpp"
-#include "YukiCore/YukiLogger.hpp"
+#include "YukiDebug/YukiLogger.hpp"
 #include "YukiDebug/YukiError.hpp"
 
 namespace Yuki::Debug
@@ -87,7 +87,7 @@ void YukiLogger::Destroy()
 
 SharedPtr<IYukiLogger> CreateYukiLogger()
 {
-  return {(IYukiLogger*) new YukiLogger(), [](IYukiLogger* p) { delete p; }};
+  return {(IYukiLogger*) new YukiLogger(), std::default_delete<IYukiLogger>()};
 }
 
 } // namespace Yuki::Debug

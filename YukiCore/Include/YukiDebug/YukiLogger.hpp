@@ -14,9 +14,6 @@ using OutputLogFileType = std::wofstream;
 class YUKIAPI IYukiLogger : public Core::IYukiObject
 {
 public:
-  IYukiLogger()          = default;
-  virtual ~IYukiLogger() = default;
-
   virtual void               PushMessage(const String& message, const String& prioty) = 0;
   virtual void               PushDebugMessage(const String& message)                  = 0;
   virtual void               PushWarningMessage(const String& message)                = 0;

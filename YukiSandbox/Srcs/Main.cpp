@@ -1,6 +1,6 @@
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiDebug/YukiError.hpp"
-#include "YukiCore/YukiLogger.hpp"
+#include "YukiDebug/YukiLogger.hpp"
 #include "YukiCore/YukiThread.hpp"
 
 int main(int, char**)

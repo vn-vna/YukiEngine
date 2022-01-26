@@ -12,9 +12,6 @@
 
 #pragma region DETAILED_HEADERS
 
-void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers);
-void funcGLFWCursorCallback(GLFWwindow* window, double x, double y);
-
 namespace Yuki::Core
 {
 
@@ -46,6 +43,9 @@ public:
 };
 
 } // namespace Yuki::Core
+
+void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers);
+void funcGLFWCursorCallback(GLFWwindow* window, double x, double y);
 
 #pragma endregion
 

@@ -11,9 +11,6 @@ using YukiThreadCallbackFuncType = std::function<void()>;
 class YUKIAPI IYukiThread
 {
 public:
-  IYukiThread()          = default;
-  virtual ~IYukiThread() = default;
-
   virtual void         Start()                                         = 0;
   virtual void         Suspend()                                       = 0;
   virtual void         WaitForThread(unsigned long timeOut = INFINITE) = 0;
@@ -24,9 +21,16 @@ public:
 
 class YUKIAPI IYukiMutex
 {
-
+public:
+  virtual void   LockMutex()   = 0;
+  virtual void   UnlockMutex() = 0;
+  virtual HANDLE GetHandler()  = 0;
 };
 
-void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll = true, unsigned long timeOut = INFINITE);
+SharedPtr<IYukiThread> YUKIAPI CreateYukiThread();
+SharedPtr<IYukiThread> YUKIAPI CreateYukiThread(const YukiThreadCallbackFuncType& callback);
+SharedPtr<IYukiThread> YUKIAPI CreateYukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback);
+SharedPtr<IYukiMutex> YUKIAPI  CreateYukiMutex();
+void YUKIAPI                   WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll = true, unsigned long timeOut = INFINITE);
 
 } // namespace Yuki::Core

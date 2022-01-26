@@ -13,9 +13,6 @@ extern bool YUKIAPI g_bGLFWInited;
 class YUKIAPI IYukiWindow : public IYukiObject
 {
 public:
-  IYukiWindow()          = default;
-  virtual ~IYukiWindow() = default;
-
   virtual void        ShowWindow()                                 = 0;
   virtual void        HideWindow()                                 = 0;
   virtual void        SetSize(const int& width, const int& height) = 0;

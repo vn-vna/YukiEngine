@@ -19,7 +19,6 @@ public:
   void AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback) override;
   void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) override;
   void ExecuteCursorPosCallback(int x, int y) override;
-
 };
 
 } // namespace Yuki::Core
@@ -76,7 +75,7 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 
 SharedPtr<IYukiInpControl> CreateNewInputControl()
 {
-  return {(IYukiInpControl*) new YukiInpControl(), [](IYukiInpControl* p) { delete p; }};
+  return {(IYukiInpControl*) new YukiInpControl(), std::default_delete<IYukiInpControl>()};
 }
 
 } // namespace Yuki::Core

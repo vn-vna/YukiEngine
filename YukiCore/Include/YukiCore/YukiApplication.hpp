@@ -2,7 +2,7 @@
 
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
-#include "YukiCore/YukiLogger.hpp"
+#include "YukiDebug/YukiLogger.hpp"
 
 namespace Yuki::Core
 {
@@ -10,9 +10,6 @@ namespace Yuki::Core
 class YUKIAPI IYukiApp : public IYukiObject
 {
 public:
-  IYukiApp()          = default;
-  virtual ~IYukiApp() = default;
-
   virtual void RunApp() = 0;
 
   //virtual IYukiInputManager& getInputManager() = 0;
