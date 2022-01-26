@@ -10,13 +10,13 @@ namespace Yuki::Core
 class YUKIAPI IYukiApp : public IYukiObject
 {
 public:
-  virtual void RunApp() = 0;
+    virtual void RunApp() = 0;
 
-  //virtual IYukiInputManager& getInputManager() = 0;
-  virtual SharedPtr<IYukiGfxControl>&    GetGraphicsController() = 0;
-  virtual SharedPtr<IYukiInpControl>&    GetInputController()    = 0;
-  virtual SharedPtr<IYukiWindow>&        GetWindow()             = 0;
-  virtual SharedPtr<Debug::IYukiLogger>& GetLogger()             = 0;
+    //virtual IYukiInputManager& getInputManager() = 0;
+    virtual SharedPtr<IYukiGfxControl>&    GetGraphicsController() = 0;
+    virtual SharedPtr<IYukiInpControl>&    GetInputController()    = 0;
+    virtual SharedPtr<IYukiWindow>&        GetWindow()             = 0;
+    virtual SharedPtr<Debug::IYukiLogger>& GetLogger()             = 0;
 };
 
 SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();

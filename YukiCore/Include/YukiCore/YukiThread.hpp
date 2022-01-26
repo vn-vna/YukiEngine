@@ -11,20 +11,20 @@ using YukiThreadCallbackFuncType = std::function<void()>;
 class YUKIAPI IYukiThread
 {
 public:
-  virtual void         Start()                                         = 0;
-  virtual void         Suspend()                                       = 0;
-  virtual void         WaitForThread(unsigned long timeOut = INFINITE) = 0;
-  virtual void         RunCallback()                                   = 0;
-  virtual const DWORD& GetID()                                         = 0;
-  virtual const HANDLE GetHandler()                                    = 0;
+    virtual void         Start()                                         = 0;
+    virtual void         Suspend()                                       = 0;
+    virtual void         WaitForThread(unsigned long timeOut = INFINITE) = 0;
+    virtual void         RunCallback()                                   = 0;
+    virtual const DWORD& GetID()                                         = 0;
+    virtual const HANDLE GetHandler()                                    = 0;
 };
 
 class YUKIAPI IYukiMutex
 {
 public:
-  virtual void   LockMutex()   = 0;
-  virtual void   UnlockMutex() = 0;
-  virtual HANDLE GetHandler()  = 0;
+    virtual void   LockMutex()   = 0;
+    virtual void   UnlockMutex() = 0;
+    virtual HANDLE GetHandler()  = 0;
 };
 
 SharedPtr<IYukiThread> YUKIAPI CreateYukiThread();
