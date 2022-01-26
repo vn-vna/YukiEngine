@@ -39,7 +39,7 @@ Một người bạn tốt bụng đã làm nó ❤️.
 
 ## Công nghệ
 
-- Yuki Engine sử dụng API chính là Vulkan (tại sao không phải OpenGL ư - Vì nó khá cũ rồi nên không thích lắm) để giao tiếp với GPUs.
+- Yuki Engine sử dụng API chính là OpenGL để giao tiếp với GPUs.
 - GLFW đóng vai trò Window manager vì nó khá thích hợp với vulkan.
 - GLM được sử dụng cho các tính toán ma trận, vector,... (cũng vì nó thích hợp với vulkan và dễ dùng).
 - Project manager được sử dụng là Visual Studio 2022 và vcpkg
@@ -49,7 +49,6 @@ Một người bạn tốt bụng đã làm nó ❤️.
 ### Yêu cầu:
 
 - Visual Studio 2022
-- Vulkan SDK đã được cài.
-- VCPKG đã cài đặt glfw[core]::x64-windows, glm[core]::x64-windows.
+- VCPKG đã cài đặt glfw[core]:x64-windows, glm[core]:x64-windows, opengl[core]:x64-windows, glad[core]:x64-windows.
 
 ### Mở `Yuki.sln` và boom 😌
