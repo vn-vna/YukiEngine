@@ -8,14 +8,18 @@ namespace Yuki::Core
 class YUKIAPI IYukiObject
 {
 public:
-  IYukiObject()          = default;
-  virtual ~IYukiObject() = default;
-
   virtual void Create(){};
   virtual void Awake(){};
   virtual void Update(){};
   virtual void Render(){};
   virtual void Destroy(){};
+};
+
+class YUKIAPI IYukiProtectedObject
+{
+public:
+  virtual void LockYukiObj()   = 0;
+  virtual void UnlockYukiObj() = 0;
 };
 
 } // namespace Yuki::Core
@@ -28,10 +32,13 @@ namespace Core
 
 class YUKIAPI IYukiApp;
 class YUKIAPI IYukiGfxControl;
-class YUKIAPI IYukiGfxPipeline;
+class YUKIAPI IYukiShaderProgram;
 class YUKIAPI IYukiWindow;
 class YUKIAPI IYukiInpControl;
 class YUKIAPI IYukiThread;
+class YUKIAPI IYukiOGLObject;
+class YUKIAPI IYukiOGLVertexBuffer;
+class YUKIAPI IYukiOGLShaderProgram;
 
 } // namespace Core
 

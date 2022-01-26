@@ -1,7 +1,30 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiChrono.hpp"
-#include "YukiCore/YukiLogger.hpp"
-#include "YukiCore/YukiError.hpp"
+#include "YukiDebug/YukiLogger.hpp"
+#include "YukiDebug/YukiError.hpp"
+
+namespace Yuki::Debug
+{
+
+class YUKIAPI YukiLogger : public IYukiLogger
+{
+protected:
+  SharedPtr<OutputLogFileType> m_pOutFileStream;
+
+public:
+  YukiLogger();
+  virtual ~YukiLogger() = default;
+
+  void               PushMessage(const String& message, const String& prioty);
+  void               PushDebugMessage(const String& message) override;
+  void               PushWarningMessage(const String& message) override;
+  void               PushErrorMessage(const String& message) override;
+  OutputLogFileType& GetOutFileStream() override;
+  void               Create() override;
+  void               Destroy() override;
+};
+
+} // namespace Yuki::Debug
 
 namespace Yuki::Debug
 {
@@ -62,9 +85,9 @@ void YukiLogger::Destroy()
   m_pOutFileStream->close();
 }
 
-SharedPtr<IYukiLogger> YukiLogger::CreateYukiLogger()
+SharedPtr<IYukiLogger> CreateYukiLogger()
 {
-  return {(IYukiLogger*) new YukiLogger(), [](IYukiLogger* p) { delete p; }};
+  return {(IYukiLogger*) new YukiLogger(), std::default_delete<IYukiLogger>()};
 }
 
 } // namespace Yuki::Debug

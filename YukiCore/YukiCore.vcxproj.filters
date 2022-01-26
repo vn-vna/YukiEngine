@@ -10,15 +10,18 @@
     <Filter Include="Include\YukiCore">
       <UniqueIdentifier>{dd4317c3-8200-467b-8d23-c6b45347c4f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include\YukiDebug">
+      <UniqueIdentifier>{8b1d40ed-370a-4fef-908a-8cf1b0e0e3fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Srcs\YukiVE.cpp">
+    <ClCompile Include="Srcs\YukiPCH.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiApplication.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\YukiGraphics.cpp">
+    <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiInputCtrl.cpp">
@@ -39,7 +42,10 @@
     <ClCompile Include="Srcs\YukiThread.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\YukiGfxPipeline.cpp">
+    <ClCompile Include="Srcs\YukiOGLShaderProgram.cpp">
+      <Filter>Srcs</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiOGLVertexArray.cpp">
       <Filter>Srcs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,20 +68,17 @@
     <ClInclude Include="Include\YukiCore\YukiPCH.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\YukiError.hpp">
-      <Filter>Include\YukiCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\YukiCore\YukiLogger.hpp">
-      <Filter>Include\YukiCore</Filter>
-    </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiChrono.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiThread.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiCore\YukiGfxPipeline.h">
-      <Filter>Include\YukiCore</Filter>
+    <ClInclude Include="Include\YukiDebug\YukiError.hpp">
+      <Filter>Include\YukiDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiDebug\YukiLogger.hpp">
+      <Filter>Include\YukiDebug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
