@@ -151,6 +151,9 @@
     <ProjectReference Include="..\YukiCore\YukiCore.vcxproj">
       <Project>{217561df-8283-4319-b833-8f7347748478}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\YukiShader\YukiShader.vcxproj">
+      <Project>{3acd6c85-f0eb-4d1a-a166-13cf0d6587d5}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />

@@ -1,34 +1,13 @@
 #include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiGraphics.hpp"
 
-namespace Yuki::Core
-{
-
-class YukiOGLElementBuffer : public IYukiOGLElementBuffer
-{
-protected:
-  unsigned m_nEboID;
-
-public:
-  YukiOGLElementBuffer();
-  virtual ~YukiOGLElementBuffer();
-
-  const unsigned& GetID() override;
-  void            BindObject() override;
-  bool            OnUse() override;
-  void            SetBufferData(std::vector<unsigned>& data) override;
-  void            SetBufferData(unsigned* pData, size_t size) override;
-  void            Create() override;
-  void            Destroy() override;
-};
-
-} // namespace Yuki::Core
+#include "PYukiOGLElementBuffer.hpp"
 
 namespace Yuki::Core
 {
 
 YukiOGLElementBuffer::YukiOGLElementBuffer()
-    : m_nEboID()
+    : m_nEboID(),
+      m_nElementCount()
 {}
 
 YukiOGLElementBuffer::~YukiOGLElementBuffer() = default;
@@ -58,6 +37,18 @@ void YukiOGLElementBuffer::SetBufferData(std::vector<unsigned>& data)
 void YukiOGLElementBuffer::SetBufferData(unsigned* pData, size_t size)
 {
   glNamedBufferData(m_nEboID, size, pData, GL_STATIC_DRAW);
+  m_nElementCount = size / sizeof(unsigned);
+}
+
+void YukiOGLElementBuffer::DrawElements(Core::PrimitiveTopology topology, const unsigned& start, const unsigned& count)
+{
+  GLenum glTopology = (GLenum) topology;
+  glDrawElements(glTopology, count, GL_UNSIGNED_INT, (void*) (start * sizeof(unsigned)));
+}
+
+void YukiOGLElementBuffer::DrawAllElements(Core::PrimitiveTopology topology)
+{
+  DrawElements(topology, 0, m_nElementCount);
 }
 
 void YukiOGLElementBuffer::Create()

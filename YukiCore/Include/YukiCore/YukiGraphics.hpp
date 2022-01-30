@@ -10,6 +10,37 @@
 namespace Yuki::Core
 {
 
+enum class PrimitiveTopology
+{
+  TRIANGLE_LIST  = GL_TRIANGLES,
+  TRIANGLE_FAN   = GL_TRIANGLE_FAN,
+  TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+  QUAD_LIST      = GL_QUADS,
+  QUAD_STRIP     = GL_QUAD_STRIP,
+  LINES          = GL_LINES,
+  LINE_STRIP     = GL_LINE_STRIP,
+  LINE_LOOP      = GL_LINE_LOOP,
+  POINT_LIST     = GL_POINTS
+};
+
+typedef struct StVertexFormat
+{
+  glm::vec3 position;
+  glm::vec4 color;
+  glm::vec3 texcoord;
+  unsigned  texID;
+
+  StVertexFormat(const glm::vec3& _position, const glm::vec4& _color, const glm::vec3& _texcoord, const unsigned& _texID)
+      : position(_position), color(_color), texcoord(_texcoord), texID(_texID) {}
+
+} VertexData, VertexFormat;
+
+typedef struct StIndexData
+{
+  PrimitiveTopology      topology;
+  std::vector<unsigned>& data;
+} IndexData, IndexFormat;
+
 class YUKIAPI IYukiGfxControl : public IYukiObject
 {
 public:
@@ -26,8 +57,8 @@ public:
 class YUKIAPI IYukiOGLVertexBuffer : public IYukiOGLObject
 {
 public:
-  virtual void   SetBufferData(std::vector<float>& data)  = 0;
-  virtual void   SetBufferData(float* pData, size_t size) = 0;
+  virtual void SetBufferData(std::vector<float>& data)  = 0;
+  virtual void SetBufferData(float* pData, size_t size) = 0;
 };
 
 class YUKIAPI IYukiOGLElementBuffer : public IYukiOGLObject
@@ -35,6 +66,10 @@ class YUKIAPI IYukiOGLElementBuffer : public IYukiOGLObject
 public:
   virtual void SetBufferData(std::vector<unsigned>& data)  = 0;
   virtual void SetBufferData(unsigned* pData, size_t size) = 0;
+  virtual void DrawElements(
+      Core::PrimitiveTopology topology, const unsigned& start, const unsigned& count) = 0;
+  virtual void DrawAllElements(
+      Core::PrimitiveTopology topology) = 0;
 };
 
 class YUKIAPI IYukiOGLVertexArray : public IYukiOGLObject

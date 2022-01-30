@@ -19,11 +19,20 @@
     <Filter Include="Srcs\Debug">
       <UniqueIdentifier>{64adbb4e-0227-442a-bf56-75f59757b80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Srcs\Core Components">
-      <UniqueIdentifier>{9511d341-8739-4534-a590-6910a4e31e80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Srcs\Utilities">
       <UniqueIdentifier>{b73b8102-8856-4e4e-a23d-ea8cfc6d2e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\YukiComp">
+      <UniqueIdentifier>{b06d1b9b-fa97-4b67-b8ce-fcc05b3cf895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Components">
+      <UniqueIdentifier>{dbd4fede-3233-499b-a867-3a6b8bb6d73d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Core">
+      <UniqueIdentifier>{9511d341-8739-4534-a590-6910a4e31e80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Private Header">
+      <UniqueIdentifier>{3e193b83-9c23-46ee-a757-a21e2f9b4252}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,25 +52,31 @@
       <Filter>Srcs\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiWindow.cpp">
-      <Filter>Srcs\Core Components</Filter>
+      <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiApplication.cpp">
-      <Filter>Srcs\Core Components</Filter>
+      <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiInputCtrl.cpp">
-      <Filter>Srcs\Core Components</Filter>
+      <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiPCH.cpp">
-      <Filter>Srcs\Core Components</Filter>
+      <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiThread.cpp">
-      <Filter>Srcs\Core Components</Filter>
+      <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiChrono.cpp">
       <Filter>Srcs\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp">
       <Filter>Srcs\OpenGL Abstraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\YukiComp\YukiMesh.hpp">
+      <Filter>Include\YukiComp</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiMesh.cpp">
+      <Filter>Srcs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +109,33 @@
     </ClInclude>
     <ClInclude Include="Include\YukiDebug\YukiLogger.hpp">
       <Filter>Include\YukiDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiApplication.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiOGLElementBuffer.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiOGLShaderProgram.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiOGLVertexArray.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiOGLVertexBuffer.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiInputControl.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiThread.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiWindow.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiMesh.hpp">
+      <Filter>Srcs\Private Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

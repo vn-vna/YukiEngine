@@ -59,4 +59,9 @@ struct YUKIAPI StAsciiDateTimeFormat;
 class YUKIAPI  IYukiTimer;
 } // namespace Chrono
 
+namespace Comp
+{
+class YUKIAPI IYukiMesh;
+}
+
 } // namespace Yuki

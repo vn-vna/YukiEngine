@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Include\YukiComp\YukiMesh.hpp" />
+    <ClCompile Include="Srcs\YukiMesh.cpp" />
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
     <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp" />
@@ -43,6 +45,15 @@
     <ClInclude Include="Include\YukiCore\YukiPCH.hpp" />
     <ClInclude Include="Include\YukiDebug\YukiError.hpp" />
     <ClInclude Include="Include\YukiDebug\YukiLogger.hpp" />
+    <ClInclude Include="Srcs\PYukiApplication.hpp" />
+    <ClInclude Include="Srcs\PYukiInputControl.hpp" />
+    <ClInclude Include="Srcs\PYukiMesh.hpp" />
+    <ClInclude Include="Srcs\PYukiOGLElementBuffer.hpp" />
+    <ClInclude Include="Srcs\PYukiOGLShaderProgram.hpp" />
+    <ClInclude Include="Srcs\PYukiOGLVertexArray.hpp" />
+    <ClInclude Include="Srcs\PYukiOGLVertexBuffer.hpp" />
+    <ClInclude Include="Srcs\PYukiThread.hpp" />
+    <ClInclude Include="Srcs\PYukiWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
