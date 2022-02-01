@@ -148,35 +148,35 @@ void YukiWindow::Awake()
           switch (key)
           {
           case GLFW_KEY_A:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(+0.20f, 0.00f, 0.00f));
+            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraHorizontalAxis());
             break;
           case GLFW_KEY_D:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(-0.20f, 0.00f, 0.00f));
+            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraHorizontalAxis());
             break;
           case GLFW_KEY_W:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, 0.00f, +0.20f));
+            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraVerticalAxis());
             break;
           case GLFW_KEY_S:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, 0.00f, -0.20f));
+            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraVerticalAxis());
             break;
           case GLFW_KEY_Q:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, +0.20f, 0.00f));
+            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraTopAxis());
             break;
           case GLFW_KEY_E:
-            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, -0.20f, 0.00f));
+            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraTopAxis());
             break;
 
           case GLFW_KEY_UP:
-            camera->CameraRotateDirection(glm::vec3(glm::radians(-5.00f), 0.00f, 0.00f));
+            camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(+1.00f));
             break;
           case GLFW_KEY_DOWN:
-            camera->CameraRotateDirection(glm::vec3(glm::radians(+5.00f), 0.00f, 0.00f));
+            camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(-1.00f));
             break;
           case GLFW_KEY_LEFT:
-            camera->CameraRotateDirection(glm::vec3(0.00f, glm::radians(+5.00f), 0.00f));
+            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-1.00f));
             break;
           case GLFW_KEY_RIGHT:
-            camera->CameraRotateDirection(glm::vec3(0.00f, glm::radians(-5.00f), 0.00f));
+            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(1.00f));
             break;
 
           default:
@@ -186,21 +186,23 @@ void YukiWindow::Awake()
       });
 
   std::vector<VertexData> vdata;
-  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {0.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 0.00f, 0.00f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {0.00f, 0.00f, 1.00f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {0.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 0.00f, 0.00f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {0.00f, 0.00f, 1.00f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
 
   // clang-format off
   std::vector<unsigned> indices = {
-    0, 1, 2, 1, 2, 3,
-    2, 3, 6, 3, 6, 7,
-    0, 1, 4, 1, 4, 5,
-    4, 5, 6, 5, 6, 7,
+    0, 3, 1, 0, 3, 2,
+    4, 7, 5, 4, 7, 6,
+    0, 5, 1, 0, 5, 4,
+    2, 7, 3, 2, 7, 6,
+    1, 7, 5, 1, 7, 3,
+    0, 6, 4, 0, 6, 2
   };
   // clang-format on
 
@@ -215,7 +217,9 @@ void YukiWindow::Awake()
 void YukiWindow::Update()
 {
   camera->Update();
+
   Render();
+
   glfwSwapBuffers(m_pGLFWWindow);
   glfwPollEvents();
 }
@@ -223,14 +227,14 @@ void YukiWindow::Update()
 void YukiWindow::Render()
 {
   // Clear screen;
-  glBindFramebuffer(GL_FRAMEBUFFER, 0); // Use Default FB
+  glBindFramebuffer(GL_FRAMEBUFFER, 0); // Use Default FrameBuffer
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
   glClearColor(0.00f, 0.00f, 0.00f, 1.00f);           // Set clear color
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear frame buffer
 
   // TEST
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   mesh->RenderMesh(glm::identity<glm::mat4>(), camera->GetCameraViewMatrix(), camera->GetCameraProjectionMatrix());
   // TEST
 }

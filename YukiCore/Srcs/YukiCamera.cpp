@@ -51,9 +51,19 @@ const glm::vec3& YukiCamera::GetCameraDirection()
   return m_CamDirection;
 }
 
-const glm::vec3& YukiCamera::GetCameraTopVector()
+const glm::vec3 YukiCamera::GetCameraTopAxis()
 {
-  return m_CamTop;
+  return glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis());
+}
+
+const glm::vec3 YukiCamera::GetCameraHorizontalAxis()
+{
+  return glm::cross(GetCameraVerticalAxis(), m_CamTop);
+}
+
+const glm::vec3 YukiCamera::GetCameraVerticalAxis()
+{
+  return m_CamDirection;
 }
 
 const float& YukiCamera::GetFieldOfView()
@@ -78,19 +88,12 @@ const float& YukiCamera::GetFarPerspective()
 
 void YukiCamera::CameraRotateViewport(const float& rad)
 {
-  glm::rotateZ(m_CamTop, rad);
+  m_CamTop = glm::rotateZ(m_CamTop, rad);
 }
 
 void YukiCamera::CameraRotateDirection(const glm::vec3& rotAxis, const float& rad)
 {
-  glm::rotate(m_CamDirection, rad, rotAxis);
-}
-
-void YukiCamera::CameraRotateDirection(const glm::vec3& rotXYZ)
-{
-  m_CamDirection = glm::rotateX(m_CamDirection, rotXYZ.x);
-  m_CamDirection = glm::rotateY(m_CamDirection, rotXYZ.y);
-  m_CamDirection = glm::rotateZ(m_CamDirection, rotXYZ.z);
+  m_CamDirection = glm::rotate(m_CamDirection, rad, rotAxis);
 }
 
 void YukiCamera::LookAtPoint(const glm::vec3& point)
@@ -142,7 +145,7 @@ void YukiCamera::SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& call
     Core::GetYukiApp()->GetInputController()->RemoveKeyboardInputCallback(sstr.str());
     Core::GetYukiApp()->GetLogger()->PushWarningMessage(L"Replacing old callback");
   }
-  catch (Debug::YukiError& yer)
+  catch (Debug::YukiError&)
   {}
   Core::GetYukiApp()->GetInputController()->AddKeyboardInputCallback(sstr.str(), callback);
 }
@@ -156,7 +159,7 @@ void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& cal
     Core::GetYukiApp()->GetInputController()->RemoveCursorInputCallback(sstr.str());
     Core::GetYukiApp()->GetLogger()->PushWarningMessage(L"Replacing old cursor callback");
   }
-  catch (Debug::YukiError& yer)
+  catch (Debug::YukiError&)
   {}
   Core::GetYukiApp()->GetInputController()->AddCursorInputCallback(sstr.str(), callback);
 }

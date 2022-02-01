@@ -29,15 +29,18 @@ public:
   const glm::mat4& GetCameraProjectionMatrix() override;
   const glm::vec3& GetCameraPosition() override;
   const glm::vec3& GetCameraDirection() override;
-  const glm::vec3& GetCameraTopVector() override;
-  const float&     GetFieldOfView() override;
-  const float&     GetViewportAspectRatio() override;
-  const float&     GetNearPerspective() override;
-  const float&     GetFarPerspective() override;
+
+  const glm::vec3 GetCameraTopAxis() override;
+  const glm::vec3 GetCameraHorizontalAxis() override;
+  const glm::vec3 GetCameraVerticalAxis() override;
+
+  const float& GetFieldOfView() override;
+  const float& GetViewportAspectRatio() override;
+  const float& GetNearPerspective() override;
+  const float& GetFarPerspective() override;
 
   void CameraRotateViewport(const float& rad) override;
   void CameraRotateDirection(const glm::vec3& rotAxis, const float& rad) override;
-  void CameraRotateDirection(const glm::vec3& rotXYZ) override;
   void LookAtPoint(const glm::vec3& point) override;
   void SetCameraDirection(const glm::vec3& direction) override;
   void SetCameraPosition(const glm::vec3& position) override;
