@@ -31,8 +31,7 @@ namespace Yuki::Debug
 
 YukiLogger::YukiLogger()
     : m_pOutFileStream(nullptr)
-{
-}
+{}
 
 void YukiLogger::PushMessage(const String& message, const String& prioty)
 {

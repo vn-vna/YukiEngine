@@ -1,11 +1,14 @@
 #version 460 core
 
-in vec4 VS_Out_VertexColor;
-in vec4 VS_Out_TexCoord;
+in vec3 GS_Normal;
+in vec4 GS_VertexColor;
+in vec2 GS_TexCoord;
 
-out vec4 FS_Out_FragColor;
+out vec4 FS_FragColor;
+
+uniform float U_AmbientStrength;
 
 void main() 
 {
-  FS_Out_FragColor = VS_Out_VertexColor;
+  FS_FragColor = U_AmbientStrength * GS_VertexColor;
 }

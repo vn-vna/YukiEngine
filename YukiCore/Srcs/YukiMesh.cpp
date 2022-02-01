@@ -71,6 +71,7 @@ void YukiMesh::RenderMesh(const glm::mat4& model, const glm::mat4& view, const g
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", model);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", view);
   m_pShaderProgram->UniformMatrix("U_PresentationMatrix", presentation);
+  m_pShaderProgram->UniformValue("U_AmbientStrength", 0.10f);
 
   m_pElementBuffer->DrawAllElements(m_eTopology);
 }
@@ -79,27 +80,30 @@ SharedPtr<IYukiMesh> CreateYukiMesh(std::vector<Core::VertexData>& vertexData, C
 {
   SharedPtr<IYukiMesh> mesh{(IYukiMesh*) new YukiMesh(indexData.topology, meshName)};
   mesh->Create();
-  mesh
-      ->GetVertexBuffer()
+
+  mesh->GetVertexBuffer()
       ->SetBufferData((float*) vertexData.data(), vertexData.size() * sizeof(Core::VertexData));
-  mesh
-      ->GetElementBuffer()
+
+  mesh->GetElementBuffer()
       ->SetBufferData(indexData.data);
 
   AutoType meshVAO = mesh->GetVertexArray();
 
   meshVAO->SetVertexBuffer(mesh->GetVertexBuffer(), 0, 0, sizeof(Core::VertexFormat));
   meshVAO->EnableAttribute(0);
-  meshVAO->EnableAttribute(1);
-  meshVAO->EnableAttribute(2);
-  meshVAO->EnableAttribute(3);
   meshVAO->SetAttributeFormat(0, 3, offsetof(Core::VertexFormat, position));
-  meshVAO->SetAttributeFormat(1, 4, offsetof(Core::VertexFormat, color));
-  meshVAO->SetAttributeFormat(2, 3, offsetof(Core::VertexFormat, texcoord));
-  meshVAO->SetAttributeFormat(3, 1, offsetof(Core::VertexFormat, texID));
   meshVAO->AttributeBinding(0, 0);
+
+  meshVAO->EnableAttribute(1);
+  meshVAO->SetAttributeFormat(1, 4, offsetof(Core::VertexFormat, color));
   meshVAO->AttributeBinding(1, 0);
+
+  meshVAO->EnableAttribute(2);
+  meshVAO->SetAttributeFormat(2, 3, offsetof(Core::VertexFormat, texcoord));
   meshVAO->AttributeBinding(2, 0);
+
+  meshVAO->EnableAttribute(3);
+  meshVAO->SetAttributeFormat(3, 1, offsetof(Core::VertexFormat, texID));
   meshVAO->AttributeBinding(3, 0);
   return mesh;
 }

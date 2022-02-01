@@ -49,6 +49,7 @@ YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
 {
   m_VSShaderFile = shaderName + L".vert";
   m_FSShaderFile = shaderName + L".frag";
+  m_GSShaderFile = shaderName + L".geom";
 }
 
 YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
@@ -67,14 +68,17 @@ void YukiOGLShaderProgram::Create()
 {
   AsciiString vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   AsciiString fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
+  AsciiString gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
   int         status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
+  unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);
   glAttachShader(pid, fs);
+  glAttachShader(pid, gs);
   glLinkProgram(pid);
   glGetProgramiv(pid, GL_LINK_STATUS, &status);
   if (!status)

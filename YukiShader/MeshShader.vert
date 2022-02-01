@@ -1,12 +1,17 @@
 #version 460 core
 
-layout (location = 0) in vec3 IA_In_VertexPos;
-layout (location = 1) in vec4 IA_In_VertexColor;
-layout (location = 2) in vec3 IA_In_TexCoord;
-layout (location = 3) in uint IA_In_TexureID;
+layout (location = 0) in vec3 IA_VertexPos;
+layout (location = 1) in vec4 IA_VertexColor;
+layout (location = 2) in vec2 IA_TexCoord;
 
-out vec4 VS_Out_VertexColor;
-out vec3 VS_Out_TexCoord;
+// Flags:
+// Bit 0:         Enable texture
+// Bit 1 - 7:     Reserve
+layout (location = 3) in uint IA_Flags;
+
+out vec4 VS_VertexColor;
+out vec2 VS_TexCoord;
+out uint VS_Flags;
 
 uniform mat4 U_ModelMatrix;
 uniform mat4 U_ViewMatrix;
@@ -14,7 +19,8 @@ uniform mat4 U_PresentationMatrix;
 
 void main() 
 {
-  gl_Position = U_PresentationMatrix * U_ViewMatrix * U_ModelMatrix * vec4(IA_In_VertexPos, 1.0);
-  VS_Out_VertexColor = IA_In_VertexColor;
-  VS_Out_TexCoord = IA_In_TexCoord;
+  gl_Position     = U_PresentationMatrix * U_ViewMatrix * U_ModelMatrix * vec4(IA_VertexPos, 1.0);
+  VS_VertexColor  = IA_VertexColor;
+  VS_TexCoord     = IA_TexCoord;
+  VS_Flags        = IA_Flags;
 }

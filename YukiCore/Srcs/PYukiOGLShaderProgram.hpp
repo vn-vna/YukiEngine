@@ -15,6 +15,7 @@ protected:
   unsigned m_nSPId;
   String   m_VSShaderFile;
   String   m_FSShaderFile;
+  String   m_GSShaderFile;
 
   unsigned GetUniformLocation(const AsciiString& prop);
 

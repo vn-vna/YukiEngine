@@ -27,10 +27,10 @@ typedef struct StVertexFormat
 {
   glm::vec3 position;
   glm::vec4 color;
-  glm::vec3 texcoord;
+  glm::vec2 texcoord;
   unsigned  texID;
 
-  StVertexFormat(const glm::vec3& _position, const glm::vec4& _color, const glm::vec3& _texcoord, const unsigned& _texID)
+  StVertexFormat(const glm::vec3& _position, const glm::vec4& _color, const glm::vec2& _texcoord, const unsigned& _texID)
       : position(_position), color(_color), texcoord(_texcoord), texID(_texID) {}
 
 } VertexData, VertexFormat;

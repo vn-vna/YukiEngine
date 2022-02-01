@@ -21,5 +21,8 @@
     <CopyFileToFolders Include="MeshShader.vert">
       <Filter>MeshShader</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="MeshShader.geom">
+      <Filter>MeshShader</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

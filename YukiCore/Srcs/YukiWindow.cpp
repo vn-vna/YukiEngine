@@ -166,6 +166,13 @@ void YukiWindow::Awake()
             camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraTopAxis());
             break;
 
+          case GLFW_KEY_M:
+            camera->CameraRotateViewport(glm::radians(1.00f));
+            break;
+          case GLFW_KEY_N:
+            camera->CameraRotateViewport(glm::radians(-1.00f));
+            break;
+
           case GLFW_KEY_UP:
             camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(+1.00f));
             break;
@@ -173,10 +180,10 @@ void YukiWindow::Awake()
             camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(-1.00f));
             break;
           case GLFW_KEY_LEFT:
-            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-1.00f));
+            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(+1.00f));
             break;
           case GLFW_KEY_RIGHT:
-            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(1.00f));
+            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-1.00f));
             break;
 
           default:
@@ -186,14 +193,14 @@ void YukiWindow::Awake()
       });
 
   std::vector<VertexData> vdata;
-  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
-  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {0.10f, 0.10f, 0.10f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, 0});
 
   // clang-format off
   std::vector<unsigned> indices = {
