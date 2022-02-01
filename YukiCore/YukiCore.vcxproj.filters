@@ -72,10 +72,10 @@
     <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp">
       <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
-    <ClCompile Include="Include\YukiComp\YukiMesh.hpp">
-      <Filter>Include\YukiComp</Filter>
-    </ClCompile>
     <ClCompile Include="Srcs\YukiMesh.cpp">
+      <Filter>Srcs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiCamera.cpp">
       <Filter>Srcs\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -136,6 +136,18 @@
     </ClInclude>
     <ClInclude Include="Srcs\PYukiMesh.hpp">
       <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiScene.hpp">
+      <Filter>Include\YukiComp</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiCamera.hpp">
+      <Filter>Include\YukiComp</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiCamera.hpp">
+      <Filter>Srcs\Private Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiMesh.hpp">
+      <Filter>Include\YukiComp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

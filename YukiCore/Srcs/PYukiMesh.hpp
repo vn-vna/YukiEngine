@@ -36,7 +36,4 @@ public:
       const glm::mat4& presentation) override;
 };
 
-void InitializeMeshShader();
-void ReleaseMeshShader();
-
 } // namespace Yuki::Comp

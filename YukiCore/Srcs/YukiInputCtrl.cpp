@@ -10,7 +10,7 @@ YukiInpControl::YukiInpControl()
       m_mpCursorCallbacksPool{}
 {}
 
-void YukiInpControl::AddCursorInputCallback(const String& name, SharedPtr<IYukiInpCursorCallback>& pcallback)
+void YukiInpControl::AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback)
 {
   if (m_mpCursorCallbacksPool.find(name) != m_mpCursorCallbacksPool.end())
   {
@@ -19,7 +19,25 @@ void YukiInpControl::AddCursorInputCallback(const String& name, SharedPtr<IYukiI
   m_mpCursorCallbacksPool.emplace(name, pcallback);
 }
 
-void YukiInpControl::AddKeyboardInputCallback(const String& name, SharedPtr<IYukiInpKeyboardCallback>& pcallback)
+void YukiInpControl::RemoveCursorInputCallback(const String& name)
+{
+  if (m_mpCursorCallbacksPool.find(name) == m_mpCursorCallbacksPool.end())
+  {
+    THROW_YUKI_ERROR(Debug::YukiInpCtrlRemoveCallbackNExistsError);
+  }
+  m_mpCursorCallbacksPool.erase(name);
+}
+
+void YukiInpControl::RemoveKeyboardInputCallback(const String& name)
+{
+  if (m_mpKeyCallbacksPool.find(name) == m_mpKeyCallbacksPool.end())
+  {
+    THROW_YUKI_ERROR(Debug::YukiInpCtrlRemoveCallbackNExistsError);
+  }
+  m_mpKeyCallbacksPool.erase(name);
+}
+
+void YukiInpControl::AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallbackT& pcallback)
 {
   if (m_mpKeyCallbacksPool.find(name) != m_mpKeyCallbacksPool.end())
   {
@@ -32,11 +50,11 @@ void YukiInpControl::ExecuteKeyCallbacks(int key, int scancode, int action, int 
 {
   for (const auto& callback : m_mpKeyCallbacksPool)
   {
-    if (!callback.second.get())
+    if (!callback.second)
     {
       THROW_YUKI_ERROR(Debug::YukiInpCtrlInvokeUndefinedCallbackError);
     }
-    callback.second->invoke(key, scancode, action, modifiers);
+    callback.second(key, scancode, action, modifiers);
   }
 }
 
@@ -44,11 +62,11 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 {
   for (const auto& callback : m_mpCursorCallbacksPool)
   {
-    if (!callback.second.get())
+    if (!callback.second)
     {
       THROW_YUKI_ERROR(Debug::YukiInpCtrlInvokeUndefinedCallbackError);
     }
-    callback.second->invoke(x, y);
+    callback.second(x, y);
   }
 }
 

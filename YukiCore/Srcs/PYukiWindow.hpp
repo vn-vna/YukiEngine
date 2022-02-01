@@ -1,13 +1,7 @@
 #pragma once
 
 #include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiObject.hpp"
-#include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"
-#include "YukiCore/YukiInputCtrl.hpp"
-#include "YukiDebug/YukiError.hpp"
-#include "YukiCore/YukiGraphics.hpp"
 
 #define YUKI_DEFAULT_WINDOW_WIDTH  1366
 #define YUKI_DEFAULT_WINDOW_HEIGHT 768

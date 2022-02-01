@@ -37,7 +37,7 @@ void YukiOGLElementBuffer::SetBufferData(std::vector<unsigned>& data)
 void YukiOGLElementBuffer::SetBufferData(unsigned* pData, size_t size)
 {
   glNamedBufferData(m_nEboID, size, pData, GL_STATIC_DRAW);
-  m_nElementCount = size / sizeof(unsigned);
+  m_nElementCount = (unsigned) (size / sizeof(unsigned));
 }
 
 void YukiOGLElementBuffer::DrawElements(Core::PrimitiveTopology topology, const unsigned& start, const unsigned& count)

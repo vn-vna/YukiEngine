@@ -62,6 +62,8 @@ class YUKIAPI  IYukiTimer;
 namespace Comp
 {
 class YUKIAPI IYukiMesh;
-}
+class YUKIAPI IYukiScene;
+class YUKIAPI IYukiCamera;
+} // namespace Comp
 
 } // namespace Yuki

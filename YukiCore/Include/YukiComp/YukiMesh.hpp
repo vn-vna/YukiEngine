@@ -1,6 +1,5 @@
 #pragma once
 
-#include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 
@@ -27,5 +26,8 @@ SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
     std::vector<Core::VertexData>& vertexData,
     Core::IndexData&               indexData,
     const String&                  meshName);
+
+void YUKIAPI InitializeMeshShader();
+void YUKIAPI ReleaseMeshShader();
 
 } // namespace Yuki::Comp

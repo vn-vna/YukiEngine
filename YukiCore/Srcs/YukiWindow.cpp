@@ -1,13 +1,18 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiComp/YukiMesh.hpp"
+#include "YukiComp/YukiCamera.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiInputCtrl.hpp"
+#include "YukiDebug/YukiError.hpp"
 
 #include "PYukiWindow.hpp"
-#include "PYukiMesh.hpp"
 
 /// TEST CODE
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh> mesh;
+Yuki::SharedPtr<Yuki::Comp::IYukiMesh>   mesh;
+Yuki::SharedPtr<Yuki::Comp::IYukiCamera> camera;
 
 /// TEST CODE
 
@@ -133,19 +138,73 @@ void YukiWindow::Create()
 void YukiWindow::Awake()
 {
   // TEST
+  camera = Comp::CreateYukiCamera();
+  camera->SetFieldOfView(glm::radians(60.0f));
+
+  camera->SetCameraKeyCallback(
+      [&](const int& key, const int& scancode, const int& action, const int& modifiers) {
+        if (action == GLFW_PRESS || action == GLFW_REPEAT)
+        {
+          switch (key)
+          {
+          case GLFW_KEY_A:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(+0.20f, 0.00f, 0.00f));
+            break;
+          case GLFW_KEY_D:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(-0.20f, 0.00f, 0.00f));
+            break;
+          case GLFW_KEY_W:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, 0.00f, +0.20f));
+            break;
+          case GLFW_KEY_S:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, 0.00f, -0.20f));
+            break;
+          case GLFW_KEY_Q:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, +0.20f, 0.00f));
+            break;
+          case GLFW_KEY_E:
+            camera->SetCameraPosition(camera->GetCameraPosition() + glm::vec3(0.00f, -0.20f, 0.00f));
+            break;
+
+          case GLFW_KEY_UP:
+            camera->CameraRotateDirection(glm::vec3(glm::radians(-5.00f), 0.00f, 0.00f));
+            break;
+          case GLFW_KEY_DOWN:
+            camera->CameraRotateDirection(glm::vec3(glm::radians(+5.00f), 0.00f, 0.00f));
+            break;
+          case GLFW_KEY_LEFT:
+            camera->CameraRotateDirection(glm::vec3(0.00f, glm::radians(+5.00f), 0.00f));
+            break;
+          case GLFW_KEY_RIGHT:
+            camera->CameraRotateDirection(glm::vec3(0.00f, glm::radians(-5.00f), 0.00f));
+            break;
+
+          default:
+            break;
+          }
+        }
+      });
+
   std::vector<VertexData> vdata;
   vdata.push_back({{-0.50f, -0.50f, +0.00f}, {0.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
   vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 0.00f, 0.00f, 1.00f}, {}, 0});
   vdata.push_back({{+0.50f, -0.50f, +0.00f}, {0.00f, 0.00f, 1.00f, 1.00f}, {}, 0});
   vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {0.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
+  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 0.00f, 0.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {0.00f, 0.00f, 1.00f, 1.00f}, {}, 0});
+  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 0.00f, 1.00f}, {}, 0});
 
-  std::vector<unsigned> indices;
-  indices.emplace_back(0);
-  indices.emplace_back(1);
-  indices.emplace_back(2);
-  indices.emplace_back(3);
+  // clang-format off
+  std::vector<unsigned> indices = {
+    0, 1, 2, 1, 2, 3,
+    2, 3, 6, 3, 6, 7,
+    0, 1, 4, 1, 4, 5,
+    4, 5, 6, 5, 6, 7,
+  };
+  // clang-format on
 
-  IndexData idata = {Core::PrimitiveTopology::TRIANGLE_STRIP, indices};
+  IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
 
   mesh = Comp::CreateYukiMesh(vdata, idata, L"MeshTest");
   // TEST
@@ -155,6 +214,7 @@ void YukiWindow::Awake()
 
 void YukiWindow::Update()
 {
+  camera->Update();
   Render();
   glfwSwapBuffers(m_pGLFWWindow);
   glfwPollEvents();
@@ -162,12 +222,17 @@ void YukiWindow::Update()
 
 void YukiWindow::Render()
 {
-  // Clear screen
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);     // Use Default FB
-  glClearColor(0.00f, 0.00f, 0.00f, 1.00f); // Set clear color
-  glClear(GL_COLOR_BUFFER_BIT);             // Clear
+  // Clear screen;
+  glBindFramebuffer(GL_FRAMEBUFFER, 0); // Use Default FB
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
+  glClearColor(0.00f, 0.00f, 0.00f, 1.00f);           // Set clear color
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear
 
-  mesh->RenderMesh(glm::identity<glm::mat4>(), glm::identity<glm::mat4>(), glm::identity<glm::mat4>());
+  // TEST
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  mesh->RenderMesh(glm::identity<glm::mat4>(), camera->GetCameraViewMatrix(), camera->GetCameraProjectionMatrix());
+  // TEST
 }
 
 void YukiWindow::Destroy()
@@ -175,6 +240,7 @@ void YukiWindow::Destroy()
   // TEST
   mesh->Destroy();
   // TEST
+
   Comp::ReleaseMeshShader();
 
   if (m_pGLFWWindow)
