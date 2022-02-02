@@ -23,6 +23,12 @@ enum class PrimitiveTopology
   POINT_LIST     = GL_POINTS
 };
 
+enum class VertexFlag
+{
+  ENABLE_TEXTURE   = 1,
+  ENABLE_LIGHTNING = 2
+};
+
 typedef struct StVertexFormat
 {
   glm::vec3 position;
@@ -99,6 +105,12 @@ public:
   virtual void UniformValue(const AsciiString& prop, const float& value) = 0;
 };
 
+class YUKIAPI IYukiOGLTexture : public IYukiObject
+{
+public:
+};
+
+SharedPtr<IYukiGfxControl> YUKIAPI       CreateGraphicsController();
 SharedPtr<IYukiOGLVertexBuffer> YUKIAPI  CreateGLVertexBuffer();
 SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer();
 SharedPtr<IYukiOGLShaderProgram> YUKIAPI CreateGLShaderProgram(const String& shaderName);

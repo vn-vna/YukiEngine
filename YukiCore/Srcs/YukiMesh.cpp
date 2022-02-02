@@ -71,7 +71,11 @@ void YukiMesh::RenderMesh(const glm::mat4& model, const glm::mat4& view, const g
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", model);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", view);
   m_pShaderProgram->UniformMatrix("U_PresentationMatrix", presentation);
+
+  // Some hard coding
   m_pShaderProgram->UniformValue("U_AmbientStrength", 0.10f);
+  m_pShaderProgram->UniformVector("U_LightPos", glm::vec3(3.00f, 3.00f, 3.00f));
+  m_pShaderProgram->UniformVector("U_LightColor", glm::vec4(1.00f, 1.00f, 1.00f, 1.00f));
 
   m_pElementBuffer->DrawAllElements(m_eTopology);
 }

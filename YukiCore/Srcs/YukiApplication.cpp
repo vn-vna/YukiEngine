@@ -17,6 +17,7 @@ YukiApp::YukiApp()
   m_pLogger          = Debug::CreateYukiLogger();
   m_pWindow          = CreateNewWindow();
   m_pInputController = CreateNewInputControl();
+  m_pGfxController   = CreateGraphicsController();
 }
 
 SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
@@ -70,16 +71,19 @@ void YukiApp::Create()
 {
   GetLogger()->Create();
   GetWindow()->Create();
+  GetGraphicsController()->Create();
 }
 
 void YukiApp::Awake()
 {
   GetWindow()->Awake();
+  GetGraphicsController()->Awake();
 }
 
 void YukiApp::Update()
 {
   GetWindow()->Update();
+  GetGraphicsController()->Render();
   if (GetWindow()->ShouldClose())
   {
     m_bAlive = false;
@@ -88,6 +92,7 @@ void YukiApp::Update()
 
 void YukiApp::Destroy()
 {
+  GetGraphicsController()->Destroy();
   GetWindow()->Destroy();
   GetLogger()->Destroy();
 }

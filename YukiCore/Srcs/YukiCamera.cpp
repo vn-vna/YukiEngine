@@ -22,11 +22,11 @@ YukiCamera::YukiCamera()
   m_CamPos            = {0.00f, 0.00f, -1.00f};
   m_CamDirection      = {0.00f, 0.00f, 1.00f};
   m_CamTop            = {0.00f, 1.00f, 0.00f};
-  m_nFOV              = glm::radians(120.00f);
+  m_nFOV              = glm::radians(360.00f);
   AutoType windowSize = Core::GetYukiApp()->GetWindow()->GetWindowSize();
   m_nAspectRatio      = windowSize.x / windowSize.y;
   m_nNear             = 0.01f;
-  m_nFar              = 1000.00f;
+  m_nFar              = 100.00f;
 }
 
 YukiCamera::~YukiCamera() = default;

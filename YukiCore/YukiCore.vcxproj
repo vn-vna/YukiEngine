@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Srcs\YukiCamera.cpp" />
+    <ClCompile Include="Srcs\YukiGraphicsControl.cpp" />
     <ClCompile Include="Srcs\YukiMesh.cpp" />
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
