@@ -17,9 +17,9 @@ public:
   YukiOGLVertexBuffer();
   virtual ~YukiOGLVertexBuffer();
 
+  bool            OnUse();
   const unsigned& GetID() override;
   void            BindObject() override;
-  bool            OnUse() override;
   void            SetBufferData(std::vector<float>& data) override;
   void            SetBufferData(float* pData, size_t size) override;
   void            Create() override;

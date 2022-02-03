@@ -1,5 +1,5 @@
 #include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiChrono.hpp"
+#include "YukiUtil/YukiChrono.hpp"
 #include "YukiDebug/YukiLogger.hpp"
 #include "YukiDebug/YukiError.hpp"
 
@@ -69,7 +69,6 @@ OutputLogFileType& YukiLogger::GetOutFileStream()
 void YukiLogger::Create()
 {
   Chrono::AsciiDateTimeFormat format{};
-  format.timeSeperator = YUKI_ASCII_TIMESTR_SLASH_SEPERATOR;
   m_pOutFileStream     = std::make_shared<OutputLogFileType>(Chrono::DateTimeAsciiString(format) + ".ylg");
 #ifndef NDEBUG
   //OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");

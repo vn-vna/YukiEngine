@@ -15,11 +15,11 @@ public:
   YukiOGLVertexArray();
   virtual ~YukiOGLVertexArray();
 
+  bool            OnUse();
   const unsigned& GetID() override;
   void            BindObject() override;
   void            Create() override;
   void            Destroy() override;
-  bool            OnUse() override;
 
   void EnableAttribute(const unsigned& attrib) override;
   void AttributeBinding(const unsigned& attrib, const unsigned& binding) override;

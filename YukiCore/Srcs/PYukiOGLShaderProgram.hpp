@@ -23,11 +23,11 @@ public:
   YukiOGLShaderProgram(const String& shaderName);
   virtual ~YukiOGLShaderProgram();
 
+  bool            OnUse();
   const unsigned& GetID() override;
   void            BindObject() override;
   void            Create() override;
   void            Destroy() override;
-  bool            OnUse() override;
   void            UniformMatrix(const AsciiString& prop, const glm::mat2& mat, bool transpose = false) override;
   void            UniformMatrix(const AsciiString& prop, const glm::mat3& mat, bool transpose = false) override;
   void            UniformMatrix(const AsciiString& prop, const glm::mat4& mat, bool transpose = false) override;

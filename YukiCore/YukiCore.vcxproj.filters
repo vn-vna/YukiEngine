@@ -19,9 +19,6 @@
     <Filter Include="Srcs\Debug">
       <UniqueIdentifier>{64adbb4e-0227-442a-bf56-75f59757b80a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Srcs\Utilities">
-      <UniqueIdentifier>{b73b8102-8856-4e4e-a23d-ea8cfc6d2e83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Include\YukiComp">
       <UniqueIdentifier>{b06d1b9b-fa97-4b67-b8ce-fcc05b3cf895}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,15 @@
     </Filter>
     <Filter Include="Private Header\OpenGL Abstraction">
       <UniqueIdentifier>{c745849e-5323-42aa-9b5e-2609fa1dad88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Utils">
+      <UniqueIdentifier>{ce26d86e-82c9-492f-94e0-c09c7164118e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Srcs\Utils">
+      <UniqueIdentifier>{b73b8102-8856-4e4e-a23d-ea8cfc6d2e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Binaries">
+      <UniqueIdentifier>{3bbdbee6-7720-46e9-9c1c-6c2ea7ad142e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +82,7 @@
       <Filter>Srcs\Core</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiChrono.cpp">
-      <Filter>Srcs\Utilities</Filter>
+      <Filter>Srcs\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp">
       <Filter>Srcs\OpenGL Abstraction</Filter>
@@ -89,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="Srcs\YukiGraphicsControl.cpp">
       <Filter>Srcs\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiOGLTexture.cpp">
+      <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +117,6 @@
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiPCH.hpp">
-      <Filter>Include\YukiCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\YukiCore\YukiChrono.hpp">
       <Filter>Include\YukiCore</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiCore\YukiThread.hpp">
@@ -164,8 +170,34 @@
     <ClInclude Include="Srcs\PYukiOGLVertexBuffer.hpp">
       <Filter>Private Header\OpenGL Abstraction</Filter>
     </ClInclude>
+    <ClInclude Include="Srcs\PYukiOGLTexture.hpp">
+      <Filter>Private Header\OpenGL Abstraction</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiUtil\YukiChrono.hpp">
+      <Filter>Include\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\zlib1.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\glfw3.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\jpeg62.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\libpng16.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\turbojpeg.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\freetype.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

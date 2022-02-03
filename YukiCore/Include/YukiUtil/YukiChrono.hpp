@@ -21,6 +21,7 @@
 #define YUKI_TIMESTR_SECOND_NUMBER_FORMAT    L"%S"
 #define YUKI_TIMESTR_SLASH_SEPERATOR         L"-"
 #define YUKI_TIMESTR_COLON_SEPERATOR         L":"
+#define YUKI_TIMESTR_DOT_SEPERATOR           L"."
 #define YUKI_TIMESTR_SPACE_SEPERATOR         L" "
 
 #define YUKI_ASCII_TIMESTR_YEAR_SHORT_FORMAT       "%y"
@@ -40,6 +41,7 @@
 #define YUKI_ASCII_TIMESTR_SECOND_NUMBER_FORMAT    "%S"
 #define YUKI_ASCII_TIMESTR_SLASH_SEPERATOR         "-"
 #define YUKI_ASCII_TIMESTR_COLON_SEPERATOR         ":"
+#define YUKI_ASCII_TIMESTR_DOT_SEPERATOR           "."
 #define YUKI_ASCII_TIMESTR_SPACE_SEPERATOR         " "
 
 namespace Yuki::Chrono
@@ -60,7 +62,7 @@ typedef struct YUKIAPI StDateTimeFormat
   String minute            = YUKI_TIMESTR_MINUTE_NUMBER_FORMAT;
   String second            = YUKI_TIMESTR_SECOND_NUMBER_FORMAT;
   String dateSeperator     = YUKI_TIMESTR_SLASH_SEPERATOR;
-  String timeSeperator     = YUKI_TIMESTR_COLON_SEPERATOR;
+  String timeSeperator     = YUKI_TIMESTR_DOT_SEPERATOR;
   String timeDateSeperator = YUKI_TIMESTR_SPACE_SEPERATOR;
 } DateTimeFormat;
 
@@ -73,7 +75,7 @@ typedef struct YUKIAPI StAsciiDateTimeFormat
   AsciiString minute            = YUKI_ASCII_TIMESTR_MINUTE_NUMBER_FORMAT;
   AsciiString second            = YUKI_ASCII_TIMESTR_SECOND_NUMBER_FORMAT;
   AsciiString dateSeperator     = YUKI_ASCII_TIMESTR_SLASH_SEPERATOR;
-  AsciiString timeSeperator     = YUKI_ASCII_TIMESTR_COLON_SEPERATOR;
+  AsciiString timeSeperator     = YUKI_ASCII_TIMESTR_DOT_SEPERATOR;
   AsciiString timeDateSeperator = YUKI_ASCII_TIMESTR_SPACE_SEPERATOR;
 } AsciiDateTimeFormat;
 
