@@ -49,6 +49,5 @@ Một người bạn tốt bụng đã làm nó ❤️.
 ### Yêu cầu:
 
 - Visual Studio 2022
-- VCPKG đã cài đặt glfw[core]:x64-windows, glm[core]:x64-windows, opengl[core]:x64-windows, glad[core]:x64-windows.
 
 ### Mở `Yuki.sln` và boom 😌
