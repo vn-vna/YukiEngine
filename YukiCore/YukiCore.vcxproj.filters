@@ -46,9 +46,6 @@
     <Filter Include="Srcs\Utils">
       <UniqueIdentifier>{b73b8102-8856-4e4e-a23d-ea8cfc6d2e83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External Binaries">
-      <UniqueIdentifier>{3bbdbee6-7720-46e9-9c1c-6c2ea7ad142e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp">
@@ -179,25 +176,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\zlib1.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\glfw3.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\jpeg62.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\libpng16.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\turbojpeg.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\freetype.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
 </Project>

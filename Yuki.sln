@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YukiSandbox", "YukiSandbox\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YukiShader", "YukiShader\YukiShader.vcxproj", "{3ACD6C85-F0EB-4D1A-A166-13CF0D6587D5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YukiDeps", "YukiDeps\YukiDeps.vcxproj", "{1FE30926-C59C-45B6-8FE8-16669D132DC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{3ACD6C85-F0EB-4D1A-A166-13CF0D6587D5}.Release|x64.Build.0 = Release|x64
 		{3ACD6C85-F0EB-4D1A-A166-13CF0D6587D5}.Release|x86.ActiveCfg = Release|Win32
 		{3ACD6C85-F0EB-4D1A-A166-13CF0D6587D5}.Release|x86.Build.0 = Release|Win32
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Debug|x64.ActiveCfg = Debug|x64
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Debug|x64.Build.0 = Debug|x64
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Debug|x86.ActiveCfg = Debug|Win32
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Debug|x86.Build.0 = Debug|Win32
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Release|x64.ActiveCfg = Release|x64
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Release|x64.Build.0 = Release|x64
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Release|x86.ActiveCfg = Release|Win32
+		{1FE30926-C59C-45B6-8FE8-16669D132DC8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
