@@ -1,6 +1,13 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiDebug/YukiError.hpp"
 
 #include "PYukiOGLTexture.hpp"
+
+#define CHECK_VALID_TEXTURE_TYPE(type, valid)                 \
+  if (type != valid)                                          \
+  {                                                           \
+    THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatible); \
+  }
 
 namespace Yuki::Core
 {
@@ -96,6 +103,93 @@ const float YukiOGLTexture::GetTextureLodBias()
   float param;
   glGetTextureParameterfv(m_nTexID, GL_TEXTURE_LOD_BIAS, &param);
   return param;
+}
+
+void YukiOGLTexture::SetStorageData1D(
+    const PixelInternalFormat& internalFormat, const int& level,
+    const glm::vec1& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
+  glTextureStorage1D(m_nTexID, level, (int) internalFormat, (int) size.x);
+}
+
+void YukiOGLTexture::SetStorageData2D(
+    const PixelInternalFormat& internalFormat, const int& level,
+    const glm::vec2& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
+  glTextureStorage2D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y);
+}
+
+void YukiOGLTexture::SetStorageData3D(
+    const PixelInternalFormat& internalFormat, const int& level,
+    const glm::vec3& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
+  glTextureStorage3D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y, (int) size.z);
+}
+
+void YukiOGLTexture::SetStorageData1D(
+    const PixelBasedInternalFormat& internalFormat, const int& level,
+    const glm::vec1& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
+  glTextureStorage1D(m_nTexID, level, (int) internalFormat, (int) size.x);
+}
+
+void YukiOGLTexture::SetStorageData2D(
+    const PixelBasedInternalFormat& internalFormat, const int& level,
+    const glm::vec2& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
+  glTextureStorage2D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y);
+}
+
+void YukiOGLTexture::SetStorageData3D(
+    const PixelBasedInternalFormat& internalFormat, const int& level,
+    const glm::vec3& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
+  glTextureStorage3D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y, (int) size.z);
+}
+
+void YukiOGLTexture::SetTextureData1D(
+    uint8_t* pixels, const int& level,
+    const PixelBasedInternalFormat& imageFormat,
+    const glm::ivec1& offset, const glm::ivec1& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
+  glTextureSubImage1D(
+      m_nTexID, level,
+      (int) offset.x,
+      (int) size.x,
+      (int) imageFormat, GL_UNSIGNED_BYTE, pixels);
+}
+
+void YukiOGLTexture::SetTextureData2D(
+    uint8_t* pixels, const int& level,
+    const PixelBasedInternalFormat& imageFormat,
+    const glm::ivec2& offset, const glm::ivec2& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
+  glTextureSubImage2D(
+      m_nTexID, level,
+      (int) offset.x, (int) offset.y,
+      (int) size.x, (int) size.y,
+      (int) imageFormat, GL_UNSIGNED_BYTE, pixels);
+}
+
+void YukiOGLTexture::SetTextureData3D(
+    uint8_t* pixels, const int& level,
+    const PixelBasedInternalFormat& imageFormat,
+    const glm::ivec3& offset, const glm::ivec3& size)
+{
+  CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
+  glTextureSubImage3D(
+      m_nTexID, level,
+      (int) offset.x, (int) offset.y, (int) offset.z,
+      (int) size.x, (int) size.y, (int) size.z,
+      (int) imageFormat, GL_UNSIGNED_BYTE, pixels);
 }
 
 const unsigned& YukiOGLTexture::GetID()

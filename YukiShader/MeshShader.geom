@@ -20,7 +20,7 @@ void main()
   vec3 a        = (VS_FragPos[1] - VS_FragPos[0]).xyz;
   vec3 b        = (VS_FragPos[2] - VS_FragPos[0]).xyz;
   vec3 normal   = normalize(cross(b, a));
-  
+
   for (int i = 0; i < gl_in.length() ; ++i)
   {
     gl_Position         = gl_in[i].gl_Position;
@@ -31,5 +31,6 @@ void main()
     GS_Flags            = VS_Flags[i];
     EmitVertex();
   }
+
   EndPrimitive();
 }

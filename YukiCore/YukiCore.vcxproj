@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Srcs\YukiCamera.cpp" />
     <ClCompile Include="Srcs\YukiGraphicsControl.cpp" />
+    <ClCompile Include="Srcs\YukiImage.cpp" />
     <ClCompile Include="Srcs\YukiMesh.cpp" />
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Include\YukiDebug\YukiError.hpp" />
     <ClInclude Include="Include\YukiDebug\YukiLogger.hpp" />
     <ClInclude Include="Include\YukiUtil\YukiChrono.hpp" />
+    <ClInclude Include="Include\YukiUtil\YukiImage.hpp" />
     <ClInclude Include="Srcs\PYukiApplication.hpp" />
     <ClInclude Include="Srcs\PYukiCamera.hpp" />
     <ClInclude Include="Srcs\PYukiGraphicsControl.hpp" />

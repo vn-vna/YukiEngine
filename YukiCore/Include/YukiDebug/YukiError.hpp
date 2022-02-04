@@ -31,7 +31,8 @@ enum class YUKIAPI YukiErrCode
   GLFW_WINDOW_CREATION_FAILED,
   GLAD_LOAD_GLLOADER_FAILED,
   OPENGL_COMPILE_SHADER_ERROR,
-  OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED
+  OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED,
+  OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE
 };
 
 class YUKIAPI YukiError : public std::runtime_error
@@ -50,19 +51,25 @@ public:
 };
 
 DECLARE_YUKI_ERROR(YukiCreateLogFileError);
+
 DECLARE_YUKI_ERROR(YukiInpCtrlInsertCallbackExistsError);
 DECLARE_YUKI_ERROR(YukiInpCtrlRemoveCallbackNExistsError);
 DECLARE_YUKI_ERROR(YukiInpCtrlInvokeUndefinedCallbackError);
+
 DECLARE_YUKI_ERROR(YukiThreadAssignmentDuplicateThreadIdError);
 DECLARE_YUKI_ERROR(YukiThreadCreationError);
 DECLARE_YUKI_ERROR(YukiThreadDetachmentNotExistError);
 DECLARE_YUKI_ERROR(YukiMutexCreationError);
 DECLARE_YUKI_ERROR(YukiMutexWaitAbandoned);
 DECLARE_YUKI_ERROR(YukiMutexWaitFunctionFailed);
+
 DECLARE_YUKI_ERROR(YukiGLFWInitError);
 DECLARE_YUKI_ERROR(YukiWindowCreationError);
+
 DECLARE_YUKI_ERROR(YukiGladLoadGLLoaderError);
+
 DECLARE_YUKI_ERROR(YukiOGLCompileShaderError);
 DECLARE_YUKI_ERROR(YukiOGLShaderProgramIsNotActived);
+DECLARE_YUKI_ERROR(YukiOGLTextureTypeNotCompatible);
 
 } // namespace Yuki::Debug

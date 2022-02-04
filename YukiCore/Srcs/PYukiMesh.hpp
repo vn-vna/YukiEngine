@@ -4,6 +4,8 @@
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiComp/YukiMesh.hpp"
 
+#define YUKI_MAX_TEXTURE 128
+
 namespace Yuki::Comp
 {
 
@@ -14,13 +16,15 @@ protected:
   SharedPtr<Core::IYukiOGLVertexBuffer>  m_pVertexBuffer;
   SharedPtr<Core::IYukiOGLVertexArray>   m_pVertexArray;
   SharedPtr<Core::IYukiOGLShaderProgram> m_pShaderProgram;
+  SharedPtr<Core::IYukiOGLTexture>       m_pTexture;
   Core::PrimitiveTopology                m_eTopology;
   String                                 m_Name;
 
 public:
-  YukiMesh(const Core::PrimitiveTopology& topology, const String& name);
+  YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYukiOGLTexture>& texture, const String& name);
   virtual ~YukiMesh();
 
+  SharedPtr<Core::IYukiOGLTexture>       GetMeshTexture() override;
   SharedPtr<Core::IYukiOGLElementBuffer> GetElementBuffer() override;
   SharedPtr<Core::IYukiOGLVertexBuffer>  GetVertexBuffer() override;
   SharedPtr<Core::IYukiOGLShaderProgram> GetShaderProgram() override;

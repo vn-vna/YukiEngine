@@ -279,10 +279,28 @@ enum class TextureCompareMode
   NONE                   = GL_NONE
 };
 
+enum class PixelCompressedInternalFormat
+{
+  COMPRESSED_RED                     = GL_COMPRESSED_RED,
+  COMPRESSED_RG                      = GL_COMPRESSED_RG,
+  COMPRESSED_RGB                     = GL_COMPRESSED_RGB,
+  COMPRESSED_RGBA                    = GL_COMPRESSED_RGBA,
+  COMPRESSED_SRGB                    = GL_COMPRESSED_SRGB,
+  COMPRESSED_SRGB_ALPHA              = GL_COMPRESSED_SRGB_ALPHA,
+  COMPRESSED_RED_RGTC1               = GL_COMPRESSED_RED_RGTC1,
+  COMPRESSED_SIGNED_RED_RGTC1        = GL_COMPRESSED_SIGNED_RED_RGTC1,
+  COMPRESSED_RG_RGTC2                = GL_COMPRESSED_RG_RGTC2,
+  COMPRESSED_SIGNED_RG_RGTC2         = GL_COMPRESSED_SIGNED_RG_RGTC2,
+  COMPRESSED_RGBA_BPTC_UNORM         = GL_COMPRESSED_RGBA_BPTC_UNORM,
+  COMPRESSED_SRGB_ALPHA_BPTC_UNORM   = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM,
+  COMPRESSED_RGB_BPTC_SIGNED_FLOAT   = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT,
+  COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT,
+};
+
 /// <summary>
 /// Sized Internal Formats
 /// </summary>
-enum class TextureInternalFormat
+enum class PixelInternalFormat
 {
   R8             = GL_R8,
   R8_SNORM       = GL_R8_SNORM,
@@ -347,6 +365,20 @@ enum class TextureInternalFormat
 };
 
 /// <summary>
+/// Pixel format
+/// </summary>
+enum class PixelBasedInternalFormat
+{
+  RED             = GL_RED,
+  RG              = GL_RG,
+  RGB             = GL_RGB,
+  BGR             = GL_BGR,
+  RGBA            = GL_RGBA,
+  DEPTH_COMPONENT = GL_DEPTH_COMPONENT,
+  STENCIL_INDEX   = GL_STENCIL_INDEX
+};
+
+/// <summary>
 /// Flag of each vertices. Use | to combine them. [Count Right-to-left]
 /// <para> - Bit 0: Enable texture </para>
 /// <para> - Bit 1: Enable texture </para>
@@ -354,14 +386,19 @@ enum class TextureInternalFormat
 /// </summary>
 enum class VertexFlag
 {
+  NONE                         = 0,
   /// <summary>
   /// Allow shader to use texture coordinate value.
   /// </summary>
-  ENABLE_TEXTURE   = 1,
+  ENABLE_TEXTURE               = 1,
   /// <summary>
   /// Allow shader to calculate lightning of vertex.
   /// </summary>
-  ENABLE_LIGHTNING = 2,
+  ENABLE_LIGHTNING             = 2,
+  /// <summary>
+  /// Alow shader using expilict Vertex color.
+  /// </summary>
+  ENABLE_EXPLICIT_VERTEX_COLOR = 4,
 };
 
 /// <summary>
@@ -481,6 +518,39 @@ public:
   virtual void SetTextureCompareFunc(const TextureCompareFunc& compareFunc)    = 0;
   virtual void SetTextureCompareMode(const TextureCompareMode& compareMode)    = 0;
   virtual void SetTextureLodBias(const float& bias)                            = 0;
+
+  virtual void SetStorageData1D(
+      const PixelInternalFormat& internalFormat, const int& level,
+      const glm::vec1& size) = 0;
+  virtual void SetStorageData2D(
+      const PixelInternalFormat& internalFormat, const int& level,
+      const glm::vec2& size) = 0;
+  virtual void SetStorageData3D(
+      const PixelInternalFormat& internalFormat, const int& level,
+      const glm::vec3& size) = 0;
+
+  virtual void SetStorageData1D(
+      const PixelBasedInternalFormat& internalFormat, const int& level,
+      const glm::vec1& size) = 0;
+  virtual void SetStorageData2D(
+      const PixelBasedInternalFormat& internalFormat, const int& level,
+      const glm::vec2& size) = 0;
+  virtual void SetStorageData3D(
+      const PixelBasedInternalFormat& internalFormat, const int& level,
+      const glm::vec3& size) = 0;
+
+  virtual void SetTextureData1D(
+      uint8_t* pixels, const int& level,
+      const PixelBasedInternalFormat& imageFormat,
+      const glm::ivec1& offset, const glm::ivec1& len) = 0;
+  virtual void SetTextureData2D(
+      uint8_t* pixels, const int& level,
+      const PixelBasedInternalFormat& imageFormat,
+      const glm::ivec2& offset, const glm::ivec2& size) = 0;
+  virtual void SetTextureData3D(
+      uint8_t* pixels, const int& level,
+      const PixelBasedInternalFormat& imageFormat,
+      const glm::ivec3& offset, const glm::ivec3& size) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;

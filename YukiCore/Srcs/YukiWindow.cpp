@@ -8,15 +8,26 @@
 
 #include "PYukiWindow.hpp"
 
+void initAndCheckGLFW()
+{
+  if (!glfwInit())
+  {
+    THROW_YUKI_ERROR(Yuki::Debug::YukiGLFWInitError);
+  }
+}
 
 void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(key, scancode, action, modifiers);
+  Yuki::Core::GetYukiApp()
+      ->GetInputController()
+      ->ExecuteKeyCallbacks(key, scancode, action, modifiers);
 }
 
 void funcGLFWCursorCallback(GLFWwindow* window, double x, double y)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback((int) x, (int) y);
+  Yuki::Core::GetYukiApp()
+      ->GetInputController()
+      ->ExecuteCursorPosCallback((int) x, (int) y);
 }
 
 namespace Yuki::Core
@@ -90,10 +101,7 @@ void YukiWindow::Create()
 {
   if (!g_bGLFWInited)
   {
-    if (!glfwInit())
-    {
-      THROW_YUKI_ERROR(Yuki::Debug::YukiGLFWInitError);
-    }
+    initAndCheckGLFW();
   }
   g_bGLFWInited = true;
 
@@ -126,16 +134,8 @@ void YukiWindow::Awake()
 
 void YukiWindow::Update()
 {
-
-  Render();
-
   glfwSwapBuffers(m_pGLFWWindow);
   glfwPollEvents();
-}
-
-void YukiWindow::Render()
-{
-  
 }
 
 void YukiWindow::Destroy()

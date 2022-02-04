@@ -34,11 +34,11 @@ public:
   void Create() override;
   void Awake() override;
   void Update() override;
-  void Render() override;
   void Destroy() override;
 };
 
 } // namespace Yuki::Core
 
+void initAndCheckGLFW();
 void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers);
 void funcGLFWCursorCallback(GLFWwindow* window, double x, double y);

@@ -99,6 +99,9 @@
     <ClCompile Include="Srcs\YukiOGLTexture.cpp">
       <Filter>Srcs\OpenGL Abstraction</Filter>
     </ClCompile>
+    <ClCompile Include="Srcs\YukiImage.cpp">
+      <Filter>Srcs\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
@@ -174,6 +177,9 @@
       <Filter>Private Header\OpenGL Abstraction</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiUtil\YukiChrono.hpp">
+      <Filter>Include\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiUtil\YukiImage.hpp">
       <Filter>Include\Utils</Filter>
     </ClInclude>
   </ItemGroup>

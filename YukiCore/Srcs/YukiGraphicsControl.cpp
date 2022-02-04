@@ -2,6 +2,7 @@
 #include "YukiDebug/YukiError.hpp"
 #include "YukiComp/YukiMesh.hpp"
 #include "YukiComp/YukiCamera.hpp"
+#include "YukiUtil/YukiImage.hpp"
 
 #include "PYukiGraphicsControl.hpp"
 
@@ -10,8 +11,10 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh>   mesh;
-Yuki::SharedPtr<Yuki::Comp::IYukiCamera> camera;
+Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       mesh;
+Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       lightCube;
+Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     camera;
+Yuki::SharedPtr<Yuki::Core::IYukiOGLTexture> tex;
 
 /// TEST CODE
 
@@ -101,32 +104,47 @@ void YukiGfxControl::Awake()
         }
       });
 
-  unsigned vertexFlag = 0 | (unsigned) VertexFlag::ENABLE_LIGHTNING;
+  tex = Utils::YukiImage("tex.png").Create2DTexture();
+
+  unsigned vertexFlag  = (unsigned) VertexFlag::ENABLE_LIGHTNING | (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR | (unsigned) VertexFlag::ENABLE_TEXTURE;
+  unsigned vertexFlag2 = (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR;
 
   std::vector<VertexData> vdata;
-  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag});
+  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
+  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
+  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
+  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
+  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
+  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
+  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
+  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
+
+  std::vector<VertexData> vdata2;
+  vdata2.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  vdata2.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
 
   // clang-format off
   std::vector<unsigned> indices = {
-    0, 3, 1, 0, 3, 2,
-    4, 7, 5, 4, 7, 6,
-    0, 5, 1, 0, 5, 4,
-    2, 7, 3, 2, 7, 6,
-    1, 7, 5, 1, 7, 3,
-    0, 6, 4, 0, 6, 2
+    0, 2, 3, 0, 3, 1,
+    4, 7, 6, 4, 5, 7,
+    1, 3, 7, 1, 7, 5,
+    0, 4, 6, 0, 6, 2,
+    0, 1, 5, 0, 5, 4,
+    2, 6, 7, 2, 7, 3
   };
   // clang-format on
 
   IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
 
-  mesh = Comp::CreateYukiMesh(vdata, idata, L"MeshTest");
+  mesh      = Comp::CreateYukiMesh(vdata, idata, tex, L"MeshTest");
+  lightCube = Comp::CreateYukiMesh(vdata2, idata, tex, L"LightCube");
+
   // TEST
 }
 
@@ -143,10 +161,15 @@ void YukiGfxControl::Render()
 
   // TEST
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  mesh->RenderMesh(glm::identity<glm::mat4>(), camera->GetCameraViewMatrix(), camera->GetCameraProjectionMatrix());
   mesh->RenderMesh(
-      glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3(3.02f, 3.02f, 3.02f)), glm::vec3(0.10f, 0.10f, 0.10f)),
-      camera->GetCameraViewMatrix(), camera->GetCameraProjectionMatrix());
+      glm::identity<glm::mat4>(),
+      camera->GetCameraViewMatrix(),
+      camera->GetCameraProjectionMatrix());
+
+  lightCube->RenderMesh(
+      glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{1.30f, 1.30f, 2.00f}), glm::vec3{0.05f, 0.05f, 0.05f}),
+      camera->GetCameraViewMatrix(),
+      camera->GetCameraProjectionMatrix());
   // TEST
 }
 
@@ -154,7 +177,9 @@ void YukiGfxControl::Destroy()
 {
 
   // TEST
+  tex->Destroy();
   mesh->Destroy();
+  lightCube->Destroy();
   // TEST
 
   Comp::ReleaseMeshShader();

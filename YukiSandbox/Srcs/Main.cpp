@@ -2,8 +2,8 @@
 
 int main(int, char**)
 {
-   AutoType yukiApp = Yuki::Core::CreateYukiApp();
-   yukiApp->RunApp();
+  AutoType yukiApp = Yuki::Core::CreateYukiApp();
+  yukiApp->RunApp();
 
   return 0;
 }

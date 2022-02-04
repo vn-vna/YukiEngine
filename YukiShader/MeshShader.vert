@@ -7,7 +7,8 @@ layout (location = 2) in vec2 IA_TexCoord;
 // Flags:
 // Bit 0:         Enable texture
 // Bit 1:         Enable lighting 
-// Bit 2- 7:      Reserve
+// Bit 2:         Enable vertex explicit color 
+// Bit 3 - 7:     Reserve
 layout (location = 3) in uint IA_Flags;
 
 out vec3 VS_FragPos;

@@ -7,8 +7,9 @@ Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram> g_pDefaultMeshShader = Yuki::
 namespace Yuki::Comp
 {
 
-YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, const String& name)
+YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYukiOGLTexture>& textureList, const String& name)
     : m_pShaderProgram(g_pDefaultMeshShader),
+      m_pTexture(textureList),
       m_Name(name),
       m_eTopology(topology)
 {
@@ -18,6 +19,11 @@ YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, const String& name)
 }
 
 YukiMesh::~YukiMesh() = default;
+
+SharedPtr<Core::IYukiOGLTexture> YukiMesh::GetMeshTexture()
+{
+  return m_pTexture;
+}
 
 SharedPtr<Core::IYukiOGLElementBuffer> YukiMesh::GetElementBuffer()
 {
@@ -68,21 +74,27 @@ void YukiMesh::RenderMesh(const glm::mat4& model, const glm::mat4& view, const g
   m_pShaderProgram->BindObject();
   m_pElementBuffer->BindObject();
   m_pVertexArray->BindObject();
+  m_pTexture->BindTexture(0);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", model);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", view);
   m_pShaderProgram->UniformMatrix("U_PresentationMatrix", presentation);
 
   // Some hard coding
   m_pShaderProgram->UniformValue("U_AmbientStrength", 0.10f);
-  m_pShaderProgram->UniformVector("U_LightPos", glm::vec3(3.00f, 3.00f, 3.00f));
-  m_pShaderProgram->UniformVector("U_LightColor", glm::vec4(1.00f, 1.00f, 1.00f, 1.00f));
+  m_pShaderProgram->UniformVector("U_LightPos", glm::vec3{1.30f, 1.30f, 2.00f});
+  m_pShaderProgram->UniformVector("U_LightColor", glm::vec4{1.00f, 1.00f, 1.00f, 1.00f});
+  m_pShaderProgram->UniformValue("U_MeshTextures", 0);
 
   m_pElementBuffer->DrawAllElements(m_eTopology);
 }
 
-SharedPtr<IYukiMesh> CreateYukiMesh(std::vector<Core::VertexData>& vertexData, Core::IndexData& indexData, const String& meshName)
+SharedPtr<IYukiMesh> CreateYukiMesh(
+    std::vector<Core::VertexData>&    vertexData,
+    Core::IndexData&                  indexData,
+    SharedPtr<Core::IYukiOGLTexture>& texture,
+    const String&                     meshName)
 {
-  SharedPtr<IYukiMesh> mesh{(IYukiMesh*) new YukiMesh(indexData.topology, meshName)};
+  SharedPtr<IYukiMesh> mesh{(IYukiMesh*) new YukiMesh(indexData.topology, texture, meshName)};
   mesh->Create();
 
   mesh->GetVertexBuffer()

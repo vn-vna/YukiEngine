@@ -15,13 +15,6 @@ public:
   virtual void Destroy(){};
 };
 
-class YUKIAPI IYukiProtectedObject
-{
-public:
-  virtual void LockYukiObj()   = 0;
-  virtual void UnlockYukiObj() = 0;
-};
-
 } // namespace Yuki::Core
 
 namespace Yuki
@@ -40,6 +33,20 @@ class YUKIAPI IYukiOGLObject;
 class YUKIAPI IYukiOGLVertexBuffer;
 class YUKIAPI IYukiOGLShaderProgram;
 class YUKIAPI IYukiOGLElementBuffer;
+class YUKIAPI IYukiOGLTexture;
+
+enum class PrimitiveTopology;
+enum class TextureType;
+enum class TextureMinFilter;
+enum class TextureMagFilter;
+enum class TextureDepthStencilMode;
+enum class TextureCompareFunc;
+enum class TextureCompareMode;
+enum class PixelBasedInternalFormat;
+enum class VertexFlag;
+
+struct StVertexFormat;
+struct StIndexData;
 
 } // namespace Core
 

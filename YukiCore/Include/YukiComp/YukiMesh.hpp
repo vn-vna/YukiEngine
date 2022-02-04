@@ -9,6 +9,7 @@ namespace Yuki::Comp
 class YUKIAPI IYukiMesh : public Core::IYukiObject
 {
 public:
+  virtual SharedPtr<Core::IYukiOGLTexture>       GetMeshTexture()   = 0;
   virtual SharedPtr<Core::IYukiOGLElementBuffer> GetElementBuffer() = 0;
   virtual SharedPtr<Core::IYukiOGLVertexBuffer>  GetVertexBuffer()  = 0;
   virtual SharedPtr<Core::IYukiOGLShaderProgram> GetShaderProgram() = 0;
@@ -23,9 +24,10 @@ public:
 };
 
 SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
-    std::vector<Core::VertexData>& vertexData,
-    Core::IndexData&               indexData,
-    const String&                  meshName);
+    std::vector<Core::VertexData>&    vertexData,
+    Core::IndexData&                  indexData,
+    SharedPtr<Core::IYukiOGLTexture>& texture,
+    const String&                     meshName);
 
 void YUKIAPI InitializeMeshShader();
 void YUKIAPI ReleaseMeshShader();
