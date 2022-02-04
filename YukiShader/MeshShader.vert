@@ -18,11 +18,11 @@ out uint VS_Flags;
 
 uniform mat4 U_ModelMatrix;
 uniform mat4 U_ViewMatrix;
-uniform mat4 U_PresentationMatrix;
+uniform mat4 U_ProjectionMatrix;
 
 void main() 
 {
-  gl_Position     = U_PresentationMatrix * U_ViewMatrix * U_ModelMatrix * vec4(IA_VertexPos, 1.0);
+  gl_Position     = U_ProjectionMatrix * U_ViewMatrix * U_ModelMatrix * vec4(IA_VertexPos, 1.0);
   VS_FragPos      = (U_ModelMatrix * vec4(IA_VertexPos, 1.0)).xyz;
   VS_VertexColor  = IA_VertexColor;
   VS_TexCoord     = IA_TexCoord;

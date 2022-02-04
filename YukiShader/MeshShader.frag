@@ -38,7 +38,7 @@ void main()
   {
     vec4 ambient            = U_AmbientStrength * U_LightColor;
 
-    vec3 lightDirection     = normalize(U_LightPos - GS_FragPos);
+    vec3 lightDirection     = normalize(U_LightPos - GS_FragPos) / length(U_LightPos - GS_FragPos) * 2;
     float diff              = max(dot(GS_Normal, lightDirection), 0.0);
     vec4 diffuse            = diff * U_LightColor;
 
