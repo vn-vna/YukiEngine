@@ -17,10 +17,7 @@ public:
   virtual const Core::PrimitiveTopology&         GetTopology()      = 0;
   virtual const String&                          GetName()          = 0;
 
-  virtual void RenderMesh(
-      const glm::mat4& model,
-      const glm::mat4& view,
-      const glm::mat4& presentation) = 0;
+  virtual void RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera) = 0;
 };
 
 SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(

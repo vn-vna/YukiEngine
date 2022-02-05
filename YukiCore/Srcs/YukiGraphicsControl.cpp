@@ -71,6 +71,10 @@ void YukiGfxControl::Awake()
             camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraTopAxis());
             break;
 
+          case GLFW_KEY_U:
+            camera->CameraRotateDirection(camera->GetCameraVerticalAxis(), glm::radians(90.0f));
+            break;
+
           case GLFW_KEY_M:
             camera->CameraRotateViewport(glm::radians(1.00f));
             break;
@@ -161,15 +165,11 @@ void YukiGfxControl::Render()
 
   // TEST
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  mesh->RenderMesh(
-      glm::identity<glm::mat4>(),
-      camera->GetCameraViewMatrix(),
-      camera->GetCameraProjectionMatrix());
+  mesh->RenderMesh(glm::identity<glm::mat4>(), camera);
 
   lightCube->RenderMesh(
       glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{1.30f, 1.30f, 2.00f}), glm::vec3{0.05f, 0.05f, 0.05f}),
-      camera->GetCameraViewMatrix(),
-      camera->GetCameraProjectionMatrix());
+      camera);
   // TEST
 }
 

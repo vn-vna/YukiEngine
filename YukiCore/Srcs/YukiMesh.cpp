@@ -1,4 +1,5 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiComp/YukiCamera.hpp"
 
 #include "PYukiMesh.hpp"
 
@@ -69,18 +70,20 @@ void YukiMesh::Destroy()
   m_pVertexArray->Destroy();
 }
 
-void YukiMesh::RenderMesh(const glm::mat4& model, const glm::mat4& view, const glm::mat4& presentation)
+void YukiMesh::RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera)
 {
   m_pShaderProgram->BindObject();
   m_pElementBuffer->BindObject();
   m_pVertexArray->BindObject();
   m_pTexture->BindTexture(0);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", model);
-  m_pShaderProgram->UniformMatrix("U_ViewMatrix", view);
-  m_pShaderProgram->UniformMatrix("U_ProjectionMatrix", presentation);
+  m_pShaderProgram->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
+  m_pShaderProgram->UniformMatrix("U_ProjectionMatrix", camera->GetCameraProjectionMatrix());
+  m_pShaderProgram->UniformVector("U_ViewPosition", camera->GetCameraPosition());
 
   // Some hard coding
   m_pShaderProgram->UniformValue("U_AmbientStrength", 0.01f);
+  m_pShaderProgram->UniformValue("U_SpecularStrength", 0.50f);
   m_pShaderProgram->UniformVector("U_LightPos", glm::vec3{1.30f, 1.30f, 2.00f});
   m_pShaderProgram->UniformVector("U_LightColor", glm::vec4{1.00f, 1.00f, 1.00f, 1.00f});
   m_pShaderProgram->UniformValue("U_MeshTextures", 0);

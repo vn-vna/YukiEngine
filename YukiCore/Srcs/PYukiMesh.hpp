@@ -34,10 +34,7 @@ public:
   void                                   Create() override;
   void                                   Destroy() override;
 
-  void RenderMesh(
-      const glm::mat4& model,
-      const glm::mat4& view,
-      const glm::mat4& presentation) override;
+  void RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera) override;
 };
 
 } // namespace Yuki::Comp
