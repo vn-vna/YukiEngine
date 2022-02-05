@@ -187,19 +187,7 @@
     <None Include="..\.clang-format" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\zlib1.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="..\YukiDeps\Binaries\glfw3.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\jpeg62.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\libpng16.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\turbojpeg.dll">
       <Filter>External Binaries</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\YukiDeps\Binaries\freetype.dll">
