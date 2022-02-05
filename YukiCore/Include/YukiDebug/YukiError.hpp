@@ -21,6 +21,7 @@ enum class YUKIAPI YukiErrCode
   YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
   YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
   YUKI_INPCTRL_INVOKE_UNDEFINED_CALLBACK,
+  YUKI_INPCTRL_KEYCODE_INVALID,
   YUKI_THREAD_ATTACHMENT_DUPLICATE_ID,
   YUKI_THREAD_CREATION_FAILED,
   YUKI_THREAD_DETACHMENT_NEXIST,
@@ -55,6 +56,7 @@ DECLARE_YUKI_ERROR(YukiCreateLogFileError);
 DECLARE_YUKI_ERROR(YukiInpCtrlInsertCallbackExistsError);
 DECLARE_YUKI_ERROR(YukiInpCtrlRemoveCallbackNExistsError);
 DECLARE_YUKI_ERROR(YukiInpCtrlInvokeUndefinedCallbackError);
+DECLARE_YUKI_ERROR(YukiInpCtrlKeyCodeInvalidError);
 
 DECLARE_YUKI_ERROR(YukiThreadAssignmentDuplicateThreadIdError);
 DECLARE_YUKI_ERROR(YukiThreadCreationError);
@@ -70,6 +72,6 @@ DECLARE_YUKI_ERROR(YukiGladLoadGLLoaderError);
 
 DECLARE_YUKI_ERROR(YukiOGLCompileShaderError);
 DECLARE_YUKI_ERROR(YukiOGLShaderProgramIsNotActived);
-DECLARE_YUKI_ERROR(YukiOGLTextureTypeNotCompatible);
+DECLARE_YUKI_ERROR(YukiOGLTextureTypeNotCompatibleError);
 
 } // namespace Yuki::Debug

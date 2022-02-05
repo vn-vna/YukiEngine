@@ -83,6 +83,7 @@ void YukiMesh::RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera)
 
   // Some hard coding
   m_pShaderProgram->UniformValue("U_AmbientStrength", 0.01f);
+  m_pShaderProgram->UniformValue("U_LightIntensity", 0.10f);
   m_pShaderProgram->UniformValue("U_SpecularStrength", 0.50f);
   m_pShaderProgram->UniformVector("U_LightPos", glm::vec3{1.30f, 1.30f, 2.00f});
   m_pShaderProgram->UniformVector("U_LightColor", glm::vec4{1.00f, 1.00f, 1.00f, 1.00f});

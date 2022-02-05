@@ -44,9 +44,19 @@ enum class TextureCompareFunc;
 enum class TextureCompareMode;
 enum class PixelBasedInternalFormat;
 enum class VertexFlag;
+enum class KeyState;
+enum class JoyStickHatState;
+enum class KeyCode;
+enum class MouseBtnCode;
+enum class JoystickBtnCode;
+enum class GamepadBtnCode;
+enum class GamepadAxes;
+enum class KeyModifier;
 
+struct StKeyStatus;
 struct StVertexFormat;
 struct StIndexData;
+struct StKeyStatus;
 
 } // namespace Core
 

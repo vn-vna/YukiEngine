@@ -6,7 +6,7 @@
 #define CHECK_VALID_TEXTURE_TYPE(type, valid)                 \
   if (type != valid)                                          \
   {                                                           \
-    THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatible); \
+    THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatibleError); \
   }
 
 namespace Yuki::Core

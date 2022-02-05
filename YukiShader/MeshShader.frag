@@ -15,6 +15,7 @@ uniform float     U_AmbientStrength;
 uniform vec3      U_LightPos;
 uniform vec4      U_LightColor;
 uniform vec3      U_ViewPosition;
+uniform float     U_LightIntensity;
 
 uniform sampler2D U_MeshTextures;
 
@@ -40,8 +41,9 @@ void main()
   {
     vec4 ambient            = U_AmbientStrength * U_LightColor;
 
+    float lightDistance     = length(U_LightPos - GS_FragPos); 
     vec3 lightDirection     = normalize(U_LightPos - GS_FragPos);
-    float diff              = max(dot(GS_Normal, lightDirection / (length(U_LightPos - GS_FragPos) / 2)), 0.0);
+    float diff              = max(dot(GS_Normal, lightDirection / pow(lightDistance, U_LightIntensity)), 0.0);
     vec4 diffuse            = diff * U_LightColor;
 
     vec3 viewDirection      = normalize(U_ViewPosition - GS_FragPos);

@@ -1,4 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiInputCtrl.hpp"
 #include "YukiDebug/YukiError.hpp"
 #include "YukiComp/YukiMesh.hpp"
 #include "YukiComp/YukiCamera.hpp"
@@ -46,68 +48,6 @@ void YukiGfxControl::Awake()
   camera = Comp::CreateYukiCamera();
   camera->SetFieldOfView(glm::radians(60.0f));
 
-  camera->SetCameraKeyCallback(
-      [&](const int& key, const int& scancode, const int& action, const int& modifiers) {
-        if (action == GLFW_PRESS || action == GLFW_REPEAT)
-        {
-          switch (key)
-          {
-          case GLFW_KEY_A:
-            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraHorizontalAxis());
-            break;
-          case GLFW_KEY_D:
-            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraHorizontalAxis());
-            break;
-          case GLFW_KEY_W:
-            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraVerticalAxis());
-            break;
-          case GLFW_KEY_S:
-            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraVerticalAxis());
-            break;
-          case GLFW_KEY_Q:
-            camera->SetCameraPosition(camera->GetCameraPosition() + 0.10f * camera->GetCameraTopAxis());
-            break;
-          case GLFW_KEY_E:
-            camera->SetCameraPosition(camera->GetCameraPosition() - 0.10f * camera->GetCameraTopAxis());
-            break;
-
-          case GLFW_KEY_U:
-            camera->CameraRotateDirection(camera->GetCameraVerticalAxis(), glm::radians(90.0f));
-            break;
-
-          case GLFW_KEY_M:
-            camera->CameraRotateViewport(glm::radians(1.00f));
-            break;
-          case GLFW_KEY_N:
-            camera->CameraRotateViewport(glm::radians(-1.00f));
-            break;
-
-          case GLFW_KEY_Z:
-            camera->SetFieldOfView(camera->GetFieldOfView() + glm::radians(5.0f));
-            break;
-          case GLFW_KEY_X:
-            camera->SetFieldOfView(camera->GetFieldOfView() - glm::radians(5.0f));
-            break;
-
-          case GLFW_KEY_UP:
-            camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(+1.00f));
-            break;
-          case GLFW_KEY_DOWN:
-            camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(-1.00f));
-            break;
-          case GLFW_KEY_LEFT:
-            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(+1.00f));
-            break;
-          case GLFW_KEY_RIGHT:
-            camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-1.00f));
-            break;
-
-          default:
-            break;
-          }
-        }
-      });
-
   tex = Utils::YukiImage("tex.png").Create2DTexture();
 
   unsigned vertexFlag  = (unsigned) VertexFlag::ENABLE_LIGHTNING | (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR | (unsigned) VertexFlag::ENABLE_TEXTURE;
@@ -154,14 +94,74 @@ void YukiGfxControl::Awake()
 
 void YukiGfxControl::Render()
 {
-  camera->Update();
-
   // Clear screen;
   glBindFramebuffer(GL_FRAMEBUFFER, 0); // Use Default FrameBuffer
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
   glClearColor(0.00f, 0.00f, 0.00f, 1.00f);           // Set clear color
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear frame buffer
+
+  // TEST
+  {
+    AutoType keyAStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_A);
+    if (keyAStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraHorizontalAxis() * 0.03f);
+    }
+    AutoType keyDStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_D);
+    if (keyDStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraHorizontalAxis() * 0.03f);
+    }
+    AutoType keyWStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_W);
+    if (keyWStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraVerticalAxis() * 0.03f);
+    }
+    AutoType keySStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_S);
+    if (keySStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraVerticalAxis() * 0.03f);
+    }
+  }
+  {
+    AutoType keyUpStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_UP);
+    if (keyUpStat.state != KeyState::RELEASE)
+    {
+      camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(30.00f) * 0.03f);
+    }
+    AutoType keyDownStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_DOWN);
+    if (keyDownStat.state != KeyState::RELEASE)
+    {
+      camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(-30.00f) * 0.03f);
+    }
+    AutoType keyLeftStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_LEFT);
+    if (keyLeftStat.state != KeyState::RELEASE)
+    {
+      camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(30.00f) * 0.03f);
+    }
+    AutoType keyRightStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_RIGHT);
+    if (keyRightStat.state != KeyState::RELEASE)
+    {
+      camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-30.00f) * 0.03f);
+    }
+  }
+  {
+    AutoType keyQStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_Q);
+    if (keyQStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraTopAxis() * 0.03f);
+    }
+    AutoType keyEStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_E);
+    if (keyEStat.state != KeyState::RELEASE)
+    {
+      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraTopAxis() * 0.03f);
+    }
+  }
+
+  camera->Update();
+
+  // TEST
 
   // TEST
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
