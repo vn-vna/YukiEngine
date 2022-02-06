@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Srcs\Entity.cpp" />
     <ClCompile Include="Srcs\YukiCamera.cpp" />
     <ClCompile Include="Srcs\YukiGraphicsControl.cpp" />
     <ClCompile Include="Srcs\YukiImage.cpp" />
@@ -40,7 +41,6 @@
   <ItemGroup>
     <ClInclude Include="Include\YukiComp\YukiCamera.hpp" />
     <ClInclude Include="Include\YukiComp\YukiMesh.hpp" />
-    <ClInclude Include="Include\YukiComp\YukiScene.hpp" />
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp" />
     <ClInclude Include="Include\YukiCore\YukiGraphics.hpp" />
     <ClInclude Include="Include\YukiCore\YukiInputCtrl.hpp" />
@@ -50,6 +50,9 @@
     <ClInclude Include="Include\YukiCore\YukiPCH.hpp" />
     <ClInclude Include="Include\YukiDebug\YukiError.hpp" />
     <ClInclude Include="Include\YukiDebug\YukiLogger.hpp" />
+    <ClInclude Include="Include\YukiEntities\Camera.hpp" />
+    <ClInclude Include="Include\YukiEntities\Entity.hpp" />
+    <ClInclude Include="Include\YukiEntities\Scene.hpp" />
     <ClInclude Include="Include\YukiUtil\YukiChrono.hpp" />
     <ClInclude Include="Include\YukiUtil\YukiImage.hpp" />
     <ClInclude Include="Srcs\PYukiApplication.hpp" />

@@ -8,18 +8,6 @@
 
 #include "PYukiGraphicsControl.hpp"
 
-
-/// TEST CODE
-
-#include <glm/gtc/matrix_transform.hpp>
-
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       mesh;
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       lightCube;
-Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     camera;
-Yuki::SharedPtr<Yuki::Core::IYukiOGLTexture> tex;
-
-/// TEST CODE
-
 namespace Yuki::Core
 {
 
@@ -44,52 +32,6 @@ void YukiGfxControl::Create()
 void YukiGfxControl::Awake()
 {
 
-  // TEST
-  camera = Comp::CreateYukiCamera();
-  camera->SetFieldOfView(glm::radians(60.0f));
-
-  tex = Utils::YukiImage("tex.png").Create2DTexture();
-
-  unsigned vertexFlag  = (unsigned) VertexFlag::ENABLE_LIGHTNING | (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR | (unsigned) VertexFlag::ENABLE_TEXTURE;
-  unsigned vertexFlag2 = (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR;
-
-  std::vector<VertexData> vdata;
-  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
-
-  std::vector<VertexData> vdata2;
-  vdata2.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-
-  // clang-format off
-  std::vector<unsigned> indices = {
-    0, 2, 3, 0, 3, 1,
-    4, 7, 6, 4, 5, 7,
-    1, 3, 7, 1, 7, 5,
-    0, 4, 6, 0, 6, 2,
-    0, 1, 5, 0, 5, 4,
-    2, 6, 7, 2, 7, 3
-  };
-  // clang-format on
-
-  IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
-
-  mesh      = Comp::CreateYukiMesh(vdata, idata, tex, L"MeshTest");
-  lightCube = Comp::CreateYukiMesh(vdata2, idata, tex, L"LightCube");
-
-  // TEST
 }
 
 void YukiGfxControl::Render()
@@ -101,87 +43,10 @@ void YukiGfxControl::Render()
   glClearColor(0.00f, 0.00f, 0.00f, 1.00f);           // Set clear color
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear frame buffer
 
-  // TEST
-  {
-    AutoType keyAStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_A);
-    if (keyAStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraHorizontalAxis() * 0.03f);
-    }
-    AutoType keyDStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_D);
-    if (keyDStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraHorizontalAxis() * 0.03f);
-    }
-    AutoType keyWStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_W);
-    if (keyWStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraVerticalAxis() * 0.03f);
-    }
-    AutoType keySStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_S);
-    if (keySStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraVerticalAxis() * 0.03f);
-    }
-  }
-  {
-    AutoType keyUpStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_UP);
-    if (keyUpStat.state != KeyState::RELEASE)
-    {
-      camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(30.00f) * 0.03f);
-    }
-    AutoType keyDownStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_DOWN);
-    if (keyDownStat.state != KeyState::RELEASE)
-    {
-      camera->CameraRotateDirection(camera->GetCameraHorizontalAxis(), glm::radians(-30.00f) * 0.03f);
-    }
-    AutoType keyLeftStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_LEFT);
-    if (keyLeftStat.state != KeyState::RELEASE)
-    {
-      camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(30.00f) * 0.03f);
-    }
-    AutoType keyRightStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_RIGHT);
-    if (keyRightStat.state != KeyState::RELEASE)
-    {
-      camera->CameraRotateDirection(camera->GetCameraTopAxis(), glm::radians(-30.00f) * 0.03f);
-    }
-  }
-  {
-    AutoType keyQStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_Q);
-    if (keyQStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() + camera->GetCameraTopAxis() * 0.03f);
-    }
-    AutoType keyEStat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_E);
-    if (keyEStat.state != KeyState::RELEASE)
-    {
-      camera->SetCameraPosition(camera->GetCameraPosition() - camera->GetCameraTopAxis() * 0.03f);
-    }
-  }
-
-  camera->Update();
-
-  // TEST
-
-  // TEST
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  mesh->RenderMesh(glm::identity<glm::mat4>(), camera);
-
-  lightCube->RenderMesh(
-      glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{1.30f, 1.30f, 2.00f}), glm::vec3{0.05f, 0.05f, 0.05f}),
-      camera);
-  // TEST
 }
 
 void YukiGfxControl::Destroy()
 {
-
-  // TEST
-  tex->Destroy();
-  mesh->Destroy();
-  lightCube->Destroy();
-  // TEST
-
   Comp::ReleaseMeshShader();
 }
 
