@@ -66,4 +66,4 @@
 **/*.h        linguist-language=C++
 
 # Ignore dependencies from language recognization
-YukiDeps/**/* linguist-vendored
+YukiDeps/*    linguist-vendored
