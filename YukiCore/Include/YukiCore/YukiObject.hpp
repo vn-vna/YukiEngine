@@ -83,4 +83,10 @@ class YUKIAPI IYukiScene;
 class YUKIAPI IYukiCamera;
 } // namespace Comp
 
+namespace Entities
+{
+class YUKIAPI Entity;
+class YUKIAPI Scene;
+}
+
 } // namespace Yuki
