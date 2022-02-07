@@ -12,7 +12,8 @@ YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYuk
     : m_pShaderProgram(g_pDefaultMeshShader),
       m_pTexture(textureList),
       m_Name(name),
-      m_eTopology(topology)
+      m_eTopology(topology),
+      m_nRequired(0)
 {
   m_pVertexBuffer  = Core::CreateGLVertexBuffer();
   m_pElementBuffer = Core::CreateGLElementBuffer();
@@ -20,6 +21,11 @@ YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYuk
 }
 
 YukiMesh::~YukiMesh() = default;
+
+ComponentType YukiMesh::GetComponentType()
+{
+  return ComponentType::MESH;
+}
 
 SharedPtr<Core::IYukiOGLTexture> YukiMesh::GetMeshTexture()
 {
@@ -58,16 +64,28 @@ const String& YukiMesh::GetName()
 
 void YukiMesh::Create()
 {
-  m_pVertexBuffer->Create();
-  m_pElementBuffer->Create();
-  m_pVertexArray->Create();
+  if (m_nRequired <= 0)
+  {
+    m_pVertexBuffer->Create();
+    m_pElementBuffer->Create();
+    m_pVertexArray->Create();
+    m_nRequired = 1;
+  }
+  else
+  {
+    ++m_nRequired;
+  }
 }
 
 void YukiMesh::Destroy()
 {
-  m_pVertexBuffer->Destroy();
-  m_pElementBuffer->Destroy();
-  m_pVertexArray->Destroy();
+  --m_nRequired;
+  if (m_nRequired == 0)
+  {
+    m_pVertexBuffer->Destroy();
+    m_pElementBuffer->Destroy();
+    m_pVertexArray->Destroy();
+  }
 }
 
 void YukiMesh::RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera)
