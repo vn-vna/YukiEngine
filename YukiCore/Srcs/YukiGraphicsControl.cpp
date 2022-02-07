@@ -31,7 +31,6 @@ void YukiGfxControl::Create()
 
 void YukiGfxControl::Awake()
 {
-
 }
 
 void YukiGfxControl::Render()
@@ -42,7 +41,6 @@ void YukiGfxControl::Render()
   glDepthFunc(GL_LESS);
   glClearColor(0.00f, 0.00f, 0.00f, 1.00f);           // Set clear color
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear frame buffer
-
 }
 
 void YukiGfxControl::Destroy()

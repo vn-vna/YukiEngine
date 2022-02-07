@@ -25,6 +25,8 @@ public:
   YukiCamera();
   virtual ~YukiCamera();
 
+  ComponentType GetComponentType() override;
+
   const glm::mat4& GetCameraViewMatrix() override;
   const glm::mat4& GetCameraProjectionMatrix() override;
   const glm::vec3& GetCameraPosition() override;

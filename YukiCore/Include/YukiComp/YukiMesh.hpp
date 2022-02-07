@@ -1,12 +1,12 @@
 #pragma once
 
-#include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiGraphics.hpp"
+#include "YukiComp/YukiComponent.hpp"
 
 namespace Yuki::Comp
 {
 
-class YUKIAPI IYukiMesh : public Core::IYukiObject
+class YUKIAPI IYukiMesh : public IYukiComp
 {
 public:
   virtual SharedPtr<Core::IYukiOGLTexture>       GetMeshTexture()   = 0;

@@ -49,12 +49,6 @@
     <Filter Include="External Binaries">
       <UniqueIdentifier>{3bbdbee6-7720-46e9-9c1c-6c2ea7ad142e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include\Entities">
-      <UniqueIdentifier>{3a0be470-483d-4191-b5e5-801c184422f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Srcs\Entities">
-      <UniqueIdentifier>{085d4cd8-88e8-433b-bae1-5b5d75e7a8e8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Srcs\YukiOGLVertexBuffer.cpp">
@@ -108,8 +102,8 @@
     <ClCompile Include="Srcs\YukiImage.cpp">
       <Filter>Srcs\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\Entity.cpp">
-      <Filter>Srcs\Entities</Filter>
+    <ClCompile Include="Srcs\YukiEntity.cpp">
+      <Filter>Srcs\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +182,17 @@
     <ClInclude Include="Include\YukiUtil\YukiImage.hpp">
       <Filter>Include\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiEntities\Entity.hpp">
-      <Filter>Include\Entities</Filter>
+    <ClInclude Include="Include\YukiComp\YukiLights.hpp">
+      <Filter>Include\YukiComp</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiEntities\Scene.hpp">
-      <Filter>Include\Entities</Filter>
+    <ClInclude Include="Include\YukiComp\YukiComponent.hpp">
+      <Filter>Include\YukiComp</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiEntities\Camera.hpp">
-      <Filter>Include\Entities</Filter>
+    <ClInclude Include="Include\YukiComp\YukiEntity.hpp">
+      <Filter>Include\YukiComp</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiScene.hpp">
+      <Filter>Include\YukiComp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

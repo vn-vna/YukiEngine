@@ -64,6 +64,7 @@ namespace Debug
 {
 
 enum class YUKIAPI YukiErrCode;
+
 class YUKIAPI      YukiError;
 class YUKIAPI      IYukiLogger;
 
@@ -71,22 +72,27 @@ class YUKIAPI      IYukiLogger;
 
 namespace Chrono
 {
+
 struct YUKIAPI StDateTimeFormat;
 struct YUKIAPI StAsciiDateTimeFormat;
-class YUKIAPI  IYukiTimer;
+
+class YUKIAPI IYukiTimer;
+
 } // namespace Chrono
 
 namespace Comp
 {
+
+class YUKIAPI IYukiComp;
 class YUKIAPI IYukiMesh;
 class YUKIAPI IYukiScene;
 class YUKIAPI IYukiCamera;
-} // namespace Comp
+class YUKIAPI YukiEntity;
+class YUKIAPI YukiScene;
+class YUKIAPI IYukiDirectionalLight;
+class YUKIAPI IYukiPointLight;
+class YUKIAPI IYukiSpotLight;
 
-namespace Entities
-{
-class YUKIAPI Entity;
-class YUKIAPI Scene;
-}
+} // namespace Comp
 
 } // namespace Yuki

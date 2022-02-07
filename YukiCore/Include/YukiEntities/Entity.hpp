@@ -7,7 +7,7 @@
 namespace Yuki::Entities
 {
 
-typedef std::map<String, SharedPtr<Core::IYukiObject>> ComponentsPoolType;
+typedef std::map<String, SharedPtr<Comp::IYukiComp>> ComponentsPoolType;
 
 class YUKIAPI Entity : protected Core::IYukiObject
 {
@@ -34,7 +34,7 @@ public:
   virtual void OnRender();
   virtual void OnDestroy();
 
-  virtual void AddComponent(const String& name, SharedPtr<Core::IYukiObject> comp);
+  virtual void AddComponent(const String& name, SharedPtr<Comp::IYukiComp> comp);
   virtual void RemoveComponent(const String& name);
 
   template <typename CompType>

@@ -31,6 +31,11 @@ YukiCamera::YukiCamera()
 
 YukiCamera::~YukiCamera() = default;
 
+ComponentType YukiCamera::GetComponentType()
+{
+  return ComponentType::CAMERA;
+}
+
 const glm::mat4& YukiCamera::GetCameraViewMatrix()
 {
   return m_ViewMatrix;
