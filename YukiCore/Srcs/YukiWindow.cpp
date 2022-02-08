@@ -99,11 +99,17 @@ GLFWwindow* YukiWindow::GetGLFWWindow()
 
 void YukiWindow::Create()
 {
+  if (m_bCreated)
+  {
+    THROW_YUKI_ERROR(Debug::YukiWindowRecreationError);
+    m_bCreated = true;
+  }
+
   if (!g_bGLFWInited)
   {
     initAndCheckGLFW();
+    g_bGLFWInited = true;
   }
-  g_bGLFWInited = true;
 
   glfwDefaultWindowHints();
   glfwWindowHint(GLFW_SAMPLES, YUKI_WINDOW_SAMPLES);
@@ -140,6 +146,12 @@ void YukiWindow::Update()
 
 void YukiWindow::Destroy()
 {
+  if (!m_bCreated)
+  {
+    THROW_YUKI_ERROR(Debug::YukiWindowNotCreatedError);
+    m_bCreated = false;
+  }
+
   if (m_pGLFWWindow)
   {
     glfwDestroyWindow(m_pGLFWWindow);

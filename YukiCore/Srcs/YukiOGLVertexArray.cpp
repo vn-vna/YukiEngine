@@ -51,12 +51,21 @@ void YukiOGLVertexArray::AttributeBinding(const unsigned& attrib, const unsigned
 
 void YukiOGLVertexArray::Create()
 {
-  glCreateVertexArrays(1, &m_nVaoID);
+  if (m_nRequired <= 0)
+  {
+    glCreateVertexArrays(1, &m_nVaoID);
+    m_nRequired = 0;
+  }
+  ++m_nRequired;
 }
 
 void YukiOGLVertexArray::Destroy()
 {
-  glDeleteVertexArrays(1, &m_nVaoID);
+  --m_nRequired;
+  if (m_nRequired == 0)
+  {
+    glDeleteVertexArrays(1, &m_nVaoID);
+  }
 }
 
 SharedPtr<IYukiOGLVertexArray> CreateGLVertexArray()

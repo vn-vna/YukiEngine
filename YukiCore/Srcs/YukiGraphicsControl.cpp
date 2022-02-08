@@ -12,12 +12,19 @@ namespace Yuki::Core
 {
 
 YukiGfxControl::YukiGfxControl()
+    : m_bCreated(false)
 {}
 
 YukiGfxControl::~YukiGfxControl() = default;
 
 void YukiGfxControl::Create()
 {
+  if (m_bCreated)
+  {
+    THROW_YUKI_ERROR(Debug::YukiGfxControlRecreationError);
+  }
+  m_bCreated = true;
+
   if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
   {
     THROW_YUKI_ERROR(Debug::YukiGladLoadGLLoaderError);
@@ -45,6 +52,12 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
+  if (!m_bCreated)
+  {
+    THROW_YUKI_ERROR(Debug::YukiGfxControlNotCreatedError);
+  }
+  m_bCreated = false;
+
   Comp::ReleaseMeshShader();
 }
 

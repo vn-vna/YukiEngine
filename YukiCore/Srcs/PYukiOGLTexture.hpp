@@ -9,6 +9,7 @@ class YukiOGLTexture : public IYukiOGLTexture
 {
 protected:
   unsigned    m_nTexID;
+  int         m_nRequired;
   TextureType m_eTexType;
 
 public:

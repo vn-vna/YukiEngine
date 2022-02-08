@@ -15,6 +15,7 @@ class YukiWindow : public IYukiWindow
 {
 protected:
   GLFWwindow* m_pGLFWWindow;
+  bool        m_bCreated;
 
 public:
   YukiWindow();

@@ -7,6 +7,9 @@ namespace Yuki::Core
 
 class YukiGfxControl : public IYukiGfxControl
 {
+protected:
+  bool m_bCreated;
+
 public:
   YukiGfxControl();
   virtual ~YukiGfxControl();
