@@ -91,7 +91,7 @@ class YUKIAPI YukiEntity;
 class YUKIAPI YukiScene;
 class YUKIAPI IYukiDirectionalLight;
 class YUKIAPI IYukiPointLight;
-class YUKIAPI IYukiSpotLight;
+class YUKIAPI IYukiFlashLight;
 
 } // namespace Comp
 

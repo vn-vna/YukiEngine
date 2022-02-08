@@ -6,6 +6,12 @@
 namespace Yuki::Comp
 {
 
+SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
+    std::vector<Core::VertexData>&    vertexData,
+    Core::IndexData&                  indexData,
+    SharedPtr<Core::IYukiOGLTexture>& texture,
+    const String&                     meshName);
+
 class YUKIAPI IYukiMesh : public IYukiComp
 {
 public:
@@ -18,13 +24,14 @@ public:
   virtual const String&                          GetName()          = 0;
 
   virtual void RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera) = 0;
-};
 
-SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
-    std::vector<Core::VertexData>&    vertexData,
-    Core::IndexData&                  indexData,
-    SharedPtr<Core::IYukiOGLTexture>& texture,
-    const String&                     meshName);
+
+  friend SharedPtr<IYukiMesh> CreateYukiMesh(
+      std::vector<Core::VertexData>&    vertexData,
+      Core::IndexData&                  indexData,
+      SharedPtr<Core::IYukiOGLTexture>& texture,
+      const String&                     meshName);
+};
 
 void YUKIAPI InitializeMeshShader();
 void YUKIAPI ReleaseMeshShader();

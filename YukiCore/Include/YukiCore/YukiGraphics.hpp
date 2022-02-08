@@ -556,9 +556,9 @@ public:
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
   virtual const TextureMagFilter        GetTextureMagFilter()        = 0;
   virtual const TextureDepthStencilMode GetDepthStencilTextureMode() = 0;
-  virtual const int                     GetTextureBaseLevel()        = 0;
   virtual const TextureCompareFunc      GetTextureCompareFunc()      = 0;
   virtual const TextureCompareMode      GetTextureCompareMode()      = 0;
+  virtual const int                     GetTextureBaseLevel()        = 0;
   virtual const float                   GetTextureLodBias()          = 0;
 
   virtual void GenerateMipMap()                  = 0;

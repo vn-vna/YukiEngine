@@ -10,7 +10,7 @@ typedef std::map<String, SharedPtr<IYukiCamera>>           CamerasPoolType;
 typedef std::map<String, SharedPtr<IYukiMesh>>             MeshesPoolType;
 typedef std::map<String, SharedPtr<IYukiDirectionalLight>> DirectionalLightsPoolType;
 typedef std::map<String, SharedPtr<IYukiPointLight>>       PointLightsPoolType;
-typedef std::map<String, SharedPtr<IYukiSpotLight>>        SpotLightsPoolType;
+typedef std::map<String, SharedPtr<IYukiFlashLight>>        SpotLightsPoolType;
 
 class YUKIAPI YukiScene : public Core::IYukiObject
 {

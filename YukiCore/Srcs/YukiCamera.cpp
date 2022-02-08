@@ -16,12 +16,12 @@ namespace Yuki::Comp
 
 YukiCamera::YukiCamera()
     : m_nCamID(g_CXIndex++),
-      m_ViewMatrix(1.00f),
-      m_ProjectionMatrix(1.00f)
+      m_tViewMatrix(1.00f),
+      m_tProjectionMatrix(1.00f)
 {
-  m_CamPos            = {0.00f, 0.00f, -1.00f};
-  m_CamDirection      = {0.00f, 0.00f, 1.00f};
-  m_CamTop            = {0.00f, 1.00f, 0.00f};
+  m_tCamPos           = {0.00f, 0.00f, -1.00f};
+  m_tCamDirection     = {0.00f, 0.00f, 1.00f};
+  m_tCamTop           = {0.00f, 1.00f, 0.00f};
   m_nFOV              = glm::radians(360.00f);
   AutoType windowSize = Core::GetYukiApp()->GetWindow()->GetWindowSize();
   m_nAspectRatio      = windowSize.x / windowSize.y;
@@ -38,22 +38,22 @@ ComponentType YukiCamera::GetComponentType()
 
 const glm::mat4& YukiCamera::GetCameraViewMatrix()
 {
-  return m_ViewMatrix;
+  return m_tViewMatrix;
 }
 
 const glm::mat4& YukiCamera::GetCameraProjectionMatrix()
 {
-  return m_ProjectionMatrix;
+  return m_tProjectionMatrix;
 }
 
 const glm::vec3& YukiCamera::GetCameraPosition()
 {
-  return m_CamPos;
+  return m_tCamPos;
 }
 
 const glm::vec3& YukiCamera::GetCameraDirection()
 {
-  return m_CamDirection;
+  return m_tCamDirection;
 }
 
 const glm::vec3 YukiCamera::GetCameraTopAxis()
@@ -63,12 +63,12 @@ const glm::vec3 YukiCamera::GetCameraTopAxis()
 
 const glm::vec3 YukiCamera::GetCameraHorizontalAxis()
 {
-  return glm::cross(GetCameraVerticalAxis(), m_CamTop);
+  return glm::cross(GetCameraVerticalAxis(), m_tCamTop);
 }
 
 const glm::vec3 YukiCamera::GetCameraVerticalAxis()
 {
-  return m_CamDirection;
+  return m_tCamDirection;
 }
 
 const float& YukiCamera::GetFieldOfView()
@@ -93,27 +93,27 @@ const float& YukiCamera::GetFarPerspective()
 
 void YukiCamera::CameraRotateViewport(const float& rad)
 {
-  m_CamTop = glm::rotateZ(m_CamTop, rad);
+  m_tCamTop = glm::rotateZ(m_tCamTop, rad);
 }
 
 void YukiCamera::CameraRotateDirection(const glm::vec3& rotAxis, const float& rad)
 {
-  m_CamDirection = glm::rotate(m_CamDirection, rad, rotAxis);
+  m_tCamDirection = glm::rotate(m_tCamDirection, rad, rotAxis);
 }
 
 void YukiCamera::LookAtPoint(const glm::vec3& point)
 {
-  m_CamDirection = glm::normalize(point - m_CamPos);
+  m_tCamDirection = glm::normalize(point - m_tCamPos);
 }
 
 void YukiCamera::SetCameraDirection(const glm::vec3& direction)
 {
-  m_CamDirection = glm::normalize(direction);
+  m_tCamDirection = glm::normalize(direction);
 }
 
 void YukiCamera::SetCameraPosition(const glm::vec3& position)
 {
-  m_CamPos = position;
+  m_tCamPos = position;
 }
 
 void YukiCamera::SetFieldOfView(const float& fov)
@@ -171,8 +171,8 @@ void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& cal
 
 void YukiCamera::Update()
 {
-  m_ViewMatrix       = glm::lookAt(m_CamPos, m_CamPos + m_CamDirection, m_CamTop);
-  m_ProjectionMatrix = glm::perspective(m_nFOV, m_nAspectRatio, m_nNear, m_nFar);
+  m_tViewMatrix       = glm::lookAt(m_tCamPos, m_tCamPos + m_tCamDirection, m_tCamTop);
+  m_tProjectionMatrix = glm::perspective(m_nFOV, m_nAspectRatio, m_nNear, m_nFar);
 }
 
 SharedPtr<IYukiCamera> CreateYukiCamera()

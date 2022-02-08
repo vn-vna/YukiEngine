@@ -18,7 +18,6 @@ protected:
   glm::mat4      m_RotationMatrix;
   String         m_Name;
 
-
   virtual void Create() override;
   virtual void Awake() override;
   virtual void Update() override;

@@ -12,10 +12,12 @@ enum class ComponentType
   MESH
 };
 
-class YUKIAPI IYukiComp : public Core::IYukiObject
+class YUKIAPI IYukiComp : protected Core::IYukiObject
 {
 public:
   virtual ComponentType GetComponentType() = 0;
+
+  friend class YukiEntity;
 };
 
 } // namespace Yuki::Comp

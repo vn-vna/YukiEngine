@@ -105,6 +105,15 @@
     <ClCompile Include="Srcs\YukiEntity.cpp">
       <Filter>Srcs\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Srcs\YukiDirectionalLight.cpp">
+      <Filter>Srcs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiPointLight.cpp">
+      <Filter>Srcs\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Srcs\YukiFlashLight.cpp">
+      <Filter>Srcs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
@@ -193,6 +202,15 @@
     </ClInclude>
     <ClInclude Include="Include\YukiComp\YukiScene.hpp">
       <Filter>Include\YukiComp</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiDirectionalLight.hpp">
+      <Filter>Private Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiPointLight.hpp">
+      <Filter>Private Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiFlashLight.hpp">
+      <Filter>Private Header\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,9 @@
 namespace Yuki::Core
 {
 
+SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();
+SharedPtr<IYukiApp> YUKIAPI GetYukiApp();
+
 class YUKIAPI IYukiApp : public IYukiObject
 {
 public:
@@ -18,8 +21,5 @@ public:
   virtual SharedPtr<IYukiWindow>&        GetWindow()             = 0;
   virtual SharedPtr<Debug::IYukiLogger>& GetLogger()             = 0;
 };
-
-SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();
-SharedPtr<IYukiApp> YUKIAPI GetYukiApp();
 
 } // namespace Yuki::Core
