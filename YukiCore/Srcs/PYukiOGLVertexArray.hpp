@@ -10,6 +10,7 @@ class YukiOGLVertexArray : public IYukiOGLVertexArray
 {
 protected:
   unsigned m_nVaoID;
+  int      m_nRequired;
 
 public:
   YukiOGLVertexArray();

@@ -17,6 +17,13 @@ namespace Yuki::Debug
 
 enum class YUKIAPI YukiErrCode
 {
+  YUKI_APP_RECREATION_ERROR,
+  YUKI_APP_NOT_CREATED_ERROR,
+  YUKI_APP_INSTANCE_ALREADY_EXISTS,
+  YUKI_GFXCTRL_NOT_CREATED_ERROR,
+  YUKI_GFXCTRL_RECREATION_ERROR,
+  YUKI_WINDOW_NOT_CREATED_ERROR,
+  YUKI_WINDOW_RECREATION_ERROR,
   YUKI_LOGGER_CREATE_LOGFILE_ERROR,
   YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
   YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
@@ -53,6 +60,14 @@ public:
   String             getErrorMessage() const;
   const YukiErrCode& getErrorCode() const;
 };
+
+DECLARE_YUKI_ERROR(YukiApplicationRecreationError);
+DECLARE_YUKI_ERROR(YukiApplicationNotCreatedError);
+DECLARE_YUKI_ERROR(YukiApplicationInstanceExistsError);
+DECLARE_YUKI_ERROR(YukiGfxControlRecreationError);
+DECLARE_YUKI_ERROR(YukiGfxControlNotCreatedError);
+DECLARE_YUKI_ERROR(YukiWindowRecreationError);
+DECLARE_YUKI_ERROR(YukiWindowNotCreatedError);
 
 DECLARE_YUKI_ERROR(YukiCreateLogFileError);
 

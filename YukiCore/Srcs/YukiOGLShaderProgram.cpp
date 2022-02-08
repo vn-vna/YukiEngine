@@ -45,7 +45,8 @@ namespace Yuki::Core
 {
 
 YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
-    : m_nSPId()
+    : m_nSPId(),
+      m_nRequired(0)
 {
   m_VSShaderFile = shaderName + L".vert";
   m_FSShaderFile = shaderName + L".frag";
@@ -66,6 +67,15 @@ void YukiOGLShaderProgram::BindObject()
 
 void YukiOGLShaderProgram::Create()
 {
+  if (m_nRequired > 0)
+  {
+    ++m_nRequired;
+    return;
+  }
+
+  m_nRequired = 0;
+  ++m_nRequired;
+
   AsciiString vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   AsciiString fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
   AsciiString gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
@@ -96,7 +106,11 @@ void YukiOGLShaderProgram::Create()
 
 void YukiOGLShaderProgram::Destroy()
 {
-  glDeleteProgram(m_nSPId);
+  --m_nRequired;
+  if (m_nRequired == 0)
+  {
+    glDeleteProgram(m_nSPId);
+  }
 }
 
 bool YukiOGLShaderProgram::OnUse()

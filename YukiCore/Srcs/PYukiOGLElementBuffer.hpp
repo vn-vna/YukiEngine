@@ -11,6 +11,7 @@ class YukiOGLElementBuffer : public IYukiOGLElementBuffer
 protected:
   unsigned m_nEboID;
   unsigned m_nElementCount;
+  int      m_nRequired;
 
 public:
   YukiOGLElementBuffer();

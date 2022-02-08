@@ -3,9 +3,9 @@
 
 #include "PYukiOGLTexture.hpp"
 
-#define CHECK_VALID_TEXTURE_TYPE(type, valid)                 \
-  if (type != valid)                                          \
-  {                                                           \
+#define CHECK_VALID_TEXTURE_TYPE(type, valid)                      \
+  if (type != valid)                                               \
+  {                                                                \
     THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatibleError); \
   }
 
@@ -13,7 +13,9 @@ namespace Yuki::Core
 {
 
 YukiOGLTexture::YukiOGLTexture(const TextureType& type)
-    : m_nTexID(), m_eTexType(type)
+    : m_nTexID(),
+      m_eTexType(type),
+      m_nRequired(0)
 {}
 
 void YukiOGLTexture::SetTextureMinFilter(const TextureMinFilter& minFilter)
@@ -215,7 +217,12 @@ void YukiOGLTexture::BindTexture(const unsigned& slot)
 
 void YukiOGLTexture::Create()
 {
-  glCreateTextures((int) m_eTexType, 1, &m_nTexID);
+  if (m_nRequired <= 0)
+  {
+    glCreateTextures((int) m_eTexType, 1, &m_nTexID);
+    m_nRequired = 0;
+  }
+  ++m_nRequired;
 }
 
 void YukiOGLTexture::Destroy()
