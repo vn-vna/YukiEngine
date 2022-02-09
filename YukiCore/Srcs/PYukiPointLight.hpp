@@ -5,7 +5,7 @@
 namespace Yuki::Comp
 {
 
-class YukiPointLight : public IYukiPointLight
+class YukiPointLight : public virtual IYukiPointLight
 {
 protected:
   glm::vec3 m_tPosition;

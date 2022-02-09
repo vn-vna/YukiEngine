@@ -5,7 +5,7 @@
 namespace Yuki::Core
 {
 
-class YukiGfxControl : public IYukiGfxControl
+class YukiGfxControl : public virtual IYukiGfxControl
 {
 protected:
   bool m_bCreated;

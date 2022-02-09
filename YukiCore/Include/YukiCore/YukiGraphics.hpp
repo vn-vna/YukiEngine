@@ -433,7 +433,7 @@ typedef struct StIndexData
 /// This object is only used once in Application. This is the class
 /// controls every graphics actions.
 /// </summary>
-class YUKIAPI IYukiGfxControl : public IYukiObject
+class YUKIAPI IYukiGfxControl : public virtual IYukiObject
 {
 public:
 };
@@ -441,7 +441,7 @@ public:
 /// <summary>
 /// OpenGL Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLObject : public IYukiObject
+class YUKIAPI IYukiOGLObject : public virtual IYukiObject
 {
 public:
   virtual const unsigned& GetID()      = 0;

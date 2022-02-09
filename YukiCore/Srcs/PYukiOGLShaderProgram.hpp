@@ -9,7 +9,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram : public IYukiOGLShaderProgram
+class YukiOGLShaderProgram : public virtual IYukiOGLShaderProgram
 {
 protected:
   unsigned m_nSPId;

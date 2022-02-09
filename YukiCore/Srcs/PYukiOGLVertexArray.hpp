@@ -6,7 +6,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexArray : public IYukiOGLVertexArray
+class YukiOGLVertexArray : public virtual IYukiOGLVertexArray
 {
 protected:
   unsigned m_nVaoID;

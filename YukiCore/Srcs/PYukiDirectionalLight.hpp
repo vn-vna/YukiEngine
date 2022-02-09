@@ -5,7 +5,7 @@
 namespace Yuki::Comp
 {
 
-class YukiDirectionalLight : public IYukiDirectionalLight
+class YukiDirectionalLight : public virtual IYukiDirectionalLight
 {
 protected:
   glm::vec3 m_tDirection;

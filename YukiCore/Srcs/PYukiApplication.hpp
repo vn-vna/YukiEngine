@@ -11,7 +11,7 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI YukiApp : IYukiApp
+class YUKIAPI YukiApp : public virtual IYukiApp
 {
 protected:
   SharedPtr<IYukiWindow>        m_pWindow;

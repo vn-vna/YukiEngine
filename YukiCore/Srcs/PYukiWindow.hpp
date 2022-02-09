@@ -11,7 +11,7 @@
 namespace Yuki::Core
 {
 
-class YukiWindow : public IYukiWindow
+class YukiWindow : public virtual IYukiWindow
 {
 protected:
   GLFWwindow* m_pGLFWWindow;

@@ -9,7 +9,7 @@
 namespace Yuki::Comp
 {
 
-class YukiMesh : public IYukiMesh
+class YukiMesh : public virtual IYukiMesh
 {
 protected:
   SharedPtr<Core::IYukiOGLElementBuffer> m_pElementBuffer;

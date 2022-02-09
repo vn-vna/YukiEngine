@@ -10,7 +10,7 @@ namespace Yuki::Core
 SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();
 SharedPtr<IYukiApp> YUKIAPI GetYukiApp();
 
-class YUKIAPI IYukiApp : public IYukiObject
+class YUKIAPI IYukiApp : public virtual IYukiObject
 {
 public:
   virtual void RunApp() = 0;

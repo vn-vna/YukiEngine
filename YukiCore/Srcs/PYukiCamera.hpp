@@ -5,7 +5,7 @@
 namespace Yuki::Comp
 {
 
-class YukiCamera : public IYukiCamera
+class YukiCamera : public virtual IYukiCamera
 {
 protected:
   glm::mat4 m_tViewMatrix;
