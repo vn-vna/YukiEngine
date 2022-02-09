@@ -1,9 +1,17 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiComp/YukiCamera.hpp"
+#include "YukiDebug/YukiError.hpp"
 
 #include "PYukiMesh.hpp"
 
-Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram> g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+
+constexpr const unsigned ASSIMP_LOAD_FLAG = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices;
+
+Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram>
+    g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
 
 namespace Yuki::Comp
 {
@@ -146,6 +154,21 @@ SharedPtr<IYukiMesh> CreateYukiMesh(
   meshVAO->SetAttributeFormat(3, 1, offsetof(Core::VertexFormat, texID));
   meshVAO->AttributeBinding(3, 0);
   return mesh;
+}
+
+std::vector<SharedPtr<IYukiMesh>> LoadMeshesFromFile(const AsciiString& fileName)
+{
+  Assimp::Importer importer;
+  const aiScene*   pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAG);
+
+  if (!pScene)
+  {
+    THROW_YUKI_ERROR(Debug::YukiAssimpLoadModelFailed);
+  }
+
+  std::vector<SharedPtr<IYukiMesh>> aMeshes(pScene->mNumMeshes);
+
+  return std::vector<SharedPtr<IYukiMesh>>();
 }
 
 void InitializeMeshShader()

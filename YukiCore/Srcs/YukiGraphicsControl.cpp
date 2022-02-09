@@ -36,6 +36,7 @@ void YukiGfxControl::Create()
 
 void YukiGfxControl::Awake()
 {
+  Comp::LoadMeshesFromFile("untitled.blend");
 }
 
 void YukiGfxControl::Render()

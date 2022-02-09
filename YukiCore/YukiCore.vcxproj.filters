@@ -223,5 +223,8 @@
     <CopyFileToFolders Include="..\YukiDeps\Binaries\freetype.dll">
       <Filter>External Binaries</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\YukiDeps\Binaries\assimp-vc143-mtd.dll">
+      <Filter>External Binaries</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

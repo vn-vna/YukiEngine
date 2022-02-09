@@ -12,6 +12,8 @@ SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
     SharedPtr<Core::IYukiOGLTexture>& texture,
     const String&                     meshName);
 
+std::vector<SharedPtr<IYukiMesh>> YUKIAPI LoadMeshesFromFile(const AsciiString& fileName);
+
 class YUKIAPI IYukiMesh : public IYukiComp
 {
 public:
@@ -31,6 +33,8 @@ public:
       Core::IndexData&                  indexData,
       SharedPtr<Core::IYukiOGLTexture>& texture,
       const String&                     meshName);
+
+  friend std::vector<SharedPtr<IYukiMesh>> LoadMeshesFromFile(const AsciiString& fileName);
 };
 
 } // namespace Yuki::Comp

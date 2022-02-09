@@ -10,6 +10,7 @@
 #define YUKI_GLFW_ERROR   L"[GLFW]"
 #define YUKI_OPENGL_ERROR L"[OPENGL]"
 #define YUKI_GLAD_ERROR   L"[GLAD]"
+#define YUKI_ASSIMP_ERROR L"[ASSIMP]"
 
 #define CHECK_CASE_OF_ERROR(__err_code, __caused_by)                            \
   case YukiErrCode::__err_code##:                                               \
@@ -67,6 +68,8 @@ String YukiError::getErrorMessage() const
     CHECK_CASE_OF_ERROR(OPENGL_COMPILE_SHADER_ERROR,            YUKI_OPENGL_ERROR);
     CHECK_CASE_OF_ERROR(OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED,    YUKI_OPENGL_ERROR);
     CHECK_CASE_OF_ERROR(OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE,     YUKI_OPENGL_ERROR);
+
+    CHECK_CASE_OF_ERROR(ASSIMP_LOAD_MODEL_FAILED,               YUKI_ASSIMP_ERROR);
     // clang-format on
   }
   return sstr.str();
@@ -112,6 +115,8 @@ MAKE_ERROR_DEFINATION(YukiGladLoadGLLoaderError,                    GLAD_LOAD_GL
 MAKE_ERROR_DEFINATION(YukiOGLCompileShaderError,                    OPENGL_COMPILE_SHADER_ERROR)
 MAKE_ERROR_DEFINATION(YukiOGLShaderProgramIsNotActived,             OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED)
 MAKE_ERROR_DEFINATION(YukiOGLTextureTypeNotCompatibleError,         OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE)
+
+MAKE_ERROR_DEFINATION(YukiAssimpLoadModelFailed,                    ASSIMP_LOAD_MODEL_FAILED)
 // clang-format on
 
 } // namespace Yuki::Debug
