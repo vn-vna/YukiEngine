@@ -33,7 +33,4 @@ public:
       const String&                     meshName);
 };
 
-void YUKIAPI InitializeMeshShader();
-void YUKIAPI ReleaseMeshShader();
-
 } // namespace Yuki::Comp

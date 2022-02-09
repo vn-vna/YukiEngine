@@ -69,6 +69,7 @@ void YukiMesh::Create()
     m_pVertexBuffer->Create();
     m_pElementBuffer->Create();
     m_pVertexArray->Create();
+    m_pShaderProgram->Create();
     m_nRequired = 1;
   }
   else
@@ -85,6 +86,7 @@ void YukiMesh::Destroy()
     m_pVertexBuffer->Destroy();
     m_pElementBuffer->Destroy();
     m_pVertexArray->Destroy();
+    m_pShaderProgram->Destroy();
   }
 }
 

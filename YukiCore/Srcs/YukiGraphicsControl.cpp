@@ -30,8 +30,6 @@ void YukiGfxControl::Create()
     THROW_YUKI_ERROR(Debug::YukiGladLoadGLLoaderError);
   }
 
-  Comp::InitializeMeshShader();
-
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 }
@@ -57,8 +55,6 @@ void YukiGfxControl::Destroy()
     THROW_YUKI_ERROR(Debug::YukiGfxControlNotCreatedError);
   }
   m_bCreated = false;
-
-  Comp::ReleaseMeshShader();
 }
 
 SharedPtr<IYukiGfxControl> CreateGraphicsController()
