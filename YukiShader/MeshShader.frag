@@ -17,12 +17,12 @@ uniform float     U_LightIntensity;
 
 uniform sampler2D U_MeshTextures;
 
-void main() 
+void main()
 {
   bool flagEnableTexture    = GS_Flags        % 2 == 1;
   bool flagEnableLighting   = (GS_Flags / 2)  % 2 == 1;
   bool flagEnableVertColor  = (GS_Flags / 4)  % 2 == 1;
-  
+
   vec4 fragmentColor        = vec4(1.0, 1.0, 1.0, 1.0);
 
   if (flagEnableTexture)
@@ -39,7 +39,7 @@ void main()
   {
     vec4 ambient            = U_AmbientStrength * U_LightColor;
 
-    float lightDistance     = length(U_LightPos - GS_FragPos); 
+    float lightDistance     = length(U_LightPos - GS_FragPos);
     vec3 lightDirection     = normalize(U_LightPos - GS_FragPos);
     float diff              = max(dot(GS_Normal, lightDirection / pow(lightDistance, U_LightIntensity)), 0.0);
     vec4 diffuse            = diff * U_LightColor;
