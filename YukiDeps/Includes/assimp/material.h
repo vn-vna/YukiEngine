@@ -540,9 +540,10 @@ struct aiUVTransform {
 
 #ifdef __cplusplus
     aiUVTransform() AI_NO_EXCEPT
-            : mTranslation(0.0, 0.0),
-              mScaling(1.0, 1.0),
-              mRotation(0.0) {
+:
+    mTranslation(0.0, 0.0),
+                 mScaling(1.0, 1.0),
+    mRotation(0.0) {
         // nothing to be done here ...
     }
 #endif
@@ -591,9 +592,9 @@ enum aiPropertyTypeInfo {
     */
     aiPTI_Buffer = 0x5,
 
-/** This value is not used. It is just there to force the
-     *  compiler to map this enum to a 32 Bit integer.
-     */
+    /** This value is not used. It is just there to force the
+         *  compiler to map this enum to a 32 Bit integer.
+         */
 #ifndef SWIG
     _aiPTI_Force32Bit = INT_MAX
 #endif
@@ -658,11 +659,12 @@ struct aiMaterialProperty {
 #ifdef __cplusplus
 
     aiMaterialProperty() AI_NO_EXCEPT
-            : mSemantic(0),
+:
+    mSemantic(0),
               mIndex(0),
               mDataLength(0),
               mType(aiPTI_Float),
-              mData(nullptr) {
+    mData(nullptr) {
         // empty
     }
 
@@ -723,13 +725,13 @@ public:
      */
     template <typename Type>
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, Type *pOut, unsigned int *pMax) const;
+                 unsigned int idx, Type *pOut, unsigned int *pMax) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, int *pOut, unsigned int *pMax) const;
+                 unsigned int idx, int *pOut, unsigned int *pMax) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, ai_real *pOut, unsigned int *pMax) const;
+                 unsigned int idx, ai_real *pOut, unsigned int *pMax) const;
 
     // -------------------------------------------------------------------
     /** @brief Retrieve a Type value with a specific key
@@ -743,25 +745,25 @@ public:
      */
     template <typename Type>
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, Type &pOut) const;
+                 unsigned int idx, Type &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, int &pOut) const;
+                 unsigned int idx, int &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, ai_real &pOut) const;
+                 unsigned int idx, ai_real &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, aiString &pOut) const;
+                 unsigned int idx, aiString &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, aiColor3D &pOut) const;
+                 unsigned int idx, aiColor3D &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, aiColor4D &pOut) const;
+                 unsigned int idx, aiColor4D &pOut) const;
 
     aiReturn Get(const char *pKey, unsigned int type,
-            unsigned int idx, aiUVTransform &pOut) const;
+                 unsigned int idx, aiUVTransform &pOut) const;
 
     // -------------------------------------------------------------------
     /** Get the number of textures for a particular texture type.
@@ -802,13 +804,13 @@ public:
      */
     // -------------------------------------------------------------------
     aiReturn GetTexture(aiTextureType type,
-            unsigned int index,
-            C_STRUCT aiString *path,
-            aiTextureMapping *mapping = NULL,
-            unsigned int *uvindex = NULL,
-            ai_real *blend = NULL,
-            aiTextureOp *op = NULL,
-            aiTextureMapMode *mapmode = NULL) const;
+                        unsigned int index,
+                        C_STRUCT aiString *path,
+                        aiTextureMapping *mapping = NULL,
+                        unsigned int *uvindex = NULL,
+                        ai_real *blend = NULL,
+                        aiTextureOp *op = NULL,
+                        aiTextureMapMode *mapmode = NULL) const;
 
     // Setters
 
@@ -823,11 +825,11 @@ public:
      *  @param index Set by the AI_MATKEY_XXX macro
      *  @param pType Type information hint */
     aiReturn AddBinaryProperty(const void *pInput,
-            unsigned int pSizeInBytes,
-            const char *pKey,
-            unsigned int type,
-            unsigned int index,
-            aiPropertyTypeInfo pType);
+                               unsigned int pSizeInBytes,
+                               const char *pKey,
+                               unsigned int type,
+                               unsigned int index,
+                               aiPropertyTypeInfo pType);
 
     // ------------------------------------------------------------------------------
     /** @brief Add a string property with a given key and type info to the
@@ -838,9 +840,9 @@ public:
      *  @param type Set by the AI_MATKEY_XXX macro
      *  @param index Set by the AI_MATKEY_XXX macro */
     aiReturn AddProperty(const aiString *pInput,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     // ------------------------------------------------------------------------------
     /** @brief Add a property with a given key to the material structure
@@ -851,52 +853,52 @@ public:
      *  @param index Set by the AI_MATKEY_XXX macro  */
     template <class TYPE>
     aiReturn AddProperty(const TYPE *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const aiVector3D *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const aiColor3D *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const aiColor4D *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const int *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const float *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const double *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     aiReturn AddProperty(const aiUVTransform *pInput,
-            unsigned int pNumValues,
-            const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                         unsigned int pNumValues,
+                         const char *pKey,
+                         unsigned int type = 0,
+                         unsigned int index = 0);
 
     // ------------------------------------------------------------------------------
     /** @brief Remove a given key from the list.
@@ -906,8 +908,8 @@ public:
      *  @param type Set by the AI_MATKEY_XXX macro
      *  @param index Set by the AI_MATKEY_XXX macro  */
     aiReturn RemoveProperty(const char *pKey,
-            unsigned int type = 0,
-            unsigned int index = 0);
+                            unsigned int type = 0,
+                            unsigned int index = 0);
 
     // ------------------------------------------------------------------------------
     /** @brief Removes all properties from the material.
@@ -921,7 +923,7 @@ public:
      *  @param pcSrc Source material
      */
     static void CopyPropertyList(aiMaterial *pcDest,
-            const aiMaterial *pcSrc);
+                                 const aiMaterial *pcSrc);
 
 #endif
 
@@ -1475,11 +1477,11 @@ extern "C" {
  *        structure or NULL if the key has not been found. */
 // ---------------------------------------------------------------------------
 ASSIMP_API C_ENUM aiReturn aiGetMaterialProperty(
-        const C_STRUCT aiMaterial *pMat,
-        const char *pKey,
-        unsigned int type,
-        unsigned int index,
-        const C_STRUCT aiMaterialProperty **pPropOut);
+    const C_STRUCT aiMaterial *pMat,
+    const char *pKey,
+    unsigned int type,
+    unsigned int index,
+    const C_STRUCT aiMaterialProperty **pPropOut);
 
 // ---------------------------------------------------------------------------
 /** @brief Retrieve an array of float values with a specific key
@@ -1508,12 +1510,12 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialProperty(
  *   arrays remains unmodified and pMax is set to 0.*/
 // ---------------------------------------------------------------------------
 ASSIMP_API C_ENUM aiReturn aiGetMaterialFloatArray(
-        const C_STRUCT aiMaterial *pMat,
-        const char *pKey,
-        unsigned int type,
-        unsigned int index,
-        ai_real *pOut,
-        unsigned int *pMax);
+    const C_STRUCT aiMaterial *pMat,
+    const char *pKey,
+    unsigned int type,
+    unsigned int index,
+    ai_real *pOut,
+    unsigned int *pMax);
 
 // ---------------------------------------------------------------------------
 /** @brief Retrieve a single float property with a specific key from the material.
@@ -1535,10 +1537,10 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialFloatArray(
 *   float remains unmodified.*/
 // ---------------------------------------------------------------------------
 inline aiReturn aiGetMaterialFloat(const C_STRUCT aiMaterial *pMat,
-        const char *pKey,
-        unsigned int type,
-        unsigned int index,
-        ai_real *pOut) {
+                                   const char *pKey,
+                                   unsigned int type,
+                                   unsigned int index,
+                                   ai_real *pOut) {
     return aiGetMaterialFloatArray(pMat, pKey, type, index, pOut, (unsigned int *)0x0);
 }
 
@@ -1560,10 +1562,10 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialIntegerArray(const C_STRUCT aiMaterial *
  * See the sample for aiGetMaterialFloat for more information.*/
 // ---------------------------------------------------------------------------
 inline aiReturn aiGetMaterialInteger(const C_STRUCT aiMaterial *pMat,
-        const char *pKey,
-        unsigned int type,
-        unsigned int index,
-        int *pOut) {
+                                     const char *pKey,
+                                     unsigned int type,
+                                     unsigned int index,
+                                     int *pOut) {
     return aiGetMaterialIntegerArray(pMat, pKey, type, index, pOut, (unsigned int *)0x0);
 }
 
@@ -1660,15 +1662,15 @@ ASSIMP_API aiReturn aiGetMaterialTexture(const C_STRUCT aiMaterial *mat,
         unsigned int *flags = NULL);
 #else
 C_ENUM aiReturn aiGetMaterialTexture(const C_STRUCT aiMaterial *mat,
-        C_ENUM aiTextureType type,
-        unsigned int index,
-        C_STRUCT aiString *path,
-        C_ENUM aiTextureMapping *mapping /*= NULL*/,
-        unsigned int *uvindex /*= NULL*/,
-        ai_real *blend /*= NULL*/,
-        C_ENUM aiTextureOp *op /*= NULL*/,
-        C_ENUM aiTextureMapMode *mapmode /*= NULL*/,
-        unsigned int *flags /*= NULL*/);
+                                     C_ENUM aiTextureType type,
+                                     unsigned int index,
+                                     C_STRUCT aiString *path,
+                                     C_ENUM aiTextureMapping *mapping /*= NULL*/,
+                                     unsigned int *uvindex /*= NULL*/,
+                                     ai_real *blend /*= NULL*/,
+                                     C_ENUM aiTextureOp *op /*= NULL*/,
+                                     C_ENUM aiTextureMapMode *mapmode /*= NULL*/,
+                                     unsigned int *flags /*= NULL*/);
 #endif // !#ifdef __cplusplus
 
 #ifdef __cplusplus

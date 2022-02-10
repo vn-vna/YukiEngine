@@ -65,7 +65,8 @@ template <typename TReal>
 class aiQuaterniont
 {
 public:
-    aiQuaterniont() AI_NO_EXCEPT : w(1.0), x(), y(), z() {}
+aiQuaterniont() AI_NO_EXCEPT :
+    w(1.0), x(), y(), z() {}
     aiQuaterniont(TReal pw, TReal px, TReal py, TReal pz)
         : w(pw), x(px), y(py), z(pz) {}
 
@@ -117,7 +118,7 @@ public:
      * @param pFactor Interpolation factor between 0 and 1. Values outside of this range yield undefined results.
      */
     static void Interpolate( aiQuaterniont& pOut, const aiQuaterniont& pStart,
-        const aiQuaterniont& pEnd, TReal pFactor);
+                             const aiQuaterniont& pEnd, TReal pFactor);
 
 public:
 

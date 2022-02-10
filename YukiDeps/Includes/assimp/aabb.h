@@ -50,8 +50,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <assimp/vector3.h>
 
 // ---------------------------------------------------------------------------
-/** 
- *  An axis-aligned bounding box.  
+/**
+ *  An axis-aligned bounding box.
  */
 struct aiAABB {
     C_STRUCT aiVector3D mMin;
@@ -60,7 +60,7 @@ struct aiAABB {
 #ifdef __cplusplus
     /// @brief The default class constructor.
     aiAABB() :
-            mMin(), mMax() {
+        mMin(), mMax() {
         // empty
     }
 
@@ -68,7 +68,7 @@ struct aiAABB {
     /// @param min  The minimum dimension.
     /// @param max  The maximum dimension.
     aiAABB(const aiVector3D &min, const aiVector3D &max) :
-            mMin(min), mMax(max) {
+        mMin(min), mMax(max) {
         // empty
     }
 

@@ -81,7 +81,7 @@ public:
      *   between the knobs representing the nodes.
      */
     SkeletonMeshBuilder(aiScene *pScene, aiNode *root = nullptr,
-            bool bKnobsOnly = false);
+                        bool bKnobsOnly = false);
 
 protected:
     // -------------------------------------------------------------------

@@ -128,12 +128,13 @@ static const size_t MAXLEN = 1024;
 */
 struct aiPlane {
 #ifdef __cplusplus
-    aiPlane() AI_NO_EXCEPT : a(0.f), b(0.f), c(0.f), d(0.f) {}
+aiPlane() AI_NO_EXCEPT :
+    a(0.f), b(0.f), c(0.f), d(0.f) {}
     aiPlane(ai_real _a, ai_real _b, ai_real _c, ai_real _d) :
-            a(_a), b(_b), c(_c), d(_d) {}
+        a(_a), b(_b), c(_c), d(_d) {}
 
     aiPlane(const aiPlane &o) :
-            a(o.a), b(o.b), c(o.c), d(o.d) {}
+        a(o.a), b(o.b), c(o.c), d(o.d) {}
 
 #endif // !__cplusplus
 
@@ -148,10 +149,10 @@ struct aiRay {
 #ifdef __cplusplus
     aiRay() AI_NO_EXCEPT {}
     aiRay(const aiVector3D &_pos, const aiVector3D &_dir) :
-            pos(_pos), dir(_dir) {}
+        pos(_pos), dir(_dir) {}
 
     aiRay(const aiRay &o) :
-            pos(o.pos), dir(o.dir) {}
+        pos(o.pos), dir(o.dir) {}
 
 #endif // !__cplusplus
 
@@ -164,13 +165,14 @@ struct aiRay {
 */
 struct aiColor3D {
 #ifdef __cplusplus
-    aiColor3D() AI_NO_EXCEPT : r(0.0f), g(0.0f), b(0.0f) {}
+aiColor3D() AI_NO_EXCEPT :
+    r(0.0f), g(0.0f), b(0.0f) {}
     aiColor3D(ai_real _r, ai_real _g, ai_real _b) :
-            r(_r), g(_g), b(_b) {}
+        r(_r), g(_g), b(_b) {}
     explicit aiColor3D(ai_real _r) :
-            r(_r), g(_r), b(_r) {}
+        r(_r), g(_r), b(_r) {}
     aiColor3D(const aiColor3D &o) :
-            r(o.r), g(o.g), b(o.b) {}
+        r(o.r), g(o.g), b(o.b) {}
 
     aiColor3D &operator=(const aiColor3D &o) {
         r = o.r;
@@ -181,11 +183,15 @@ struct aiColor3D {
 
     /** Component-wise comparison */
     // TODO: add epsilon?
-    bool operator==(const aiColor3D &other) const { return r == other.r && g == other.g && b == other.b; }
+    bool operator==(const aiColor3D &other) const {
+        return r == other.r && g == other.g && b == other.b;
+    }
 
     /** Component-wise inverse comparison */
     // TODO: add epsilon?
-    bool operator!=(const aiColor3D &other) const { return r != other.r || g != other.g || b != other.b; }
+    bool operator!=(const aiColor3D &other) const {
+        return r != other.r || g != other.g || b != other.b;
+    }
 
     /** Component-wise comparison */
     // TODO: add epsilon?
@@ -267,7 +273,8 @@ struct aiString {
 #ifdef __cplusplus
     /** Default constructor, the string is set to have zero length */
     aiString() AI_NO_EXCEPT
-            : length(0) {
+:
+    length(0) {
         data[0] = '\0';
 
 #ifdef ASSIMP_BUILD_DEBUG
@@ -278,7 +285,7 @@ struct aiString {
 
     /** Copy constructor */
     aiString(const aiString &rOther) :
-            length(rOther.length) {
+        length(rOther.length) {
         // Crop the string to the maximum length
         length = length >= MAXLEN ? MAXLEN - 1 : length;
         memcpy(data, rOther.data, length);
@@ -287,7 +294,7 @@ struct aiString {
 
     /** Constructor from std::string */
     explicit aiString(const std::string &pString) :
-            length((ai_uint32)pString.length()) {
+        length((ai_uint32)pString.length()) {
         length = length >= MAXLEN ? MAXLEN - 1 : length;
         memcpy(data, pString.c_str(), length);
         data[length] = '\0';
@@ -414,7 +421,7 @@ typedef enum aiReturn {
      */
     _AI_ENFORCE_ENUM_SIZE = 0x7fffffff
 
-    /// @endcond
+                            /// @endcond
 } aiReturn; // !enum aiReturn
 
 // just for backwards compatibility, don't use these constants anymore
@@ -441,7 +448,7 @@ enum aiOrigin {
      */
     _AI_ORIGIN_ENFORCE_ENUM_SIZE = 0x7fffffff
 
-    /// @endcond
+                                   /// @endcond
 }; // !enum aiOrigin
 
 // ----------------------------------------------------------------------------------
@@ -468,7 +475,7 @@ enum aiDefaultLogStream {
      *  Force 32-bit size enum
      */
     _AI_DLS_ENFORCE_ENUM_SIZE = 0x7fffffff
-    /// @endcond
+                                /// @endcond
 }; // !enum aiDefaultLogStream
 
 // just for backwards compatibility, don't use these constants anymore
@@ -487,14 +494,15 @@ struct aiMemoryInfo {
 
     /** Default constructor */
     aiMemoryInfo() AI_NO_EXCEPT
-            : textures(0),
-              materials(0),
-              meshes(0),
-              nodes(0),
-              animations(0),
-              cameras(0),
-              lights(0),
-              total(0) {}
+:
+    textures(0),
+             materials(0),
+             meshes(0),
+             nodes(0),
+             animations(0),
+             cameras(0),
+             lights(0),
+    total(0) {}
 
 #endif
 

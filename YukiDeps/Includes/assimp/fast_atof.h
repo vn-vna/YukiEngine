@@ -289,14 +289,14 @@ const char* fast_atoreal_move(const char* c, Real& out, bool check_comma = true)
             c += 5;
         }
         return c;
-     }
+    }
 
     if (!(c[0] >= '0' && c[0] <= '9') &&
             !((c[0] == '.' || (check_comma && c[0] == ',')) && c[1] >= '0' && c[1] <= '9')) {
         // The string is known to be bad, so don't risk printing the whole thing.
         throw ExceptionType("Cannot parse string \"", ai_str_toprintable(c, (int)strlen(c)),
-                                    "\" as a real number: does not start with digit "
-                                    "or decimal point followed by digit.");
+                            "\" as a real number: does not start with digit "
+                            "or decimal point followed by digit.");
     }
 
     if (*c != '.' && (! check_comma || c[0] != ',')) {

@@ -72,9 +72,9 @@ public:
     }
 
     /** @brief  Logs a verbose debug message */
-	void OnVerboseDebug(const char *message) {
-		(void)message; //this avoids compiler warnings
-	}
+    void OnVerboseDebug(const char *message) {
+        (void)message; //this avoids compiler warnings
+    }
 
     /** @brief  Logs an info message */
     void OnInfo(const char* message) {
@@ -93,13 +93,15 @@ public:
 
     /** @brief  Detach a still attached stream from logger */
     bool attachStream(LogStream *pStream, unsigned int severity) {
-        (void)pStream; (void)severity; //this avoids compiler warnings
+        (void)pStream;
+        (void)severity; //this avoids compiler warnings
         return false;
     }
 
     /** @brief  Detach a still attached stream from logger */
     bool detachStream(LogStream *pStream, unsigned int severity) {
-        (void)pStream; (void)severity; //this avoids compiler warnings
+        (void)pStream;
+        (void)severity; //this avoids compiler warnings
         return false;
     }
 

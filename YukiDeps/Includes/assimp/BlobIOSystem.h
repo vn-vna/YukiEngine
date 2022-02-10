@@ -71,13 +71,13 @@ public:
     /// @param file     The filename
     /// @param initial  The initial size
     BlobIOStream(BlobIOSystem *creator, const std::string &file, size_t initial = 4096) :
-            buffer(),
-            cur_size(),
-            file_size(),
-            cursor(),
-            initial(initial),
-            file(file),
-            creator(creator) {
+        buffer(),
+        cur_size(),
+        file_size(),
+        cursor(),
+        initial(initial),
+        file(file),
+        creator(creator) {
         // empty
     }
 
@@ -118,20 +118,20 @@ public:
     // -------------------------------------------------------------------
     aiReturn Seek(size_t pOffset, aiOrigin pOrigin) override {
         switch (pOrigin) {
-            case aiOrigin_CUR:
-                cursor += pOffset;
-                break;
+        case aiOrigin_CUR:
+            cursor += pOffset;
+            break;
 
-            case aiOrigin_END:
-                cursor = file_size - pOffset;
-                break;
+        case aiOrigin_END:
+            cursor = file_size - pOffset;
+            break;
 
-            case aiOrigin_SET:
-                cursor = pOffset;
-                break;
+        case aiOrigin_SET:
+            cursor = pOffset;
+            break;
 
-            default:
-                return AI_FAILURE;
+        default:
+            return AI_FAILURE;
         }
 
         if (cursor > file_size) {
@@ -202,13 +202,13 @@ class BlobIOSystem : public IOSystem {
 public:
     /// @brief The default class constructor.
     BlobIOSystem() :
-            baseName{AI_BLOBIO_MAGIC} {
+        baseName{AI_BLOBIO_MAGIC} {
     }
 
     ///	@brief  The class constructor with the base name.
     /// @param baseName     The base name.
     BlobIOSystem(const std::string &baseName) :
-            baseName(baseName) {
+        baseName(baseName) {
         // empty
     }
 

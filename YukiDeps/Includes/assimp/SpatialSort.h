@@ -76,7 +76,7 @@ public:
      * @param pElementOffset Offset in bytes from the beginning of one vector in memory
      *   to the beginning of the next vector. */
     SpatialSort(const aiVector3D *pPositions, unsigned int pNumPositions,
-            unsigned int pElementOffset);
+                unsigned int pElementOffset);
 
     /** Destructor */
     ~SpatialSort();
@@ -95,14 +95,14 @@ public:
      *   If you don't finalize yet, you can use #Append() to add data from
      *   other sources.*/
     void Fill(const aiVector3D *pPositions, unsigned int pNumPositions,
-            unsigned int pElementOffset,
-            bool pFinalize = true);
+              unsigned int pElementOffset,
+              bool pFinalize = true);
 
     // ------------------------------------------------------------------------------------
     /** Same as #Fill(), except the method appends to existing data in the #SpatialSort. */
     void Append(const aiVector3D *pPositions, unsigned int pNumPositions,
-            unsigned int pElementOffset,
-            bool pFinalize = true);
+                unsigned int pElementOffset,
+                bool pFinalize = true);
 
     // ------------------------------------------------------------------------------------
     /** Finalize the spatial hash data structure. This can be useful after
@@ -119,7 +119,7 @@ public:
      *   Will be emptied by the call so it may contain anything.
      * @return An iterator to iterate over all vertices in the given area.*/
     void FindPositions(const aiVector3D &pPosition, ai_real pRadius,
-            std::vector<unsigned int> &poResults) const;
+                       std::vector<unsigned int> &poResults) const;
 
     // ------------------------------------------------------------------------------------
     /** Fills an array with indices of all positions identical to the given position. In
@@ -129,7 +129,7 @@ public:
      * @param poResults The container to store the indices of the found positions.
      *   Will be emptied by the call so it may contain anything.*/
     void FindIdenticalPositions(const aiVector3D &pPosition,
-            std::vector<unsigned int> &poResults) const;
+                                std::vector<unsigned int> &poResults) const;
 
     // ------------------------------------------------------------------------------------
     /** Compute a table that maps each vertex ID referring to a spatially close
@@ -140,7 +140,7 @@ public:
      *   be counted in.
      *  @return Number of unique vertices (n).  */
     unsigned int GenerateMappingTable(std::vector<unsigned int> &fill,
-            ai_real pRadius) const;
+                                      ai_real pRadius) const;
 
 protected:
     /** Return the distance to the sorting plane. */
@@ -162,20 +162,23 @@ protected:
         unsigned int mIndex; ///< The vertex referred by this entry
         aiVector3D mPosition; ///< Position
         /// Distance of this vertex to the sorting plane. This is set by Finalize.
-        ai_real mDistance; 
+        ai_real mDistance;
 
         Entry() AI_NO_EXCEPT
-                : mIndex(std::numeric_limits<unsigned int>::max()),
-                  mPosition(),
-                  mDistance(std::numeric_limits<ai_real>::max()) {
+:
+        mIndex(std::numeric_limits<unsigned int>::max()),
+               mPosition(),
+        mDistance(std::numeric_limits<ai_real>::max()) {
             // empty
         }
         Entry(unsigned int pIndex, const aiVector3D &pPosition) :
-                mIndex(pIndex), mPosition(pPosition), mDistance(std::numeric_limits<ai_real>::max()) {
+            mIndex(pIndex), mPosition(pPosition), mDistance(std::numeric_limits<ai_real>::max()) {
             // empty
         }
 
-        bool operator<(const Entry &e) const { return mDistance < e.mDistance; }
+        bool operator<(const Entry &e) const {
+            return mDistance < e.mDistance;
+        }
     };
 
     // all positions, sorted by distance to the sorting plane

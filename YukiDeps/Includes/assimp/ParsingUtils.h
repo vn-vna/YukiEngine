@@ -237,7 +237,7 @@ AI_FORCE_INLINE std::string GetNextToken(const char *&in) {
  */
 template <class string_type>
 AI_FORCE_INLINE unsigned int tokenize(const string_type &str, std::vector<string_type> &tokens,
-        const string_type &delimiters) {
+                                      const string_type &delimiters) {
     // Skip delimiters at beginning.
     typename string_type::size_type lastPos = str.find_first_not_of(delimiters, 0);
 

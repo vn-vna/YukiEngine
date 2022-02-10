@@ -57,7 +57,7 @@ namespace Assimp {
 struct find_node_by_name_predicate {
     std::string mName;
     find_node_by_name_predicate(const std::string &name) :
-            mName(name) {
+        mName(name) {
         // empty
     }
 
@@ -100,8 +100,8 @@ class TXmlParser {
 public:
     /// @brief The default class constructor.
     TXmlParser() :
-            mDoc(nullptr),
-            mData() {
+        mDoc(nullptr),
+        mData() {
         // empty
     }
 
@@ -409,9 +409,9 @@ public:
     /// @param  parent      [in] The xml parent to to iterate through.
     /// @param  mode        [in] The iteration mode.
     explicit XmlNodeIterator(XmlNode &parent, IterationMode mode) :
-            mParent(parent),
-            mNodes(),
-            mIndex(0) {
+        mParent(parent),
+        mNodes(),
+        mIndex(0) {
         if (mode == PreOrderMode) {
             collectChildrenPreOrder(parent);
         } else {

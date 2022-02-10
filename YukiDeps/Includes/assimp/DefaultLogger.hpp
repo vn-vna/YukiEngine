@@ -92,9 +92,9 @@ public:
      *   log file). Pass nullptr to rely on the default implementation.
      *  This replaces the default #NullLogger with a #DefaultLogger instance. */
     static Logger *create(const char *name = ASSIMP_DEFAULT_LOG_NAME,
-            LogSeverity severity = NORMAL,
-            unsigned int defStreams = aiDefaultLogStream_DEBUGGER | aiDefaultLogStream_FILE,
-            IOSystem *io = nullptr);
+                          LogSeverity severity = NORMAL,
+                          unsigned int defStreams = aiDefaultLogStream_DEBUGGER | aiDefaultLogStream_FILE,
+                          IOSystem *io = nullptr);
 
     // ----------------------------------------------------------------------
     /** @brief Setup a custom #Logger implementation.

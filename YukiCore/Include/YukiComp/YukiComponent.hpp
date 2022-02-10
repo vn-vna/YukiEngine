@@ -7,17 +7,17 @@ namespace Yuki::Comp
 
 enum class ComponentType
 {
-  CAMERA,
-  LIGHT,
-  MESH
+    CAMERA,
+    LIGHT,
+    MESH
 };
 
 class YUKIAPI IYukiComp : protected Core::IYukiObject
 {
 public:
-  virtual ComponentType GetComponentType() = 0;
+    virtual ComponentType GetComponentType() = 0;
 
-  friend class YukiEntity;
+    friend class YukiEntity;
 };
 
 } // namespace Yuki::Comp

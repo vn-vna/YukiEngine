@@ -64,7 +64,7 @@ class IOSystem;
  *  are not enough for your purpose. */
 class ASSIMP_API LogStream
 #ifndef SWIG
-        : public Intern::AllocateFromAssimpHeap
+    : public Intern::AllocateFromAssimpHeap
 #endif
 {
 protected:
@@ -94,8 +94,8 @@ public:
      *   file. Pass nullptr for the default implementation.
      *  @return New LogStream instance.  */
     static LogStream *createDefaultStream(aiDefaultLogStream stream,
-            const char *name = "AssimpLog.txt",
-            IOSystem *io = nullptr);
+                                          const char *name = "AssimpLog.txt",
+                                          IOSystem *io = nullptr);
 
 }; // !class LogStream
 

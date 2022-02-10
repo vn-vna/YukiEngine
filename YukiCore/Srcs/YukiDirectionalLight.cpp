@@ -13,37 +13,37 @@ YukiDirectionalLight::YukiDirectionalLight()
 
 const glm::vec4& YukiDirectionalLight::GetColor()
 {
-  return m_tColor;
+    return m_tColor;
 }
 
 const float& YukiDirectionalLight::GetIntensity()
 {
-  return m_nIntensity;
+    return m_nIntensity;
 }
 
 const glm::vec3& YukiDirectionalLight::GetDirection()
 {
-  return m_tDirection;
+    return m_tDirection;
 }
 
 void YukiDirectionalLight::SetDirection(const glm::vec3& direction)
 {
-  m_tDirection = direction;
+    m_tDirection = direction;
 }
 
 void YukiDirectionalLight::SetColor(const glm::vec4& color)
 {
-  m_tColor = color;
+    m_tColor = color;
 }
 
 void YukiDirectionalLight::SetIntensity(const float& intensity)
 {
-  m_nIntensity = intensity;
+    m_nIntensity = intensity;
 }
 
 SharedPtr<IYukiDirectionalLight> CreateDirectionalLight()
 {
-  return {(IYukiDirectionalLight*) new YukiDirectionalLight, std::default_delete<IYukiDirectionalLight>()};
+    return {(IYukiDirectionalLight*) new YukiDirectionalLight, std::default_delete<IYukiDirectionalLight>()};
 }
 
 

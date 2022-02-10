@@ -89,8 +89,8 @@ public:
      *    to reuse the existing mesh for intermediate results.
      *  @pre out!=mesh*/
     virtual void Subdivide ( aiMesh* mesh,
-        aiMesh*& out, unsigned int num,
-        bool discard_input = false) = 0;
+                             aiMesh*& out, unsigned int num,
+                             bool discard_input = false) = 0;
 
     // ---------------------------------------------------------------
     /** Subdivide multiple meshes using the selected algorithm. This

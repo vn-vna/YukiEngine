@@ -70,10 +70,10 @@ template <typename T> class aiVector3t;
 template <typename TReal>
 class aiMatrix3x3t {
 public:
-    aiMatrix3x3t() AI_NO_EXCEPT :
-        a1(static_cast<TReal>(1.0f)), a2(), a3(),
-        b1(), b2(static_cast<TReal>(1.0f)), b3(),
-        c1(), c2(), c3(static_cast<TReal>(1.0f)) {}
+aiMatrix3x3t() AI_NO_EXCEPT :
+    a1(static_cast<TReal>(1.0f)), a2(), a3(),
+    b1(), b2(static_cast<TReal>(1.0f)), b3(),
+    c1(), c2(), c3(static_cast<TReal>(1.0f)) {}
 
     aiMatrix3x3t (  TReal _a1, TReal _a2, TReal _a3,
                     TReal _b1, TReal _b2, TReal _b3,
@@ -155,7 +155,7 @@ public:
      *          Journal of Graphics Tools, 4(4):1-4, 1999
      */
     static aiMatrix3x3t& FromToMatrix(const aiVector3t<TReal>& from,
-        const aiVector3t<TReal>& to, aiMatrix3x3t& out);
+                                      const aiVector3t<TReal>& to, aiMatrix3x3t& out);
 
 public:
     TReal a1, a2, a3;

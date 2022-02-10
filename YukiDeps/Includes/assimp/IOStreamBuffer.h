@@ -129,13 +129,13 @@ private:
 
 template <class T>
 AI_FORCE_INLINE IOStreamBuffer<T>::IOStreamBuffer(size_t cache) :
-        m_stream(nullptr),
-        m_filesize(0),
-        m_cacheSize(cache),
-        m_numBlocks(0),
-        m_blockIdx(0),
-        m_cachePos(0),
-        m_filePos(0) {
+    m_stream(nullptr),
+    m_filesize(0),
+    m_cacheSize(cache),
+    m_numBlocks(0),
+    m_blockIdx(0),
+    m_cachePos(0),
+    m_filePos(0) {
     m_cache.resize(cache);
     std::fill(m_cache.begin(), m_cache.end(), '\n');
 }
@@ -193,15 +193,15 @@ AI_FORCE_INLINE bool IOStreamBuffer<T>::close() {
 
 template <class T>
 AI_FORCE_INLINE
-        size_t
-        IOStreamBuffer<T>::size() const {
+size_t
+IOStreamBuffer<T>::size() const {
     return m_filesize;
 }
 
 template <class T>
 AI_FORCE_INLINE
-        size_t
-        IOStreamBuffer<T>::cacheSize() const {
+size_t
+IOStreamBuffer<T>::cacheSize() const {
     return m_cacheSize;
 }
 

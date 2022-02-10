@@ -83,11 +83,11 @@ namespace Assimp {
  */
 struct AttachmentInfo {
     AttachmentInfo() :
-            scene(nullptr),
-            attachToNode(nullptr) {}
+        scene(nullptr),
+        attachToNode(nullptr) {}
 
     AttachmentInfo(aiScene *_scene, aiNode *_attachToNode) :
-            scene(_scene), attachToNode(_attachToNode) {}
+        scene(_scene), attachToNode(_attachToNode) {}
 
     aiScene *scene;
     aiNode *attachToNode;
@@ -96,13 +96,13 @@ struct AttachmentInfo {
 // ---------------------------------------------------------------------------
 struct NodeAttachmentInfo {
     NodeAttachmentInfo() :
-            node(nullptr),
-            attachToNode(nullptr),
-            resolved(false),
-            src_idx(SIZE_MAX) {}
+        node(nullptr),
+        attachToNode(nullptr),
+        resolved(false),
+        src_idx(SIZE_MAX) {}
 
     NodeAttachmentInfo(aiNode *_scene, aiNode *_attachToNode, size_t idx) :
-            node(_scene), attachToNode(_attachToNode), resolved(false), src_idx(idx) {}
+        node(_scene), attachToNode(_attachToNode), resolved(false), src_idx(idx) {}
 
     aiNode *node;
     aiNode *attachToNode;
@@ -154,13 +154,13 @@ struct BoneWithHash : public std::pair<uint32_t, aiString *> {
  */
 struct SceneHelper {
     SceneHelper() :
-            scene(nullptr),
-            idlen(0) {
+        scene(nullptr),
+        idlen(0) {
         id[0] = 0;
     }
 
     explicit SceneHelper(aiScene *_scene) :
-            scene(_scene), idlen(0) {
+        scene(_scene), idlen(0) {
         id[0] = 0;
     }
 
@@ -211,7 +211,7 @@ public:
      *  @param flags Combination of the AI_INT_MERGE_SCENE flags defined above
      */
     static void MergeScenes(aiScene **dest, std::vector<aiScene *> &src,
-            unsigned int flags = 0);
+                            unsigned int flags = 0);
 
     // -------------------------------------------------------------------
     /** Merges two or more scenes and attaches all scenes to a specific
@@ -228,8 +228,8 @@ public:
      *  @param flags Combination of the AI_INT_MERGE_SCENE flags defined above
      */
     static void MergeScenes(aiScene **dest, aiScene *master,
-            std::vector<AttachmentInfo> &src,
-            unsigned int flags = 0);
+                            std::vector<AttachmentInfo> &src,
+                            unsigned int flags = 0);
 
     // -------------------------------------------------------------------
     /** Merges two or more meshes
@@ -246,8 +246,8 @@ public:
      *  @param end Points to the mesh after the last mesh to be processed
      */
     static void MergeMeshes(aiMesh **dest, unsigned int flags,
-            std::vector<aiMesh *>::const_iterator begin,
-            std::vector<aiMesh *>::const_iterator end);
+                            std::vector<aiMesh *>::const_iterator begin,
+                            std::vector<aiMesh *>::const_iterator end);
 
     // -------------------------------------------------------------------
     /** Merges two or more bones
@@ -258,7 +258,7 @@ public:
      *  @param end Points to the mesh after the last mesh to be processed
      */
     static void MergeBones(aiMesh *out, std::vector<aiMesh *>::const_iterator it,
-            std::vector<aiMesh *>::const_iterator end);
+                           std::vector<aiMesh *>::const_iterator end);
 
     // -------------------------------------------------------------------
     /** Merges two or more materials
@@ -272,8 +272,8 @@ public:
      *  @param end Points to the material after the last material to be processed
      */
     static void MergeMaterials(aiMaterial **dest,
-            std::vector<aiMaterial *>::const_iterator begin,
-            std::vector<aiMaterial *>::const_iterator end);
+                               std::vector<aiMaterial *>::const_iterator begin,
+                               std::vector<aiMaterial *>::const_iterator end);
 
     // -------------------------------------------------------------------
     /** Builds a list of uniquely named bones in a mesh list
@@ -283,8 +283,8 @@ public:
      *  @param end Last mesh to be processed
      */
     static void BuildUniqueBoneList(std::list<BoneWithHash> &asBones,
-            std::vector<aiMesh *>::const_iterator it,
-            std::vector<aiMesh *>::const_iterator end);
+                                    std::vector<aiMesh *>::const_iterator it,
+                                    std::vector<aiMesh *>::const_iterator end);
 
     // -------------------------------------------------------------------
     /** Add a name prefix to all nodes in a scene.
@@ -294,7 +294,7 @@ public:
      *  @param len STring length
      */
     static void AddNodePrefixes(aiNode *node, const char *prefix,
-            unsigned int len);
+                                unsigned int len);
 
     // -------------------------------------------------------------------
     /** Add an offset to all mesh indices in a node graph
@@ -317,10 +317,10 @@ public:
      *    a duplicate. Otherwise elem[n] links scene n to its first occurrence.
      */
     static void AttachToGraph(aiScene *master,
-            std::vector<NodeAttachmentInfo> &srcList);
+                              std::vector<NodeAttachmentInfo> &srcList);
 
     static void AttachToGraph(aiNode *attach,
-            std::vector<NodeAttachmentInfo> &srcList);
+                              std::vector<NodeAttachmentInfo> &srcList);
 
     // -------------------------------------------------------------------
     /** Get a deep copy of a scene
@@ -370,9 +370,9 @@ private:
     // -------------------------------------------------------------------
     // Same as AddNodePrefixes, but with an additional check
     static void AddNodePrefixesChecked(aiNode *node, const char *prefix,
-            unsigned int len,
-            std::vector<SceneHelper> &input,
-            unsigned int cur);
+                                       unsigned int len,
+                                       std::vector<SceneHelper> &input,
+                                       unsigned int cur);
 
     // -------------------------------------------------------------------
     // Add node identifiers to a hashing set
@@ -381,7 +381,7 @@ private:
     // -------------------------------------------------------------------
     // Search for duplicate names
     static bool FindNameMatch(const aiString &name,
-            std::vector<SceneHelper> &input, unsigned int cur);
+                              std::vector<SceneHelper> &input, unsigned int cur);
 };
 
 } // namespace Assimp

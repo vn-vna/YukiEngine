@@ -144,12 +144,12 @@ private:
 };
 
 AI_FORCE_INLINE LineSplitter::LineSplitter(StreamReaderLE& stream, bool skip_empty_lines, bool trim ) :
-        mIdx(0),
-        mCur(),
-        mStream(stream),
-        mSwallow(),
-        mSkip_empty_lines(skip_empty_lines),
-        mTrim(trim) {
+    mIdx(0),
+    mCur(),
+    mStream(stream),
+    mSwallow(),
+    mSkip_empty_lines(skip_empty_lines),
+    mTrim(trim) {
     mCur.reserve(1024);
     operator++();
     mIdx = 0;

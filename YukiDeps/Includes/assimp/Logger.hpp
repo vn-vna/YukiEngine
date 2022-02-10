@@ -168,7 +168,7 @@ public:
      *    combination of the ErrorSeverity flags.
      *  @return true if the stream has been attached, false otherwise.*/
     virtual bool attachStream(LogStream *pStream,
-        unsigned int severity = Debugging | Err | Warn | Info) = 0;
+                              unsigned int severity = Debugging | Err | Warn | Info) = 0;
 
     // ----------------------------------------------------------------------
     /** @brief  Detach a still attached stream from the logger (or
@@ -180,7 +180,7 @@ public:
      *    the caller retakes the possession of the stream.
      *  @return true if the stream has been detached, false otherwise.*/
     virtual bool detachStream(LogStream *pStream,
-        unsigned int severity = Debugging | Err | Warn | Info) = 0;
+                              unsigned int severity = Debugging | Err | Warn | Info) = 0;
 
 protected:
     /**
@@ -204,14 +204,14 @@ protected:
     virtual void OnDebug(const char* message)= 0;
 
     // ----------------------------------------------------------------------
-	/**
+    /**
      *  @brief Called as a request to write a specific verbose debug message
      *  @param  message Debug message. Never longer than
      *    MAX_LOG_MESSAGE_LENGTH characters (excluding the '0').
      *  @note  The message string is only valid until the scope of
      *    the function is left.
      */
-	virtual void OnVerboseDebug(const char *message) = 0;
+    virtual void OnVerboseDebug(const char *message) = 0;
 
     // ----------------------------------------------------------------------
     /**
@@ -258,7 +258,7 @@ protected:
 
 // ----------------------------------------------------------------------------------
 inline Logger::Logger() AI_NO_EXCEPT :
-        m_Severity(NORMAL) {
+m_Severity(NORMAL) {
     // empty
 }
 
@@ -269,12 +269,12 @@ inline Logger::~Logger() {
 
 // ----------------------------------------------------------------------------------
 inline Logger::Logger(LogSeverity severity) :
-        m_Severity(severity) {
+    m_Severity(severity) {
     // empty
 }
 
 // ----------------------------------------------------------------------------------
-inline void Logger::setLogSeverity(LogSeverity log_severity){
+inline void Logger::setLogSeverity(LogSeverity log_severity) {
     m_Severity = log_severity;
 }
 

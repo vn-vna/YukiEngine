@@ -182,13 +182,14 @@ struct aiCamera {
 #ifdef __cplusplus
 
     aiCamera() AI_NO_EXCEPT
-            : mUp(0.f, 1.f, 0.f),
-              mLookAt(0.f, 0.f, 1.f),
-              mHorizontalFOV(0.25f * (float)AI_MATH_PI),
-              mClipPlaneNear(0.1f),
-              mClipPlaneFar(1000.f),
-              mAspect(0.f),
-              mOrthographicWidth(0.f) {}
+:
+    mUp(0.f, 1.f, 0.f),
+        mLookAt(0.f, 0.f, 1.f),
+        mHorizontalFOV(0.25f * (float)AI_MATH_PI),
+        mClipPlaneNear(0.1f),
+        mClipPlaneFar(1000.f),
+        mAspect(0.f),
+    mOrthographicWidth(0.f) {}
 
     /** @brief Get a *right-handed* camera matrix from me
      *  @param out Camera matrix to be filled

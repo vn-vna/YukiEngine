@@ -90,8 +90,8 @@ struct aiMetadataEntry {
 
 #ifdef __cplusplus
     aiMetadataEntry() :
-            mType(AI_META_MAX),
-            mData( nullptr ) {
+        mType(AI_META_MAX),
+        mData( nullptr ) {
         // empty
     }
 #endif
@@ -160,14 +160,15 @@ struct aiMetadata {
      *  @brief  The default constructor, set all members to zero by default.
      */
     aiMetadata() AI_NO_EXCEPT
-            : mNumProperties(0),
-              mKeys(nullptr),
-              mValues(nullptr) {
+:
+    mNumProperties(0),
+                   mKeys(nullptr),
+    mValues(nullptr) {
         // empty
     }
 
     aiMetadata(const aiMetadata &rhs) :
-            mNumProperties(rhs.mNumProperties), mKeys(nullptr), mValues(nullptr) {
+        mNumProperties(rhs.mNumProperties), mKeys(nullptr), mValues(nullptr) {
         mKeys = new aiString[mNumProperties];
         for (size_t i = 0; i < static_cast<size_t>(mNumProperties); ++i) {
             mKeys[i] = rhs.mKeys[i];
@@ -184,37 +185,44 @@ struct aiMetadata {
                 int32_t v;
                 ::memcpy(&v, rhs.mValues[i].mData, sizeof(int32_t));
                 mValues[i].mData = new int32_t(v);
-            } break;
+            }
+            break;
             case AI_UINT64: {
                 uint64_t v;
                 ::memcpy(&v, rhs.mValues[i].mData, sizeof(uint64_t));
                 mValues[i].mData = new uint64_t(v);
-            } break;
+            }
+            break;
             case AI_FLOAT: {
                 float v;
                 ::memcpy(&v, rhs.mValues[i].mData, sizeof(float));
                 mValues[i].mData = new float(v);
-            } break;
+            }
+            break;
             case AI_DOUBLE: {
                 double v;
                 ::memcpy(&v, rhs.mValues[i].mData, sizeof(double));
                 mValues[i].mData = new double(v);
-            } break;
+            }
+            break;
             case AI_AISTRING: {
                 aiString v;
                 rhs.Get<aiString>(static_cast<unsigned int>(i), v);
                 mValues[i].mData = new aiString(v);
-            } break;
+            }
+            break;
             case AI_AIVECTOR3D: {
                 aiVector3D v;
                 rhs.Get<aiVector3D>(static_cast<unsigned int>(i), v);
                 mValues[i].mData = new aiVector3D(v);
-            } break;
+            }
+            break;
             case AI_AIMETADATA: {
                 aiMetadata v;
                 rhs.Get<aiMetadata>(static_cast<unsigned int>(i), v);
                 mValues[i].mData = new aiMetadata(v);
-            } break;
+            }
+            break;
 #ifndef SWIG
             case FORCE_32BIT:
 #endif
@@ -474,42 +482,50 @@ struct aiMetadata {
                 if (*static_cast<bool *>(lhs.mValues[i].mData) != *static_cast<bool *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_INT32: {
                 if (*static_cast<int32_t *>(lhs.mValues[i].mData) != *static_cast<int32_t *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_UINT64: {
                 if (*static_cast<uint64_t *>(lhs.mValues[i].mData) != *static_cast<uint64_t *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_FLOAT: {
                 if (*static_cast<float *>(lhs.mValues[i].mData) != *static_cast<float *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_DOUBLE: {
                 if (*static_cast<double *>(lhs.mValues[i].mData) != *static_cast<double *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_AISTRING: {
                 if (*static_cast<aiString *>(lhs.mValues[i].mData) != *static_cast<aiString *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_AIVECTOR3D: {
                 if (*static_cast<aiVector3D *>(lhs.mValues[i].mData) != *static_cast<aiVector3D *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
             case AI_AIMETADATA: {
                 if (*static_cast<aiMetadata *>(lhs.mValues[i].mData) != *static_cast<aiMetadata *>(rhs.mValues[i].mData)) {
                     return false;
                 }
-            } break;
+            }
+            break;
 #ifndef SWIG
             case FORCE_32BIT:
 #endif

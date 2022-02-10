@@ -54,7 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef __cplusplus
 #   error This header requires C++ to be used. aiFileIO.h is the \
-    corresponding C interface.
+corresponding C interface.
 #endif
 
 #include "types.h"
@@ -143,14 +143,14 @@ public:
      *  you probably have to supply an own implementation of IOStream as well.
      */
     virtual IOStream* Open(const char* pFile,
-        const char* pMode = "rb") = 0;
+                           const char* pMode = "rb") = 0;
 
     // -------------------------------------------------------------------
     /** @brief For backward compatibility
      *  @see Open(const char*, const char*)
      */
     inline IOStream* Open(const std::string& pFile,
-        const std::string& pMode = std::string("rb"));
+                          const std::string& pMode = std::string("rb"));
 
     // -------------------------------------------------------------------
     /** @brief Closes the given file and releases all resources
@@ -173,14 +173,14 @@ public:
      *   be existing, however.
      */
     virtual bool ComparePaths (const char* one,
-        const char* second) const;
+                               const char* second) const;
 
     // -------------------------------------------------------------------
     /** @brief For backward compatibility
      *  @see ComparePaths(const char*, const char*)
      */
     inline bool ComparePaths (const std::string& one,
-        const std::string& second) const;
+                              const std::string& second) const;
 
     // -------------------------------------------------------------------
     /** @brief Pushes a new directory onto the directory stack.
@@ -238,7 +238,7 @@ private:
 
 // ----------------------------------------------------------------------------
 AI_FORCE_INLINE IOSystem::IOSystem() AI_NO_EXCEPT :
-        m_pathStack() {
+m_pathStack() {
     // empty
 }
 

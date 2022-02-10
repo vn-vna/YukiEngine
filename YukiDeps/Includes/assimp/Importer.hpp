@@ -265,7 +265,7 @@ public:
      *   GetPropertyFloat() to read the property, but it won't be there.
      */
     int GetPropertyInteger(const char *szName,
-            int iErrorReturn = 0xffffffff) const;
+                           int iErrorReturn = 0xffffffff) const;
 
     // -------------------------------------------------------------------
     /** Get a boolean configuration property. Boolean properties
@@ -283,7 +283,7 @@ public:
      * @see GetPropertyInteger()
      */
     ai_real GetPropertyFloat(const char *szName,
-            ai_real fErrorReturn = 10e10) const;
+                             ai_real fErrorReturn = 10e10) const;
 
     // -------------------------------------------------------------------
     /** Get a string configuration property
@@ -292,7 +292,7 @@ public:
      * @see GetPropertyInteger()
      */
     std::string GetPropertyString(const char *szName,
-            const std::string &sErrorReturn = std::string()) const;
+                                  const std::string &sErrorReturn = std::string()) const;
 
     // -------------------------------------------------------------------
     /** Get a matrix configuration property
@@ -301,7 +301,7 @@ public:
      * @see GetPropertyInteger()
      */
     aiMatrix4x4 GetPropertyMatrix(const char *szName,
-            const aiMatrix4x4 &sErrorReturn = aiMatrix4x4()) const;
+                                  const aiMatrix4x4 &sErrorReturn = aiMatrix4x4()) const;
 
     // -------------------------------------------------------------------
     /** Get a pointer configuration property
@@ -310,7 +310,7 @@ public:
      * @see GetPropertyInteger()
      */
     void* GetPropertyPointer(const char *szName,
-        void *sErrorReturn = nullptr) const;
+                             void *sErrorReturn = nullptr) const;
 
     // -------------------------------------------------------------------
     /** Supplies a custom IO handler to the importer to use to open and
@@ -415,8 +415,8 @@ public:
      * automatically.
      */
     const aiScene *ReadFile(
-            const char *pFile,
-            unsigned int pFlags);
+        const char *pFile,
+        unsigned int pFlags);
 
     // -------------------------------------------------------------------
     /** Reads the given file from a memory buffer and returns its
@@ -456,10 +456,10 @@ public:
      * the regular ReadFile() API.
      */
     const aiScene *ReadFileFromMemory(
-            const void *pBuffer,
-            size_t pLength,
-            unsigned int pFlags,
-            const char *pHint = "");
+        const void *pBuffer,
+        size_t pLength,
+        unsigned int pFlags,
+        const char *pHint = "");
 
     // -------------------------------------------------------------------
     /** Apply post-processing to an already-imported scene.
@@ -490,8 +490,8 @@ public:
      * See the const char* version for detailed docs.
      * @see ReadFile(const char*, pFlags)  */
     const aiScene *ReadFile(
-            const std::string &pFile,
-            unsigned int pFlags);
+        const std::string &pFile,
+        unsigned int pFlags);
 
     // -------------------------------------------------------------------
     /** Frees the current scene.
@@ -651,8 +651,12 @@ public:
 
     // -------------------------------------------------------------------
     /** Private, do not use. */
-    ImporterPimpl *Pimpl() { return pimpl; }
-    const ImporterPimpl *Pimpl() const { return pimpl; }
+    ImporterPimpl *Pimpl() {
+        return pimpl;
+    }
+    const ImporterPimpl *Pimpl() const {
+        return pimpl;
+    }
 
 protected:
     // Just because we don't want you to know how we're hacking around.

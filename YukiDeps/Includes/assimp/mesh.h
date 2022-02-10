@@ -144,8 +144,9 @@ struct aiFace {
 
     //! Default constructor
     aiFace() AI_NO_EXCEPT
-            : mNumIndices(0),
-              mIndices(nullptr) {
+:
+    mNumIndices(0),
+    mIndices(nullptr) {
         // empty
     }
 
@@ -156,7 +157,7 @@ struct aiFace {
 
     //! Copy constructor. Copy the index array
     aiFace(const aiFace &o) :
-            mNumIndices(0), mIndices(nullptr) {
+        mNumIndices(0), mIndices(nullptr) {
         *this = o;
     }
 
@@ -225,8 +226,9 @@ struct aiVertexWeight {
 
     //! Default constructor
     aiVertexWeight() AI_NO_EXCEPT
-            : mVertexId(0),
-              mWeight(0.0f) {
+:
+    mVertexId(0),
+    mWeight(0.0f) {
         // empty
     }
 
@@ -234,7 +236,7 @@ struct aiVertexWeight {
     //! \param pID ID
     //! \param pWeight Vertex weight factor
     aiVertexWeight(unsigned int pID, float pWeight) :
-            mVertexId(pID), mWeight(pWeight) {
+        mVertexId(pID), mWeight(pWeight) {
         // empty
     }
 
@@ -298,27 +300,28 @@ struct aiBone {
 
     //! Default constructor
     aiBone() AI_NO_EXCEPT
-            : mName(),
-              mNumWeights(0),
+:
+    mName(),
+          mNumWeights(0),
 #ifndef ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS
-              mArmature(nullptr),
-              mNode(nullptr),
+          mArmature(nullptr),
+          mNode(nullptr),
 #endif
-              mWeights(nullptr),
-              mOffsetMatrix() {
+          mWeights(nullptr),
+    mOffsetMatrix() {
         // empty
     }
 
     //! Copy constructor
     aiBone(const aiBone &other) :
-            mName(other.mName),
-            mNumWeights(other.mNumWeights),
+        mName(other.mName),
+        mNumWeights(other.mNumWeights),
 #ifndef ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS
-              mArmature(nullptr),
-              mNode(nullptr),
+        mArmature(nullptr),
+        mNode(nullptr),
 #endif
-            mWeights(nullptr),
-            mOffsetMatrix(other.mOffsetMatrix) {
+        mWeights(nullptr),
+        mOffsetMatrix(other.mOffsetMatrix) {
         if (other.mWeights && other.mNumWeights) {
             mWeights = new aiVertexWeight[mNumWeights];
             ::memcpy(mWeights, other.mWeights, mNumWeights * sizeof(aiVertexWeight));
@@ -423,9 +426,9 @@ enum aiPrimitiveType {
      */
     aiPrimitiveType_NGONEncodingFlag = 0x10,
 
-/** This value is not used. It is just here to force the
-     *  compiler to map this enum to a 32 Bit integer.
-     */
+    /** This value is not used. It is just here to force the
+         *  compiler to map this enum to a 32 Bit integer.
+         */
 #ifndef SWIG
     _aiPrimitiveType_Force32Bit = INT_MAX
 #endif
@@ -491,14 +494,15 @@ struct aiAnimMesh {
 #ifdef __cplusplus
 
     aiAnimMesh() AI_NO_EXCEPT
-            : mVertices(nullptr),
+:
+    mVertices(nullptr),
               mNormals(nullptr),
               mTangents(nullptr),
               mBitangents(nullptr),
               mColors(),
               mTextureCoords(),
               mNumVertices(0),
-              mWeight(0.0f) {
+    mWeight(0.0f) {
         // fixme consider moving this to the ctor initializer list as well
         for (unsigned int a = 0; a < AI_MAX_NUMBER_OF_TEXTURECOORDS; a++) {
             mTextureCoords[a] = nullptr;
@@ -570,9 +574,9 @@ enum aiMorphingMethod {
     /** Relative morphing between morph targets  */
     aiMorphingMethod_MORPH_RELATIVE = 0x3,
 
-/** This value is not used. It is just here to force the
-     *  compiler to map this enum to a 32 Bit integer.
-     */
+    /** This value is not used. It is just here to force the
+         *  compiler to map this enum to a 32 Bit integer.
+         */
 #ifndef SWIG
     _aiMorphingMethod_Force32Bit = INT_MAX
 #endif
@@ -757,25 +761,26 @@ struct aiMesh {
 
     //! Default constructor. Initializes all members to 0
     aiMesh() AI_NO_EXCEPT
-            : mPrimitiveTypes(0),
-              mNumVertices(0),
-              mNumFaces(0),
-              mVertices(nullptr),
-              mNormals(nullptr),
-              mTangents(nullptr),
-              mBitangents(nullptr),
-              mColors(),
-              mTextureCoords(),
-              mNumUVComponents(),
-              mFaces(nullptr),
-              mNumBones(0),
-              mBones(nullptr),
-              mMaterialIndex(0),
-              mNumAnimMeshes(0),
-              mAnimMeshes(nullptr),
-              mMethod(0),
-              mAABB(),
-              mTextureCoordsNames(nullptr) {
+:
+    mPrimitiveTypes(0),
+                    mNumVertices(0),
+                    mNumFaces(0),
+                    mVertices(nullptr),
+                    mNormals(nullptr),
+                    mTangents(nullptr),
+                    mBitangents(nullptr),
+                    mColors(),
+                    mTextureCoords(),
+                    mNumUVComponents(),
+                    mFaces(nullptr),
+                    mNumBones(0),
+                    mBones(nullptr),
+                    mMaterialIndex(0),
+                    mNumAnimMeshes(0),
+                    mAnimMeshes(nullptr),
+                    mMethod(0),
+                    mAABB(),
+    mTextureCoordsNames(nullptr) {
         for (unsigned int a = 0; a < AI_MAX_NUMBER_OF_TEXTURECOORDS; ++a) {
             mNumUVComponents[a] = 0;
             mTextureCoords[a] = nullptr;
@@ -829,20 +834,28 @@ struct aiMesh {
 
     //! Check whether the mesh contains positions. Provided no special
     //! scene flags are set, this will always be true
-    bool HasPositions() const { return mVertices != nullptr && mNumVertices > 0; }
+    bool HasPositions() const {
+        return mVertices != nullptr && mNumVertices > 0;
+    }
 
     //! Check whether the mesh contains faces. If no special scene flags
     //! are set this should always return true
-    bool HasFaces() const { return mFaces != nullptr && mNumFaces > 0; }
+    bool HasFaces() const {
+        return mFaces != nullptr && mNumFaces > 0;
+    }
 
     //! Check whether the mesh contains normal vectors
-    bool HasNormals() const { return mNormals != nullptr && mNumVertices > 0; }
+    bool HasNormals() const {
+        return mNormals != nullptr && mNumVertices > 0;
+    }
 
     //! Check whether the mesh contains tangent and bitangent vectors
     //! It is not possible that it contains tangents and no bitangents
     //! (or the other way round). The existence of one of them
     //! implies that the second is there, too.
-    bool HasTangentsAndBitangents() const { return mTangents != nullptr && mBitangents != nullptr && mNumVertices > 0; }
+    bool HasTangentsAndBitangents() const {
+        return mTangents != nullptr && mBitangents != nullptr && mNumVertices > 0;
+    }
 
     //! Check whether the mesh contains a vertex color set
     //! \param pIndex Index of the vertex color set

@@ -63,33 +63,33 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Assimp    {
 
-    ///////////////////////////////////////////////////////////////////////////
-    // std::plus-family operates on operands with identical types - we need to
-    // support all the (vectype op float) combinations in vector maths.
-    // Providing T(float) would open the way to endless implicit conversions.
-    ///////////////////////////////////////////////////////////////////////////
-    namespace Intern {
-        template <typename T0, typename T1, typename TRES = T0> struct plus {
-            TRES operator() (const T0& t0, const T1& t1) const {
-                return t0+t1;
-            }
-        };
-        template <typename T0, typename T1, typename TRES = T0> struct minus {
-            TRES operator() (const T0& t0, const T1& t1) const {
-                return t0-t1;
-            }
-        };
-        template <typename T0, typename T1, typename TRES = T0> struct multiplies {
-            TRES operator() (const T0& t0, const T1& t1) const {
-                return t0*t1;
-            }
-        };
-        template <typename T0, typename T1, typename TRES = T0> struct divides {
-            TRES operator() (const T0& t0, const T1& t1) const {
-                return t0/t1;
-            }
-        };
+///////////////////////////////////////////////////////////////////////////
+// std::plus-family operates on operands with identical types - we need to
+// support all the (vectype op float) combinations in vector maths.
+// Providing T(float) would open the way to endless implicit conversions.
+///////////////////////////////////////////////////////////////////////////
+namespace Intern {
+template <typename T0, typename T1, typename TRES = T0> struct plus {
+    TRES operator() (const T0& t0, const T1& t1) const {
+        return t0+t1;
     }
+};
+template <typename T0, typename T1, typename TRES = T0> struct minus {
+    TRES operator() (const T0& t0, const T1& t1) const {
+        return t0-t1;
+    }
+};
+template <typename T0, typename T1, typename TRES = T0> struct multiplies {
+    TRES operator() (const T0& t0, const T1& t1) const {
+        return t0*t1;
+    }
+};
+template <typename T0, typename T1, typename TRES = T0> struct divides {
+    TRES operator() (const T0& t0, const T1& t1) const {
+        return t0/t1;
+    }
+};
+}
 
 // ------------------------------------------------------------------------------------------------
 /** Intermediate description a vertex with all possible components. Defines a full set of
@@ -153,7 +153,7 @@ public:
         }
 
         for (unsigned int i = 0; msh->HasVertexColors(i); ++i) {
-           colors[i] = msh->mColors[i][idx];
+            colors[i] = msh->mColors[i][idx];
         }
     }
 

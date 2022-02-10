@@ -67,10 +67,10 @@ namespace Assimp    {
 class MemoryIOStream : public IOStream {
 public:
     MemoryIOStream (const uint8_t* buff, size_t len, bool own = false)
-    : buffer (buff)
-    , length(len)
-    , pos((size_t)0)
-    , own(own) {
+        : buffer (buff)
+        , length(len)
+        , pos((size_t)0)
+        , own(own) {
         // empty
     }
 
@@ -154,10 +154,10 @@ class MemoryIOSystem : public IOSystem {
 public:
     /** Constructor. */
     MemoryIOSystem(const uint8_t* buff, size_t len, IOSystem* io)
-    : buffer(buff)
-    , length(len)
-    , existing_io(io)
-    , created_streams() {
+        : buffer(buff)
+        , length(len)
+        , existing_io(io)
+        , created_streams() {
         // empty
     }
 
@@ -178,7 +178,7 @@ public:
     /** Returns the directory separator. */
     char getOsSeparator() const override {
         return existing_io ? existing_io->getOsSeparator()
-                           : '/';  // why not? it doesn't care
+               : '/';  // why not? it doesn't care
     }
 
     // -------------------------------------------------------------------

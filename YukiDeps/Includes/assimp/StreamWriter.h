@@ -291,11 +291,11 @@ private:
 // --------------------------------------------------------------------------------------------
 // `static` StreamWriter. Their byte order is fixed and they might be a little bit faster.
 #ifdef AI_BUILD_BIG_ENDIAN
-    typedef StreamWriter<true>  StreamWriterLE;
-    typedef StreamWriter<false> StreamWriterBE;
+typedef StreamWriter<true>  StreamWriterLE;
+typedef StreamWriter<false> StreamWriterBE;
 #else
-    typedef StreamWriter<true>  StreamWriterBE;
-    typedef StreamWriter<false> StreamWriterLE;
+typedef StreamWriter<true>  StreamWriterBE;
+typedef StreamWriter<false> StreamWriterLE;
 #endif
 
 // `dynamic` StreamWriter. The byte order of the input data is specified in the

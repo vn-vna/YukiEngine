@@ -15,112 +15,112 @@ YukiApp::YukiApp()
       m_pLogger(nullptr),
       m_bCreated(false)
 {
-  m_pLogger          = Debug::CreateYukiLogger();
-  m_pWindow          = CreateNewWindow();
-  m_pInputController = CreateNewInputControl();
-  m_pGfxController   = CreateGraphicsController();
+    m_pLogger          = Debug::CreateYukiLogger();
+    m_pWindow          = CreateNewWindow();
+    m_pInputController = CreateNewInputControl();
+    m_pGfxController   = CreateGraphicsController();
 }
 
 SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
 {
-  return m_pGfxController;
+    return m_pGfxController;
 }
 
 SharedPtr<IYukiInpControl>& YukiApp::GetInputController()
 {
-  return m_pInputController;
+    return m_pInputController;
 }
 
 SharedPtr<Debug::IYukiLogger>& YukiApp::GetLogger()
 {
-  return m_pLogger;
+    return m_pLogger;
 }
 
 SharedPtr<IYukiWindow>& YukiApp::GetWindow()
 {
-  return m_pWindow;
+    return m_pWindow;
 }
 
 void YukiApp::RunApp()
 {
-  try
-  {
-    Create();
-    Awake();
-    m_bAlive = true;
-    while (m_bAlive)
+    try
     {
-      Update();
+        Create();
+        Awake();
+        m_bAlive = true;
+        while (m_bAlive)
+        {
+            Update();
+        }
     }
-  }
-  catch (const Yuki::Debug::YukiError& yer)
-  {
-    GetLogger()->PushErrorMessage(yer.getErrorMessage());
-  }
+    catch (const Yuki::Debug::YukiError& yer)
+    {
+        GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    }
 
-  try
-  {
-    Destroy();
-  }
-  catch (const Yuki::Debug::YukiError& yer)
-  {
-    GetLogger()->PushErrorMessage(yer.getErrorMessage());
-  }
+    try
+    {
+        Destroy();
+    }
+    catch (const Yuki::Debug::YukiError& yer)
+    {
+        GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    }
 }
 
 void YukiApp::Create()
 {
-  if (m_bCreated)
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationRecreationError);
-  }
-  GetLogger()->Create();
-  GetWindow()->Create();
-  GetGraphicsController()->Create();
-  m_bCreated = true;
+    if (m_bCreated)
+    {
+        THROW_YUKI_ERROR(Debug::YukiApplicationRecreationError);
+    }
+    GetLogger()->Create();
+    GetWindow()->Create();
+    GetGraphicsController()->Create();
+    m_bCreated = true;
 }
 
 void YukiApp::Awake()
 {
-  GetWindow()->Awake();
-  GetGraphicsController()->Awake();
+    GetWindow()->Awake();
+    GetGraphicsController()->Awake();
 }
 
 void YukiApp::Update()
 {
-  GetWindow()->Update();
-  GetGraphicsController()->Render();
-  if (GetWindow()->ShouldClose())
-  {
-    m_bAlive = false;
-  }
+    GetWindow()->Update();
+    GetGraphicsController()->Render();
+    if (GetWindow()->ShouldClose())
+    {
+        m_bAlive = false;
+    }
 }
 
 void YukiApp::Destroy()
 {
-  if (!m_bCreated)
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationNotCreatedError);
-  }
-  GetGraphicsController()->Destroy();
-  GetWindow()->Destroy();
-  GetLogger()->Destroy();
-  m_bCreated = false;
+    if (!m_bCreated)
+    {
+        THROW_YUKI_ERROR(Debug::YukiApplicationNotCreatedError);
+    }
+    GetGraphicsController()->Destroy();
+    GetWindow()->Destroy();
+    GetLogger()->Destroy();
+    m_bCreated = false;
 }
 
 SharedPtr<IYukiApp> CreateYukiApp()
 {
-  if (g_pGlobalApplication.get())
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationInstanceExistsError);
-  }
-  g_pGlobalApplication.reset((IYukiApp*) new YukiApp());
-  return g_pGlobalApplication;
+    if (g_pGlobalApplication.get())
+    {
+        THROW_YUKI_ERROR(Debug::YukiApplicationInstanceExistsError);
+    }
+    g_pGlobalApplication.reset((IYukiApp*) new YukiApp());
+    return g_pGlobalApplication;
 }
 
 SharedPtr<IYukiApp> GetYukiApp()
 {
-  return g_pGlobalApplication;
+    return g_pGlobalApplication;
 }
 
 } // namespace Yuki::Core

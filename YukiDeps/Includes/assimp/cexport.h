@@ -116,7 +116,7 @@ ASSIMP_API void aiReleaseExportFormatDescription(const C_STRUCT aiExportFormatDe
  *    delete it again.
  */
 ASSIMP_API void aiCopyScene(const C_STRUCT aiScene *pIn,
-        C_STRUCT aiScene **pOut);
+                            C_STRUCT aiScene **pOut);
 
 // --------------------------------------------------------------------------------
 /** Frees a scene copy created using aiCopyScene() */
@@ -162,9 +162,9 @@ ASSIMP_API void aiFreeScene(const C_STRUCT aiScene *pIn);
 *   imported scene.
 */
 ASSIMP_API aiReturn aiExportScene(const C_STRUCT aiScene *pScene,
-        const char *pFormatId,
-        const char *pFileName,
-        unsigned int pPreprocessing);
+                                  const char *pFormatId,
+                                  const char *pFileName,
+                                  unsigned int pPreprocessing);
 
 // --------------------------------------------------------------------------------
 /** Exports the given scene to a chosen file format using custom IO logic supplied by you.
@@ -182,10 +182,10 @@ ASSIMP_API aiReturn aiExportScene(const C_STRUCT aiScene *pScene,
 *   imported scene.
 */
 ASSIMP_API aiReturn aiExportSceneEx(const C_STRUCT aiScene *pScene,
-        const char *pFormatId,
-        const char *pFileName,
-        C_STRUCT aiFileIO *pIO,
-        unsigned int pPreprocessing);
+                                    const char *pFormatId,
+                                    const char *pFileName,
+                                    C_STRUCT aiFileIO *pIO,
+                                    unsigned int pPreprocessing);
 
 // --------------------------------------------------------------------------------
 /** Describes a blob of exported scene data. Use #aiExportSceneToBlob() to create a blob containing an

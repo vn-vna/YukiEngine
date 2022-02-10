@@ -79,17 +79,17 @@ public:
      *  @return Output mesh
      */
     static aiMesh* MakeMesh(const std::vector<aiVector3D>& positions,
-        unsigned int numIndices);
+                            unsigned int numIndices);
 
 
     static aiMesh* MakeMesh ( unsigned int (*GenerateFunc)
-        (std::vector<aiVector3D>&));
+                              (std::vector<aiVector3D>&));
 
     static aiMesh* MakeMesh ( unsigned int (*GenerateFunc)
-        (std::vector<aiVector3D>&, bool));
+                              (std::vector<aiVector3D>&, bool));
 
     static aiMesh* MakeMesh ( unsigned int n,  void (*GenerateFunc)
-        (unsigned int,std::vector<aiVector3D>&));
+                              (unsigned int,std::vector<aiVector3D>&));
 
     // ----------------------------------------------------------------
     /** @brief Generates a hexahedron (cube)
@@ -153,7 +153,7 @@ public:
      *  @param positions Receives output triangles.
      */
     static void MakeSphere(unsigned int tess,
-        std::vector<aiVector3D>& positions);
+                           std::vector<aiVector3D>& positions);
 
 
     // ----------------------------------------------------------------
@@ -183,8 +183,8 @@ public:
      *  @param positions Receives output triangles
      */
     static void MakeCone(ai_real height,ai_real radius1,
-        ai_real radius2,unsigned int tess,
-        std::vector<aiVector3D>& positions,bool bOpen= false);
+                         ai_real radius2,unsigned int tess,
+                         std::vector<aiVector3D>& positions,bool bOpen= false);
 
 
     // ----------------------------------------------------------------
@@ -198,7 +198,7 @@ public:
      *  @param positions Receives output triangles.
      */
     static void MakeCircle(ai_real radius, unsigned int tess,
-        std::vector<aiVector3D>& positions);
+                           std::vector<aiVector3D>& positions);
 
 };
 } // ! Assimp

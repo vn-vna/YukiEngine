@@ -72,15 +72,16 @@ struct aiVectorKey {
 
     /// @brief  The default constructor.
     aiVectorKey() AI_NO_EXCEPT
-            : mTime(0.0),
-              mValue() {
+:
+    mTime(0.0),
+    mValue() {
         // empty
     }
 
     /// @brief  Construction from a given time and key value.
 
     aiVectorKey(double time, const aiVector3D &value) :
-            mTime(time), mValue(value) {
+        mTime(time), mValue(value) {
         // empty
     }
 
@@ -98,7 +99,7 @@ struct aiVectorKey {
     bool operator<(const aiVectorKey &rhs) const {
         return mTime < rhs.mTime;
     }
-    
+
     bool operator>(const aiVectorKey &rhs) const {
         return mTime > rhs.mTime;
     }
@@ -117,14 +118,15 @@ struct aiQuatKey {
 
 #ifdef __cplusplus
     aiQuatKey() AI_NO_EXCEPT
-            : mTime(0.0),
-              mValue() {
+:
+    mTime(0.0),
+    mValue() {
         // empty
     }
 
     /** Construction from a given time and key value */
     aiQuatKey(double time, const aiQuaternion &value) :
-            mTime(time), mValue(value) {}
+        mTime(time), mValue(value) {}
 
     typedef aiQuaternion elem_type;
 
@@ -132,7 +134,7 @@ struct aiQuatKey {
     bool operator==(const aiQuatKey &rhs) const {
         return rhs.mValue == this->mValue;
     }
-    
+
     bool operator!=(const aiQuatKey &rhs) const {
         return rhs.mValue != this->mValue;
     }
@@ -141,7 +143,7 @@ struct aiQuatKey {
     bool operator<(const aiQuatKey &rhs) const {
         return mTime < rhs.mTime;
     }
-    
+
     bool operator>(const aiQuatKey &rhs) const {
         return mTime > rhs.mTime;
     }
@@ -163,13 +165,14 @@ struct aiMeshKey {
 #ifdef __cplusplus
 
     aiMeshKey() AI_NO_EXCEPT
-            : mTime(0.0),
-              mValue(0) {
+:
+    mTime(0.0),
+    mValue(0) {
     }
 
     /** Construction from a given time and key value */
     aiMeshKey(double time, const unsigned int value) :
-            mTime(time), mValue(value) {}
+        mTime(time), mValue(value) {}
 
     typedef unsigned int elem_type;
 
@@ -206,10 +209,11 @@ struct aiMeshMorphKey {
     unsigned int mNumValuesAndWeights;
 #ifdef __cplusplus
     aiMeshMorphKey() AI_NO_EXCEPT
-            : mTime(0.0),
-              mValues(nullptr),
-              mWeights(nullptr),
-              mNumValuesAndWeights(0) {
+:
+    mTime(0.0),
+          mValues(nullptr),
+          mWeights(nullptr),
+    mNumValuesAndWeights(0) {
     }
 
     ~aiMeshMorphKey() {
@@ -242,8 +246,8 @@ enum aiAnimBehaviour {
      *  time is t, use the value at (t-n) % (|m-n|).*/
     aiAnimBehaviour_REPEAT = 0x3,
 
-/** This value is not used, it is just here to force the
-     *  the compiler to map this enum to a 32 Bit integer  */
+    /** This value is not used, it is just here to force the
+         *  the compiler to map this enum to a 32 Bit integer  */
 #ifndef SWIG
     _aiAnimBehaviour_Force32Bit = INT_MAX
 #endif
@@ -316,14 +320,15 @@ struct aiNodeAnim {
 
 #ifdef __cplusplus
     aiNodeAnim() AI_NO_EXCEPT
-            : mNumPositionKeys(0),
-              mPositionKeys(nullptr),
-              mNumRotationKeys(0),
-              mRotationKeys(nullptr),
-              mNumScalingKeys(0),
-              mScalingKeys(nullptr),
-              mPreState(aiAnimBehaviour_DEFAULT),
-              mPostState(aiAnimBehaviour_DEFAULT) {
+:
+    mNumPositionKeys(0),
+                     mPositionKeys(nullptr),
+                     mNumRotationKeys(0),
+                     mRotationKeys(nullptr),
+                     mNumScalingKeys(0),
+                     mScalingKeys(nullptr),
+                     mPreState(aiAnimBehaviour_DEFAULT),
+    mPostState(aiAnimBehaviour_DEFAULT) {
         // empty
     }
 
@@ -357,8 +362,9 @@ struct aiMeshAnim {
 #ifdef __cplusplus
 
     aiMeshAnim() AI_NO_EXCEPT
-            : mNumKeys(),
-              mKeys() {}
+:
+    mNumKeys(),
+    mKeys() {}
 
     ~aiMeshAnim() {
         delete[] mKeys;
@@ -385,8 +391,9 @@ struct aiMeshMorphAnim {
 #ifdef __cplusplus
 
     aiMeshMorphAnim() AI_NO_EXCEPT
-            : mNumKeys(),
-              mKeys() {}
+:
+    mNumKeys(),
+    mKeys() {}
 
     ~aiMeshMorphAnim() {
         delete[] mKeys;
@@ -436,14 +443,15 @@ struct aiAnimation {
 
 #ifdef __cplusplus
     aiAnimation() AI_NO_EXCEPT
-            : mDuration(-1.),
+:
+    mDuration(-1.),
               mTicksPerSecond(0.),
               mNumChannels(0),
               mChannels(nullptr),
               mNumMeshChannels(0),
               mMeshChannels(nullptr),
               mNumMorphMeshChannels(0),
-              mMorphMeshChannels(nullptr) {
+    mMorphMeshChannels(nullptr) {
         // empty
     }
 
@@ -505,7 +513,7 @@ struct Interpolator {
 template <>
 struct Interpolator<aiQuaternion> {
     void operator()(aiQuaternion &out, const aiQuaternion &a,
-            const aiQuaternion &b, ai_real d) const {
+                    const aiQuaternion &b, ai_real d) const {
         aiQuaternion::Interpolate(out, a, b, d);
     }
 }; // ! Interpolator <aiQuaternion>
@@ -513,7 +521,7 @@ struct Interpolator<aiQuaternion> {
 template <>
 struct Interpolator<unsigned int> {
     void operator()(unsigned int &out, unsigned int a,
-            unsigned int b, ai_real d) const {
+                    unsigned int b, ai_real d) const {
         out = d > 0.5f ? b : a;
     }
 }; // ! Interpolator <aiQuaternion>
@@ -521,7 +529,7 @@ struct Interpolator<unsigned int> {
 template <>
 struct Interpolator<aiVectorKey> {
     void operator()(aiVector3D &out, const aiVectorKey &a,
-            const aiVectorKey &b, ai_real d) const {
+                    const aiVectorKey &b, ai_real d) const {
         Interpolator<aiVector3D> ipl;
         ipl(out, a.mValue, b.mValue, d);
     }
@@ -530,7 +538,7 @@ struct Interpolator<aiVectorKey> {
 template <>
 struct Interpolator<aiQuatKey> {
     void operator()(aiQuaternion &out, const aiQuatKey &a,
-            const aiQuatKey &b, ai_real d) const {
+                    const aiQuatKey &b, ai_real d) const {
         Interpolator<aiQuaternion> ipl;
         ipl(out, a.mValue, b.mValue, d);
     }
@@ -539,7 +547,7 @@ struct Interpolator<aiQuatKey> {
 template <>
 struct Interpolator<aiMeshKey> {
     void operator()(unsigned int &out, const aiMeshKey &a,
-            const aiMeshKey &b, ai_real d) const {
+                    const aiMeshKey &b, ai_real d) const {
         Interpolator<unsigned int> ipl;
         ipl(out, a.mValue, b.mValue, d);
     }

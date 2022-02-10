@@ -983,13 +983,13 @@ enum aiComponent
 #define AI_CONFIG_IMPORT_OGRE_TEXTURETYPE_FROM_FILENAME \
     "IMPORT_OGRE_TEXTURETYPE_FROM_FILENAME"
 
- /** @brief Specifies whether the Android JNI asset extraction is supported.
-  *
-  * Turn on this option if you want to manage assets in native
-  * Android application without having to keep the internal directory and asset
-  * manager pointer.
-  */
- #define AI_CONFIG_ANDROID_JNI_ASSIMP_MANAGER_SUPPORT "AI_CONFIG_ANDROID_JNI_ASSIMP_MANAGER_SUPPORT"
+/** @brief Specifies whether the Android JNI asset extraction is supported.
+ *
+ * Turn on this option if you want to manage assets in native
+ * Android application without having to keep the internal directory and asset
+ * manager pointer.
+ */
+#define AI_CONFIG_ANDROID_JNI_ASSIMP_MANAGER_SUPPORT "AI_CONFIG_ANDROID_JNI_ASSIMP_MANAGER_SUPPORT"
 
 // ---------------------------------------------------------------------------
 /** @brief Specifies whether the IFC loader skips over IfcSpace elements.
@@ -1086,16 +1086,16 @@ enum aiComponent
 
 /**
  * @brief Specifies the blob name, assimp uses for exporting.
- * 
- * Some formats require auxiliary files to be written, that need to be linked back into 
+ *
+ * Some formats require auxiliary files to be written, that need to be linked back into
  * the original file. For example, OBJ files export materials to a separate MTL file and
  * use the `mtllib` keyword to reference this file.
- * 
+ *
  * When exporting blobs using #ExportToBlob, assimp does not know the name of the blob
- * file and thus outputs `mtllib $blobfile.mtl`, which might not be desired, since the 
- * MTL file might be called differently. 
- * 
- * This property can be used to give the exporter a hint on how to use the magic 
+ * file and thus outputs `mtllib $blobfile.mtl`, which might not be desired, since the
+ * MTL file might be called differently.
+ *
+ * This property can be used to give the exporter a hint on how to use the magic
  * `$blobfile` keyword. If the exporter detects the keyword and is provided with a name
  * for the blob, it instead uses this name.
  */

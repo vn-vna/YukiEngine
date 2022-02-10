@@ -229,7 +229,9 @@ AI_FORCE_INLINE std::string ai_tolower(const std::string &in) {
     std::string out(in);
     ai_trim_left(out);
     ai_trim_right(out);
-    std::transform(out.begin(), out.end(), out.begin(), [](unsigned char c) { return ai_tolower(c); });
+    std::transform(out.begin(), out.end(), out.begin(), [](unsigned char c) {
+        return ai_tolower(c);
+    });
     return out;
 }
 
@@ -245,7 +247,9 @@ AI_FORCE_INLINE char_t ai_toupper(char_t in) {
 /// @return The string as uppercase.
 AI_FORCE_INLINE std::string ai_str_toupper(const std::string &in) {
     std::string out(in);
-    std::transform(out.begin(), out.end(), out.begin(), [](char c) { return ai_toupper(c); });
+    std::transform(out.begin(), out.end(), out.begin(), [](char c) {
+        return ai_toupper(c);
+    });
     return out;
 }
 

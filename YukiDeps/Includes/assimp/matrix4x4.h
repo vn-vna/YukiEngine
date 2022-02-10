@@ -92,18 +92,18 @@ public:
      * @param position The position for the x,y,z axes
      */
     aiMatrix4x4t(const aiVector3t<TReal>& scaling, const aiQuaterniont<TReal>& rotation,
-        const aiVector3t<TReal>& position);
+                 const aiVector3t<TReal>& position);
 
     // array access operators
-	/** @fn TReal* operator[] (unsigned int p_iIndex)
-	 *  @param [in] p_iIndex - index of the row.
-	 *  @return pointer to pointed row.
-	 */
+    /** @fn TReal* operator[] (unsigned int p_iIndex)
+     *  @param [in] p_iIndex - index of the row.
+     *  @return pointer to pointed row.
+     */
     TReal* operator[]       (unsigned int p_iIndex);
 
-	/** @fn const TReal* operator[] (unsigned int p_iIndex) const
-	 *  @overload TReal* operator[] (unsigned int p_iIndex)
-	 */
+    /** @fn const TReal* operator[] (unsigned int p_iIndex) const
+     *  @overload TReal* operator[] (unsigned int p_iIndex)
+     */
     const TReal* operator[] (unsigned int p_iIndex) const;
 
     // comparison operators
@@ -148,10 +148,10 @@ public:
      *  @param position Receives the output position for the x,y,z axes
      */
     void Decompose (aiVector3t<TReal>& scaling, aiQuaterniont<TReal>& rotation,
-        aiVector3t<TReal>& position) const;
+                    aiVector3t<TReal>& position) const;
 
-	// -------------------------------------------------------------------
-	/** @fn void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotation, aiVector3t<TReal>& pPosition) const
+    // -------------------------------------------------------------------
+    /** @fn void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotation, aiVector3t<TReal>& pPosition) const
      *  @brief Decompose a trafo matrix into its original components.
      * Thx to good FAQ at http://www.gamedev.ru/code/articles/faq_matrix_quat
      *  @param [out] pScaling - Receives the output scaling for the x,y,z axes.
@@ -160,13 +160,13 @@ public:
      */
     void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotation, aiVector3t<TReal>& pPosition) const;
 
-	// -------------------------------------------------------------------
-	/** @fn void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotationAxis, TReal& pRotationAngle, aiVector3t<TReal>& pPosition) const
+    // -------------------------------------------------------------------
+    /** @fn void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotationAxis, TReal& pRotationAngle, aiVector3t<TReal>& pPosition) const
      *  @brief Decompose a trafo matrix into its original components
-	 * Thx to good FAQ at http://www.gamedev.ru/code/articles/faq_matrix_quat
+     * Thx to good FAQ at http://www.gamedev.ru/code/articles/faq_matrix_quat
      *  @param [out] pScaling - Receives the output scaling for the x,y,z axes.
      *  @param [out] pRotationAxis - Receives the output rotation axis.
-	 *  @param [out] pRotationAngle - Receives the output rotation angle for @ref pRotationAxis.
+     *  @param [out] pRotationAngle - Receives the output rotation angle for @ref pRotationAxis.
      *  @param [out] pPosition - Receives the output position for the x,y,z axes.
      */
     void Decompose(aiVector3t<TReal>& pScaling, aiVector3t<TReal>& pRotationAxis, TReal& pRotationAngle, aiVector3t<TReal>& pPosition) const;
@@ -179,7 +179,7 @@ public:
      *  @param position Receives the output position for the x,y,z axes
      */
     void DecomposeNoScaling (aiQuaterniont<TReal>& rotation,
-        aiVector3t<TReal>& position) const;
+                             aiVector3t<TReal>& position) const;
 
     // -------------------------------------------------------------------
     /** @brief Creates a trafo matrix from a set of euler angles
@@ -222,7 +222,7 @@ public:
      *  @return Reference to the output matrix
      */
     static aiMatrix4x4t& Rotation(TReal a, const aiVector3t<TReal>& axis,
-            aiMatrix4x4t& out);
+                                  aiMatrix4x4t& out);
 
     // -------------------------------------------------------------------
     /** @brief Returns a translation matrix
@@ -231,7 +231,7 @@ public:
      *  @return Reference to the output matrix
      */
     static aiMatrix4x4t& Translation( const aiVector3t<TReal>& v,
-            aiMatrix4x4t& out);
+                                      aiMatrix4x4t& out);
 
     // -------------------------------------------------------------------
     /** @brief Returns a scaling matrix
@@ -251,7 +251,7 @@ public:
      *          Journal of Graphics Tools, 4(4):1-4, 1999
      */
     static aiMatrix4x4t& FromToMatrix(const aiVector3t<TReal>& from,
-            const aiVector3t<TReal>& to, aiMatrix4x4t& out);
+                                      const aiVector3t<TReal>& to, aiMatrix4x4t& out);
 
     TReal a1, a2, a3, a4;
     TReal b1, b2, b3, b4;

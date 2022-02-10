@@ -20,79 +20,79 @@ YukiFlashLight::YukiFlashLight()
 
 const glm::vec4& YukiFlashLight::GetColor()
 {
-  return m_tColor;
+    return m_tColor;
 }
 
 const float& YukiFlashLight::GetIntensity()
 {
-  return m_nIntensity;
+    return m_nIntensity;
 }
 
 const glm::vec3& YukiFlashLight::GetPosition()
 {
-  return m_tPosition;
+    return m_tPosition;
 }
 
 const float& YukiFlashLight::GetAttenuationConstantParam()
 {
-  return m_nAttenuationConstant;
+    return m_nAttenuationConstant;
 }
 
 const float& YukiFlashLight::GetAttenuationLinearParam()
 {
-  return m_nAttenuationLinear;
+    return m_nAttenuationLinear;
 }
 
 const float& YukiFlashLight::GetAttenuationQuadraticParam()
 {
-  return m_nAttenuationQuadratic;
+    return m_nAttenuationQuadratic;
 }
 
 const glm::vec3& YukiFlashLight::GetDirection()
 {
-  return m_tDirection;
+    return m_tDirection;
 }
 
 const float& YukiFlashLight::GetCutOffAngle()
 {
-  return m_nCutoffAngle;
+    return m_nCutoffAngle;
 }
 
 void YukiFlashLight::SetCutOffAngle(const float& cutoff)
 {
-  m_nCutoffAngle = cutoff;
+    m_nCutoffAngle = cutoff;
 }
 
 void YukiFlashLight::SetDirection(const glm::vec3& direction)
 {
-  m_tDirection = direction;
+    m_tDirection = direction;
 }
 
 void YukiFlashLight::SetPosition(const glm::vec3& pos)
 {
-  m_tPosition = pos;
+    m_tPosition = pos;
 }
 
 void YukiFlashLight::SetColor(const glm::vec4& color)
 {
-  m_tColor = color;
+    m_tColor = color;
 }
 
 void YukiFlashLight::SetIntensity(const float& intensity)
 {
-  m_nIntensity = intensity;
+    m_nIntensity = intensity;
 }
 
 void YukiFlashLight::SetAttenuationParam(const float& constant, const float& linear, const float& quadratic)
 {
-  m_nAttenuationConstant  = constant;
-  m_nAttenuationLinear    = linear;
-  m_nAttenuationQuadratic = quadratic;
+    m_nAttenuationConstant  = constant;
+    m_nAttenuationLinear    = linear;
+    m_nAttenuationQuadratic = quadratic;
 }
 
 SharedPtr<IYukiFlashLight> CreateSpotLight()
 {
-  return {(IYukiFlashLight*) new YukiFlashLight, std::default_delete<IYukiFlashLight>()};
+    return {(IYukiFlashLight*) new YukiFlashLight, std::default_delete<IYukiFlashLight>()};
 }
 
 } // namespace Yuki::Comp

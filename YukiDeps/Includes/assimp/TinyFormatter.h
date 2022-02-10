@@ -69,8 +69,8 @@ namespace Formatter {
  *
  *  @endcode */
 template < typename T,
-    typename CharTraits = std::char_traits<T>,
-    typename Allocator  = std::allocator<T> >
+           typename CharTraits = std::char_traits<T>,
+           typename Allocator  = std::allocator<T> >
 class basic_formatter {
 public:
     typedef class std::basic_string<T,CharTraits,Allocator> string;

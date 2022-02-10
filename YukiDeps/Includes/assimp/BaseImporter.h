@@ -106,9 +106,9 @@ public:
      * unsure.
      */
     virtual bool CanRead(
-            const std::string &pFile,
-            IOSystem *pIOHandler,
-            bool checkSig) const = 0;
+        const std::string &pFile,
+        IOSystem *pIOHandler,
+        bool checkSig) const = 0;
 
     // -------------------------------------------------------------------
     /** Imports the given file and returns the imported data.
@@ -130,9 +130,9 @@ public:
      *  a suitable response to the caller.
      */
     aiScene *ReadFile(
-            Importer *pImp,
-            const std::string &pFile,
-            IOSystem *pIOHandler);
+        Importer *pImp,
+        const std::string &pFile,
+        IOSystem *pIOHandler);
 
     // -------------------------------------------------------------------
     /** Returns the error description of the last error that occurred.
@@ -162,7 +162,7 @@ public:
      * @param pImp Importer instance
      */
     virtual void SetupProperties(
-            const Importer *pImp);
+        const Importer *pImp);
 
     // -------------------------------------------------------------------
     /** Called by #Importer::GetImporterInfo to get a description of
@@ -232,9 +232,9 @@ protected:
      * @param pIOHandler The IO handler to use for any file access.
      * nullptr is not a valid parameter. */
     virtual void InternReadFile(
-            const std::string &pFile,
-            aiScene *pScene,
-            IOSystem *pIOHandler) = 0;
+        const std::string &pFile,
+        aiScene *pScene,
+        IOSystem *pIOHandler) = 0;
 
 public: // static utilities
     // -------------------------------------------------------------------
@@ -252,13 +252,13 @@ public: // static utilities
      *  @param searchBytes Number of bytes to be searched for the tokens.
      */
     static bool SearchFileHeaderForToken(
-            IOSystem *pIOSystem,
-            const std::string &file,
-            const char **tokens,
-            std::size_t numTokens,
-            unsigned int searchBytes = 200,
-            bool tokensSol = false,
-            bool noAlphaBeforeTokens = false);
+        IOSystem *pIOSystem,
+        const std::string &file,
+        const char **tokens,
+        std::size_t numTokens,
+        unsigned int searchBytes = 200,
+        bool tokensSol = false,
+        bool noAlphaBeforeTokens = false);
 
     // -------------------------------------------------------------------
     /** @brief Check whether a file has a specific file extension
@@ -269,10 +269,10 @@ public: // static utilities
      *  @note Case-insensitive
      */
     static bool SimpleExtensionCheck(
-            const std::string &pFile,
-            const char *ext0,
-            const char *ext1 = nullptr,
-            const char *ext2 = nullptr);
+        const std::string &pFile,
+        const char *ext0,
+        const char *ext1 = nullptr,
+        const char *ext2 = nullptr);
 
     // -------------------------------------------------------------------
     /** @brief Extract file extension from a string
@@ -280,7 +280,7 @@ public: // static utilities
      *  @return Extension without trailing dot, all lowercase
      */
     static std::string GetExtension(
-            const std::string &pFile);
+        const std::string &pFile);
 
     // -------------------------------------------------------------------
     /** @brief Check whether a file starts with one or more magic tokens
@@ -297,12 +297,12 @@ public: // static utilities
      *  tokens of size 2,4.
      */
     static bool CheckMagicToken(
-            IOSystem *pIOHandler,
-            const std::string &pFile,
-            const void *magic,
-            std::size_t num,
-            unsigned int offset = 0,
-            unsigned int size = 4);
+        IOSystem *pIOHandler,
+        const std::string &pFile,
+        const void *magic,
+        std::size_t num,
+        unsigned int offset = 0,
+        unsigned int size = 4);
 
     // -------------------------------------------------------------------
     /** An utility for all text file loaders. It converts a file to our
@@ -311,7 +311,7 @@ public: // static utilities
      *  @param data File buffer to be converted to UTF8 data. The buffer
      *  is resized as appropriate. */
     static void ConvertToUTF8(
-            std::vector<char> &data);
+        std::vector<char> &data);
 
     // -------------------------------------------------------------------
     /** An utility for all text file loaders. It converts a file from our
@@ -320,7 +320,7 @@ public: // static utilities
      *  @param data File buffer to be converted from UTF8 to ISO-8859-1. The buffer
      *  is resized as appropriate. */
     static void ConvertUTF8toISO8859_1(
-            std::string &data);
+        std::string &data);
 
     // -------------------------------------------------------------------
     /// @brief  Enum to define, if empty files are ok or not.
@@ -339,9 +339,9 @@ public: // static utilities
      *   a binary 0.
      *  @param mode Whether it is OK to load empty text files. */
     static void TextFileToBuffer(
-            IOStream *stream,
-            std::vector<char> &data,
-            TextFileMode mode = FORBID_EMPTY);
+        IOStream *stream,
+        std::vector<char> &data,
+        TextFileMode mode = FORBID_EMPTY);
 
     // -------------------------------------------------------------------
     /** Utility function to move a std::vector into a aiScene array
@@ -350,9 +350,9 @@ public: // static utilities
     *  @param numOut The output count of elements copied. */
     template <typename T>
     AI_FORCE_INLINE static void CopyVector(
-            std::vector<T> &vec,
-            T *&out,
-            unsigned int &outLength) {
+        std::vector<T> &vec,
+        T *&out,
+        unsigned int &outLength) {
         outLength = unsigned(vec.size());
         if (outLength) {
             out = new T[outLength];
@@ -367,14 +367,17 @@ public: // static utilities
     *  @param numOut The output count of elements copied. */
     template <typename T>
     AI_FORCE_INLINE static void CopyVector(
-            std::vector<std::unique_ptr<T> > &vec,
-            T **&out,
-            unsigned int &outLength) {
+        std::vector<std::unique_ptr<T> > &vec,
+        T **&out,
+        unsigned int &outLength) {
         outLength = unsigned(vec.size());
         if (outLength) {
             out = new T*[outLength];
             T** outPtr = out;
-            std::for_each(vec.begin(), vec.end(), [&outPtr](std::unique_ptr<T>& uPtr){*outPtr = uPtr.release(); ++outPtr; });
+            std::for_each(vec.begin(), vec.end(), [&outPtr](std::unique_ptr<T>& uPtr) {
+                *outPtr = uPtr.release();
+                ++outPtr;
+            });
         }
     }
 

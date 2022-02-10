@@ -87,24 +87,24 @@ public:
      *    endianness information is contained in the @c SwapEndianess
      *    template parameter and this parameter is meaningless.  */
     StreamReader(std::shared_ptr<IOStream> stream, bool le = false) :
-            mStream(stream),
-            mBuffer(nullptr),
-            mCurrent(nullptr),
-            mEnd(nullptr),
-            mLimit(nullptr),
-            mLe(le) {
+        mStream(stream),
+        mBuffer(nullptr),
+        mCurrent(nullptr),
+        mEnd(nullptr),
+        mLimit(nullptr),
+        mLe(le) {
         ai_assert(stream);
         InternBegin();
     }
 
     // ---------------------------------------------------------------------
     StreamReader(IOStream *stream, bool le = false) :
-            mStream(std::shared_ptr<IOStream>(stream)),
-            mBuffer(nullptr),
-            mCurrent(nullptr),
-            mEnd(nullptr),
-            mLimit(nullptr),
-            mLe(le) {
+        mStream(std::shared_ptr<IOStream>(stream)),
+        mBuffer(nullptr),
+        mCurrent(nullptr),
+        mEnd(nullptr),
+        mLimit(nullptr),
+        mLe(le) {
         ai_assert(nullptr != stream);
         InternBegin();
     }

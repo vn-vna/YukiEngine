@@ -64,9 +64,9 @@ class SmallVector {
 public:
     /// @brief  The default class constructor.
     SmallVector() :
-            mStorage(mInplaceStorage),
-            mSize(0),
-            mCapacity(Capacity) {
+        mStorage(mInplaceStorage),
+        mSize(0),
+        mCapacity(Capacity) {
         // empty
     }
 

@@ -61,18 +61,18 @@ namespace Math {
 /// @return The greatest common divisor.
 template <typename IntegerType>
 inline IntegerType gcd( IntegerType a, IntegerType b ) {
-	const IntegerType zero = (IntegerType)0;
-	while ( true ) {
-		if ( a == zero ) {
-			return b;
+    const IntegerType zero = (IntegerType)0;
+    while ( true ) {
+        if ( a == zero ) {
+            return b;
         }
-		b %= a;
+        b %= a;
 
-		if ( b == zero ) {
-			return a;
+        if ( b == zero ) {
+            return a;
         }
-		a %= b;
-	}
+        a %= b;
+    }
 }
 
 /// @brief  Will return the greatest common divisor.
@@ -81,11 +81,11 @@ inline IntegerType gcd( IntegerType a, IntegerType b ) {
 /// @return The greatest common divisor.
 template < typename IntegerType >
 inline IntegerType lcm( IntegerType a, IntegerType b ) {
-	const IntegerType t = gcd (a,b);
-	if (!t) {
+    const IntegerType t = gcd (a,b);
+    if (!t) {
         return t;
     }
-	return a / t * b;
+    return a / t * b;
 }
 /// @brief  Will return the smallest epsilon-value for the requested type.
 /// @return The numercical limit epsilon depending on its type.

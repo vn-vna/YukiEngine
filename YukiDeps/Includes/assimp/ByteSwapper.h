@@ -108,7 +108,7 @@ public:
      *  @param[inout] _szOut A void* to save the reintcasts for the caller. */
     static inline void Swap8(void* _szOut)
     {
-    ai_assert(_szOut);
+        ai_assert(_szOut);
 
 #if _MSC_VER >= 1400
         uint64_t* const szOut = reinterpret_cast<uint64_t*>(_szOut);
@@ -151,11 +151,11 @@ public:
     // ----------------------------------------------------------------------
     /** ByteSwap an int32t. Not a joke.
      *  @param[inout] fOut ehm. .. */
-    static inline void Swap(int32_t* fOut){
+    static inline void Swap(int32_t* fOut) {
         Swap4(fOut);
     }
 
-    static inline void Swap(uint32_t* fOut){
+    static inline void Swap(uint32_t* fOut) {
         Swap4(fOut);
     }
 

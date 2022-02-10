@@ -82,7 +82,7 @@ public:
      * @param smoothingGroup SmoothingGroup for this vertex
      */
     void Add(const aiVector3D& vPosition, unsigned int index,
-        unsigned int smoothingGroup);
+             unsigned int smoothingGroup);
 
     // -------------------------------------------------------------------
     /** Prepare the spatial sorter for use. This step runs in O(logn)
@@ -107,8 +107,8 @@ public:
      */
     // -------------------------------------------------------------------
     void FindPositions( const aiVector3D& pPosition, uint32_t pSG,
-        float pRadius, std::vector<unsigned int>& poResults,
-        bool exactMatch = false) const;
+                        float pRadius, std::vector<unsigned int>& poResults,
+                        bool exactMatch = false) const;
 
 protected:
     /** Normal of the sorting plane, normalized. The center is always at (0, 0, 0) */
@@ -126,7 +126,8 @@ protected:
         float mDistance;        ///< Distance of this vertex to the sorting plane
 
         Entry() AI_NO_EXCEPT
-        : mIndex(0)
+:
+        mIndex(0)
         , mPosition()
         , mSmoothGroups(0)
         , mDistance(0.0f) {
@@ -134,10 +135,10 @@ protected:
         }
 
         Entry( unsigned int pIndex, const aiVector3D& pPosition, float pDistance,uint32_t pSG)
-        : mIndex( pIndex)
-        , mPosition( pPosition)
-        , mSmoothGroups(pSG)
-        , mDistance( pDistance) {
+            : mIndex( pIndex)
+            , mPosition( pPosition)
+            , mSmoothGroups(pSG)
+            , mDistance( pDistance) {
             // empty
         }
 

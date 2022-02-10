@@ -369,7 +369,7 @@
 #endif
 #if !defined(uint8_t) && !defined(_UINT8_T) && !defined(vxWorks)
 # if (UCHAR_MAX == UINT8_MAX) || defined (S_SPLINT_S)
-    typedef unsigned char uint8_t;
+typedef unsigned char uint8_t;
 #   define UINT8_C(v) ((uint8_t) v)
 # else
 #   error "Platform not supported"
@@ -384,7 +384,7 @@
 #endif
 #if !defined(int8_t) && !defined(_INT8_T) && !defined(vxWorks)
 # if (SCHAR_MAX == INT8_MAX) || defined (S_SPLINT_S)
-    typedef signed char int8_t;
+typedef signed char int8_t;
 #   define INT8_C(v) ((int8_t) v)
 # else
 #   error "Platform not supported"
@@ -396,13 +396,13 @@
 #endif
 #if !defined(uint16_t) && !defined(_UINT16_T) && !defined(vxWorks)
 #if (UINT_MAX == UINT16_MAX) || defined (S_SPLINT_S)
-  typedef unsigned int uint16_t;
+typedef unsigned int uint16_t;
 # ifndef PRINTF_INT16_MODIFIER
 #  define PRINTF_INT16_MODIFIER ""
 # endif
 # define UINT16_C(v) ((uint16_t) (v))
 #elif (USHRT_MAX == UINT16_MAX)
-  typedef unsigned short uint16_t;
+typedef unsigned short uint16_t;
 # define UINT16_C(v) ((uint16_t) (v))
 # ifndef PRINTF_INT16_MODIFIER
 #  define PRINTF_INT16_MODIFIER "h"
@@ -420,13 +420,13 @@
 #endif
 #if !defined(int16_t) && !defined(_INT16_T) && !defined(vxWorks)
 #if (INT_MAX == INT16_MAX) || defined (S_SPLINT_S)
-  typedef signed int int16_t;
+typedef signed int int16_t;
 # define INT16_C(v) ((int16_t) (v))
 # ifndef PRINTF_INT16_MODIFIER
 #  define PRINTF_INT16_MODIFIER ""
 # endif
 #elif (SHRT_MAX == INT16_MAX)
-  typedef signed short int16_t;
+typedef signed short int16_t;
 # define INT16_C(v) ((int16_t) (v))
 # ifndef PRINTF_INT16_MODIFIER
 #  define PRINTF_INT16_MODIFIER "h"
@@ -441,19 +441,19 @@
 #endif
 #if !defined(uint32_t) && !defined(_UINT32_T) && !defined(vxWorks)
 #if (ULONG_MAX == UINT32_MAX) || defined (S_SPLINT_S)
-  typedef unsigned long uint32_t;
+typedef unsigned long uint32_t;
 # define UINT32_C(v) v ## UL
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER "l"
 # endif
 #elif (UINT_MAX == UINT32_MAX)
-  typedef unsigned int uint32_t;
+typedef unsigned int uint32_t;
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER ""
 # endif
 # define UINT32_C(v) v ## U
 #elif (USHRT_MAX == UINT32_MAX)
-  typedef unsigned short uint32_t;
+typedef unsigned short uint32_t;
 # define UINT32_C(v) ((unsigned short) (v))
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER ""
@@ -471,19 +471,19 @@
 #endif
 #if !defined(int32_t) && !defined(_INT32_T) && !defined(vxWorks)
 #if (LONG_MAX == INT32_MAX) || defined (S_SPLINT_S)
-  typedef signed long int32_t;
+typedef signed long int32_t;
 # define INT32_C(v) v ## L
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER "l"
 # endif
 #elif (INT_MAX == INT32_MAX)
-  typedef signed int int32_t;
+typedef signed int int32_t;
 # define INT32_C(v) v
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER ""
 # endif
 #elif (SHRT_MAX == INT32_MAX)
-  typedef signed short int32_t;
+typedef signed short int32_t;
 # define INT32_C(v) ((short) (v))
 # ifndef PRINTF_INT32_MODIFIER
 #  define PRINTF_INT32_MODIFIER ""
@@ -504,8 +504,8 @@
 #if (defined(__STDC__) && defined(__STDC_VERSION__)) || defined (S_SPLINT_S)
 # if (__STDC__ && __STDC_VERSION__ >= 199901L) || defined (S_SPLINT_S)
 #  define stdint_int64_defined
-   typedef long long int64_t;
-   typedef unsigned long long uint64_t;
+typedef long long int64_t;
+typedef unsigned long long uint64_t;
 #  define UINT64_C(v) v ## ULL
 #  define  INT64_C(v) v ## LL
 #  ifndef PRINTF_INT64_MODIFIER
@@ -517,8 +517,8 @@
 #if !defined (stdint_int64_defined)
 # if defined(__GNUC__) && !defined(vxWorks)
 #  define stdint_int64_defined
-   __extension__ typedef long long int64_t;
-   __extension__ typedef unsigned long long uint64_t;
+__extension__ typedef long long int64_t;
+__extension__ typedef unsigned long long uint64_t;
 #  define UINT64_C(v) v ## ULL
 #  define  INT64_C(v) v ## LL
 #  ifndef PRINTF_INT64_MODIFIER
@@ -526,8 +526,8 @@
 #  endif
 # elif defined(__MWERKS__) || defined (__SUNPRO_C) || defined (__SUNPRO_CC) || defined (__APPLE_CC__) || defined (_LONG_LONG) || defined (_CRAYC) || defined (S_SPLINT_S)
 #  define stdint_int64_defined
-   typedef long long int64_t;
-   typedef unsigned long long uint64_t;
+typedef long long int64_t;
+typedef unsigned long long uint64_t;
 #  define UINT64_C(v) v ## ULL
 #  define  INT64_C(v) v ## LL
 #  ifndef PRINTF_INT64_MODIFIER
@@ -535,8 +535,8 @@
 #  endif
 # elif (defined(__WATCOMC__) && defined(__WATCOM_INT64__)) || (defined(_MSC_VER) && _INTEGRAL_MAX_BITS >= 64) || (defined (__BORLANDC__) && __BORLANDC__ > 0x460) || defined (__alpha) || defined (__DECC)
 #  define stdint_int64_defined
-   typedef __int64 int64_t;
-   typedef unsigned __int64 uint64_t;
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
 #  define UINT64_C(v) v ## UI64
 #  define  INT64_C(v) v ## I64
 #  ifndef PRINTF_INT64_MODIFIER
@@ -610,8 +610,8 @@
  */
 
 #ifdef stdint_int64_defined
-  typedef int64_t intmax_t;
-  typedef uint64_t uintmax_t;
+typedef int64_t intmax_t;
+typedef uint64_t uintmax_t;
 # define  INTMAX_MAX   INT64_MAX
 # define  INTMAX_MIN   INT64_MIN
 # define UINTMAX_MAX  UINT64_MAX
@@ -627,8 +627,8 @@
 #  define PRINTF_INTMAX_DEC_WIDTH PRINTF_INT64_DEC_WIDTH
 # endif
 #else
-  typedef int32_t intmax_t;
-  typedef uint32_t uintmax_t;
+typedef int32_t intmax_t;
+typedef uint32_t uintmax_t;
 # define  INTMAX_MAX   INT32_MAX
 # define UINTMAX_MAX  UINT32_MAX
 # define UINTMAX_C(v) UINT32_C(v)
@@ -652,12 +652,12 @@
  */
 
 #ifndef stdint_least_defined
-  typedef   int8_t   int_least8_t;
-  typedef  uint8_t  uint_least8_t;
-  typedef  int16_t  int_least16_t;
-  typedef uint16_t uint_least16_t;
-  typedef  int32_t  int_least32_t;
-  typedef uint32_t uint_least32_t;
+typedef   int8_t   int_least8_t;
+typedef  uint8_t  uint_least8_t;
+typedef  int16_t  int_least16_t;
+typedef uint16_t uint_least16_t;
+typedef  int32_t  int_least32_t;
+typedef uint32_t uint_least32_t;
 # define PRINTF_LEAST32_MODIFIER PRINTF_INT32_MODIFIER
 # define PRINTF_LEAST16_MODIFIER PRINTF_INT16_MODIFIER
 # define  UINT_LEAST8_MAX  UINT8_MAX
@@ -670,8 +670,8 @@
 # define  INT_LEAST16_MIN  INT16_MIN
 # define  INT_LEAST32_MIN  INT32_MIN
 # ifdef stdint_int64_defined
-    typedef  int64_t  int_least64_t;
-    typedef uint64_t uint_least64_t;
+typedef  int64_t  int_least64_t;
+typedef uint64_t uint_least64_t;
 #   define PRINTF_LEAST64_MODIFIER PRINTF_INT64_MODIFIER
 #   define UINT_LEAST64_MAX UINT64_MAX
 #   define  INT_LEAST64_MAX  INT64_MAX
@@ -707,8 +707,8 @@ typedef uint_least32_t uint_fast32_t;
 #define  INT_FAST16_MIN  INT_LEAST16_MIN
 #define  INT_FAST32_MIN  INT_LEAST32_MIN
 #ifdef stdint_int64_defined
-  typedef  int_least64_t  int_fast64_t;
-  typedef uint_least64_t uint_fast64_t;
+typedef  int_least64_t  int_fast64_t;
+typedef uint_least64_t uint_fast64_t;
 # define UINT_FAST64_MAX UINT_LEAST64_MAX
 # define  INT_FAST64_MAX  INT_LEAST64_MAX
 # define  INT_FAST64_MIN  INT_LEAST64_MIN
@@ -784,12 +784,12 @@ typedef uint_least32_t uint_fast32_t;
 #  ifndef UINTPTR_C
 #    define UINTPTR_C(x)                stdint_intptr_glue3(UINT,stdint_intptr_bits,_C)(x)
 #  endif
-  typedef stdint_intptr_glue3(uint,stdint_intptr_bits,_t) uintptr_t;
-  typedef stdint_intptr_glue3( int,stdint_intptr_bits,_t)  intptr_t;
+typedef stdint_intptr_glue3(uint,stdint_intptr_bits,_t) uintptr_t;
+typedef stdint_intptr_glue3( int,stdint_intptr_bits,_t)  intptr_t;
 # else
 /* TODO -- This following is likely wrong for some platforms, and does
    nothing for the definition of uintptr_t. */
-  typedef ptrdiff_t intptr_t;
+typedef ptrdiff_t intptr_t;
 # endif
 # define STDINT_H_UINTPTR_T_DEFINED
 #endif
@@ -828,85 +828,85 @@ typedef uint_least32_t uint_fast32_t;
 #define REPORTERROR(msg) { err_n++; if (err_first <= 0) err_first = __LINE__; printf msg; }
 
 int main () {
-	int err_n = 0;
-	int err_first = 0;
-	DECL(I,8)
-	DECL(U,8)
-	DECL(I,16)
-	DECL(U,16)
-	DECL(I,32)
-	DECL(U,32)
+    int err_n = 0;
+    int err_first = 0;
+    DECL(I,8)
+    DECL(U,8)
+    DECL(I,16)
+    DECL(U,16)
+    DECL(I,32)
+    DECL(U,32)
 #ifdef INT64_MAX
-	DECL(I,64)
-	DECL(U,64)
+    DECL(I,64)
+    DECL(U,64)
 #endif
-	intmax_t imax = INTMAX_C(0);
-	uintmax_t umax = UINTMAX_C(0);
-	char str0[256], str1[256];
+    intmax_t imax = INTMAX_C(0);
+    uintmax_t umax = UINTMAX_C(0);
+    char str0[256], str1[256];
 
-	sprintf (str0, "%" PRINTF_INT32_MODIFIER "d", INT32_C(2147483647));
-	if (0 != strcmp (str0, "2147483647")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str0));
-	if (atoi(PRINTF_INT32_DEC_WIDTH) != (int) strlen(str0)) REPORTERROR (("Something wrong with PRINTF_INT32_DEC_WIDTH : %s\n", PRINTF_INT32_DEC_WIDTH));
-	sprintf (str0, "%" PRINTF_INT32_MODIFIER "u", UINT32_C(4294967295));
-	if (0 != strcmp (str0, "4294967295")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str0));
-	if (atoi(PRINTF_UINT32_DEC_WIDTH) != (int) strlen(str0)) REPORTERROR (("Something wrong with PRINTF_UINT32_DEC_WIDTH : %s\n", PRINTF_UINT32_DEC_WIDTH));
+    sprintf (str0, "%" PRINTF_INT32_MODIFIER "d", INT32_C(2147483647));
+    if (0 != strcmp (str0, "2147483647")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str0));
+    if (atoi(PRINTF_INT32_DEC_WIDTH) != (int) strlen(str0)) REPORTERROR (("Something wrong with PRINTF_INT32_DEC_WIDTH : %s\n", PRINTF_INT32_DEC_WIDTH));
+    sprintf (str0, "%" PRINTF_INT32_MODIFIER "u", UINT32_C(4294967295));
+    if (0 != strcmp (str0, "4294967295")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str0));
+    if (atoi(PRINTF_UINT32_DEC_WIDTH) != (int) strlen(str0)) REPORTERROR (("Something wrong with PRINTF_UINT32_DEC_WIDTH : %s\n", PRINTF_UINT32_DEC_WIDTH));
 #ifdef INT64_MAX
-	sprintf (str1, "%" PRINTF_INT64_MODIFIER "d", INT64_C(9223372036854775807));
-	if (0 != strcmp (str1, "9223372036854775807")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str1));
-	if (atoi(PRINTF_INT64_DEC_WIDTH) != (int) strlen(str1)) REPORTERROR (("Something wrong with PRINTF_INT64_DEC_WIDTH : %s, %d\n", PRINTF_INT64_DEC_WIDTH, (int) strlen(str1)));
-	sprintf (str1, "%" PRINTF_INT64_MODIFIER "u", UINT64_C(18446744073709550591));
-	if (0 != strcmp (str1, "18446744073709550591")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str1));
-	if (atoi(PRINTF_UINT64_DEC_WIDTH) != (int) strlen(str1)) REPORTERROR (("Something wrong with PRINTF_UINT64_DEC_WIDTH : %s, %d\n", PRINTF_UINT64_DEC_WIDTH, (int) strlen(str1)));
+    sprintf (str1, "%" PRINTF_INT64_MODIFIER "d", INT64_C(9223372036854775807));
+    if (0 != strcmp (str1, "9223372036854775807")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str1));
+    if (atoi(PRINTF_INT64_DEC_WIDTH) != (int) strlen(str1)) REPORTERROR (("Something wrong with PRINTF_INT64_DEC_WIDTH : %s, %d\n", PRINTF_INT64_DEC_WIDTH, (int) strlen(str1)));
+    sprintf (str1, "%" PRINTF_INT64_MODIFIER "u", UINT64_C(18446744073709550591));
+    if (0 != strcmp (str1, "18446744073709550591")) REPORTERROR (("Something wrong with PRINTF_INT32_MODIFIER : %s\n", str1));
+    if (atoi(PRINTF_UINT64_DEC_WIDTH) != (int) strlen(str1)) REPORTERROR (("Something wrong with PRINTF_UINT64_DEC_WIDTH : %s, %d\n", PRINTF_UINT64_DEC_WIDTH, (int) strlen(str1)));
 #endif
 
-	sprintf (str0, "%d %x\n", 0, ~0);
+    sprintf (str0, "%d %x\n", 0, ~0);
 
-	sprintf (str1, "%d %x\n",  i8, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i8 : %s\n", str1));
-	sprintf (str1, "%u %x\n",  u8, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u8 : %s\n", str1));
-	sprintf (str1, "%d %x\n",  i16, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i16 : %s\n", str1));
-	sprintf (str1, "%u %x\n",  u16, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u16 : %s\n", str1));
-	sprintf (str1, "%" PRINTF_INT32_MODIFIER "d %x\n",  i32, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i32 : %s\n", str1));
-	sprintf (str1, "%" PRINTF_INT32_MODIFIER "u %x\n",  u32, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u32 : %s\n", str1));
+    sprintf (str1, "%d %x\n",  i8, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i8 : %s\n", str1));
+    sprintf (str1, "%u %x\n",  u8, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u8 : %s\n", str1));
+    sprintf (str1, "%d %x\n",  i16, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i16 : %s\n", str1));
+    sprintf (str1, "%u %x\n",  u16, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u16 : %s\n", str1));
+    sprintf (str1, "%" PRINTF_INT32_MODIFIER "d %x\n",  i32, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i32 : %s\n", str1));
+    sprintf (str1, "%" PRINTF_INT32_MODIFIER "u %x\n",  u32, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with u32 : %s\n", str1));
 #ifdef INT64_MAX
-	sprintf (str1, "%" PRINTF_INT64_MODIFIER "d %x\n",  i64, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i64 : %s\n", str1));
+    sprintf (str1, "%" PRINTF_INT64_MODIFIER "d %x\n",  i64, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with i64 : %s\n", str1));
 #endif
-	sprintf (str1, "%" PRINTF_INTMAX_MODIFIER "d %x\n",  imax, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with imax : %s\n", str1));
-	sprintf (str1, "%" PRINTF_INTMAX_MODIFIER "u %x\n",  umax, ~0);
-	if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with umax : %s\n", str1));
+    sprintf (str1, "%" PRINTF_INTMAX_MODIFIER "d %x\n",  imax, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with imax : %s\n", str1));
+    sprintf (str1, "%" PRINTF_INTMAX_MODIFIER "u %x\n",  umax, ~0);
+    if (0 != strcmp (str0, str1)) REPORTERROR (("Something wrong with umax : %s\n", str1));
 
-	TESTUMAX(8);
-	TESTUMAX(16);
-	TESTUMAX(32);
+    TESTUMAX(8);
+    TESTUMAX(16);
+    TESTUMAX(32);
 #ifdef INT64_MAX
-	TESTUMAX(64);
+    TESTUMAX(64);
 #endif
 
 #define STR(v) #v
 #define Q(v) printf ("sizeof " STR(v) " = %u\n", (unsigned) sizeof (v));
-	if (err_n) {
-		printf ("pstdint.h is not correct.  Please use sizes below to correct it:\n");
-	}
+    if (err_n) {
+        printf ("pstdint.h is not correct.  Please use sizes below to correct it:\n");
+    }
 
-	Q(int)
-	Q(unsigned)
-	Q(long int)
-	Q(short int)
-	Q(int8_t)
-	Q(int16_t)
-	Q(int32_t)
+    Q(int)
+    Q(unsigned)
+    Q(long int)
+    Q(short int)
+    Q(int8_t)
+    Q(int16_t)
+    Q(int32_t)
 #ifdef INT64_MAX
-	Q(int64_t)
+    Q(int64_t)
 #endif
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 #endif

@@ -54,7 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef __cplusplus
 #   error This header requires C++ to be used. aiFileIO.h is the \
-    corresponding C interface.
+corresponding C interface.
 #endif
 
 namespace Assimp {
@@ -88,8 +88,8 @@ public:
      * See fread() for more details
      * This fails for write-only files */
     virtual size_t Read(void* pvBuffer,
-        size_t pSize,
-        size_t pCount) = 0;
+                        size_t pSize,
+                        size_t pCount) = 0;
 
     // -------------------------------------------------------------------
     /** @brief Write to the file
@@ -97,8 +97,8 @@ public:
     * See fwrite() for more details
     * This fails for read-only files */
     virtual size_t Write(const void* pvBuffer,
-        size_t pSize,
-        size_t pCount) = 0;
+                         size_t pSize,
+                         size_t pCount) = 0;
 
     // -------------------------------------------------------------------
     /** @brief Set the read/write cursor of the file
@@ -106,7 +106,7 @@ public:
      * Note that the offset is _negative_ for aiOrigin_END.
      * See fseek() for more details */
     virtual aiReturn Seek(size_t pOffset,
-        aiOrigin pOrigin) = 0;
+                          aiOrigin pOrigin) = 0;
 
     // -------------------------------------------------------------------
     /** @brief Get the current position of the read/write cursor

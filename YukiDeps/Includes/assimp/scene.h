@@ -210,26 +210,26 @@ struct ASSIMP_API aiNode
  */
 #define AI_SCENE_FLAGS_NON_VERBOSE_FORMAT   0x8
 
- /**
- * Denotes pure height-map terrain data. Pure terrains usually consist of quads,
- * sometimes triangles, in a regular grid. The x,y coordinates of all vertex
- * positions refer to the x,y coordinates on the terrain height map, the z-axis
- * stores the elevation at a specific point.
- *
- * TER (Terragen) and HMP (3D Game Studio) are height map formats.
- * @note Assimp is probably not the best choice for loading *huge* terrains -
- * fully triangulated data takes extremely much free store and should be avoided
- * as long as possible (typically you'll do the triangulation when you actually
- * need to render it).
- */
+/**
+* Denotes pure height-map terrain data. Pure terrains usually consist of quads,
+* sometimes triangles, in a regular grid. The x,y coordinates of all vertex
+* positions refer to the x,y coordinates on the terrain height map, the z-axis
+* stores the elevation at a specific point.
+*
+* TER (Terragen) and HMP (3D Game Studio) are height map formats.
+* @note Assimp is probably not the best choice for loading *huge* terrains -
+* fully triangulated data takes extremely much free store and should be avoided
+* as long as possible (typically you'll do the triangulation when you actually
+* need to render it).
+*/
 #define AI_SCENE_FLAGS_TERRAIN 0x10
 
- /**
- * Specifies that the scene data can be shared between structures. For example:
- * one vertex in few faces. \ref AI_SCENE_FLAGS_NON_VERBOSE_FORMAT can not be
- * used for this because \ref AI_SCENE_FLAGS_NON_VERBOSE_FORMAT has internal
- * meaning about postprocessing steps.
- */
+/**
+* Specifies that the scene data can be shared between structures. For example:
+* one vertex in few faces. \ref AI_SCENE_FLAGS_NON_VERBOSE_FORMAT can not be
+* used for this because \ref AI_SCENE_FLAGS_NON_VERBOSE_FORMAT has internal
+* meaning about postprocessing steps.
+*/
 #define AI_SCENE_FLAGS_ALLOW_SHARED			0x20
 
 // -------------------------------------------------------------------------------
@@ -437,7 +437,7 @@ struct aiScene
 };
 
 #ifdef __cplusplus
-} 
+}
 #endif //! extern "C"
 
 #endif // AI_SCENE_H_INC

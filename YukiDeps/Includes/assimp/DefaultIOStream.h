@@ -74,7 +74,7 @@ class ASSIMP_API DefaultIOStream : public IOStream {
 #endif // __ANDROID__
 
 protected:
-    /// @brief 
+    /// @brief
     DefaultIOStream() AI_NO_EXCEPT;
 
     /// @brief The class constructor with the file name and the stream.
@@ -118,17 +118,17 @@ private:
 
 // ----------------------------------------------------------------------------------
 AI_FORCE_INLINE DefaultIOStream::DefaultIOStream() AI_NO_EXCEPT :
-        mFile(nullptr),
-        mFilename(),
-        mCachedSize(SIZE_MAX) {
+mFile(nullptr),
+      mFilename(),
+mCachedSize(SIZE_MAX) {
     // empty
 }
 
 // ----------------------------------------------------------------------------------
 AI_FORCE_INLINE DefaultIOStream::DefaultIOStream (FILE* pFile, const std::string &strFilename) :
-        mFile(pFile),
-        mFilename(strFilename),
-        mCachedSize(SIZE_MAX) {
+    mFile(pFile),
+    mFilename(strFilename),
+    mCachedSize(SIZE_MAX) {
     // empty
 }
 

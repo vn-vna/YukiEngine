@@ -74,7 +74,7 @@ protected:
     /// @param ...args  The rest
     template<typename... T, typename U>
     DeadlyErrorBase(Assimp::Formatter::format f, U&& u, T&&... args) :
-            DeadlyErrorBase(std::move(f << std::forward<U>(u)), std::forward<T>(args)...) {}
+        DeadlyErrorBase(std::move(f << std::forward<U>(u)), std::forward<T>(args)...) {}
 };
 
 // ---------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public:
     /// @brief The class constructor with the message.
     /// @param message  The message
     DeadlyImportError(const char *message) :
-            DeadlyErrorBase(Assimp::Formatter::format(), std::forward<const char*>(message)) {
+        DeadlyErrorBase(Assimp::Formatter::format(), std::forward<const char*>(message)) {
         // empty
     }
 
@@ -95,7 +95,7 @@ public:
     /// @param ...args  The args
     template<typename... T>
     explicit DeadlyImportError(T&&... args) :
-            DeadlyErrorBase(Assimp::Formatter::format(), std::forward<T>(args)...) {
+        DeadlyErrorBase(Assimp::Formatter::format(), std::forward<T>(args)...) {
         // empty
     }
 };
@@ -109,7 +109,7 @@ public:
     /** Constructor with arguments */
     template<typename... T>
     explicit DeadlyExportError(T&&... args) :
-            DeadlyErrorBase(Assimp::Formatter::format(), std::forward<T>(args)...) {}
+        DeadlyErrorBase(Assimp::Formatter::format(), std::forward<T>(args)...) {}
 };
 
 #ifdef _MSC_VER

@@ -195,15 +195,15 @@ struct aiTexture {
             return false;
         }
 
-		return (0 == ::strncmp(achFormatHint, s, sizeof(achFormatHint)));
+        return (0 == ::strncmp(achFormatHint, s, sizeof(achFormatHint)));
     }
 
     // Construction
-    aiTexture() AI_NO_EXCEPT :
-            mWidth(0),
-            mHeight(0),
-            pcData(nullptr),
-            mFilename() {
+aiTexture() AI_NO_EXCEPT :
+    mWidth(0),
+           mHeight(0),
+           pcData(nullptr),
+    mFilename() {
         memset(achFormatHint, 0, sizeof(achFormatHint));
     }
 

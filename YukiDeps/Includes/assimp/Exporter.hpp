@@ -108,8 +108,8 @@ public:
         }
 
         ExportFormatEntry() :
-                mExportFunction(),
-                mEnforcePP() {
+            mExportFunction(),
+            mEnforcePP() {
             mDescription.id = nullptr;
             mDescription.description = nullptr;
             mDescription.fileExtension = nullptr;
@@ -191,9 +191,9 @@ public:
     * @note Use aiCopyScene() to get a modifiable copy of a previously
     *   imported scene. */
     const aiExportDataBlob *ExportToBlob(const aiScene *pScene, const char *pFormatId,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+                                         unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
     const aiExportDataBlob *ExportToBlob(const aiScene *pScene, const std::string &pFormatId,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+                                         unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
 
     // -------------------------------------------------------------------
     /** Convenience function to export directly to a file. Use
@@ -229,9 +229,9 @@ public:
      * @note Use aiCopyScene() to get a modifiable copy of a previously
      *   imported scene.*/
     aiReturn Export(const aiScene *pScene, const char *pFormatId, const char *pPath,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+                    unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
     aiReturn Export(const aiScene *pScene, const std::string &pFormatId, const std::string &pPath,
-            unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
+                    unsigned int pPreprocessing = 0u, const ExportProperties *pProperties = nullptr);
 
     // -------------------------------------------------------------------
     /** Returns an error description of an error that occurred in #Export
@@ -407,7 +407,7 @@ public:
      *   GetPropertyFloat() to read the property, but it won't be there.
      */
     int GetPropertyInteger(const char *szName,
-            int iErrorReturn = 0xffffffff) const;
+                           int iErrorReturn = 0xffffffff) const;
 
     // -------------------------------------------------------------------
     /** Get a boolean configuration property. Boolean properties
@@ -425,7 +425,7 @@ public:
      * @see GetPropertyInteger()
      */
     ai_real GetPropertyFloat(const char *szName,
-            ai_real fErrorReturn = 10e10f) const;
+                             ai_real fErrorReturn = 10e10f) const;
 
     // -------------------------------------------------------------------
     /** Get a string configuration property
@@ -434,7 +434,7 @@ public:
      * @see GetPropertyInteger()
      */
     const std::string GetPropertyString(const char *szName,
-            const std::string &sErrorReturn = "") const;
+                                        const std::string &sErrorReturn = "") const;
 
     // -------------------------------------------------------------------
     /** Get a matrix configuration property
@@ -443,7 +443,7 @@ public:
      * @see GetPropertyInteger()
      */
     const aiMatrix4x4 GetPropertyMatrix(const char *szName,
-            const aiMatrix4x4 &sErrorReturn = aiMatrix4x4()) const;
+                                        const aiMatrix4x4 &sErrorReturn = aiMatrix4x4()) const;
 
     std::function<void *(void *)> GetPropertyCallback(const char* szName) const;
 
@@ -498,8 +498,8 @@ inline const aiExportDataBlob *Exporter::ExportToBlob(const aiScene *pScene, con
 
 // ----------------------------------------------------------------------------------
 inline aiReturn Exporter ::Export(const aiScene *pScene, const std::string &pFormatId,
-        const std::string &pPath, unsigned int pPreprocessing,
-        const ExportProperties *pProperties) {
+                                  const std::string &pPath, unsigned int pPreprocessing,
+                                  const ExportProperties *pProperties) {
     return Export(pScene, pFormatId.c_str(), pPath.c_str(), pPreprocessing, pProperties);
 }
 
