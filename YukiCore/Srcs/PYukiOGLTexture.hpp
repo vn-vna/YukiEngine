@@ -5,10 +5,11 @@
 namespace Yuki::Core
 {
 
-class YukiOGLTexture : public IYukiOGLTexture
+class YukiOGLTexture : public virtual IYukiOGLTexture
 {
 protected:
   unsigned    m_nTexID;
+  int         m_nRequired;
   TextureType m_eTexType;
 
 public:

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"
@@ -10,7 +11,7 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI YukiApp : IYukiApp
+class YUKIAPI YukiApp : public virtual IYukiApp
 {
 protected:
   SharedPtr<IYukiWindow>        m_pWindow;
@@ -18,6 +19,7 @@ protected:
   SharedPtr<IYukiInpControl>    m_pInputController;
   SharedPtr<Debug::IYukiLogger> m_pLogger;
   bool                          m_bAlive;
+  bool                          m_bCreated;
 
 public:
   YukiApp();

@@ -1,7 +1,5 @@
 #version 460 core
 
-#define MAX_SHADER 128
-
 in vec3           GS_FragPos;
 in vec3           GS_Normal;
 in vec4           GS_VertexColor;

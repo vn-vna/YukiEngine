@@ -6,11 +6,12 @@
 namespace Yuki::Core
 {
 
-class YukiOGLElementBuffer : public IYukiOGLElementBuffer
+class YukiOGLElementBuffer : public virtual IYukiOGLElementBuffer
 {
 protected:
   unsigned m_nEboID;
   unsigned m_nElementCount;
+  int      m_nRequired;
 
 public:
   YukiOGLElementBuffer();
