@@ -61,4 +61,9 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
-*.h      linguist-language=C++
+
+# Mark .h is c++ file
+**/*.h        linguist-language=C++
+
+# Ignore dependencies from language recognization
+YukiDeps/*    linguist-vendored
