@@ -49,89 +49,89 @@ void YukiEntity::OnDestroy()
 
 void YukiEntity::BindMesh(const String& name, const SharedPtr<IYukiMesh>& comp)
 {
-    if (!comp.get())
-    {
-        THROW_YUKI_ERROR(Debug::YukiEntityBindUndefinedMeshError);
-    }
-    if (m_mMeshPool.find(name) != m_mMeshPool.end())
-    {
-        THROW_YUKI_ERROR(Debug::YukiEntityBindMeshExistsError);
-    }
-    m_mMeshPool.emplace(name, comp);
+  if (!comp.get())
+  {
+    THROW_YUKI_ERROR(Debug::YukiEntityBindUndefinedMeshError);
+  }
+  if (m_mMeshPool.find(name) != m_mMeshPool.end())
+  {
+    THROW_YUKI_ERROR(Debug::YukiEntityBindMeshExistsError);
+  }
+  m_mMeshPool.emplace(name, comp);
 }
 
 void YukiEntity::UnbindMesh(const String& name)
 {
-    if (m_mMeshPool.find(name) == m_mMeshPool.end())
-    {
-        THROW_YUKI_ERROR(Debug::YukiEntityUnbindMeshNExistsError);
-    }
-    m_mMeshPool.erase(name);
+  if (m_mMeshPool.find(name) == m_mMeshPool.end())
+  {
+    THROW_YUKI_ERROR(Debug::YukiEntityUnbindMeshNExistsError);
+  }
+  m_mMeshPool.erase(name);
 }
 
 glm::mat4& YukiEntity::GetTranslateMatrix()
 {
-    return m_TranslateMatrix;
+  return m_TranslateMatrix;
 }
 
 glm::mat4& YukiEntity::GetScaleMatrix()
 {
-    return m_ScaleMatrix;
+  return m_ScaleMatrix;
 }
 
 glm::mat4& YukiEntity::GetRotationMatrix()
 {
-    return m_RotationMatrix;
+  return m_RotationMatrix;
 }
 
 SharedPtr<Core::IYukiApp> YukiEntity::GetApp()
 {
-    return Core::GetYukiApp();
+  return Core::GetYukiApp();
 }
 
 SharedPtr<Core::IYukiInpControl> YukiEntity::GetInputControl()
 {
-    return GetApp()->GetInputController();
+  return GetApp()->GetInputController();
 }
 
 SharedPtr<Core::IYukiGfxControl> YukiEntity::GetGraphicsControl()
 {
-    return GetApp()->GetGraphicsController();
+  return GetApp()->GetGraphicsController();
 }
 
 SharedPtr<Core::IYukiWindow> YukiEntity::GetWindow()
 {
-    return GetApp()->GetWindow();
+  return GetApp()->GetWindow();
 }
 
 void YukiEntity::Create()
 {
-    OnCreate();
-    INTERFACE_FUNC_CALL(Create);
+  OnCreate();
+  INTERFACE_FUNC_CALL(Create);
 }
 
 void YukiEntity::Awake()
 {
-    OnAwake();
-    INTERFACE_FUNC_CALL(Awake);
+  OnAwake();
+  INTERFACE_FUNC_CALL(Awake);
 }
 
 void YukiEntity::Update()
 {
-    OnUpdate();
-    INTERFACE_FUNC_CALL(Update);
+  OnUpdate();
+  INTERFACE_FUNC_CALL(Update);
 }
 
 void YukiEntity::Render()
 {
-    OnRender();
-    INTERFACE_FUNC_CALL(Render);
+  OnRender();
+  INTERFACE_FUNC_CALL(Render);
 }
 
 void YukiEntity::Destroy()
 {
-    OnDestroy();
-    INTERFACE_FUNC_CALL(Destroy);
+  OnDestroy();
+  INTERFACE_FUNC_CALL(Destroy);
 }
 
 } // namespace Yuki::Comp

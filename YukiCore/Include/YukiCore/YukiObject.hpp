@@ -8,11 +8,11 @@ namespace Yuki::Core
 class YUKIAPI IYukiObject
 {
 public:
-    virtual void Create() {};
-    virtual void Awake() {};
-    virtual void Update() {};
-    virtual void Render() {};
-    virtual void Destroy() {};
+  virtual void Create(){};
+  virtual void Awake(){};
+  virtual void Update(){};
+  virtual void Render(){};
+  virtual void Destroy(){};
 };
 
 } // namespace Yuki::Core
@@ -65,8 +65,8 @@ namespace Debug
 
 enum class YUKIAPI YukiErrCode;
 
-class YUKIAPI      YukiError;
-class YUKIAPI      IYukiLogger;
+class YUKIAPI YukiError;
+class YUKIAPI IYukiLogger;
 
 } // namespace Debug
 

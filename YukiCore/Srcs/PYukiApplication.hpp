@@ -14,27 +14,27 @@ namespace Yuki::Core
 class YUKIAPI YukiApp : public virtual IYukiApp
 {
 protected:
-    SharedPtr<IYukiWindow>        m_pWindow;
-    SharedPtr<IYukiGfxControl>    m_pGfxController;
-    SharedPtr<IYukiInpControl>    m_pInputController;
-    SharedPtr<Debug::IYukiLogger> m_pLogger;
-    bool                          m_bAlive;
-    bool                          m_bCreated;
+  SharedPtr<IYukiWindow>        m_pWindow;
+  SharedPtr<IYukiGfxControl>    m_pGfxController;
+  SharedPtr<IYukiInpControl>    m_pInputController;
+  SharedPtr<Debug::IYukiLogger> m_pLogger;
+  bool                          m_bAlive;
+  bool                          m_bCreated;
 
 public:
-    YukiApp();
-    virtual ~YukiApp() = default;
+  YukiApp();
+  virtual ~YukiApp() = default;
 
-    SharedPtr<IYukiGfxControl>&    GetGraphicsController() override;
-    SharedPtr<IYukiInpControl>&    GetInputController() override;
-    SharedPtr<IYukiWindow>&        GetWindow() override;
-    SharedPtr<Debug::IYukiLogger>& GetLogger() override;
+  SharedPtr<IYukiGfxControl>&    GetGraphicsController() override;
+  SharedPtr<IYukiInpControl>&    GetInputController() override;
+  SharedPtr<IYukiWindow>&        GetWindow() override;
+  SharedPtr<Debug::IYukiLogger>& GetLogger() override;
 
-    void RunApp() override;
-    void Create() override;
-    void Awake() override;
-    void Update() override;
-    void Destroy() override;
+  void RunApp() override;
+  void Create() override;
+  void Awake() override;
+  void Update() override;
+  void Destroy() override;
 };
 
 } // namespace Yuki::Core

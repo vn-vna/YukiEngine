@@ -16,59 +16,59 @@ YukiPointLight::YukiPointLight()
 
 const glm::vec4& YukiPointLight::GetColor()
 {
-    return m_tColor;
+  return m_tColor;
 }
 
 const float& YukiPointLight::GetIntensity()
 {
-    return m_nIntensity;
+  return m_nIntensity;
 }
 
 const glm::vec3& YukiPointLight::GetPosition()
 {
-    return m_tPosition;
+  return m_tPosition;
 }
 
 const float& YukiPointLight::GetAttenuationConstantParam()
 {
-    return m_nAttenuationConstant;
+  return m_nAttenuationConstant;
 }
 
 const float& YukiPointLight::GetAttenuationLinearParam()
 {
-    return m_nAttenuationLinear;
+  return m_nAttenuationLinear;
 }
 
 const float& YukiPointLight::GetAttenuationQuadraticParam()
 {
-    return m_nAttenuationQuadratic;
+  return m_nAttenuationQuadratic;
 }
 
 void YukiPointLight::SetPosition(const glm::vec3& pos)
 {
-    m_tPosition = pos;
+  m_tPosition = pos;
 }
 
 void YukiPointLight::SetColor(const glm::vec4& color)
 {
-    m_tColor = color;
+  m_tColor = color;
 }
 
 void YukiPointLight::SetIntensity(const float& intensity)
 {
-    m_nIntensity = intensity;
+  m_nIntensity = intensity;
 }
 
 void YukiPointLight::SetAttenuationParam(const float& constant, const float& linear, const float& quadratic)
 {
-    m_nAttenuationConstant  = constant;
-    m_nAttenuationLinear    = linear;
-    m_nAttenuationQuadratic = quadratic;
+  m_nAttenuationConstant  = constant;
+  m_nAttenuationLinear    = linear;
+  m_nAttenuationQuadratic = quadratic;
 }
 
 SharedPtr<IYukiPointLight> CreatePointLight()
 {
-    return {(IYukiPointLight*) new YukiPointLight, std::default_delete<IYukiPointLight>()};
+  return {(IYukiPointLight*) new YukiPointLight, std::default_delete<IYukiPointLight>()};
 }
 
 } // namespace Yuki::Comp

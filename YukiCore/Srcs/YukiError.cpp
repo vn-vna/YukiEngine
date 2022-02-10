@@ -29,11 +29,11 @@ YukiError::YukiError(const YukiErrCode& code, const String& file, const int& lin
 
 String YukiError::getErrorMessage() const
 {
-    StringStream sstr = {};
-    sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line " << m_nLine << "] -> ";
-    switch (m_ErrCode)
-    {
-        // clang-format off
+  StringStream sstr = {};
+  sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line " << m_nLine << "] -> ";
+  switch (m_ErrCode)
+  {
+    // clang-format off
         CHECK_CASE_OF_ERROR(YUKI_APP_RECREATION_ERROR,              YUKI_CORE_ERROR);
         CHECK_CASE_OF_ERROR(YUKI_APP_NOT_CREATED_ERROR,             YUKI_CORE_ERROR);
         CHECK_CASE_OF_ERROR(YUKI_APP_INSTANCE_ALREADY_EXISTS,       YUKI_CORE_ERROR);
@@ -70,14 +70,14 @@ String YukiError::getErrorMessage() const
         CHECK_CASE_OF_ERROR(OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE,     YUKI_OPENGL_ERROR);
 
         CHECK_CASE_OF_ERROR(ASSIMP_LOAD_MODEL_FAILED,               YUKI_ASSIMP_ERROR);
-        // clang-format on
-    }
-    return sstr.str();
+    // clang-format on
+  }
+  return sstr.str();
 }
 
 const YukiErrCode& YukiError::getErrorCode() const
 {
-    return m_ErrCode;
+  return m_ErrCode;
 }
 
 // clang-format off

@@ -45,20 +45,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #pragma once
 #ifndef AI_INCLUDED_PROFILER_H
-#define AI_INCLUDED_PROFILER_H
+#  define AI_INCLUDED_PROFILER_H
 
-#ifdef __GNUC__
-#   pragma GCC system_header
-#endif
+#  ifdef __GNUC__
+#    pragma GCC system_header
+#  endif
 
-#include <chrono>
-#include <assimp/DefaultLogger.hpp>
-#include <assimp/TinyFormatter.h>
+#  include <chrono>
+#  include <assimp/DefaultLogger.hpp>
+#  include <assimp/TinyFormatter.h>
 
-#include <map>
+#  include <map>
 
-namespace Assimp {
-namespace Profiling {
+namespace Assimp
+{
+namespace Profiling
+{
 
 using namespace Formatter;
 
@@ -66,38 +68,42 @@ using namespace Formatter;
 /** Simple wrapper around boost::timer to simplify reporting. Timings are automatically
  *  dumped to the log file.
  */
-class Profiler {
+class Profiler
+{
 public:
-    Profiler() {
-        // empty
+  Profiler()
+  {
+    // empty
+  }
+
+
+  /** Start a named timer */
+  void BeginRegion(const std::string& region)
+  {
+    regions[region] = std::chrono::system_clock::now();
+    ASSIMP_LOG_DEBUG("START `", region, "`");
+  }
+
+
+  /** End a specific named timer and write its end time to the log */
+  void EndRegion(const std::string& region)
+  {
+    RegionMap::const_iterator it = regions.find(region);
+    if (it == regions.end())
+    {
+      return;
     }
 
-
-    /** Start a named timer */
-    void BeginRegion(const std::string& region) {
-        regions[region] = std::chrono::system_clock::now();
-        ASSIMP_LOG_DEBUG("START `",region,"`");
-    }
-
-
-    /** End a specific named timer and write its end time to the log */
-    void EndRegion(const std::string& region) {
-        RegionMap::const_iterator it = regions.find(region);
-        if (it == regions.end()) {
-            return;
-        }
-
-        std::chrono::duration<double> elapsedSeconds = std::chrono::system_clock::now() - regions[region];
-        ASSIMP_LOG_DEBUG("END   `",region,"`, dt= ", elapsedSeconds.count()," s");
-    }
+    std::chrono::duration<double> elapsedSeconds = std::chrono::system_clock::now() - regions[region];
+    ASSIMP_LOG_DEBUG("END   `", region, "`, dt= ", elapsedSeconds.count(), " s");
+  }
 
 private:
-    typedef std::map<std::string,std::chrono::time_point<std::chrono::system_clock>> RegionMap;
-    RegionMap regions;
+  typedef std::map<std::string, std::chrono::time_point<std::chrono::system_clock>> RegionMap;
+  RegionMap                                                                         regions;
 };
 
-}
-}
+} // namespace Profiling
+} // namespace Assimp
 
 #endif // AI_INCLUDED_PROFILER_H
-

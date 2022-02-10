@@ -44,15 +44,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #pragma once
 #ifndef INCLUDED_AI_LOGSTREAM_H
-#define INCLUDED_AI_LOGSTREAM_H
+#  define INCLUDED_AI_LOGSTREAM_H
 
-#ifdef __GNUC__
-#pragma GCC system_header
-#endif
+#  ifdef __GNUC__
+#    pragma GCC system_header
+#  endif
 
-#include "types.h"
+#  include "types.h"
 
-namespace Assimp {
+namespace Assimp
+{
 
 class IOSystem;
 
@@ -63,48 +64,50 @@ class IOSystem;
  *  details. Writing your own implementation of LogStream is just necessary if these
  *  are not enough for your purpose. */
 class ASSIMP_API LogStream
-#ifndef SWIG
+#  ifndef SWIG
     : public Intern::AllocateFromAssimpHeap
-#endif
+#  endif
 {
 protected:
-    /** @brief  Default constructor */
-    LogStream() AI_NO_EXCEPT;
+  /** @brief  Default constructor */
+  LogStream() AI_NO_EXCEPT;
 
 public:
-    /** @brief  Virtual destructor  */
-    virtual ~LogStream();
+  /** @brief  Virtual destructor  */
+  virtual ~LogStream();
 
-    // -------------------------------------------------------------------
-    /** @brief  Overwrite this for your own output methods
-     *
-     *  Log messages *may* consist of multiple lines and you shouldn't
-     *  expect a consistent formatting. If you want custom formatting
-     *  (e.g. generate HTML), supply a custom instance of Logger to
-     *  #DefaultLogger:set(). Usually you can *expect* that a log message
-     *  is exactly one line and terminated with a single \n character.
-     *  @param message Message to be written */
-    virtual void write(const char *message) = 0;
+  // -------------------------------------------------------------------
+  /** @brief  Overwrite this for your own output methods
+   *
+   *  Log messages *may* consist of multiple lines and you shouldn't
+   *  expect a consistent formatting. If you want custom formatting
+   *  (e.g. generate HTML), supply a custom instance of Logger to
+   *  #DefaultLogger:set(). Usually you can *expect* that a log message
+   *  is exactly one line and terminated with a single \n character.
+   *  @param message Message to be written */
+  virtual void write(const char* message) = 0;
 
-    // -------------------------------------------------------------------
-    /** @brief Creates a default log stream
-     *  @param streams Type of the default stream
-     *  @param name For aiDefaultLogStream_FILE: name of the output file
-     *  @param io For aiDefaultLogStream_FILE: IOSystem to be used to open the output
-     *   file. Pass nullptr for the default implementation.
-     *  @return New LogStream instance.  */
-    static LogStream *createDefaultStream(aiDefaultLogStream stream,
-                                          const char *name = "AssimpLog.txt",
-                                          IOSystem *io = nullptr);
+  // -------------------------------------------------------------------
+  /** @brief Creates a default log stream
+   *  @param streams Type of the default stream
+   *  @param name For aiDefaultLogStream_FILE: name of the output file
+   *  @param io For aiDefaultLogStream_FILE: IOSystem to be used to open the output
+   *   file. Pass nullptr for the default implementation.
+   *  @return New LogStream instance.  */
+  static LogStream* createDefaultStream(aiDefaultLogStream stream,
+      const char*                                          name = "AssimpLog.txt",
+      IOSystem*                                            io   = nullptr);
 
 }; // !class LogStream
 
-inline LogStream::LogStream() AI_NO_EXCEPT {
-    // empty
+inline LogStream::LogStream() AI_NO_EXCEPT
+{
+  // empty
 }
 
-inline LogStream::~LogStream() {
-    // empty
+inline LogStream::~LogStream()
+{
+  // empty
 }
 
 } // Namespace Assimp
