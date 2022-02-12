@@ -5,15 +5,15 @@
 namespace Yuki::Comp
 {
 
-class YukiCamera : public virtual IYukiCamera
+class YukiCamera : public IYukiCamera
 {
 protected:
-  glm::mat4 m_tViewMatrix;
-  glm::vec3 m_tCamPos;
-  glm::vec3 m_tCamDirection;
-  glm::vec3 m_tCamTop;
+  glm::mat4 m_ViewMatrix;
+  glm::vec3 m_CamPos;
+  glm::vec3 m_CamDirection;
+  glm::vec3 m_CamTop;
 
-  glm::mat4 m_tProjectionMatrix;
+  glm::mat4 m_ProjectionMatrix;
   float     m_nFOV;
   float     m_nAspectRatio;
   float     m_nNear;
@@ -24,8 +24,6 @@ protected:
 public:
   YukiCamera();
   virtual ~YukiCamera();
-
-  ComponentType GetComponentType() override;
 
   const glm::mat4& GetCameraViewMatrix() override;
   const glm::mat4& GetCameraProjectionMatrix() override;

@@ -7,7 +7,7 @@
 namespace Yuki::Core
 {
 
-class YukiInpControl : public virtual IYukiInpControl
+class YukiInpControl : public IYukiInpControl
 {
 protected:
   std::map<String, YukiInpKeyboardCallbackT> m_mpKeyCallbacksPool;

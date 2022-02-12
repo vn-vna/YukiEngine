@@ -11,11 +11,10 @@
 namespace Yuki::Core
 {
 
-class YukiWindow : public virtual IYukiWindow
+class YukiWindow : public IYukiWindow
 {
 protected:
   GLFWwindow* m_pGLFWWindow;
-  bool        m_bCreated;
 
 public:
   YukiWindow();

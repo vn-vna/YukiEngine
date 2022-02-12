@@ -102,18 +102,6 @@
     <ClCompile Include="Srcs\YukiImage.cpp">
       <Filter>Srcs\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Srcs\YukiEntity.cpp">
-      <Filter>Srcs\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiDirectionalLight.cpp">
-      <Filter>Srcs\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiPointLight.cpp">
-      <Filter>Srcs\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Srcs\YukiFlashLight.cpp">
-      <Filter>Srcs\Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
@@ -142,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Include\YukiDebug\YukiLogger.hpp">
       <Filter>Include\YukiDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiScene.hpp">
+      <Filter>Include\YukiComp</Filter>
     </ClInclude>
     <ClInclude Include="Include\YukiComp\YukiCamera.hpp">
       <Filter>Include\YukiComp</Filter>
@@ -191,27 +182,6 @@
     <ClInclude Include="Include\YukiUtil\YukiImage.hpp">
       <Filter>Include\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Include\YukiComp\YukiLights.hpp">
-      <Filter>Include\YukiComp</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\YukiComp\YukiComponent.hpp">
-      <Filter>Include\YukiComp</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\YukiComp\YukiEntity.hpp">
-      <Filter>Include\YukiComp</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\YukiComp\YukiScene.hpp">
-      <Filter>Include\YukiComp</Filter>
-    </ClInclude>
-    <ClInclude Include="Srcs\PYukiDirectionalLight.hpp">
-      <Filter>Private Header\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Srcs\PYukiPointLight.hpp">
-      <Filter>Private Header\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Srcs\PYukiFlashLight.hpp">
-      <Filter>Private Header\Components</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
@@ -221,9 +191,6 @@
       <Filter>External Binaries</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\YukiDeps\Binaries\freetype.dll">
-      <Filter>External Binaries</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\YukiDeps\Binaries\assimp-vc143-mtd.dll">
       <Filter>External Binaries</Filter>
     </CopyFileToFolders>
   </ItemGroup>

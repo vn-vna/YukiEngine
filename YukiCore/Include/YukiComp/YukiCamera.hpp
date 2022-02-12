@@ -1,14 +1,14 @@
 #pragma once
 
+#include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiInputCtrl.hpp"
-#include "YukiComp/YukiComponent.hpp"
 
 #include <glm/mat4x4.hpp>
 
 namespace Yuki::Comp
 {
 
-class YUKIAPI IYukiCamera : public IYukiComp
+class YUKIAPI IYukiCamera : public Core::IYukiObject
 {
 public:
   virtual const glm::mat4& GetCameraViewMatrix()       = 0;
@@ -25,16 +25,16 @@ public:
   virtual const float& GetNearPerspective()     = 0;
   virtual const float& GetFarPerspective()      = 0;
 
-  virtual void CameraRotateViewport(const float& rad)                            = 0;
-  virtual void CameraRotateDirection(const glm::vec3& rotAxis, const float& rad) = 0;
-  virtual void LookAtPoint(const glm::vec3& point)                               = 0;
-  virtual void SetCameraDirection(const glm::vec3& direction)                    = 0;
-  virtual void SetCameraPosition(const glm::vec3& position)                      = 0;
-  virtual void SetFieldOfView(const float& fov)                                  = 0;
-  virtual void SetViewportAspectRatio(const float& ratio)                        = 0;
-  virtual void SetViewportAspectRatio(const float& width, const float& height)   = 0;
-  virtual void SetNearPerspective(const float& pnear)                            = 0;
-  virtual void SetFarPerspective(const float& pfar)                              = 0;
+  virtual void CameraRotateViewport(const float& rad)                                 = 0;
+  virtual void CameraRotateDirection(const glm::vec3& rotAxis, const float& rad)      = 0;
+  virtual void LookAtPoint(const glm::vec3& point)                                    = 0;
+  virtual void SetCameraDirection(const glm::vec3& direction)                         = 0;
+  virtual void SetCameraPosition(const glm::vec3& position)                           = 0;
+  virtual void SetFieldOfView(const float& fov)                                       = 0;
+  virtual void SetViewportAspectRatio(const float& ratio)                             = 0;
+  virtual void SetViewportAspectRatio(const float& width, const float& height)        = 0;
+  virtual void SetNearPerspective(const float& pnear)                                 = 0;
+  virtual void SetFarPerspective(const float& pfar)                                   = 0;
 
   virtual void SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& callback)  = 0;
   virtual void SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& callback) = 0;

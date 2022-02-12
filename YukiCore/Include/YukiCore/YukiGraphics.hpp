@@ -433,7 +433,7 @@ typedef struct StIndexData
 /// This object is only used once in Application. This is the class
 /// controls every graphics actions.
 /// </summary>
-class YUKIAPI IYukiGfxControl : public virtual IYukiObject
+class YUKIAPI IYukiGfxControl : public IYukiObject
 {
 public:
 };
@@ -441,7 +441,7 @@ public:
 /// <summary>
 /// OpenGL Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLObject : public virtual IYukiObject
+class YUKIAPI IYukiOGLObject : public IYukiObject
 {
 public:
   virtual const unsigned& GetID()      = 0;
@@ -556,9 +556,9 @@ public:
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
   virtual const TextureMagFilter        GetTextureMagFilter()        = 0;
   virtual const TextureDepthStencilMode GetDepthStencilTextureMode() = 0;
+  virtual const int                     GetTextureBaseLevel()        = 0;
   virtual const TextureCompareFunc      GetTextureCompareFunc()      = 0;
   virtual const TextureCompareMode      GetTextureCompareMode()      = 0;
-  virtual const int                     GetTextureBaseLevel()        = 0;
   virtual const float                   GetTextureLodBias()          = 0;
 
   virtual void GenerateMipMap()                  = 0;

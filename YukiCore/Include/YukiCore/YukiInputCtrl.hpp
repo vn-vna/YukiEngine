@@ -258,7 +258,7 @@ typedef struct StKeyStatus
   };
 } KeyStatus;
 
-class YUKIAPI IYukiInpControl : public virtual IYukiObject
+class YUKIAPI IYukiInpControl : public IYukiObject
 {
 public:
   virtual void         AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback)     = 0;

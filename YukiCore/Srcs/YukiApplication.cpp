@@ -12,8 +12,7 @@ YukiApp::YukiApp()
       m_pGfxController(nullptr),
       m_pInputController(nullptr),
       m_pWindow(nullptr),
-      m_pLogger(nullptr),
-      m_bCreated(false)
+      m_pLogger(nullptr)
 {
   m_pLogger          = Debug::CreateYukiLogger();
   m_pWindow          = CreateNewWindow();
@@ -70,14 +69,9 @@ void YukiApp::RunApp()
 
 void YukiApp::Create()
 {
-  if (m_bCreated)
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationRecreationError);
-  }
   GetLogger()->Create();
   GetWindow()->Create();
   GetGraphicsController()->Create();
-  m_bCreated = true;
 }
 
 void YukiApp::Awake()
@@ -98,22 +92,13 @@ void YukiApp::Update()
 
 void YukiApp::Destroy()
 {
-  if (!m_bCreated)
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationNotCreatedError);
-  }
   GetGraphicsController()->Destroy();
   GetWindow()->Destroy();
   GetLogger()->Destroy();
-  m_bCreated = false;
 }
 
 SharedPtr<IYukiApp> CreateYukiApp()
 {
-  if (g_pGlobalApplication.get())
-  {
-    THROW_YUKI_ERROR(Debug::YukiApplicationInstanceExistsError);
-  }
   g_pGlobalApplication.reset((IYukiApp*) new YukiApp());
   return g_pGlobalApplication;
 }

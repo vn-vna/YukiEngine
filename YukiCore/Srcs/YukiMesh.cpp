@@ -1,17 +1,9 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiComp/YukiCamera.hpp"
-#include "YukiDebug/YukiError.hpp"
 
 #include "PYukiMesh.hpp"
 
-#include <assimp/postprocess.h>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
-constexpr const unsigned ASSIMP_LOAD_FLAG = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices;
-
-Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram>
-    g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
+Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram> g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
 
 namespace Yuki::Comp
 {
@@ -20,8 +12,7 @@ YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYuk
     : m_pShaderProgram(g_pDefaultMeshShader),
       m_pTexture(textureList),
       m_Name(name),
-      m_eTopology(topology),
-      m_nRequired(0)
+      m_eTopology(topology)
 {
   m_pVertexBuffer  = Core::CreateGLVertexBuffer();
   m_pElementBuffer = Core::CreateGLElementBuffer();
@@ -29,11 +20,6 @@ YukiMesh::YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYuk
 }
 
 YukiMesh::~YukiMesh() = default;
-
-ComponentType YukiMesh::GetComponentType()
-{
-  return ComponentType::MESH;
-}
 
 SharedPtr<Core::IYukiOGLTexture> YukiMesh::GetMeshTexture()
 {
@@ -72,30 +58,16 @@ const String& YukiMesh::GetName()
 
 void YukiMesh::Create()
 {
-  if (m_nRequired <= 0)
-  {
-    m_pVertexBuffer->Create();
-    m_pElementBuffer->Create();
-    m_pVertexArray->Create();
-    m_pShaderProgram->Create();
-    m_nRequired = 1;
-  }
-  else
-  {
-    ++m_nRequired;
-  }
+  m_pVertexBuffer->Create();
+  m_pElementBuffer->Create();
+  m_pVertexArray->Create();
 }
 
 void YukiMesh::Destroy()
 {
-  --m_nRequired;
-  if (m_nRequired == 0)
-  {
-    m_pVertexBuffer->Destroy();
-    m_pElementBuffer->Destroy();
-    m_pVertexArray->Destroy();
-    m_pShaderProgram->Destroy();
-  }
+  m_pVertexBuffer->Destroy();
+  m_pElementBuffer->Destroy();
+  m_pVertexArray->Destroy();
 }
 
 void YukiMesh::RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera)
@@ -154,21 +126,6 @@ SharedPtr<IYukiMesh> CreateYukiMesh(
   meshVAO->SetAttributeFormat(3, 1, offsetof(Core::VertexFormat, texID));
   meshVAO->AttributeBinding(3, 0);
   return mesh;
-}
-
-std::vector<SharedPtr<IYukiMesh>> LoadMeshesFromFile(const AsciiString& fileName)
-{
-  Assimp::Importer importer;
-  const aiScene*   pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAG);
-
-  if (!pScene)
-  {
-    THROW_YUKI_ERROR(Debug::YukiAssimpLoadModelFailed);
-  }
-
-  std::vector<SharedPtr<IYukiMesh>> aMeshes(pScene->mNumMeshes);
-
-  return std::vector<SharedPtr<IYukiMesh>>();
 }
 
 void InitializeMeshShader()

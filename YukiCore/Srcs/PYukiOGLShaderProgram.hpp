@@ -9,11 +9,10 @@
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram : public virtual IYukiOGLShaderProgram
+class YukiOGLShaderProgram : public IYukiOGLShaderProgram
 {
 protected:
   unsigned m_nSPId;
-  int      m_nRequired;
   String   m_VSShaderFile;
   String   m_FSShaderFile;
   String   m_GSShaderFile;

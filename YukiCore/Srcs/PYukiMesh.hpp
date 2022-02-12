@@ -9,7 +9,7 @@
 namespace Yuki::Comp
 {
 
-class YukiMesh : public virtual IYukiMesh
+class YukiMesh : public IYukiMesh
 {
 protected:
   SharedPtr<Core::IYukiOGLElementBuffer> m_pElementBuffer;
@@ -19,13 +19,10 @@ protected:
   SharedPtr<Core::IYukiOGLTexture>       m_pTexture;
   Core::PrimitiveTopology                m_eTopology;
   String                                 m_Name;
-  int                                    m_nRequired;
 
 public:
   YukiMesh(const Core::PrimitiveTopology& topology, SharedPtr<Core::IYukiOGLTexture>& texture, const String& name);
   virtual ~YukiMesh();
-
-  ComponentType GetComponentType() override;
 
   SharedPtr<Core::IYukiOGLTexture>       GetMeshTexture() override;
   SharedPtr<Core::IYukiOGLElementBuffer> GetElementBuffer() override;

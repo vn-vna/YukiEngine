@@ -8,11 +8,10 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexBuffer : public virtual IYukiOGLVertexBuffer
+class YukiOGLVertexBuffer : public IYukiOGLVertexBuffer
 {
 protected:
   unsigned m_nVboID;
-  int      m_nRequired;
 
 public:
   YukiOGLVertexBuffer();

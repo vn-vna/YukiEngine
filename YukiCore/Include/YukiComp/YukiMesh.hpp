@@ -1,20 +1,12 @@
 #pragma once
 
+#include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiGraphics.hpp"
-#include "YukiComp/YukiComponent.hpp"
 
 namespace Yuki::Comp
 {
 
-SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
-    std::vector<Core::VertexData>&    vertexData,
-    Core::IndexData&                  indexData,
-    SharedPtr<Core::IYukiOGLTexture>& texture,
-    const String&                     meshName);
-
-std::vector<SharedPtr<IYukiMesh>> YUKIAPI LoadMeshesFromFile(const AsciiString& fileName);
-
-class YUKIAPI IYukiMesh : public IYukiComp
+class YUKIAPI IYukiMesh : public Core::IYukiObject
 {
 public:
   virtual SharedPtr<Core::IYukiOGLTexture>       GetMeshTexture()   = 0;
@@ -26,15 +18,15 @@ public:
   virtual const String&                          GetName()          = 0;
 
   virtual void RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera) = 0;
-
-
-  friend SharedPtr<IYukiMesh> CreateYukiMesh(
-      std::vector<Core::VertexData>&    vertexData,
-      Core::IndexData&                  indexData,
-      SharedPtr<Core::IYukiOGLTexture>& texture,
-      const String&                     meshName);
-
-  friend std::vector<SharedPtr<IYukiMesh>> LoadMeshesFromFile(const AsciiString& fileName);
 };
+
+SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
+    std::vector<Core::VertexData>&    vertexData,
+    Core::IndexData&                  indexData,
+    SharedPtr<Core::IYukiOGLTexture>& texture,
+    const String&                     meshName);
+
+void YUKIAPI InitializeMeshShader();
+void YUKIAPI ReleaseMeshShader();
 
 } // namespace Yuki::Comp

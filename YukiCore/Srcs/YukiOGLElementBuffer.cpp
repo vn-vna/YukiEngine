@@ -7,8 +7,7 @@ namespace Yuki::Core
 
 YukiOGLElementBuffer::YukiOGLElementBuffer()
     : m_nEboID(),
-      m_nElementCount(),
-      m_nRequired(0)
+      m_nElementCount()
 {}
 
 YukiOGLElementBuffer::~YukiOGLElementBuffer() = default;
@@ -54,21 +53,12 @@ void YukiOGLElementBuffer::DrawAllElements(Core::PrimitiveTopology topology)
 
 void YukiOGLElementBuffer::Create()
 {
-  if (m_nRequired <= 0)
-  {
-    glCreateBuffers(1, &m_nEboID);
-    m_nRequired = 0;
-  }
-  ++m_nRequired;
+  glCreateBuffers(1, &m_nEboID);
 }
 
 void YukiOGLElementBuffer::Destroy()
 {
-  --m_nRequired;
-  if (m_nRequired == 0)
-  {
-    glDeleteBuffers(1, &m_nEboID);
-  }
+  glDeleteBuffers(1, &m_nEboID);
 }
 
 SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer()

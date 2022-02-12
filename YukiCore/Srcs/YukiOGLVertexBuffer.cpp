@@ -6,8 +6,7 @@ namespace Yuki::Core
 {
 
 YukiOGLVertexBuffer::YukiOGLVertexBuffer()
-    : m_nVboID(),
-      m_nRequired(0)
+    : m_nVboID()
 {}
 
 YukiOGLVertexBuffer::~YukiOGLVertexBuffer() = default;
@@ -41,21 +40,12 @@ void YukiOGLVertexBuffer::SetBufferData(float* pData, size_t size)
 
 void YukiOGLVertexBuffer::Create()
 {
-  if (m_nRequired <= 0)
-  {
-    glCreateBuffers(1, &m_nVboID);
-    m_nRequired = 0;
-  }
-  ++m_nRequired;
+  glCreateBuffers(1, &m_nVboID);
 }
 
 void YukiOGLVertexBuffer::Destroy()
 {
-  --m_nRequired;
-  if (m_nRequired == 0)
-  {
-    glDeleteBuffers(1, &m_nVboID);
-  }
+  glDeleteBuffers(1, &m_nVboID);
 }
 
 SharedPtr<IYukiOGLVertexBuffer> CreateGLVertexBuffer()
