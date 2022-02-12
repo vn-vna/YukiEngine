@@ -2,11 +2,9 @@
 
 #define MAX_SHADER 128
 
-in vec3           GS_FragPos;
-in vec3           GS_Normal;
-in vec4           GS_VertexColor;
-in vec2           GS_TexCoord;
-flat in uint      GS_Flags;
+in vec3           VS_FragPos;
+in vec3           VS_Normal;
+in vec2           VS_TexCoord;
 
 out vec4          FS_FragColor;
 
@@ -21,33 +19,19 @@ uniform sampler2D U_MeshTextures;
 
 void main() 
 {
-  bool flagEnableTexture    = GS_Flags        % 2 == 1;
-  bool flagEnableLighting   = (GS_Flags / 2)  % 2 == 1;
-  bool flagEnableVertColor  = (GS_Flags / 4)  % 2 == 1;
   
   vec4 fragmentColor        = vec4(1.0, 1.0, 1.0, 1.0);
 
-  if (flagEnableTexture)
-  {
-    fragmentColor           *= texture(U_MeshTextures, GS_TexCoord);
-  }
-
-  if (flagEnableVertColor)
-  {
-    fragmentColor           *= GS_VertexColor;
-  }
-
-  if (flagEnableLighting)
   {
     vec4 ambient            = U_AmbientStrength * U_LightColor;
 
-    float lightDistance     = length(U_LightPos - GS_FragPos); 
-    vec3 lightDirection     = normalize(U_LightPos - GS_FragPos);
-    float diff              = max(dot(GS_Normal, lightDirection / pow(lightDistance, U_LightIntensity)), 0.0);
+    float lightDistance     = length(U_LightPos - VS_FragPos);
+    vec3 lightDirection     = normalize(U_LightPos - VS_FragPos);
+    float diff              = max(dot(VS_Normal, lightDirection / pow(lightDistance, U_LightIntensity)), 0.0);
     vec4 diffuse            = diff * U_LightColor;
 
-    vec3 viewDirection      = normalize(U_ViewPosition - GS_FragPos);
-    vec3 reflectDirection   = reflect(-lightDirection, GS_Normal);
+    vec3 viewDirection      = normalize(U_ViewPosition - VS_FragPos);
+    vec3 reflectDirection   = reflect(-lightDirection, VS_Normal);
 
     float spec              = pow(max(dot(reflectDirection, viewDirection), 0.0), 32);
     vec4 specular           = U_SpecularStrength * spec * U_LightColor;

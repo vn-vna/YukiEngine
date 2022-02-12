@@ -379,44 +379,19 @@ enum class PixelBasedInternalFormat
 };
 
 /// <summary>
-/// Flag of each vertices. Use | to combine them. [Count Right-to-left]
-/// <para> - Bit 0: Enable texture </para>
-/// <para> - Bit 1: Enable texture </para>
-/// <para> - Bit 2 - 7: Reserve </para>
-/// </summary>
-enum class VertexFlag
-{
-  NONE                         = 0,
-  /// <summary>
-  /// Allow shader to use texture coordinate value.
-  /// </summary>
-  ENABLE_TEXTURE               = 1,
-  /// <summary>
-  /// Allow shader to calculate lightning of vertex.
-  /// </summary>
-  ENABLE_LIGHTNING             = 2,
-  /// <summary>
-  /// Alow shader using expilict Vertex color.
-  /// </summary>
-  ENABLE_EXPLICIT_VERTEX_COLOR = 4,
-};
-
-/// <summary>
 /// Format of a vertex to passed into VBO
 /// </summary>
 typedef struct StVertexFormat
 {
   glm::vec3 position;
-  glm::vec4 color;
+  glm::vec3 normal;
   glm::vec2 texcoord;
-  unsigned  texID;
 
   StVertexFormat(
       const glm::vec3& _position,
-      const glm::vec4& _color,
-      const glm::vec2& _texcoord,
-      const unsigned&  _texID)
-      : position(_position), color(_color), texcoord(_texcoord), texID(_texID) {}
+      const glm::vec3& _normal,
+      const glm::vec2& _texcoord)
+      : position(_position), normal(_normal), texcoord(_texcoord) {}
 
 } VertexData, VertexFormat;
 

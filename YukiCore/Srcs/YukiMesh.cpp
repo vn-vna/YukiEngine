@@ -115,16 +115,13 @@ SharedPtr<IYukiMesh> CreateYukiMesh(
   meshVAO->AttributeBinding(0, 0);
 
   meshVAO->EnableAttribute(1);
-  meshVAO->SetAttributeFormat(1, 4, offsetof(Core::VertexFormat, color));
+  meshVAO->SetAttributeFormat(1, 3, offsetof(Core::VertexFormat, normal));
   meshVAO->AttributeBinding(1, 0);
 
   meshVAO->EnableAttribute(2);
-  meshVAO->SetAttributeFormat(2, 3, offsetof(Core::VertexFormat, texcoord));
+  meshVAO->SetAttributeFormat(2, 2, offsetof(Core::VertexFormat, texcoord));
   meshVAO->AttributeBinding(2, 0);
 
-  meshVAO->EnableAttribute(3);
-  meshVAO->SetAttributeFormat(3, 1, offsetof(Core::VertexFormat, texID));
-  meshVAO->AttributeBinding(3, 0);
   return mesh;
 }
 
