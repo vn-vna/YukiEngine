@@ -3,9 +3,9 @@
 
 #include "PYukiOGLTexture.hpp"
 
-#define CHECK_VALID_TEXTURE_TYPE(type, valid)                 \
-  if (type != valid)                                          \
-  {                                                           \
+#define CHECK_VALID_TEXTURE_TYPE(type, valid)                      \
+  if (type != valid)                                               \
+  {                                                                \
     THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatibleError); \
   }
 
@@ -46,7 +46,7 @@ void YukiOGLTexture::SetTextureCompareMode(const TextureCompareMode& compareMode
   glTextureParameteri(m_nTexID, GL_TEXTURE_COMPARE_MODE, (int) compareMode);
 }
 
-void YukiOGLTexture::SetTextureLodBias(const float& bias)
+void YukiOGLTexture::SetTextureLodBias(float bias)
 {
   glTextureParameterf(m_nTexID, GL_TEXTURE_LOD_BIAS, bias);
 }

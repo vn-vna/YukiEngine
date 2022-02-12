@@ -475,9 +475,9 @@ public:
   virtual void UniformVector(const AsciiString& prop, const glm::vec3& vec) = 0;
   virtual void UniformVector(const AsciiString& prop, const glm::vec4& vec) = 0;
 
-  virtual void UniformValue(const AsciiString& prop, const bool& value)  = 0;
-  virtual void UniformValue(const AsciiString& prop, const int& value)   = 0;
-  virtual void UniformValue(const AsciiString& prop, const float& value) = 0;
+  virtual void UniformValue(const AsciiString& prop, const bool& value) = 0;
+  virtual void UniformValue(const AsciiString& prop, const int& value)  = 0;
+  virtual void UniformValue(const AsciiString& prop, float value)       = 0;
 };
 
 /// <summary>
@@ -492,7 +492,7 @@ public:
   virtual void SetTextureBaseLevel(const int& baseLevel)                       = 0;
   virtual void SetTextureCompareFunc(const TextureCompareFunc& compareFunc)    = 0;
   virtual void SetTextureCompareMode(const TextureCompareMode& compareMode)    = 0;
-  virtual void SetTextureLodBias(const float& bias)                            = 0;
+  virtual void SetTextureLodBias(float bias)                                   = 0;
 
   virtual void SetStorageData1D(
       const PixelInternalFormat& internalFormat, const int& level,

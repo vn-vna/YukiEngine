@@ -36,7 +36,7 @@ public:
   void            UniformVector(const AsciiString& prop, const glm::vec4& vec) override;
   void            UniformValue(const AsciiString& prop, const bool& value) override;
   void            UniformValue(const AsciiString& prop, const int& value) override;
-  void            UniformValue(const AsciiString& prop, const float& value) override;
+  void            UniformValue(const AsciiString& prop, float value) override;
 };
 
 } // namespace Yuki::Core

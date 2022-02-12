@@ -21,7 +21,7 @@ public:
   void SetTextureBaseLevel(const int& baseLevel) override;
   void SetTextureCompareFunc(const TextureCompareFunc& compareFunc) override;
   void SetTextureCompareMode(const TextureCompareMode& compareMode) override;
-  void SetTextureLodBias(const float& bias) override;
+  void SetTextureLodBias(float bias) override;
 
   const TextureType             GetTextureType() override;
   const TextureMinFilter        GetTextureMinFilter() override;

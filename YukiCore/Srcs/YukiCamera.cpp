@@ -66,32 +66,32 @@ const glm::vec3 YukiCamera::GetCameraVerticalAxis()
   return m_CamDirection;
 }
 
-const float& YukiCamera::GetFieldOfView()
+float YukiCamera::GetFieldOfView()
 {
   return m_nFOV;
 }
 
-const float& YukiCamera::GetViewportAspectRatio()
+float YukiCamera::GetViewportAspectRatio()
 {
   return m_nAspectRatio;
 }
 
-const float& YukiCamera::GetNearPerspective()
+float YukiCamera::GetNearPerspective()
 {
   return m_nNear;
 }
 
-const float& YukiCamera::GetFarPerspective()
+float YukiCamera::GetFarPerspective()
 {
   return m_nFar;
 }
 
-void YukiCamera::CameraRotateViewport(const float& rad)
+void YukiCamera::CameraRotateViewport(float rad)
 {
   m_CamTop = glm::rotateZ(m_CamTop, rad);
 }
 
-void YukiCamera::CameraRotateDirection(const glm::vec3& rotAxis, const float& rad)
+void YukiCamera::CameraRotateDirection(const glm::vec3& rotAxis, float rad)
 {
   m_CamDirection = glm::rotate(m_CamDirection, rad, rotAxis);
 }
@@ -111,27 +111,27 @@ void YukiCamera::SetCameraPosition(const glm::vec3& position)
   m_CamPos = position;
 }
 
-void YukiCamera::SetFieldOfView(const float& fov)
+void YukiCamera::SetFieldOfView(float fov)
 {
   m_nFOV = fov;
 }
 
-void YukiCamera::SetViewportAspectRatio(const float& ratio)
+void YukiCamera::SetViewportAspectRatio(float ratio)
 {
   m_nAspectRatio = ratio;
 }
 
-void YukiCamera::SetViewportAspectRatio(const float& width, const float& height)
+void YukiCamera::SetViewportAspectRatio(float width, float height)
 {
   m_nAspectRatio = width / height;
 }
 
-void YukiCamera::SetNearPerspective(const float& pnear)
+void YukiCamera::SetNearPerspective(float pnear)
 {
   m_nNear = pnear;
 }
 
-void YukiCamera::SetFarPerspective(const float& pfar)
+void YukiCamera::SetFarPerspective(float pfar)
 {
   m_nFar = pfar;
 }

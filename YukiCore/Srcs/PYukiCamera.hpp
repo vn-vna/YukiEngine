@@ -34,21 +34,21 @@ public:
   const glm::vec3 GetCameraHorizontalAxis() override;
   const glm::vec3 GetCameraVerticalAxis() override;
 
-  const float& GetFieldOfView() override;
-  const float& GetViewportAspectRatio() override;
-  const float& GetNearPerspective() override;
-  const float& GetFarPerspective() override;
+  float GetFieldOfView() override;
+  float GetViewportAspectRatio() override;
+  float GetNearPerspective() override;
+  float GetFarPerspective() override;
 
-  void CameraRotateViewport(const float& rad) override;
-  void CameraRotateDirection(const glm::vec3& rotAxis, const float& rad) override;
+  void CameraRotateViewport(float rad) override;
+  void CameraRotateDirection(const glm::vec3& rotAxis, float rad) override;
   void LookAtPoint(const glm::vec3& point) override;
   void SetCameraDirection(const glm::vec3& direction) override;
   void SetCameraPosition(const glm::vec3& position) override;
-  void SetFieldOfView(const float& fov) override;
-  void SetViewportAspectRatio(const float& ratio) override;
-  void SetViewportAspectRatio(const float& width, const float& height) override;
-  void SetNearPerspective(const float& pnear) override;
-  void SetFarPerspective(const float& pfar) override;
+  void SetFieldOfView(float fov) override;
+  void SetViewportAspectRatio(float ratio) override;
+  void SetViewportAspectRatio(float width, float height) override;
+  void SetNearPerspective(float pnear) override;
+  void SetFarPerspective(float pfar) override;
 
   void SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& callback) override;
   void SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& callback) override;

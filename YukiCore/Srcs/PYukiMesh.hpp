@@ -9,6 +9,23 @@
 namespace Yuki::Comp
 {
 
+class YukiMeshMaterial : public IYukiMeshMaterial
+{
+protected:
+  float m_nSpecularStrength;
+  float m_nAmbientStrength;
+
+public:
+  YukiMeshMaterial(float specular, float ambient);
+  virtual ~YukiMeshMaterial() = default;
+
+  float GetSpecularStrength() override;
+  float GetAmbientStrength() override;
+
+  void SetSpecularStrength(float strength) override;
+  void SetAmbientStrength(float strength) override;
+};
+
 class YukiMesh : public IYukiMesh
 {
 protected:
@@ -17,6 +34,7 @@ protected:
   SharedPtr<Core::IYukiOGLVertexArray>   m_pVertexArray;
   SharedPtr<Core::IYukiOGLShaderProgram> m_pShaderProgram;
   SharedPtr<Core::IYukiOGLTexture>       m_pTexture;
+  SharedPtr<IYukiMeshMaterial>           m_pMaterial;
   Core::PrimitiveTopology                m_eTopology;
   String                                 m_Name;
 
@@ -29,10 +47,13 @@ public:
   SharedPtr<Core::IYukiOGLVertexBuffer>  GetVertexBuffer() override;
   SharedPtr<Core::IYukiOGLShaderProgram> GetShaderProgram() override;
   SharedPtr<Core::IYukiOGLVertexArray>   GetVertexArray() override;
+  SharedPtr<IYukiMeshMaterial>           GetMaterial() override;
   const Core::PrimitiveTopology&         GetTopology() override;
   const String&                          GetName() override;
   void                                   Create() override;
   void                                   Destroy() override;
+
+  void SetMaterial(SharedPtr<IYukiMeshMaterial> material) override;
 
   void RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera) override;
 };

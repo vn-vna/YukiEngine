@@ -214,7 +214,7 @@ void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const int& valu
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const float& value)
+void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, float value)
 {
   try
   {

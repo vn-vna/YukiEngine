@@ -185,6 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
+    <None Include="..\YukiDeps\Binaries\assimp-vc143-mt.dll">
+      <Filter>External Binaries</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\YukiDeps\Binaries\glfw3.dll">
