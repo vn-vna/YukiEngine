@@ -20,7 +20,6 @@ Yuki::AsciiString loadShaderSourceFromFile(const Yuki::String& path)
 
 const unsigned createShaderFromSource(GLenum shaderType, const Yuki::AsciiString& shaderSource)
 {
-
   const char* pSource = shaderSource.c_str();
   int         status;
 
@@ -68,17 +67,17 @@ void YukiOGLShaderProgram::Create()
 {
   AsciiString vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   AsciiString fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
-  AsciiString gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
+  //AsciiString gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
   int         status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
-  unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
+  //unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);
   glAttachShader(pid, fs);
-  glAttachShader(pid, gs);
+  //glAttachShader(pid, gs);
   glLinkProgram(pid);
   glGetProgramiv(pid, GL_LINK_STATUS, &status);
   if (!status)

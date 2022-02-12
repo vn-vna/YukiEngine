@@ -50,44 +50,109 @@ void YukiGfxControl::Awake()
 
   tex = Utils::YukiImage("tex.png").Create2DTexture();
 
-  unsigned vertexFlag  = (unsigned) VertexFlag::ENABLE_LIGHTNING | (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR | (unsigned) VertexFlag::ENABLE_TEXTURE;
-  unsigned vertexFlag2 = (unsigned) VertexFlag::ENABLE_EXPLICIT_VERTEX_COLOR;
 
-  std::vector<VertexData> vdata;
-  vdata.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {0.00f, 1.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 0.00f}, vertexFlag});
-  vdata.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {1.00f, 1.00f}, vertexFlag});
 
-  std::vector<VertexData> vdata2;
-  vdata2.push_back({{-0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, -0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, +0.50f, +0.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{-0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, -0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
-  vdata2.push_back({{+0.50f, +0.50f, +1.00f}, {1.00f, 1.00f, 1.00f, 1.00f}, {}, vertexFlag2});
+  std::vector<VertexData> cube;
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+
+  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{-0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+
+  cube.push_back({{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, 0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+
+  cube.push_back({{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+
+  std::vector<VertexData> light_cube;
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+
+  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+
+  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
+
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
+
+  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
 
   // clang-format off
   std::vector<unsigned> indices = {
-    0, 2, 3, 0, 3, 1,
-    4, 7, 6, 4, 5, 7,
-    1, 3, 7, 1, 7, 5,
-    0, 4, 6, 0, 6, 2,
-    0, 1, 5, 0, 5, 4,
-    2, 6, 7, 2, 7, 3
+     0,  1,  2,  3,  4,  5,
+     6,  7,  8,  9, 10, 11,
+    12, 13, 14, 15, 16, 17,
+    18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29,
+    30, 31, 32, 33, 34, 35
   };
   // clang-format on
 
   IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
 
-  mesh      = Comp::CreateYukiMesh(vdata, idata, tex, L"MeshTest");
-  lightCube = Comp::CreateYukiMesh(vdata2, idata, tex, L"LightCube");
+  mesh      = Comp::CreateYukiMesh(cube, idata, tex, L"MeshTest");
+  lightCube = Comp::CreateYukiMesh(light_cube, idata, tex, L"LightCube");
 
   // TEST
 }
