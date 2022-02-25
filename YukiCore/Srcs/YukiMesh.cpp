@@ -3,10 +3,12 @@
 
 #include "PYukiMesh.hpp"
 
-Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram> g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
+AutoType g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram("MeshShader");
 
 namespace Yuki::Comp
 {
+
+SharedPtr<Core::IYukiOGLTexture> NO_TEXTURE = SharedPtr<Core::IYukiOGLTexture>(nullptr);
 
 YukiMeshMaterial::YukiMeshMaterial(float specular, float ambient)
     : m_nSpecularStrength(specular), m_nAmbientStrength(ambient)
@@ -109,7 +111,11 @@ void YukiMesh::RenderMesh(const glm::mat4& model, SharedPtr<IYukiCamera> camera)
   m_pShaderProgram->BindObject();
   m_pElementBuffer->BindObject();
   m_pVertexArray->BindObject();
-  m_pTexture->BindTexture(0);
+
+  if (m_pTexture.get())
+  {
+    m_pTexture->BindTexture(0);
+  }
 
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", model);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
@@ -131,7 +137,7 @@ SharedPtr<IYukiMesh> CreateYukiMesh(
     std::vector<Core::VertexData>&    vertexData,
     Core::IndexData&                  indexData,
     SharedPtr<Core::IYukiOGLTexture>& texture,
-    SharedPtr<IYukiMeshMaterial>      material,
+    SharedPtr<IYukiMeshMaterial>&     material,
     const String&                     meshName)
 {
   SharedPtr<IYukiMesh> mesh{(IYukiMesh*) new YukiMesh(indexData.topology, texture, meshName)};
@@ -165,7 +171,8 @@ SharedPtr<IYukiMesh> CreateYukiMesh(
 
 SharedPtr<IYukiMeshMaterial> CreateMaterial(float specular, float ambient)
 {
-  return {(IYukiMeshMaterial*) new YukiMeshMaterial(specular, ambient), std::default_delete<IYukiMeshMaterial>()};
+  return {(IYukiMeshMaterial*) new YukiMeshMaterial(specular, ambient),
+      std::default_delete<IYukiMeshMaterial>()};
 }
 
 void InitializeMeshShader()

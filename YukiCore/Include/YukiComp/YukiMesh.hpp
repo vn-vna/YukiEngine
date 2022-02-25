@@ -6,6 +6,8 @@
 namespace Yuki::Comp
 {
 
+extern SharedPtr<Core::IYukiOGLTexture> NO_TEXTURE;
+
 class YUKIAPI IYukiMeshMaterial
 {
 public:
@@ -37,7 +39,7 @@ SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
     std::vector<Core::VertexData>&    vertexData,
     Core::IndexData&                  indexData,
     SharedPtr<Core::IYukiOGLTexture>& texture,
-    SharedPtr<IYukiMeshMaterial>      material,
+    SharedPtr<IYukiMeshMaterial>&     material,
     const String&                     meshName);
 
 SharedPtr<IYukiMeshMaterial> YUKIAPI CreateMaterial(float specular, float ambient);

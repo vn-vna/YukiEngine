@@ -25,6 +25,7 @@
     <ClCompile Include="Srcs\YukiMesh.cpp" />
     <ClCompile Include="Srcs\YukiApplication.cpp" />
     <ClCompile Include="Srcs\YukiError.cpp" />
+    <ClCompile Include="Srcs\YukiModel.cpp" />
     <ClCompile Include="Srcs\YukiOGLElementBuffer.cpp" />
     <ClCompile Include="Srcs\YukiOGLShaderProgram.cpp" />
     <ClCompile Include="Srcs\YukiOGLTexture.cpp" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="Include\YukiComp\YukiCamera.hpp" />
     <ClInclude Include="Include\YukiComp\YukiMesh.hpp" />
+    <ClInclude Include="Include\YukiComp\YukiModel.hpp" />
     <ClInclude Include="Include\YukiComp\YukiScene.hpp" />
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp" />
     <ClInclude Include="Include\YukiCore\YukiGraphics.hpp" />
@@ -57,6 +59,7 @@
     <ClInclude Include="Srcs\PYukiGraphicsControl.hpp" />
     <ClInclude Include="Srcs\PYukiInputControl.hpp" />
     <ClInclude Include="Srcs\PYukiMesh.hpp" />
+    <ClInclude Include="Srcs\PYukiModel.hpp" />
     <ClInclude Include="Srcs\PYukiOGLElementBuffer.hpp" />
     <ClInclude Include="Srcs\PYukiOGLShaderProgram.hpp" />
     <ClInclude Include="Srcs\PYukiOGLTexture.hpp" />
