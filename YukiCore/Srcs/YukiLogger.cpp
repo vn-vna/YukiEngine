@@ -74,7 +74,7 @@ void YukiLogger::Create()
   // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
   PushDebugMessage("Application is running in DEBUG MODE");
 #else
-  PushDebugMessage(L"Application is running in RELEASE MODE");
+  PushDebugMessage("Application is running in RELEASE MODE");
 #endif // NDEBUG
 }
 
