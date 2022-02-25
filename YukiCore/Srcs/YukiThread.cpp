@@ -202,7 +202,7 @@ void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool 
   {
     handlers.emplace_back(t->GetHandler());
   }
-  WaitForMultipleObjects(handlers.size(), handlers.data(), waitAll, timeOut);
+  WaitForMultipleObjects((DWORD) handlers.size(), handlers.data(), waitAll, timeOut);
 }
 
 } // namespace Yuki::Core

@@ -54,11 +54,11 @@ glm::mat4& YukiModel::GetModelMatrix()
 
 SharedPtr<IYukiModel> LoadModel(String fileName)
 {
-  AsciiStringStream asciiFilePathSS = {};
-  asciiFilePathSS << fileName;
+  StringStream FilePathSS = {};
+  FilePathSS << fileName;
   Assimp::Importer importer = {};
 
-  AutoType pScene = importer.ReadFile(asciiFilePathSS.str(), ASSIMP_LOAD_FLAGS);
+  AutoType pScene = importer.ReadFile(FilePathSS.str(), ASSIMP_LOAD_FLAGS);
 
   MeshArrType meshes;
   meshes.reserve(pScene->mNumMeshes);
@@ -98,7 +98,7 @@ SharedPtr<IYukiModel> LoadModel(String fileName)
 
     AutoType default_mat = Comp::CreateMaterial(0.3f, 0.02f);
 
-    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, default_mat, L"MeshName");
+    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, default_mat, "MeshName");
     meshes.emplace_back(mesh);
   }
 

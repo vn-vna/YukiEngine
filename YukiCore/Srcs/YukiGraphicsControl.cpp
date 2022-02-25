@@ -51,7 +51,7 @@ void YukiGfxControl::Awake()
 
   tex = Utils::YukiImage("tex.png").Create2DTexture();
 
-  AutoType model = Comp::LoadModel(L"Test.blend");
+  AutoType model = Comp::LoadModel("Test.blend");
 
   std::vector<VertexData> cube;
   cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
@@ -155,8 +155,8 @@ void YukiGfxControl::Awake()
   AutoType cube_material = Comp::CreateMaterial(0.3f, 0.02f);
   AutoType lc_material   = Comp::CreateMaterial(0.3f, 1.0f);
 
-  mesh      = Comp::CreateYukiMesh(cube, idata, tex, cube_material, L"MeshTest");
-  lightCube = Comp::CreateYukiMesh(light_cube, idata, Comp::NO_TEXTURE, lc_material, L"LightCube");
+  mesh      = Comp::CreateYukiMesh(cube, idata, tex, cube_material, "MeshTest");
+  lightCube = Comp::CreateYukiMesh(light_cube, idata, Comp::NO_TEXTURE, lc_material, "LightCube");
 
   // TEST
 }

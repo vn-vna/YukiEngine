@@ -470,17 +470,17 @@ public:
 class YUKIAPI IYukiOGLShaderProgram : public IYukiOGLObject
 {
 public:
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat2& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat3& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat4& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat2& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat3& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat4& mat, bool transopse = false) = 0;
 
-  virtual void UniformVector(const AsciiString& prop, const glm::vec2& vec) = 0;
-  virtual void UniformVector(const AsciiString& prop, const glm::vec3& vec) = 0;
-  virtual void UniformVector(const AsciiString& prop, const glm::vec4& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec2& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec3& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec4& vec) = 0;
 
-  virtual void UniformValue(const AsciiString& prop, const bool& value) = 0;
-  virtual void UniformValue(const AsciiString& prop, const int& value)  = 0;
-  virtual void UniformValue(const AsciiString& prop, float value)       = 0;
+  virtual void UniformValue(const String& prop, const bool& value) = 0;
+  virtual void UniformValue(const String& prop, const int& value)  = 0;
+  virtual void UniformValue(const String& prop, float value)       = 0;
 };
 
 /// <summary>

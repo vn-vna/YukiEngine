@@ -67,17 +67,9 @@ void YukiWindow::SetCursoPos(const int& cx, const int& cy)
   glfwSetCursorPos(m_pGLFWWindow, cx, cy);
 }
 
-void YukiWindow::SetTitle(const AsciiString& title)
-{
-  glfwSetWindowTitle(m_pGLFWWindow, title.c_str());
-}
-
 void YukiWindow::SetTitle(const String& title)
 {
-  AsciiStringStream ss = {};
-  ss << title.c_str();
-  AsciiString str = ss.str();
-  glfwSetWindowTitle(m_pGLFWWindow, str.c_str());
+  glfwSetWindowTitle(m_pGLFWWindow, title.c_str());
 }
 
 bool YukiWindow::ShouldClose()

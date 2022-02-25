@@ -10,7 +10,7 @@
     virtual ~__err_name##() = default;                 \
   }
 
-#define THROW_YUKI_ERROR(__err_name) throw __err_name##(__FILEW__, __LINE__)
+#define THROW_YUKI_ERROR(__err_name) throw __err_name##(__FILE__, __LINE__)
 
 namespace Yuki::Debug
 {

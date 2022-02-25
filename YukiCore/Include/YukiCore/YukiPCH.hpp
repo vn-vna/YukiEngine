@@ -50,13 +50,11 @@ using UniquePtr = std::unique_ptr<T>;
 template <typename T>
 using WeakPtr = std::weak_ptr<T>;
 
-using String            = std::wstring;
-using StringStream      = std::wstringstream;
-using AsciiString       = std::string;
-using AsciiStringStream = std::stringstream;
+using String       = std::string;
+using StringStream = std::stringstream;
 
-typedef char           AsciiChar, *AsciiCharPtr, &AsciiCharRef;
-typedef const char*    ConstAsciiCharPtr;
+typedef char           Char, *CharPtr, &CharRef;
+typedef const char*    ConstCharPtr;
 typedef wchar_t        WChar, *WCharPtr, &WCharRef;
 typedef const wchar_t* WConstCharPtr;
 

@@ -16,7 +16,6 @@ protected:
 
 public:
   YukiImage(const String& path, bool flip = false);
-  YukiImage(const AsciiString& path, bool flip = false);
   virtual ~YukiImage();
 
   const uint8_t* GetData();

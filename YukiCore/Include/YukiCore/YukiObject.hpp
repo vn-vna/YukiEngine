@@ -72,7 +72,7 @@ class YUKIAPI      IYukiLogger;
 namespace Chrono
 {
 struct YUKIAPI StDateTimeFormat;
-struct YUKIAPI StAsciiDateTimeFormat;
+struct YUKIAPI StDateTimeFormat;
 class YUKIAPI  IYukiTimer;
 } // namespace Chrono
 

@@ -18,7 +18,6 @@ public:
   virtual void        SetSize(const int& width, const int& height) = 0;
   virtual void        SetPosition(const int& wx, const int& wy)    = 0;
   virtual void        SetCursoPos(const int& cx, const int& cy)    = 0;
-  virtual void        SetTitle(const AsciiString& title)           = 0;
   virtual void        SetTitle(const String& title)                = 0;
   virtual bool        ShouldClose()                                = 0;
   virtual glm::vec2   GetWindowSize()                              = 0;

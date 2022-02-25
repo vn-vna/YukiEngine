@@ -143,7 +143,7 @@ void YukiCamera::SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& call
   try
   {
     Core::GetYukiApp()->GetInputController()->RemoveKeyboardInputCallback(sstr.str());
-    Core::GetYukiApp()->GetLogger()->PushWarningMessage(L"Replacing old callback");
+    Core::GetYukiApp()->GetLogger()->PushWarningMessage("Replacing old callback");
   }
   catch (Debug::YukiError&)
   {}
@@ -157,7 +157,7 @@ void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& cal
   try
   {
     Core::GetYukiApp()->GetInputController()->RemoveCursorInputCallback(sstr.str());
-    Core::GetYukiApp()->GetLogger()->PushWarningMessage(L"Replacing old cursor callback");
+    Core::GetYukiApp()->GetLogger()->PushWarningMessage("Replacing old cursor callback");
   }
   catch (Debug::YukiError&)
   {}

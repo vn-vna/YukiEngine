@@ -3,7 +3,7 @@
 
 #include "PYukiMesh.hpp"
 
-Yuki::SharedPtr<Yuki::Core::IYukiOGLShaderProgram> g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram(L"MeshShader");
+AutoType g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram("MeshShader");
 
 namespace Yuki::Comp
 {

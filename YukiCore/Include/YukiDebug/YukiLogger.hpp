@@ -2,14 +2,14 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 
-#define YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL  L"DEBUG"
-#define YUKI_DEBUG_MESSAGE_PRIOTY_WARNING L"WARNING"
-#define YUKI_DEBUG_MESSAGE_PRIOTY_ERROR   L"ERROR"
+#define YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL  "DEBUG"
+#define YUKI_DEBUG_MESSAGE_PRIOTY_WARNING "WARNING"
+#define YUKI_DEBUG_MESSAGE_PRIOTY_ERROR   "ERROR"
 
 namespace Yuki::Debug
 {
 
-using OutputLogFileType = std::wofstream;
+using OutputLogFileType = std::ofstream;
 
 class YUKIAPI IYukiLogger : public Core::IYukiObject
 {
