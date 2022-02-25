@@ -81,6 +81,7 @@ namespace Comp
 class YUKIAPI IYukiMesh;
 class YUKIAPI IYukiScene;
 class YUKIAPI IYukiCamera;
+class YUKIAPI IYukiModel;
 } // namespace Comp
 
 } // namespace Yuki

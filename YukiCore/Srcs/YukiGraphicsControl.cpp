@@ -4,10 +4,10 @@
 #include "YukiDebug/YukiError.hpp"
 #include "YukiComp/YukiMesh.hpp"
 #include "YukiComp/YukiCamera.hpp"
+#include "YukiComp/YukiModel.hpp"
 #include "YukiUtil/YukiImage.hpp"
 
 #include "PYukiGraphicsControl.hpp"
-
 
 /// TEST CODE
 
@@ -45,12 +45,13 @@ void YukiGfxControl::Awake()
 {
 
   // TEST
+
   camera = Comp::CreateYukiCamera();
   camera->SetFieldOfView(glm::radians(60.0f));
 
   tex = Utils::YukiImage("tex.png").Create2DTexture();
 
-
+  AutoType model = Comp::LoadModel(L"Test.blend");
 
   std::vector<VertexData> cube;
   cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
@@ -155,7 +156,7 @@ void YukiGfxControl::Awake()
   AutoType lc_material   = Comp::CreateMaterial(0.3f, 1.0f);
 
   mesh      = Comp::CreateYukiMesh(cube, idata, tex, cube_material, L"MeshTest");
-  lightCube = Comp::CreateYukiMesh(light_cube, idata, tex, lc_material, L"LightCube");
+  lightCube = Comp::CreateYukiMesh(light_cube, idata, Comp::NO_TEXTURE, lc_material, L"LightCube");
 
   // TEST
 }

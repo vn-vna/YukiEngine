@@ -393,6 +393,9 @@ typedef struct StVertexFormat
       const glm::vec2& _texcoord)
       : position(_position), normal(_normal), texcoord(_texcoord) {}
 
+  StVertexFormat()
+      : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
+
 } VertexData, VertexFormat;
 
 /// <summary>
