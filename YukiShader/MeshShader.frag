@@ -20,7 +20,7 @@ uniform sampler2D U_MeshTextures;
 void main() 
 {
   
-  vec4 fragmentColor        = vec4(1.0, 1.0, 1.0, 1.0);
+  vec4 fragmentColor        = texture(U_MeshTextures, VS_TexCoord);
 
   {
     vec4 ambient            = U_AmbientStrength * U_LightColor;

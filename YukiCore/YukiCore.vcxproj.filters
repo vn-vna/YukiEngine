@@ -102,6 +102,9 @@
     <ClCompile Include="Srcs\YukiImage.cpp">
       <Filter>Srcs\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Srcs\YukiModel.cpp">
+      <Filter>Srcs\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\YukiCore\YukiApplication.hpp">
@@ -182,9 +185,18 @@
     <ClInclude Include="Include\YukiUtil\YukiImage.hpp">
       <Filter>Include\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Include\YukiComp\YukiModel.hpp">
+      <Filter>Include\YukiComp</Filter>
+    </ClInclude>
+    <ClInclude Include="Srcs\PYukiModel.hpp">
+      <Filter>Private Header\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
+    <None Include="..\YukiDeps\Binaries\assimp-vc143-mt.dll">
+      <Filter>External Binaries</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\YukiDeps\Binaries\glfw3.dll">

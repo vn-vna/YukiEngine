@@ -37,32 +37,7 @@ TMType CurrentTimePointTM()
 
 const String DateTimeString(const DateTimeFormat& format)
 {
-  StringStream wss{};
-  wss << format.year
-      << format.dateSeperator
-      << format.month
-      << format.dateSeperator
-      << format.day
-      << format.timeDateSeperator
-      << format.hour
-      << format.timeSeperator
-      << format.minute
-      << format.timeSeperator
-      << format.second;
-
-  String tformat = wss.str();
-  wss.str(L"");
-
-  AutoType crrTMTime = CurrentTimePointTM();
-
-  wss << std::put_time(&crrTMTime, tformat.c_str());
-
-  return {std::move(wss.str())};
-}
-
-const AsciiString DateTimeAsciiString(const AsciiDateTimeFormat& format)
-{
-  AsciiStringStream asstr{};
+  StringStream asstr{};
   asstr << format.year
         << format.dateSeperator
         << format.month
@@ -75,7 +50,7 @@ const AsciiString DateTimeAsciiString(const AsciiDateTimeFormat& format)
         << format.timeSeperator
         << format.second;
 
-  AsciiString tformat = asstr.str();
+  String tformat = asstr.str();
   asstr.str("");
 
   AutoType crrTMTime = CurrentTimePointTM();

@@ -6,10 +6,10 @@
       : YukiError(YukiErrCode::__err_code##, file, line)           \
   {}
 
-#define YUKI_CORE_ERROR   L"[YUKI CORE]"
-#define YUKI_GLFW_ERROR   L"[GLFW]"
-#define YUKI_OPENGL_ERROR L"[OPENGL]"
-#define YUKI_GLAD_ERROR   L"[GLAD]"
+#define YUKI_CORE_ERROR   "[YUKI CORE]"
+#define YUKI_GLFW_ERROR   "[GLFW]"
+#define YUKI_OPENGL_ERROR "[OPENGL]"
+#define YUKI_GLAD_ERROR   "[GLAD]"
 
 #define CHECK_CASE_OF_ERROR(__err_code, __caused_by)                            \
   case YukiErrCode::__err_code##:                                               \

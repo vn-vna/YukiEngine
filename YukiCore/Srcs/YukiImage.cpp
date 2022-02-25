@@ -10,16 +10,6 @@ namespace Yuki::Utils
 YukiImage::YukiImage(const String& path, bool flip)
 {
   stbi_set_flip_vertically_on_load(!flip);
-  AsciiStringStream sstr{};
-  sstr << path.c_str();
-  AsciiString str = sstr.str();
-  m_pData         = stbi_load(str.c_str(), &m_nWidth, &m_nHeight, &m_nChannel, 4);
-  m_nChannel      = 4;
-}
-
-YukiImage::YukiImage(const AsciiString& path, bool flip)
-{
-  stbi_set_flip_vertically_on_load(!flip);
   m_pData    = stbi_load(path.c_str(), &m_nWidth, &m_nHeight, &m_nChannel, 4);
   m_nChannel = 4;
 }

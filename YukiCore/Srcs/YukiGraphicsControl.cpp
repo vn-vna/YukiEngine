@@ -4,10 +4,10 @@
 #include "YukiDebug/YukiError.hpp"
 #include "YukiComp/YukiMesh.hpp"
 #include "YukiComp/YukiCamera.hpp"
+#include "YukiComp/YukiModel.hpp"
 #include "YukiUtil/YukiImage.hpp"
 
 #include "PYukiGraphicsControl.hpp"
-
 
 /// TEST CODE
 
@@ -45,55 +45,56 @@ void YukiGfxControl::Awake()
 {
 
   // TEST
+
   camera = Comp::CreateYukiCamera();
   camera->SetFieldOfView(glm::radians(60.0f));
 
   tex = Utils::YukiImage("tex.png").Create2DTexture();
 
-
+  AutoType model = Comp::LoadModel("Test.blend");
 
   std::vector<VertexData> cube;
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
+  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 0.00}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 1.00}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 1.00}});
+  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 1.00}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
 
-  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  cube.push_back({{-0.5f, 0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, +1.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 0.00}});
+  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 0.00}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 1.00}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 1.00}});
+  cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 1.00}});
+  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 0.00}});
 
-  cube.push_back({{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, 0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, 0.5f, 0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
 
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {1.0f, 0.0f, 0.0f}, {}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
 
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, 0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
 
-  cube.push_back({{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
-  cube.push_back({{0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}, {}});
-  cube.push_back({{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {}});
+  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
+  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
 
   std::vector<VertexData> light_cube;
   light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
@@ -151,8 +152,11 @@ void YukiGfxControl::Awake()
 
   IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
 
-  mesh      = Comp::CreateYukiMesh(cube, idata, tex, L"MeshTest");
-  lightCube = Comp::CreateYukiMesh(light_cube, idata, tex, L"LightCube");
+  AutoType cube_material = Comp::CreateMaterial(0.3f, 0.02f);
+  AutoType lc_material   = Comp::CreateMaterial(0.3f, 1.0f);
+
+  mesh      = Comp::CreateYukiMesh(cube, idata, tex, cube_material, "MeshTest");
+  lightCube = Comp::CreateYukiMesh(light_cube, idata, Comp::NO_TEXTURE, lc_material, "LightCube");
 
   // TEST
 }

@@ -25,7 +25,6 @@ public:
   void        SetSize(const int& width, const int& height) override;
   void        SetPosition(const int& wx, const int& wy) override;
   void        SetCursoPos(const int& cx, const int& cy) override;
-  void        SetTitle(const AsciiString& title) override;
   void        SetTitle(const String& title) override;
   bool        ShouldClose() override;
   glm::vec2   GetWindowSize() override;

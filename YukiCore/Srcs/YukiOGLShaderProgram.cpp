@@ -2,14 +2,14 @@
 
 #include "PYukiOGLShaderProgram.hpp"
 
-Yuki::AsciiString loadShaderSourceFromFile(const Yuki::String& path);
-const unsigned    createShaderFromSource(GLenum shaderTypem, const Yuki::AsciiString& shaderSource);
+Yuki::String   loadShaderSourceFromFile(const Yuki::String& path);
+const unsigned createShaderFromSource(GLenum shaderTypem, const Yuki::String& shaderSource);
 
-Yuki::AsciiString loadShaderSourceFromFile(const Yuki::String& path)
+Yuki::String loadShaderSourceFromFile(const Yuki::String& path)
 {
-  Yuki::AsciiStringStream sstr{};
-  Yuki::AsciiString       line;
-  std::ifstream           ipf{path};
+  Yuki::StringStream sstr{};
+  Yuki::String       line;
+  std::ifstream      ipf{path};
   while (std::getline(ipf, line))
   {
     sstr << line << "\n";
@@ -18,7 +18,7 @@ Yuki::AsciiString loadShaderSourceFromFile(const Yuki::String& path)
   return sstr.str();
 }
 
-const unsigned createShaderFromSource(GLenum shaderType, const Yuki::AsciiString& shaderSource)
+const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& shaderSource)
 {
   const char* pSource = shaderSource.c_str();
   int         status;
@@ -46,9 +46,9 @@ namespace Yuki::Core
 YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
     : m_nSPId()
 {
-  m_VSShaderFile = shaderName + L".vert";
-  m_FSShaderFile = shaderName + L".frag";
-  m_GSShaderFile = shaderName + L".geom";
+  m_VSShaderFile = shaderName + ".vert";
+  m_FSShaderFile = shaderName + ".frag";
+  m_GSShaderFile = shaderName + ".geom";
 }
 
 YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
@@ -65,19 +65,19 @@ void YukiOGLShaderProgram::BindObject()
 
 void YukiOGLShaderProgram::Create()
 {
-  AsciiString vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
-  AsciiString fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
-  //AsciiString gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
-  int         status;
+  String vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
+  String fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
+  // String gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
+  int    status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
-  //unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
+  // unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);
   glAttachShader(pid, fs);
-  //glAttachShader(pid, gs);
+  // glAttachShader(pid, gs);
   glLinkProgram(pid);
   glGetProgramiv(pid, GL_LINK_STATUS, &status);
   if (!status)
@@ -106,7 +106,7 @@ bool YukiOGLShaderProgram::OnUse()
 }
 
 
-unsigned YukiOGLShaderProgram::GetUniformLocation(const AsciiString& prop)
+unsigned YukiOGLShaderProgram::GetUniformLocation(const String& prop)
 {
   if (OnUse())
   {
@@ -118,7 +118,7 @@ unsigned YukiOGLShaderProgram::GetUniformLocation(const AsciiString& prop)
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat2& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat2& mat, bool transpose)
 {
   try
   {
@@ -130,7 +130,7 @@ void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat3& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat3& mat, bool transpose)
 {
   try
   {
@@ -142,7 +142,7 @@ void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat4& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat4& mat, bool transpose)
 {
   try
   {
@@ -154,7 +154,7 @@ void YukiOGLShaderProgram::UniformMatrix(const AsciiString& prop, const glm::mat
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec2& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec2& vec)
 {
   try
   {
@@ -166,7 +166,7 @@ void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec3& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec3& vec)
 {
   try
   {
@@ -178,7 +178,7 @@ void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec4& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec4& vec)
 {
   try
   {
@@ -190,7 +190,7 @@ void YukiOGLShaderProgram::UniformVector(const AsciiString& prop, const glm::vec
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const bool& value)
+void YukiOGLShaderProgram::UniformValue(const String& prop, const bool& value)
 {
   try
   {
@@ -202,7 +202,7 @@ void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const bool& val
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const int& value)
+void YukiOGLShaderProgram::UniformValue(const String& prop, const int& value)
 {
   try
   {
@@ -214,7 +214,7 @@ void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const int& valu
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const AsciiString& prop, const float& value)
+void YukiOGLShaderProgram::UniformValue(const String& prop, float value)
 {
   try
   {

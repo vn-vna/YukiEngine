@@ -17,7 +17,7 @@ protected:
   String   m_FSShaderFile;
   String   m_GSShaderFile;
 
-  unsigned GetUniformLocation(const AsciiString& prop);
+  unsigned GetUniformLocation(const String& prop);
 
 public:
   YukiOGLShaderProgram(const String& shaderName);
@@ -28,15 +28,15 @@ public:
   void            BindObject() override;
   void            Create() override;
   void            Destroy() override;
-  void            UniformMatrix(const AsciiString& prop, const glm::mat2& mat, bool transpose = false) override;
-  void            UniformMatrix(const AsciiString& prop, const glm::mat3& mat, bool transpose = false) override;
-  void            UniformMatrix(const AsciiString& prop, const glm::mat4& mat, bool transpose = false) override;
-  void            UniformVector(const AsciiString& prop, const glm::vec2& vec) override;
-  void            UniformVector(const AsciiString& prop, const glm::vec3& vec) override;
-  void            UniformVector(const AsciiString& prop, const glm::vec4& vec) override;
-  void            UniformValue(const AsciiString& prop, const bool& value) override;
-  void            UniformValue(const AsciiString& prop, const int& value) override;
-  void            UniformValue(const AsciiString& prop, const float& value) override;
+  void            UniformMatrix(const String& prop, const glm::mat2& mat, bool transpose = false) override;
+  void            UniformMatrix(const String& prop, const glm::mat3& mat, bool transpose = false) override;
+  void            UniformMatrix(const String& prop, const glm::mat4& mat, bool transpose = false) override;
+  void            UniformVector(const String& prop, const glm::vec2& vec) override;
+  void            UniformVector(const String& prop, const glm::vec3& vec) override;
+  void            UniformVector(const String& prop, const glm::vec4& vec) override;
+  void            UniformValue(const String& prop, const bool& value) override;
+  void            UniformValue(const String& prop, const int& value) override;
+  void            UniformValue(const String& prop, float value) override;
 };
 
 } // namespace Yuki::Core

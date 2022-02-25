@@ -393,6 +393,9 @@ typedef struct StVertexFormat
       const glm::vec2& _texcoord)
       : position(_position), normal(_normal), texcoord(_texcoord) {}
 
+  StVertexFormat()
+      : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
+
 } VertexData, VertexFormat;
 
 /// <summary>
@@ -467,17 +470,17 @@ public:
 class YUKIAPI IYukiOGLShaderProgram : public IYukiOGLObject
 {
 public:
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat2& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat3& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const AsciiString& prop, const glm::mat4& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat2& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat3& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const glm::mat4& mat, bool transopse = false) = 0;
 
-  virtual void UniformVector(const AsciiString& prop, const glm::vec2& vec) = 0;
-  virtual void UniformVector(const AsciiString& prop, const glm::vec3& vec) = 0;
-  virtual void UniformVector(const AsciiString& prop, const glm::vec4& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec2& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec3& vec) = 0;
+  virtual void UniformVector(const String& prop, const glm::vec4& vec) = 0;
 
-  virtual void UniformValue(const AsciiString& prop, const bool& value)  = 0;
-  virtual void UniformValue(const AsciiString& prop, const int& value)   = 0;
-  virtual void UniformValue(const AsciiString& prop, const float& value) = 0;
+  virtual void UniformValue(const String& prop, const bool& value) = 0;
+  virtual void UniformValue(const String& prop, const int& value)  = 0;
+  virtual void UniformValue(const String& prop, float value)       = 0;
 };
 
 /// <summary>
@@ -492,7 +495,7 @@ public:
   virtual void SetTextureBaseLevel(const int& baseLevel)                       = 0;
   virtual void SetTextureCompareFunc(const TextureCompareFunc& compareFunc)    = 0;
   virtual void SetTextureCompareMode(const TextureCompareMode& compareMode)    = 0;
-  virtual void SetTextureLodBias(const float& bias)                            = 0;
+  virtual void SetTextureLodBias(float bias)                                   = 0;
 
   virtual void SetStorageData1D(
       const PixelInternalFormat& internalFormat, const int& level,
