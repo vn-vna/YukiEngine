@@ -10,7 +10,7 @@ namespace Yuki::Core
 
 extern bool YUKIAPI g_bGLFWInited;
 
-class YUKIAPI IYukiWindow : public IYukiObject
+class YUKIAPI IYukiWindow : virtual public IYukiObject
 {
 public:
   virtual void        ShowWindow()                                 = 0;

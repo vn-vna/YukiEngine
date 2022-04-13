@@ -1,15 +1,20 @@
 #pragma once
+
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiDebug/YukiError.hpp"
 
+#include "PYukiObject.hpp"
+
+// glm
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram : public IYukiOGLShaderProgram
+class YukiOGLShaderProgram : virtual public IYukiOGLShaderProgram,
+                             virtual public YukiObject
 {
 protected:
   unsigned m_nSPId;

@@ -102,7 +102,7 @@ StKeyStatus& YukiInpControl::GetKeyStatus(const KeyCode& keyCode)
 
 SharedPtr<IYukiInpControl> CreateNewInputControl()
 {
-  return {(IYukiInpControl*) new YukiInpControl(), std::default_delete<IYukiInpControl>()};
+  return CreateInterfaceInstance<IYukiInpControl, YukiInpControl>();
 }
 
 } // namespace Yuki::Core

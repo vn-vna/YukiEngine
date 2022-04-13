@@ -31,57 +31,57 @@ YukiCamera::YukiCamera()
 
 YukiCamera::~YukiCamera() = default;
 
-const glm::mat4& YukiCamera::GetCameraViewMatrix()
+const glm::mat4& YukiCamera::GetCameraViewMatrix() const
 {
   return m_ViewMatrix;
 }
 
-const glm::mat4& YukiCamera::GetCameraProjectionMatrix()
+const glm::mat4& YukiCamera::GetCameraProjectionMatrix() const
 {
   return m_ProjectionMatrix;
 }
 
-const glm::vec3& YukiCamera::GetCameraPosition()
+const glm::vec3& YukiCamera::GetCameraPosition() const
 {
   return m_CamPos;
 }
 
-const glm::vec3& YukiCamera::GetCameraDirection()
+const glm::vec3& YukiCamera::GetCameraDirection() const
 {
   return m_CamDirection;
 }
 
-const glm::vec3 YukiCamera::GetCameraTopAxis()
+const glm::vec3 YukiCamera::GetCameraTopAxis() const
 {
   return glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis());
 }
 
-const glm::vec3 YukiCamera::GetCameraHorizontalAxis()
+const glm::vec3 YukiCamera::GetCameraHorizontalAxis() const
 {
   return glm::cross(GetCameraVerticalAxis(), m_CamTop);
 }
 
-const glm::vec3 YukiCamera::GetCameraVerticalAxis()
+const glm::vec3 YukiCamera::GetCameraVerticalAxis() const
 {
   return m_CamDirection;
 }
 
-float YukiCamera::GetFieldOfView()
+float YukiCamera::GetFieldOfView() const
 {
   return m_nFOV;
 }
 
-float YukiCamera::GetViewportAspectRatio()
+float YukiCamera::GetViewportAspectRatio() const
 {
   return m_nAspectRatio;
 }
 
-float YukiCamera::GetNearPerspective()
+float YukiCamera::GetNearPerspective() const
 {
   return m_nNear;
 }
 
-float YukiCamera::GetFarPerspective()
+float YukiCamera::GetFarPerspective() const
 {
   return m_nFar;
 }
@@ -142,12 +142,20 @@ void YukiCamera::SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& call
   sstr << L"Camera Key-control callback " << m_nCamID;
   try
   {
-    Core::GetYukiApp()->GetInputController()->RemoveKeyboardInputCallback(sstr.str());
-    Core::GetYukiApp()->GetLogger()->PushWarningMessage("Replacing old callback");
+    Core::GetYukiApp()
+        ->GetInputController()
+        ->RemoveKeyboardInputCallback(sstr.str());
+    Core::GetYukiApp()
+        ->GetLogger()
+        ->PushWarningMessage("Replacing old callback");
   }
-  catch (Debug::YukiError&)
-  {}
-  Core::GetYukiApp()->GetInputController()->AddKeyboardInputCallback(sstr.str(), callback);
+  catch (Debug::YukiError& yer)
+  {
+    yer.PushErrorMessage();
+  }
+  Core::GetYukiApp()
+      ->GetInputController()
+      ->AddKeyboardInputCallback(sstr.str(), callback);
 }
 
 void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& callback)
@@ -156,12 +164,20 @@ void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& cal
   sstr << L"Camera Cursor-control callback " << m_nCamID;
   try
   {
-    Core::GetYukiApp()->GetInputController()->RemoveCursorInputCallback(sstr.str());
-    Core::GetYukiApp()->GetLogger()->PushWarningMessage("Replacing old cursor callback");
+    Core::GetYukiApp()
+        ->GetInputController()
+        ->RemoveCursorInputCallback(sstr.str());
+    Core::GetYukiApp()
+        ->GetLogger()
+        ->PushWarningMessage("Replacing old cursor callback");
   }
-  catch (Debug::YukiError&)
-  {}
-  Core::GetYukiApp()->GetInputController()->AddCursorInputCallback(sstr.str(), callback);
+  catch (Debug::YukiError& yer)
+  {
+    yer.PushErrorMessage();
+  }
+  Core::GetYukiApp()
+      ->GetInputController()
+      ->AddCursorInputCallback(sstr.str(), callback);
 }
 
 void YukiCamera::Update()
@@ -172,7 +188,8 @@ void YukiCamera::Update()
 
 SharedPtr<IYukiCamera> CreateYukiCamera()
 {
-  return {(IYukiCamera*) new YukiCamera, std::default_delete<IYukiCamera>()};
+  // return {(IYukiCamera*) new YukiCamera, std::default_delete<IYukiCamera>()};
+  return Core::CreateInterfaceInstance<IYukiCamera, YukiCamera>();
 }
 
 } // namespace Yuki::Comp

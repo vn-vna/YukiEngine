@@ -2,10 +2,13 @@
 
 #include "YukiCore/YukiGraphics.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Core
 {
 
-class YukiGfxControl : public IYukiGfxControl
+class YukiGfxControl : virtual public IYukiGfxControl,
+                       virtual public YukiObject
 {
 public:
   YukiGfxControl();

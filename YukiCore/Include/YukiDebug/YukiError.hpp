@@ -33,10 +33,11 @@ enum class YUKIAPI YukiErrCode
   GLAD_LOAD_GLLOADER_FAILED,
   OPENGL_COMPILE_SHADER_ERROR,
   OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED,
-  OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE
+  OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE,
+  ASSIMP_MODEL_CANT_BE_LOADED
 };
 
-class YUKIAPI YukiError : public std::runtime_error
+class YUKIAPI YukiError
 {
 protected:
   YukiErrCode m_ErrCode;
@@ -49,6 +50,7 @@ public:
 
   String             getErrorMessage() const;
   const YukiErrCode& getErrorCode() const;
+  void               PushErrorMessage() const;
 };
 
 DECLARE_YUKI_ERROR(YukiCreateLogFileError);
@@ -73,5 +75,7 @@ DECLARE_YUKI_ERROR(YukiGladLoadGLLoaderError);
 DECLARE_YUKI_ERROR(YukiOGLCompileShaderError);
 DECLARE_YUKI_ERROR(YukiOGLShaderProgramIsNotActived);
 DECLARE_YUKI_ERROR(YukiOGLTextureTypeNotCompatibleError);
+
+DECLARE_YUKI_ERROR(YukiAssimpModelCantBeLoaded);
 
 } // namespace Yuki::Debug

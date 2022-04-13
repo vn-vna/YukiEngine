@@ -2,21 +2,6 @@
 
 #include "YukiCore/YukiPCH.hpp"
 
-namespace Yuki::Core
-{
-
-class YUKIAPI IYukiObject
-{
-public:
-  virtual void Create(){};
-  virtual void Awake(){};
-  virtual void Update(){};
-  virtual void Render(){};
-  virtual void Destroy(){};
-};
-
-} // namespace Yuki::Core
-
 namespace Yuki
 {
 
@@ -71,17 +56,51 @@ class YUKIAPI      IYukiLogger;
 
 namespace Chrono
 {
+
 struct YUKIAPI StDateTimeFormat;
 struct YUKIAPI StDateTimeFormat;
 class YUKIAPI  IYukiTimer;
+
 } // namespace Chrono
 
 namespace Comp
 {
+
+struct YUKIAPI StTransformationInfo;
+
 class YUKIAPI IYukiMesh;
 class YUKIAPI IYukiScene;
 class YUKIAPI IYukiCamera;
 class YUKIAPI IYukiModel;
+
 } // namespace Comp
 
+namespace Entity
+{
+
+class YUKIAPI YukiEntity;
+
+}
+
 } // namespace Yuki
+
+namespace Yuki::Core
+{
+
+class YUKIAPI IYukiObject
+{
+public:
+  virtual void Create()  = 0;
+  virtual void Awake()   = 0;
+  virtual void Update()  = 0;
+  virtual void Render()  = 0;
+  virtual void Destroy() = 0;
+};
+
+template <typename I, typename D, typename... Args>
+SharedPtr<I> CreateInterfaceInstance(Args&&... args)
+{
+  return std::dynamic_pointer_cast<I>(std::make_shared<D>(args...));
+}
+
+} // namespace Yuki::Core

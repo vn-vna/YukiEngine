@@ -2,7 +2,7 @@
 
 #include "PYukiThread.hpp"
 
-std::map<DWORD, Yuki::Core::IYukiThread*> g_mThreadManager{};
+Yuki::Map<DWORD, Yuki::Core::IYukiThread*> g_mThreadManager{};
 
 DWORD CALLBACK Win32APIThreadCallback(LPVOID args)
 {
@@ -176,27 +176,27 @@ HANDLE YukiMutex::GetHandler()
 
 SharedPtr<IYukiThread> CreateYukiThread()
 {
-  return {(IYukiThread*) new YukiThread(), std::default_delete<IYukiThread>()};
+  return CreateInterfaceInstance<IYukiThread, YukiThread>();
 }
 
 SharedPtr<IYukiThread> CreateYukiThread(const YukiThreadCallbackFuncType& callback)
 {
-  return {(IYukiThread*) new YukiThread(callback), std::default_delete<IYukiThread>()};
+  return CreateInterfaceInstance<IYukiThread, YukiThread>(callback);
 }
 
 SharedPtr<IYukiThread> CreateYukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback)
 {
-  return {(IYukiThread*) new YukiThread(pcallback), std::default_delete<IYukiThread>()};
+  return CreateInterfaceInstance<IYukiThread, YukiThread>(pcallback);
 }
 
 SharedPtr<IYukiMutex> CreateYukiMutex()
 {
-  return {(IYukiMutex*) new YukiMutex(), std::default_delete<IYukiMutex>()};
+  return CreateInterfaceInstance<IYukiMutex, YukiMutex>();
 }
 
 void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll, unsigned long timeOut)
 {
-  std::vector<HANDLE> handlers;
+  Vector<HANDLE> handlers;
   handlers.reserve(threads.size());
   for (auto& t : threads)
   {

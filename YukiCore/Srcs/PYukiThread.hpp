@@ -11,7 +11,7 @@ DWORD CALLBACK Win32APIThreadCallback(LPVOID args);
 namespace Yuki::Core
 {
 
-class YukiThread : public IYukiThread
+class YukiThread : virtual public IYukiThread
 {
 protected:
   SharedPtr<YukiThreadCallbackFuncType> m_pfnRunnable;

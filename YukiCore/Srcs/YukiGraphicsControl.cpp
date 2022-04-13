@@ -13,10 +13,10 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       mesh;
-Yuki::SharedPtr<Yuki::Comp::IYukiMesh>       lightCube;
-Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     camera;
-Yuki::SharedPtr<Yuki::Core::IYukiOGLTexture> tex;
+Yuki::SharedPtr<Yuki::Comp::IYukiCamera> camera;
+Yuki::SharedPtr<Yuki::Comp::IYukiModel>  model;
+Yuki::SharedPtr<Yuki::Comp::IYukiModel>  lightSphere;
+Yuki::SharedPtr<Yuki::Comp::IYukiModel>  sphere;
 
 /// TEST CODE
 
@@ -36,9 +36,6 @@ void YukiGfxControl::Create()
   }
 
   Comp::InitializeMeshShader();
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
 }
 
 void YukiGfxControl::Awake()
@@ -49,114 +46,26 @@ void YukiGfxControl::Awake()
   camera = Comp::CreateYukiCamera();
   camera->SetFieldOfView(glm::radians(60.0f));
 
-  tex = Utils::YukiImage("tex.png").Create2DTexture();
+  model       = Comp::LoadModel("model.fbx");
+  sphere      = Comp::LoadModel("sphere.fbx");
+  lightSphere = Comp::LoadModel("light.fbx");
 
-  AutoType model = Comp::LoadModel("Test.blend");
+  model->Create();
+  sphere->Create();
+  lightSphere->Create();
 
-  std::vector<VertexData> cube;
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
-  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 0.00}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 1.00}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {1.00, 1.00}});
-  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 1.00}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, -1.0f}, {0.00, 0.00}});
+  AutoType spheremesh = sphere->GetMesh("Sphere");
+  if (spheremesh.get())
+  {
+    spheremesh->TranslateMesh({-2.30f, 2.30f, 3.00f});
+  }
 
-  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 0.00}});
-  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 0.00}});
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 1.00}});
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {1.00, 1.00}});
-  cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 1.00}});
-  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, +1.0f}, {0.00, 0.00}});
-
-  cube.push_back({{-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {0.00f, 0.00f}});
-
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.00f, 0.00f}});
-
-  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-  cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {0.00f, 0.00f}});
-
-  std::vector<VertexData> light_cube;
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, +1.0f}, {}});
-
-  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, 0.0f, -1.0f}, {}});
-
-  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {+1.0f, 0.0f, 0.0f}, {}});
-
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {-1.0f, 0.0f, 0.0f}, {}});
-
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, +0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, -0.5f, -0.5f}, {0.0f, +1.0f, 0.0f}, {}});
-
-  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  light_cube.push_back({{+0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, +0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-  light_cube.push_back({{-0.5f, +0.5f, -0.5f}, {0.0f, -1.0f, 0.0f}, {}});
-
-  // clang-format off
-  std::vector<unsigned> indices = {
-     0,  1,  2,  3,  4,  5,
-     6,  7,  8,  9, 10, 11,
-    12, 13, 14, 15, 16, 17,
-    18, 19, 20, 21, 22, 23,
-    24, 25, 26, 27, 28, 29,
-    30, 31, 32, 33, 34, 35
-  };
-  // clang-format on
-
-  IndexData idata = {Core::PrimitiveTopology::TRIANGLE_LIST, indices};
-
-  AutoType cube_material = Comp::CreateMaterial(0.3f, 0.02f);
-  AutoType lc_material   = Comp::CreateMaterial(0.3f, 1.0f);
-
-  mesh      = Comp::CreateYukiMesh(cube, idata, tex, cube_material, "MeshTest");
-  lightCube = Comp::CreateYukiMesh(light_cube, idata, Comp::NO_TEXTURE, lc_material, "LightCube");
+  AutoType lsphereMesh = lightSphere->GetMesh("Sphere");
+  if (lsphereMesh.get())
+  {
+    lsphereMesh->TranslateMesh({-1.30f, 1.30f, 2.00f});
+    lsphereMesh->ScaleMesh({0.02f, 0.02f, 0.02f});
+  }
 
   // TEST
 }
@@ -228,27 +137,57 @@ void YukiGfxControl::Render()
     }
   }
 
+  {
+    AutoType key1Stat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_1);
+    if (key1Stat.state != KeyState::RELEASE)
+    {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+    AutoType key2Stat = GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_2);
+    if (key2Stat.state != KeyState::RELEASE)
+    {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+  }
+
   camera->Update();
 
   // TEST
 
   // TEST
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  mesh->RenderMesh(glm::identity<glm::mat4>(), camera);
+  model->Render(camera);
+  sphere->Render(camera);
+  lightSphere->Render(camera);
 
-  lightCube->RenderMesh(
-      glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{1.30f, 1.30f, 2.00f}), glm::vec3{0.05f, 0.05f, 0.05f}),
-      camera);
-  // TEST
+  AutoType diamond = model->GetMesh("Diamond.001");
+  if (diamond.get())
+  {
+    diamond->RotateMesh({0.0f, 0.0f, 1.0f}, glm::radians(1.0f));
+  }
+
+  AutoType spheremesh = sphere->GetMesh("Sphere");
+  if (spheremesh.get())
+  {
+    spheremesh->RotateMesh({0.0f, 0.0f, 1.0f}, glm::radians(1.0f));
+  }
+  //  TEST
 }
 
 void YukiGfxControl::Destroy()
 {
-
   // TEST
-  tex->Destroy();
-  mesh->Destroy();
-  lightCube->Destroy();
+  if (lightSphere.get())
+  {
+    lightSphere->Destroy();
+  }
+  if (model.get())
+  {
+    model->Destroy();
+  }
+  if (sphere.get())
+  {
+    sphere->Destroy();
+  }
   // TEST
 
   Comp::ReleaseMeshShader();
@@ -256,7 +195,7 @@ void YukiGfxControl::Destroy()
 
 SharedPtr<IYukiGfxControl> CreateGraphicsController()
 {
-  return {(IYukiGfxControl*) new YukiGfxControl, std::default_delete<IYukiGfxControl>()};
+  return CreateInterfaceInstance<IYukiGfxControl, YukiGfxControl>();
 }
 
 } // namespace Yuki::Core

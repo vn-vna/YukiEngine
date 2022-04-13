@@ -2,15 +2,16 @@
 
 #include "YukiComp/YukiModel.hpp"
 
+#include "PYukiObject.hpp"
+
+// glm
 #include <glm/mat4x4.hpp>
 
 namespace Yuki::Comp
 {
 
-typedef SharedPtr<IYukiMesh>  MeshType;
-typedef std::vector<MeshType> MeshArrType;
-
-class YukiModel final : public IYukiModel
+class YukiModel final : virtual public IYukiModel,
+                        virtual public Core::YukiObject
 {
 protected:
   MeshArrType m_apMeshes;
@@ -22,6 +23,10 @@ public:
 
   MeshArrType& GetMeshes() override;
   glm::mat4&   GetModelMatrix() override;
+  MeshType     GetMesh(const String& name) override;
+
+
+  void Render(SharedPtr<IYukiCamera> camera) override;
 
   void Create() override;
   void Render() override;

@@ -29,7 +29,7 @@ bool YukiOGLElementBuffer::OnUse()
   return m_nEboID == crrEbo;
 }
 
-void YukiOGLElementBuffer::SetBufferData(std::vector<unsigned>& data)
+void YukiOGLElementBuffer::SetBufferData(Vector<unsigned>& data)
 {
   SetBufferData(data.data(), data.size() * sizeof(unsigned));
 }
@@ -63,7 +63,7 @@ void YukiOGLElementBuffer::Destroy()
 
 SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer()
 {
-  return {(IYukiOGLElementBuffer*) new YukiOGLElementBuffer, std::default_delete<IYukiOGLElementBuffer>()};
+  return CreateInterfaceInstance<IYukiOGLElementBuffer, YukiOGLElementBuffer>();
 }
 
 } // namespace Yuki::Core

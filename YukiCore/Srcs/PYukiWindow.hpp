@@ -3,6 +3,8 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiWindow.hpp"
 
+#include "PYukiObject.hpp"
+
 #define YUKI_DEFAULT_WINDOW_WIDTH  1366
 #define YUKI_DEFAULT_WINDOW_HEIGHT 768
 #define YUKI_DEFAULT_WINDOW_TITLE  "Window"
@@ -11,7 +13,8 @@
 namespace Yuki::Core
 {
 
-class YukiWindow : public IYukiWindow
+class YukiWindow : virtual public IYukiWindow,
+                   virtual public YukiObject
 {
 protected:
   GLFWwindow* m_pGLFWWindow;

@@ -228,7 +228,7 @@ void YukiOGLShaderProgram::UniformValue(const String& prop, float value)
 
 SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName)
 {
-  return {(IYukiOGLShaderProgram*) new YukiOGLShaderProgram(shaderName), std::default_delete<IYukiOGLShaderProgram>()};
+  return CreateInterfaceInstance<IYukiOGLShaderProgram, YukiOGLShaderProgram>(shaderName);
 }
 
 } // namespace Yuki::Core

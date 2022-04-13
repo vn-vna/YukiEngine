@@ -7,10 +7,13 @@
 #include "YukiDebug/YukiError.hpp"
 #include "YukiDebug/YukiLogger.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Core
 {
 
-class YUKIAPI YukiApp : IYukiApp
+class YUKIAPI YukiApp : virtual public IYukiApp,
+                        virtual public YukiObject
 {
 protected:
   SharedPtr<IYukiWindow>        m_pWindow;

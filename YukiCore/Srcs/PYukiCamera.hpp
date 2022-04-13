@@ -2,10 +2,13 @@
 
 #include "YukiComp/YukiCamera.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Comp
 {
 
-class YukiCamera : public IYukiCamera
+class YukiCamera : virtual public IYukiCamera,
+                   virtual public Core::YukiObject
 {
 protected:
   glm::mat4 m_ViewMatrix;
@@ -25,19 +28,17 @@ public:
   YukiCamera();
   virtual ~YukiCamera();
 
-  const glm::mat4& GetCameraViewMatrix() override;
-  const glm::mat4& GetCameraProjectionMatrix() override;
-  const glm::vec3& GetCameraPosition() override;
-  const glm::vec3& GetCameraDirection() override;
-
-  const glm::vec3 GetCameraTopAxis() override;
-  const glm::vec3 GetCameraHorizontalAxis() override;
-  const glm::vec3 GetCameraVerticalAxis() override;
-
-  float GetFieldOfView() override;
-  float GetViewportAspectRatio() override;
-  float GetNearPerspective() override;
-  float GetFarPerspective() override;
+  const glm::mat4& GetCameraViewMatrix() const override;
+  const glm::mat4& GetCameraProjectionMatrix() const override;
+  const glm::vec3& GetCameraPosition() const override;
+  const glm::vec3& GetCameraDirection() const override;
+  const glm::vec3  GetCameraTopAxis() const override;
+  const glm::vec3  GetCameraHorizontalAxis() const override;
+  const glm::vec3  GetCameraVerticalAxis() const override;
+  float            GetFieldOfView() const override;
+  float            GetViewportAspectRatio() const override;
+  float            GetNearPerspective() const override;
+  float            GetFarPerspective() const override;
 
   void CameraRotateViewport(float rad) override;
   void CameraRotateDirection(const glm::vec3& rotAxis, float rad) override;

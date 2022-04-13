@@ -225,7 +225,7 @@ void YukiOGLTexture::Destroy()
 
 SharedPtr<IYukiOGLTexture> CreateGLTexture(const TextureType& type)
 {
-  return {(IYukiOGLTexture*) new YukiOGLTexture(type), std::default_delete<IYukiOGLTexture>()};
+  return CreateInterfaceInstance<IYukiOGLTexture, YukiOGLTexture>(type);
 }
 
 } // namespace Yuki::Core

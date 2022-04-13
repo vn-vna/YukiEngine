@@ -2,10 +2,13 @@
 
 #include "YukiCore/YukiGraphics.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Core
 {
 
-class YukiOGLTexture : public IYukiOGLTexture
+class YukiOGLTexture : virtual public IYukiOGLTexture,
+                       virtual public YukiObject
 {
 protected:
   unsigned    m_nTexID;

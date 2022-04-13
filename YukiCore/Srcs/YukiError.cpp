@@ -1,7 +1,9 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiDebug/YukiError.hpp"
+#include "YukiDebug/YukiLogger.hpp"
+#include "YukiCore/YukiApplication.hpp"
 
-#define MAKE_ERROR_DEFINATION(__err_name, __err_code)              \
+#define MAKE_ERROR_DEFINITION(__err_name, __err_code)              \
   __err_name## ::__err_name##(const String& file, const int& line) \
       : YukiError(YukiErrCode::__err_code##, file, line)           \
   {}
@@ -11,17 +13,16 @@
 #define YUKI_OPENGL_ERROR "[OPENGL]"
 #define YUKI_GLAD_ERROR   "[GLAD]"
 
-#define CHECK_CASE_OF_ERROR(__err_code, __caused_by)                            \
-  case YukiErrCode::__err_code##:                                               \
-    sstr << __caused_by L" >> " L#__err_code L"<< .Please Check your system\n"; \
+#define CHECK_CASE_OF_ERROR(__err_code, __caused_by)                          \
+  case YukiErrCode::__err_code##:                                             \
+    sstr << __caused_by " >> " #__err_code " << .Please Check your system\n"; \
     break
 
 namespace Yuki::Debug
 {
 
 YukiError::YukiError(const YukiErrCode& code, const String& file, const int& line)
-    : std::runtime_error("[RTE]"),
-      m_File(file),
+    : m_File(file),
       m_nLine(line),
       m_ErrCode(code)
 {}
@@ -54,6 +55,8 @@ String YukiError::getErrorMessage() const
     CHECK_CASE_OF_ERROR(OPENGL_COMPILE_SHADER_ERROR, YUKI_OPENGL_ERROR);
     CHECK_CASE_OF_ERROR(OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED, YUKI_OPENGL_ERROR);
     CHECK_CASE_OF_ERROR(OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE, YUKI_OPENGL_ERROR);
+
+    CHECK_CASE_OF_ERROR(ASSIMP_MODEL_CANT_BE_LOADED, YUKI_CORE_ERROR);
   }
   return sstr.str();
 }
@@ -63,27 +66,36 @@ const YukiErrCode& YukiError::getErrorCode() const
   return m_ErrCode;
 }
 
-MAKE_ERROR_DEFINATION(YukiCreateLogFileError, YUKI_LOGGER_CREATE_LOGFILE_ERROR)
+void YukiError::PushErrorMessage() const
+{
+  Core::GetYukiApp()
+      ->GetLogger()
+      ->PushErrorMessage(this->getErrorMessage());
+}
 
-MAKE_ERROR_DEFINATION(YukiInpCtrlInsertCallbackExistsError, YUKI_INPCTRL_INSERT_CALLBACK_EXISTS)
-MAKE_ERROR_DEFINATION(YukiInpCtrlRemoveCallbackNExistsError, YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST)
-MAKE_ERROR_DEFINATION(YukiInpCtrlInvokeUndefinedCallbackError, YUKI_INPCTRL_INVOKE_UNDEFINED_CALLBACK)
-MAKE_ERROR_DEFINATION(YukiInpCtrlKeyCodeInvalidError, YUKI_INPCTRL_KEYCODE_INVALID)
+MAKE_ERROR_DEFINITION(YukiCreateLogFileError, YUKI_LOGGER_CREATE_LOGFILE_ERROR)
 
-MAKE_ERROR_DEFINATION(YukiThreadAssignmentDuplicateThreadIdError, YUKI_THREAD_ATTACHMENT_DUPLICATE_ID)
-MAKE_ERROR_DEFINATION(YukiThreadCreationError, YUKI_THREAD_CREATION_FAILED)
-MAKE_ERROR_DEFINATION(YukiThreadDetachmentNotExistError, YUKI_THREAD_DETACHMENT_NEXIST)
-MAKE_ERROR_DEFINATION(YukiMutexCreationError, YUKI_MUTEX_CREATION_FAILED)
-MAKE_ERROR_DEFINATION(YukiMutexWaitAbandoned, YUKI_MUTEX_WAIT_ABANDONED)
-MAKE_ERROR_DEFINATION(YukiMutexWaitFunctionFailed, YUKI_MUTEX_WAIT_FUNC_FAILED)
+MAKE_ERROR_DEFINITION(YukiInpCtrlInsertCallbackExistsError, YUKI_INPCTRL_INSERT_CALLBACK_EXISTS)
+MAKE_ERROR_DEFINITION(YukiInpCtrlRemoveCallbackNExistsError, YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST)
+MAKE_ERROR_DEFINITION(YukiInpCtrlInvokeUndefinedCallbackError, YUKI_INPCTRL_INVOKE_UNDEFINED_CALLBACK)
+MAKE_ERROR_DEFINITION(YukiInpCtrlKeyCodeInvalidError, YUKI_INPCTRL_KEYCODE_INVALID)
 
-MAKE_ERROR_DEFINATION(YukiGLFWInitError, GLFW_INITIALIZATION_FAILED)
-MAKE_ERROR_DEFINATION(YukiWindowCreationError, GLFW_WINDOW_CREATION_FAILED)
+MAKE_ERROR_DEFINITION(YukiThreadAssignmentDuplicateThreadIdError, YUKI_THREAD_ATTACHMENT_DUPLICATE_ID)
+MAKE_ERROR_DEFINITION(YukiThreadCreationError, YUKI_THREAD_CREATION_FAILED)
+MAKE_ERROR_DEFINITION(YukiThreadDetachmentNotExistError, YUKI_THREAD_DETACHMENT_NEXIST)
+MAKE_ERROR_DEFINITION(YukiMutexCreationError, YUKI_MUTEX_CREATION_FAILED)
+MAKE_ERROR_DEFINITION(YukiMutexWaitAbandoned, YUKI_MUTEX_WAIT_ABANDONED)
+MAKE_ERROR_DEFINITION(YukiMutexWaitFunctionFailed, YUKI_MUTEX_WAIT_FUNC_FAILED)
 
-MAKE_ERROR_DEFINATION(YukiGladLoadGLLoaderError, GLAD_LOAD_GLLOADER_FAILED)
+MAKE_ERROR_DEFINITION(YukiGLFWInitError, GLFW_INITIALIZATION_FAILED)
+MAKE_ERROR_DEFINITION(YukiWindowCreationError, GLFW_WINDOW_CREATION_FAILED)
 
-MAKE_ERROR_DEFINATION(YukiOGLCompileShaderError, OPENGL_COMPILE_SHADER_ERROR)
-MAKE_ERROR_DEFINATION(YukiOGLShaderProgramIsNotActived, OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED)
-MAKE_ERROR_DEFINATION(YukiOGLTextureTypeNotCompatibleError, OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE)
+MAKE_ERROR_DEFINITION(YukiGladLoadGLLoaderError, GLAD_LOAD_GLLOADER_FAILED)
+
+MAKE_ERROR_DEFINITION(YukiOGLCompileShaderError, OPENGL_COMPILE_SHADER_ERROR)
+MAKE_ERROR_DEFINITION(YukiOGLShaderProgramIsNotActived, OPENGL_SHADER_PROGRAM_ISNOT_ACTIVED)
+MAKE_ERROR_DEFINITION(YukiOGLTextureTypeNotCompatibleError, OPENGL_TEXTURE_TYPE_NOT_COMPATIBLE)
+
+MAKE_ERROR_DEFINITION(YukiAssimpModelCantBeLoaded, ASSIMP_MODEL_CANT_BE_LOADED)
 
 } // namespace Yuki::Debug

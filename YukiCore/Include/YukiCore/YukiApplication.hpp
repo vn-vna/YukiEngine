@@ -7,12 +7,11 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI IYukiApp : public IYukiObject
+class YUKIAPI IYukiApp : virtual public IYukiObject
 {
 public:
   virtual void RunApp() = 0;
 
-  //virtual IYukiInputManager& getInputManager() = 0;
   virtual SharedPtr<IYukiGfxControl>&    GetGraphicsController() = 0;
   virtual SharedPtr<IYukiInpControl>&    GetInputController()    = 0;
   virtual SharedPtr<IYukiWindow>&        GetWindow()             = 0;

@@ -43,11 +43,16 @@ SharedPtr<Core::IYukiOGLTexture> YukiImage::Create2DTexture(const glm::ivec2& of
 {
   SharedPtr<Core::IYukiOGLTexture> texture = Core::CreateGLTexture(Core::TextureType::TEXTURE_2D);
   texture->Create();
-  texture->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4, glm::vec2{m_nWidth, m_nHeight});
-  texture->SetTextureData2D(m_pData, 0, Core::PixelBasedInternalFormat::RGBA, offset, size);
-  texture->SetTextureMagFilter(Core::TextureMagFilter::LINEAR);
-  texture->SetTextureMinFilter(Core::TextureMinFilter::LINEAR);
-  texture->GenerateMipMap();
+  texture
+      ->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4, glm::vec2{m_nWidth, m_nHeight});
+  texture
+      ->SetTextureData2D(m_pData, 0, Core::PixelBasedInternalFormat::RGBA, offset, size);
+  texture
+      ->SetTextureMagFilter(Core::TextureMagFilter::LINEAR);
+  texture
+      ->SetTextureMinFilter(Core::TextureMinFilter::LINEAR);
+  texture
+      ->GenerateMipMap();
   return texture;
 }
 

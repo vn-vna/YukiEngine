@@ -5,10 +5,13 @@
 #include "YukiCore/YukiThread.hpp"
 #include "YukiDebug/YukiError.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Core
 {
 
-class YukiOGLVertexBuffer : public IYukiOGLVertexBuffer
+class YukiOGLVertexBuffer : virtual public IYukiOGLVertexBuffer,
+                            virtual public YukiObject
 {
 protected:
   unsigned m_nVboID;
@@ -20,7 +23,7 @@ public:
   bool            OnUse();
   const unsigned& GetID() override;
   void            BindObject() override;
-  void            SetBufferData(std::vector<float>& data) override;
+  void            SetBufferData(Vector<float>& data) override;
   void            SetBufferData(float* pData, size_t size) override;
   void            Create() override;
   void            Destroy() override;

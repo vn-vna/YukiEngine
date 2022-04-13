@@ -1,4 +1,5 @@
 #pragma once
+
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 
@@ -11,7 +12,7 @@ namespace Yuki::Debug
 
 using OutputLogFileType = std::ofstream;
 
-class YUKIAPI IYukiLogger : public Core::IYukiObject
+class YUKIAPI IYukiLogger : virtual public Core::IYukiObject
 {
 public:
   virtual void               PushMessage(const String& message, const String& prioty) = 0;

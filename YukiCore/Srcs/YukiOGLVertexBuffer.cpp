@@ -28,7 +28,7 @@ void YukiOGLVertexBuffer::BindObject()
   glBindBuffer(GL_ARRAY_BUFFER, m_nVboID);
 }
 
-void YukiOGLVertexBuffer::SetBufferData(std::vector<float>& data)
+void YukiOGLVertexBuffer::SetBufferData(Vector<float>& data)
 {
   SetBufferData(data.data(), data.size() * sizeof(float));
 }
@@ -50,7 +50,7 @@ void YukiOGLVertexBuffer::Destroy()
 
 SharedPtr<IYukiOGLVertexBuffer> CreateGLVertexBuffer()
 {
-  return {(IYukiOGLVertexBuffer*) new YukiOGLVertexBuffer, std::default_delete<IYukiOGLVertexBuffer>()};
+  return CreateInterfaceInstance<IYukiOGLVertexBuffer, YukiOGLVertexBuffer>();
 }
 
 } // namespace Yuki::Core

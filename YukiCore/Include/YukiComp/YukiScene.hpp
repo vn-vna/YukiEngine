@@ -5,7 +5,7 @@
 namespace Yuki::Comp
 {
 
-class YUKIAPI IYukiScene : public Core::IYukiObject
+class YUKIAPI IYukiScene : virtual public Core::IYukiObject
 {
 public:
   

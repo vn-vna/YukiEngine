@@ -145,7 +145,7 @@ void YukiWindow::Destroy()
 
 SharedPtr<IYukiWindow> CreateNewWindow()
 {
-  return {(IYukiWindow*) (new YukiWindow), [](IYukiWindow* p) { delete p; }};
+  return std::dynamic_pointer_cast<IYukiWindow>(std::make_shared<YukiWindow>());
 }
 
 } // namespace Yuki::Core

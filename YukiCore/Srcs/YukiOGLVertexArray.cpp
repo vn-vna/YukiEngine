@@ -49,6 +49,11 @@ void YukiOGLVertexArray::AttributeBinding(const unsigned& attrib, const unsigned
   glVertexArrayAttribBinding(m_nVaoID, attrib, binding);
 }
 
+void YukiOGLVertexArray::SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)
+{
+  glVertexArrayElementBuffer(m_nVaoID, buffer->GetID());
+}
+
 void YukiOGLVertexArray::Create()
 {
   glCreateVertexArrays(1, &m_nVaoID);
@@ -61,7 +66,7 @@ void YukiOGLVertexArray::Destroy()
 
 SharedPtr<IYukiOGLVertexArray> CreateGLVertexArray()
 {
-  return {(IYukiOGLVertexArray*) new YukiOGLVertexArray, std::default_delete<IYukiOGLVertexArray>()};
+  return CreateInterfaceInstance<IYukiOGLVertexArray, YukiOGLVertexArray>();
 }
 
 } // namespace Yuki::Core

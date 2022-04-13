@@ -403,15 +403,15 @@ typedef struct StVertexFormat
 /// </summary>
 typedef struct StIndexData
 {
-  PrimitiveTopology      topology;
-  std::vector<unsigned>& data;
+  PrimitiveTopology     topology;
+  Vector<unsigned> data;
 } IndexData, IndexFormat;
 
 /// <summary>
 /// This object is only used once in Application. This is the class
 /// controls every graphics actions.
 /// </summary>
-class YUKIAPI IYukiGfxControl : public IYukiObject
+class YUKIAPI IYukiGfxControl : virtual public IYukiObject
 {
 public:
 };
@@ -419,7 +419,7 @@ public:
 /// <summary>
 /// OpenGL Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLObject : public IYukiObject
+class YUKIAPI IYukiOGLObject : virtual public IYukiObject
 {
 public:
   virtual const unsigned& GetID()      = 0;
@@ -429,20 +429,20 @@ public:
 /// <summary>
 /// Vertex Buffer Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLVertexBuffer : public IYukiOGLObject
+class YUKIAPI IYukiOGLVertexBuffer : virtual public IYukiOGLObject
 {
 public:
-  virtual void SetBufferData(std::vector<float>& data)  = 0;
+  virtual void SetBufferData(Vector<float>& data)  = 0;
   virtual void SetBufferData(float* pData, size_t size) = 0;
 };
 
 /// <summary>
 /// Element Buffer Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLElementBuffer : public IYukiOGLObject
+class YUKIAPI IYukiOGLElementBuffer : virtual public IYukiOGLObject
 {
 public:
-  virtual void SetBufferData(std::vector<unsigned>& data)  = 0;
+  virtual void SetBufferData(Vector<unsigned>& data)  = 0;
   virtual void SetBufferData(unsigned* pData, size_t size) = 0;
   virtual void DrawElements(
       Core::PrimitiveTopology topology, const unsigned& start, const unsigned& count) = 0;
@@ -453,7 +453,7 @@ public:
 /// <summary>
 /// Vertex Array Object abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLVertexArray : public IYukiOGLObject
+class YUKIAPI IYukiOGLVertexArray : virtual public IYukiOGLObject
 {
 public:
   virtual void EnableAttribute(const unsigned& attrib)                           = 0;
@@ -462,12 +462,13 @@ public:
       const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) = 0;
   virtual void SetVertexBuffer(
       const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride) = 0;
+  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                          = 0;
 };
 
 /// <summary>
 /// Shader Program abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLShaderProgram : public IYukiOGLObject
+class YUKIAPI IYukiOGLShaderProgram : virtual public IYukiOGLObject
 {
 public:
   virtual void UniformMatrix(const String& prop, const glm::mat2& mat, bool transopse = false) = 0;
@@ -486,7 +487,7 @@ public:
 /// <summary>
 /// OpenGL Texture abstraction.
 /// </summary>
-class YUKIAPI IYukiOGLTexture : public IYukiOGLObject
+class YUKIAPI IYukiOGLTexture : virtual public IYukiOGLObject
 {
 public:
   virtual void SetTextureMinFilter(const TextureMinFilter& minFilter)          = 0;

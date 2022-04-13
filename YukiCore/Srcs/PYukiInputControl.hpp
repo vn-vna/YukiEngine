@@ -4,14 +4,17 @@
 #include "YukiCore/YukiInputCtrl.hpp"
 #include "YukiDebug/YukiError.hpp"
 
+#include "PYukiObject.hpp"
+
 namespace Yuki::Core
 {
 
-class YukiInpControl : public IYukiInpControl
+class YukiInpControl : virtual public IYukiInpControl,
+                       virtual public YukiObject
 {
 protected:
-  std::map<String, YukiInpKeyboardCallbackT> m_mpKeyCallbacksPool;
-  std::map<String, YukiInpCursorCallbackT>   m_mpCursorCallbacksPool;
+  Map<String, YukiInpKeyboardCallbackT> m_mpKeyCallbacksPool;
+  Map<String, YukiInpCursorCallbackT>   m_mpCursorCallbacksPool;
   KeyStatus                                  m_tKeyStatuses[(int) KeyCode::KEY_LAST + 1];
 
 public:

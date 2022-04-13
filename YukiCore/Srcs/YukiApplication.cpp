@@ -44,26 +44,26 @@ void YukiApp::RunApp()
 {
   try
   {
-    Create();
-    Awake();
+    this->Create();
+    this->Awake();
     m_bAlive = true;
     while (m_bAlive)
     {
-      Update();
+      this->Update();
     }
   }
   catch (const Yuki::Debug::YukiError& yer)
   {
-    GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 
   try
   {
-    Destroy();
+    this->Destroy();
   }
   catch (const Yuki::Debug::YukiError& yer)
   {
-    GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 }
 
@@ -99,7 +99,7 @@ void YukiApp::Destroy()
 
 SharedPtr<IYukiApp> CreateYukiApp()
 {
-  g_pGlobalApplication.reset((IYukiApp*) new YukiApp());
+  g_pGlobalApplication = CreateInterfaceInstance<IYukiApp, YukiApp>();
   return g_pGlobalApplication;
 }
 
