@@ -3,10 +3,10 @@
 
 #include "PYukiOGLTexture.hpp"
 
-#define CHECK_VALID_TEXTURE_TYPE(type, valid)                      \
-  if (type != valid)                                               \
-  {                                                                \
-    THROW_YUKI_ERROR(Debug::YukiOGLTextureTypeNotCompatibleError); \
+#define CHECK_VALID_TEXTURE_TYPE(type, valid)           \
+  if (type != valid)                                    \
+  {                                                     \
+    THROW_YUKI_ERROR(OGLTextureTypeNotCompatibleError); \
   }
 
 namespace Yuki::Core
@@ -16,32 +16,34 @@ YukiOGLTexture::YukiOGLTexture(const TextureType& type)
     : m_nTexID(), m_eTexType(type)
 {}
 
-void YukiOGLTexture::SetTextureMinFilter(const TextureMinFilter& minFilter)
+YukiOGLTexture::~YukiOGLTexture() = default;
+
+void YukiOGLTexture::SetTextureMinFilter(TextureMinFilter minFilter)
 {
   glTextureParameteri(m_nTexID, GL_TEXTURE_MIN_FILTER, (int) minFilter);
 }
 
-void YukiOGLTexture::SetTextureMagFilter(const TextureMagFilter& magFilter)
+void YukiOGLTexture::SetTextureMagFilter(TextureMagFilter magFilter)
 {
   glTextureParameteri(m_nTexID, GL_TEXTURE_MAG_FILTER, (int) magFilter);
 }
 
-void YukiOGLTexture::SetDepthStencilTextureMode(const TextureDepthStencilMode& mode)
+void YukiOGLTexture::SetDepthStencilTextureMode(TextureDepthStencilMode mode)
 {
   glTextureParameteri(m_nTexID, GL_DEPTH_STENCIL_TEXTURE_MODE, (int) mode);
 }
 
-void YukiOGLTexture::SetTextureBaseLevel(const int& baseLevel)
+void YukiOGLTexture::SetTextureBaseLevel(int baseLevel)
 {
   glTextureParameteri(m_nTexID, GL_TEXTURE_BASE_LEVEL, baseLevel);
 }
 
-void YukiOGLTexture::SetTextureCompareFunc(const TextureCompareFunc& compareFunc)
+void YukiOGLTexture::SetTextureCompareFunc(TextureCompareFunc compareFunc)
 {
   glTextureParameteri(m_nTexID, GL_TEXTURE_COMPARE_FUNC, (int) compareFunc);
 }
 
-void YukiOGLTexture::SetTextureCompareMode(const TextureCompareMode& compareMode)
+void YukiOGLTexture::SetTextureCompareMode(TextureCompareMode compareMode)
 {
   glTextureParameteri(m_nTexID, GL_TEXTURE_COMPARE_MODE, (int) compareMode);
 }
@@ -106,57 +108,57 @@ const float YukiOGLTexture::GetTextureLodBias()
 }
 
 void YukiOGLTexture::SetStorageData1D(
-    const PixelInternalFormat& internalFormat, const int& level,
-    const glm::vec1& size)
+    PixelInternalFormat internalFormat, int level,
+    const Vec1I& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
   glTextureStorage1D(m_nTexID, level, (int) internalFormat, (int) size.x);
 }
 
 void YukiOGLTexture::SetStorageData2D(
-    const PixelInternalFormat& internalFormat, const int& level,
-    const glm::vec2& size)
+    PixelInternalFormat internalFormat, int level,
+    const Vec2F& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
   glTextureStorage2D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y);
 }
 
 void YukiOGLTexture::SetStorageData3D(
-    const PixelInternalFormat& internalFormat, const int& level,
-    const glm::vec3& size)
+    PixelInternalFormat internalFormat, int level,
+    const Vec3F& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
   glTextureStorage3D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y, (int) size.z);
 }
 
 void YukiOGLTexture::SetStorageData1D(
-    const PixelBasedInternalFormat& internalFormat, const int& level,
-    const glm::vec1& size)
+    PixelBasedInternalFormat internalFormat, int level,
+    const Vec1I& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
   glTextureStorage1D(m_nTexID, level, (int) internalFormat, (int) size.x);
 }
 
 void YukiOGLTexture::SetStorageData2D(
-    const PixelBasedInternalFormat& internalFormat, const int& level,
-    const glm::vec2& size)
+    PixelBasedInternalFormat internalFormat, int level,
+    const Vec2F& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
   glTextureStorage2D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y);
 }
 
 void YukiOGLTexture::SetStorageData3D(
-    const PixelBasedInternalFormat& internalFormat, const int& level,
-    const glm::vec3& size)
+    PixelBasedInternalFormat internalFormat, int level,
+    const Vec3F& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
   glTextureStorage3D(m_nTexID, level, (int) internalFormat, (int) size.x, (int) size.y, (int) size.z);
 }
 
 void YukiOGLTexture::SetTextureData1D(
-    uint8_t* pixels, const int& level,
-    const PixelBasedInternalFormat& imageFormat,
-    const glm::ivec1& offset, const glm::ivec1& size)
+    uint8_t* pixels, int level,
+    PixelBasedInternalFormat imageFormat,
+    const Vec1I& offset, const Vec1I& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_1D);
   glTextureSubImage1D(
@@ -167,9 +169,9 @@ void YukiOGLTexture::SetTextureData1D(
 }
 
 void YukiOGLTexture::SetTextureData2D(
-    uint8_t* pixels, const int& level,
-    const PixelBasedInternalFormat& imageFormat,
-    const glm::ivec2& offset, const glm::ivec2& size)
+    uint8_t* pixels, int level,
+    PixelBasedInternalFormat imageFormat,
+    const Vec2I& offset, const Vec2I& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_2D);
   glTextureSubImage2D(
@@ -180,9 +182,9 @@ void YukiOGLTexture::SetTextureData2D(
 }
 
 void YukiOGLTexture::SetTextureData3D(
-    uint8_t* pixels, const int& level,
-    const PixelBasedInternalFormat& imageFormat,
-    const glm::ivec3& offset, const glm::ivec3& size)
+    uint8_t* pixels, int level,
+    PixelBasedInternalFormat imageFormat,
+    const Vec3I& offset, const Vec3I& size)
 {
   CHECK_VALID_TEXTURE_TYPE(m_eTexType, TextureType::TEXTURE_3D);
   glTextureSubImage3D(
@@ -207,7 +209,7 @@ void YukiOGLTexture::GenerateMipMap()
   glGenerateTextureMipmap(m_nTexID);
 }
 
-void YukiOGLTexture::BindTexture(const unsigned& slot)
+void YukiOGLTexture::BindTexture(unsigned slot)
 {
   glActiveTexture(GL_TEXTURE0 + slot);
   BindObject();
@@ -223,7 +225,7 @@ void YukiOGLTexture::Destroy()
   glDeleteTextures(1, &m_nTexID);
 }
 
-SharedPtr<IYukiOGLTexture> CreateGLTexture(const TextureType& type)
+SharedPtr<IYukiOGLTexture> CreateGLTexture(TextureType type)
 {
   return CreateInterfaceInstance<IYukiOGLTexture, YukiOGLTexture>(type);
 }

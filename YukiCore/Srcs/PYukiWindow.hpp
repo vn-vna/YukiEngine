@@ -13,24 +13,25 @@
 namespace Yuki::Core
 {
 
-class YukiWindow : virtual public IYukiWindow,
-                   virtual public YukiObject
+class YukiWindow final : virtual public IYukiWindow,
+                         virtual public YukiObject
 {
 protected:
   GLFWwindow* m_pGLFWWindow;
 
 public:
   YukiWindow();
-  virtual ~YukiWindow();
+  ~YukiWindow() override;
 
-  void        ShowWindow() override;
-  void        HideWindow() override;
-  void        SetSize(const int& width, const int& height) override;
-  void        SetPosition(const int& wx, const int& wy) override;
-  void        SetCursoPos(const int& cx, const int& cy) override;
-  void        SetTitle(const String& title) override;
+  void ShowWindow() override;
+  void HideWindow() override;
+  void SetSize(int width, int height) override;
+  void SetPosition(int wx, int wy) override;
+  void SetCursorPos(int cx, int cy) override;
+  void SetTitle(const String& title) override;
+
   bool        ShouldClose() override;
-  glm::vec2   GetWindowSize() override;
+  Vec2F       GetWindowSize() override;
   GLFWwindow* GetGLFWWindow() override;
 
   void Create() override;
@@ -42,5 +43,5 @@ public:
 } // namespace Yuki::Core
 
 void initAndCheckGLFW();
-void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers);
-void funcGLFWCursorCallback(GLFWwindow* window, double x, double y);
+void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int modifiers);
+void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y);

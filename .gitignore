@@ -362,4 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+.vscode
+
 !YukiDeps/Libraries/**
+
+# CLion build dir
+cmake-build-debug/
+cmake-build-minsizerel/
+cmake-build-release/
+cmake-build-relwithdebinfo/

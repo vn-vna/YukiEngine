@@ -1,208 +1,53 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
 
 #include "PYukiThread.hpp"
-
-Yuki::Map<DWORD, Yuki::Core::IYukiThread*> g_mThreadManager{};
-
-DWORD CALLBACK Win32APIThreadCallback(LPVOID args)
-{
-  AutoType threadID    = (DWORD*) args;
-  AutoType pYukiThread = g_mThreadManager.at(*threadID);
-  if (pYukiThread)
-  {
-    try
-    {
-      pYukiThread->RunCallback();
-    }
-    catch (Yuki::Debug::YukiError& err)
-    {
-      Yuki::Core::GetYukiApp()->GetLogger()->PushDebugMessage(err.getErrorMessage());
-    }
-  }
-  return 0;
-}
 
 namespace Yuki::Core
 {
 
-YukiThread::YukiThread()
-    : m_pfnRunnable(nullptr),
-      m_nThreadID(0),
-      m_pHandle(nullptr)
-{}
-
 YukiThread::YukiThread(const YukiThreadCallbackFuncType& callback)
-    : m_pfnRunnable(new YukiThreadCallbackFuncType{callback}),
-      m_nThreadID(0),
-      m_pHandle(nullptr)
+    : m_fnCallback(callback),
+      m_bThreadReady(false),
+      m_CppThread()
 {}
 
-YukiThread::YukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback)
-    : m_pfnRunnable(pcallback),
-      m_nThreadID(0),
-      m_pHandle(nullptr)
-{}
-
-YukiThread::~YukiThread()
-{
-  DestroyWin32Thread();
-}
-
-void YukiThread::CreateWin32Thread()
-{
-  m_pHandle = CreateThread(NULL, 0, Win32APIThreadCallback, &m_nThreadID, CREATE_SUSPENDED, &m_nThreadID);
-  if (!m_pHandle)
-  {
-    THROW_YUKI_ERROR(Debug::YukiThreadCreationError);
-  }
-  AttachWin32Thread();
-}
-
-void YukiThread::AttachWin32Thread()
-{
-  if (g_mThreadManager.find(m_nThreadID) != g_mThreadManager.end())
-  {
-    THROW_YUKI_ERROR(Debug::YukiThreadAssignmentDuplicateThreadIdError);
-  }
-  g_mThreadManager.emplace(m_nThreadID, this);
-}
-
-void YukiThread::DestroyWin32Thread()
-{
-  if (m_pHandle)
-  {
-    CloseHandle(m_pHandle);
-    m_pHandle = nullptr;
-    DetachWin32Thread();
-  }
-}
-
-void YukiThread::DetachWin32Thread()
-{
-  if (!m_pHandle)
-  {
-    return;
-  }
-  if (g_mThreadManager.find(m_nThreadID) == g_mThreadManager.end())
-  {
-    THROW_YUKI_ERROR(Debug::YukiThreadDetachmentNotExistError);
-  }
-  g_mThreadManager.erase(m_nThreadID);
-}
+YukiThread::~YukiThread() = default;
 
 void YukiThread::Start()
 {
-  if (m_pHandle)
-  {
-    DestroyWin32Thread();
-  }
-  CreateWin32Thread();
-  if (m_pHandle)
-  {
-    ResumeThread(m_pHandle);
-  }
+  m_CppThread    = ThreadType{m_fnCallback};
+  m_bThreadReady = true;
 }
 
-void YukiThread::Suspend()
+void YukiThread::Join()
 {
-  SuspendThread(m_pHandle);
+  m_CppThread.join();
 }
 
-void YukiThread::WaitForThread(unsigned long timeOut)
+void YukiThread::Detach()
 {
-  WaitForSingleObject(m_pHandle, timeOut);
+  m_CppThread.detach();
 }
 
-void YukiThread::RunCallback()
+void YukiThread::Swap(SharedPtr<IYukiThread> thread)
 {
-  if (m_pfnRunnable)
-  {
-    (*m_pfnRunnable)();
-  }
+  m_CppThread.swap(thread->GetRawThread());
 }
 
-const DWORD& YukiThread::GetID()
+bool YukiThread::IsJoinable()
 {
-  return m_nThreadID;
+  return m_CppThread.joinable();
 }
 
-const HANDLE YukiThread::GetHandler()
+ThreadIDType YukiThread::GetThreadID()
 {
-  return m_pHandle;
+  return m_CppThread.get_id();
 }
 
-YukiMutex::YukiMutex()
+ThreadType& YukiThread::GetRawThread()
 {
-  m_pMutexHandler = CreateMutexW(NULL, FALSE, NULL);
-  if (!m_pMutexHandler)
-  {
-    THROW_YUKI_ERROR(Debug::YukiMutexCreationError);
-  }
-}
-
-YukiMutex::~YukiMutex()
-{
-  if (m_pMutexHandler)
-  {
-    CloseHandle(m_pMutexHandler);
-  }
-}
-
-void YukiMutex::LockMutex()
-{
-  DWORD mutexWaitResult = WaitForSingleObject(m_pMutexHandler, INFINITE);
-  switch (mutexWaitResult)
-  {
-  case WAIT_OBJECT_0:
-    break;
-  case WAIT_ABANDONED:
-    THROW_YUKI_ERROR(Debug::YukiMutexWaitAbandoned);
-  case WAIT_FAILED:
-    THROW_YUKI_ERROR(Debug::YukiMutexWaitFunctionFailed);
-  default:
-    break;
-  }
-}
-
-void YukiMutex::UnlockMutex()
-{
-  ReleaseMutex(m_pMutexHandler);
-}
-
-HANDLE YukiMutex::GetHandler()
-{
-  return m_pMutexHandler;
-}
-
-SharedPtr<IYukiThread> CreateYukiThread()
-{
-  return CreateInterfaceInstance<IYukiThread, YukiThread>();
-}
-
-SharedPtr<IYukiThread> CreateYukiThread(const YukiThreadCallbackFuncType& callback)
-{
-  return CreateInterfaceInstance<IYukiThread, YukiThread>(callback);
-}
-
-SharedPtr<IYukiThread> CreateYukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback)
-{
-  return CreateInterfaceInstance<IYukiThread, YukiThread>(pcallback);
-}
-
-SharedPtr<IYukiMutex> CreateYukiMutex()
-{
-  return CreateInterfaceInstance<IYukiMutex, YukiMutex>();
-}
-
-void WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll, unsigned long timeOut)
-{
-  Vector<HANDLE> handlers;
-  handlers.reserve(threads.size());
-  for (auto& t : threads)
-  {
-    handlers.emplace_back(t->GetHandler());
-  }
-  WaitForMultipleObjects((DWORD) handlers.size(), handlers.data(), waitAll, timeOut);
+  return m_CppThread;
 }
 
 } // namespace Yuki::Core

@@ -6,50 +6,34 @@
 #include "YukiCore/YukiThread.hpp"
 #include "YukiDebug/YukiError.hpp"
 
-DWORD CALLBACK Win32APIThreadCallback(LPVOID args);
-
 namespace Yuki::Core
 {
 
-class YukiThread : virtual public IYukiThread
+class YukiThread final : virtual public IYukiThread
 {
 protected:
-  SharedPtr<YukiThreadCallbackFuncType> m_pfnRunnable;
-  DWORD                                 m_nThreadID;
-  HANDLE                                m_pHandle;
-
-  void CreateWin32Thread();
-  void AttachWin32Thread();
-  void DestroyWin32Thread();
-  void DetachWin32Thread();
+  ThreadType                 m_CppThread;
+  YukiThreadCallbackFuncType m_fnCallback;
+  bool                       m_bThreadReady;
 
 public:
-  YukiThread();
-  YukiThread(const YukiThreadCallbackFuncType& callback);
-  YukiThread(const SharedPtr<YukiThreadCallbackFuncType>& pcallback);
+  explicit YukiThread(const YukiThreadCallbackFuncType& callback);
+  ~YukiThread();
 
-  virtual ~YukiThread();
+  void Start() override;
+  void Join() override;
+  void Detach() override;
+  void Swap(SharedPtr<IYukiThread> thread) override;
 
-  void         Start() override;
-  void         Suspend() override;
-  void         WaitForThread(unsigned long timeOut = INFINITE) override;
-  void         RunCallback() override;
-  const DWORD& GetID() override;
-  const HANDLE GetHandler() override;
+  bool         IsJoinable() override;
+  ThreadIDType GetThreadID() override;
+  ThreadType&  GetRawThread() override;
 };
 
-class YukiMutex : public IYukiMutex
+class YukiMutex final : public IYukiMutex
 {
 protected:
-  HANDLE m_pMutexHandler;
-
 public:
-  YukiMutex();
-  virtual ~YukiMutex();
-
-  void   LockMutex() override;
-  void   UnlockMutex() override;
-  HANDLE GetHandler() override;
 };
 
 } // namespace Yuki::Core

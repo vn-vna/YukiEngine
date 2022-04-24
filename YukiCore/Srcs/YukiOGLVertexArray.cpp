@@ -28,23 +28,22 @@ bool YukiOGLVertexArray::OnUse()
 }
 
 void YukiOGLVertexArray::SetVertexBuffer(
-    const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride)
+    SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride)
 {
   glVertexArrayVertexBuffer(m_nVaoID, 0, buffer->GetID(), offset, (GLsizei) stride);
 }
 
-void YukiOGLVertexArray::EnableAttribute(const unsigned& attrib)
+void YukiOGLVertexArray::EnableAttribute(unsigned attrib)
 {
   glEnableVertexArrayAttrib(m_nVaoID, attrib);
 }
 
-void YukiOGLVertexArray::SetAttributeFormat(
-    const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized)
+void YukiOGLVertexArray::SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized)
 {
   glVertexArrayAttribFormat(m_nVaoID, attrib, size, GL_FLOAT, normalized, (GLsizei) offset);
 }
 
-void YukiOGLVertexArray::AttributeBinding(const unsigned& attrib, const unsigned& binding)
+void YukiOGLVertexArray::AttributeBinding(unsigned attrib, unsigned binding)
 {
   glVertexArrayAttribBinding(m_nVaoID, attrib, binding);
 }

@@ -4,6 +4,7 @@
 #include "YukiCore/YukiWindow.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiInputCtrl.hpp"
+#include "YukiComp/YukiScene.hpp"
 #include "YukiDebug/YukiError.hpp"
 #include "YukiDebug/YukiLogger.hpp"
 
@@ -12,24 +13,31 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI YukiApp : virtual public IYukiApp,
-                        virtual public YukiObject
+using Debug::IYukiLogger;
+using Comp::IYukiScene;
+
+class YUKIAPI YukiApp final : virtual public IYukiApp,
+                              virtual public YukiObject
 {
 protected:
-  SharedPtr<IYukiWindow>        m_pWindow;
-  SharedPtr<IYukiGfxControl>    m_pGfxController;
-  SharedPtr<IYukiInpControl>    m_pInputController;
-  SharedPtr<Debug::IYukiLogger> m_pLogger;
-  bool                          m_bAlive;
+  SharedPtr<IYukiWindow>     m_pWindow;
+  SharedPtr<IYukiGfxControl> m_pGfxController;
+  SharedPtr<IYukiInpControl> m_pInputController;
+  SharedPtr<IYukiLogger>     m_pLogger;
+  SharedPtr<IYukiScene>      m_pCurrentScene;
+  bool                       m_bAlive;
 
 public:
   YukiApp();
-  virtual ~YukiApp() = default;
+  ~YukiApp() override;
 
-  SharedPtr<IYukiGfxControl>&    GetGraphicsController() override;
-  SharedPtr<IYukiInpControl>&    GetInputController() override;
-  SharedPtr<IYukiWindow>&        GetWindow() override;
-  SharedPtr<Debug::IYukiLogger>& GetLogger() override;
+  SharedPtr<IYukiScene>      GetCurrentScene() override;
+  SharedPtr<IYukiGfxControl> GetGraphicsController() override;
+  SharedPtr<IYukiInpControl> GetInputController() override;
+  SharedPtr<IYukiWindow>     GetWindow() override;
+  SharedPtr<IYukiLogger>     GetLogger() override;
+
+  void SetCurrentScene(SharedPtr<IYukiScene> scene) override;
 
   void RunApp() override;
   void Create() override;

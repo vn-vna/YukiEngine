@@ -39,15 +39,15 @@ const String DateTimeString(const DateTimeFormat& format)
 {
   StringStream asstr{};
   asstr << format.year
-        << format.dateSeperator
+        << format.dateSeparator
         << format.month
-        << format.dateSeperator
+        << format.dateSeparator
         << format.day
-        << format.timeDateSeperator
+        << format.timeDateSeparator
         << format.hour
-        << format.timeSeperator
+        << format.timeSeparator
         << format.minute
-        << format.timeSeperator
+        << format.timeSeparator
         << format.second;
 
   String tformat = asstr.str();

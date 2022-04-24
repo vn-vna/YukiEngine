@@ -7,23 +7,23 @@
 namespace Yuki::Core
 {
 
-class YukiOGLTexture : virtual public IYukiOGLTexture,
-                       virtual public YukiObject
+class YukiOGLTexture final : virtual public IYukiOGLTexture,
+                             virtual public YukiObject
 {
 protected:
   unsigned    m_nTexID;
   TextureType m_eTexType;
 
 public:
-  YukiOGLTexture(const TextureType& type);
-  virtual ~YukiOGLTexture() = default;
+  explicit YukiOGLTexture(const TextureType& type);
+  ~YukiOGLTexture() override;
 
-  void SetTextureMinFilter(const TextureMinFilter& minFilter) override;
-  void SetTextureMagFilter(const TextureMagFilter& magFilter) override;
-  void SetDepthStencilTextureMode(const TextureDepthStencilMode& mode) override;
-  void SetTextureBaseLevel(const int& baseLevel) override;
-  void SetTextureCompareFunc(const TextureCompareFunc& compareFunc) override;
-  void SetTextureCompareMode(const TextureCompareMode& compareMode) override;
+  void SetTextureMinFilter(TextureMinFilter minFilter) override;
+  void SetTextureMagFilter(TextureMagFilter magFilter) override;
+  void SetDepthStencilTextureMode(TextureDepthStencilMode mode) override;
+  void SetTextureBaseLevel(int baseLevel) override;
+  void SetTextureCompareFunc(TextureCompareFunc compareFunc) override;
+  void SetTextureCompareMode(TextureCompareMode compareMode) override;
   void SetTextureLodBias(float bias) override;
 
   const TextureType             GetTextureType() override;
@@ -35,44 +35,23 @@ public:
   const TextureCompareMode      GetTextureCompareMode() override;
   const float                   GetTextureLodBias() override;
 
-  void SetStorageData1D(
-      const PixelInternalFormat& internalFormat, const int& level,
-      const glm::vec1& size);
-  void SetStorageData2D(
-      const PixelInternalFormat& internalFormat, const int& level,
-      const glm::vec2& size);
-  void SetStorageData3D(
-      const PixelInternalFormat& internalFormat, const int& level,
-      const glm::vec3& size);
+  void SetStorageData1D(PixelInternalFormat internalFormat, int level, const Vec1I& size) override;
+  void SetStorageData2D(PixelInternalFormat internalFormat, int level, const Vec2F& size) override;
+  void SetStorageData3D(PixelInternalFormat internalFormat, int level, const Vec3F& size) override;
 
-  void SetStorageData1D(
-      const PixelBasedInternalFormat& internalFormat, const int& level,
-      const glm::vec1& size);
-  void SetStorageData2D(
-      const PixelBasedInternalFormat& internalFormat, const int& level,
-      const glm::vec2& size);
-  void SetStorageData3D(
-      const PixelBasedInternalFormat& internalFormat, const int& level,
-      const glm::vec3& size);
+  void SetStorageData1D(PixelBasedInternalFormat internalFormat, int level, const Vec1I& size) override;
+  void SetStorageData2D(PixelBasedInternalFormat internalFormat, int level, const Vec2F& size) override;
+  void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level, const Vec3F& size) override;
 
-  void SetTextureData1D(
-      uint8_t* pixels, const int& level,
-      const PixelBasedInternalFormat& imageFormat,
-      const glm::ivec1& offset, const glm::ivec1& size) override;
-  void SetTextureData2D(
-      uint8_t* pixels, const int& level,
-      const PixelBasedInternalFormat& imageFormat,
-      const glm::ivec2& offset, const glm::ivec2& size) override;
-  void SetTextureData3D(
-      uint8_t* pixels, const int& level,
-      const PixelBasedInternalFormat& imageFormat,
-      const glm::ivec3& offset, const glm::ivec3& size) override;
+  void SetTextureData1D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& size) override;
+  void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) override;
+  void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) override;
 
   const unsigned& GetID() override;
   void            BindObject() override;
 
   void GenerateMipMap() override;
-  void BindTexture(const unsigned& slot) override;
+  void BindTexture(unsigned slot) override;
 
   void Create() override;
   void Destroy() override;

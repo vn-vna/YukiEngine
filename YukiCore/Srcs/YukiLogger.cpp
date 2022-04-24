@@ -12,6 +12,8 @@ YukiLogger::YukiLogger()
     : m_pOutFileStream(nullptr)
 {}
 
+YukiLogger::~YukiLogger() = default;
+
 void YukiLogger::PushMessage(const String& message, const String& prioty)
 {
   String sstr = "[YUKI " + prioty + " REPORT] - >> " + Chrono::DateTimeString() + " <<\n\t" + message.c_str() + "\n";
@@ -20,7 +22,7 @@ void YukiLogger::PushMessage(const String& message, const String& prioty)
 #endif // !NDEBUG
   if (!m_pOutFileStream->good())
   {
-    THROW_YUKI_ERROR(Debug::YukiCreateLogFileError);
+    THROW_YUKI_ERROR(CreateLogFileError);
   }
   GetOutFileStream() << sstr;
 }

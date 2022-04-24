@@ -10,15 +10,15 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexBuffer : virtual public IYukiOGLVertexBuffer,
-                            virtual public YukiObject
+class YukiOGLVertexBuffer final : virtual public IYukiOGLVertexBuffer,
+                                  virtual public YukiObject
 {
 protected:
   unsigned m_nVboID;
 
 public:
   YukiOGLVertexBuffer();
-  virtual ~YukiOGLVertexBuffer();
+  ~YukiOGLVertexBuffer() override;
 
   bool            OnUse();
   const unsigned& GetID() override;

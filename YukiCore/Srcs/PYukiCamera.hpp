@@ -7,52 +7,51 @@
 namespace Yuki::Comp
 {
 
-class YukiCamera : virtual public IYukiCamera,
-                   virtual public Core::YukiObject
+using Core::YukiObject;
+
+class YukiCamera final : virtual public IYukiCamera,
+                         virtual public YukiObject
 {
 protected:
-  glm::mat4 m_ViewMatrix;
-  glm::vec3 m_CamPos;
-  glm::vec3 m_CamDirection;
-  glm::vec3 m_CamTop;
+  Mat4F m_ViewMatrix;
+  Vec3F m_CamPos;
+  Vec3F m_CamDirection;
+  Vec3F m_CamTop;
 
-  glm::mat4 m_ProjectionMatrix;
-  float     m_nFOV;
-  float     m_nAspectRatio;
-  float     m_nNear;
-  float     m_nFar;
+  Mat4F m_ProjectionMatrix;
+  float m_nFOV;
+  float m_nAspectRatio;
+  float m_nNear;
+  float m_nFar;
 
   const unsigned m_nCamID;
 
 public:
   YukiCamera();
-  virtual ~YukiCamera();
+  ~YukiCamera() override;
 
-  const glm::mat4& GetCameraViewMatrix() const override;
-  const glm::mat4& GetCameraProjectionMatrix() const override;
-  const glm::vec3& GetCameraPosition() const override;
-  const glm::vec3& GetCameraDirection() const override;
-  const glm::vec3  GetCameraTopAxis() const override;
-  const glm::vec3  GetCameraHorizontalAxis() const override;
-  const glm::vec3  GetCameraVerticalAxis() const override;
-  float            GetFieldOfView() const override;
-  float            GetViewportAspectRatio() const override;
-  float            GetNearPerspective() const override;
-  float            GetFarPerspective() const override;
+  const Mat4F& GetCameraViewMatrix() const override;
+  const Mat4F& GetCameraProjectionMatrix() const override;
+  const Vec3F& GetCameraPosition() const override;
+  const Vec3F& GetCameraDirection() const override;
+  const Vec3F  GetCameraTopAxis() const override;
+  const Vec3F  GetCameraHorizontalAxis() const override;
+  const Vec3F  GetCameraVerticalAxis() const override;
+  float        GetFieldOfView() const override;
+  float        GetViewportAspectRatio() const override;
+  float        GetNearPerspective() const override;
+  float        GetFarPerspective() const override;
 
   void CameraRotateViewport(float rad) override;
-  void CameraRotateDirection(const glm::vec3& rotAxis, float rad) override;
-  void LookAtPoint(const glm::vec3& point) override;
-  void SetCameraDirection(const glm::vec3& direction) override;
-  void SetCameraPosition(const glm::vec3& position) override;
+  void CameraRotateDirection(const Vec3F& rotAxis, float rad) override;
+  void LookAtPoint(const Vec3F& point) override;
+  void SetCameraDirection(const Vec3F& direction) override;
+  void SetCameraPosition(const Vec3F& position) override;
   void SetFieldOfView(float fov) override;
   void SetViewportAspectRatio(float ratio) override;
   void SetViewportAspectRatio(float width, float height) override;
-  void SetNearPerspective(float pnear) override;
-  void SetFarPerspective(float pfar) override;
-
-  void SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& callback) override;
-  void SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& callback) override;
+  void SetNearPerspective(float nNear) override;
+  void SetFarPerspective(float nFar) override;
 
   void Update() override;
 };

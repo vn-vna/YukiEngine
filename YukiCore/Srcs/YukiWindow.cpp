@@ -12,18 +12,18 @@ void initAndCheckGLFW()
 {
   if (!glfwInit())
   {
-    THROW_YUKI_ERROR(Yuki::Debug::YukiGLFWInitError);
+    THROW_YUKI_ERROR(GLFWInitError);
   }
 }
 
-void funcGLFWKeyCallback(GLFWwindow* pwindow, int key, int scancode, int action, int modifiers)
+void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int modifiers)
 {
   Yuki::Core::GetYukiApp()
       ->GetInputController()
       ->ExecuteKeyCallbacks(key, scancode, action, modifiers);
 }
 
-void funcGLFWCursorCallback(GLFWwindow* window, double x, double y)
+void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y)
 {
   Yuki::Core::GetYukiApp()
       ->GetInputController()
@@ -39,8 +39,7 @@ YukiWindow::YukiWindow()
     : m_pGLFWWindow(nullptr)
 {}
 
-YukiWindow::~YukiWindow()
-{}
+YukiWindow::~YukiWindow() = default;
 
 void YukiWindow::ShowWindow()
 {
@@ -52,17 +51,17 @@ void YukiWindow::HideWindow()
   glfwHideWindow(m_pGLFWWindow);
 }
 
-void YukiWindow::SetSize(const int& width, const int& height)
+void YukiWindow::SetSize(int width, int height)
 {
   glfwSetWindowSize(m_pGLFWWindow, width, height);
 }
 
-void YukiWindow::SetPosition(const int& wx, const int& wy)
+void YukiWindow::SetPosition(int wx, int wy)
 {
   glfwSetWindowPos(m_pGLFWWindow, wx, wy);
 }
 
-void YukiWindow::SetCursoPos(const int& cx, const int& cy)
+void YukiWindow::SetCursorPos(int cx, int cy)
 {
   glfwSetCursorPos(m_pGLFWWindow, cx, cy);
 }
@@ -77,7 +76,7 @@ bool YukiWindow::ShouldClose()
   return glfwWindowShouldClose(m_pGLFWWindow);
 }
 
-glm::vec2 YukiWindow::GetWindowSize()
+Vec2F YukiWindow::GetWindowSize()
 {
   int w, h;
   glfwGetWindowSize(m_pGLFWWindow, &w, &h);
@@ -108,7 +107,7 @@ void YukiWindow::Create()
   m_pGLFWWindow = glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT, YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
   if (!m_pGLFWWindow)
   {
-    THROW_YUKI_ERROR(Yuki::Debug::YukiWindowCreationError);
+    THROW_YUKI_ERROR(WindowCreationError);
   }
 
   glfwSetKeyCallback(m_pGLFWWindow, funcGLFWKeyCallback);

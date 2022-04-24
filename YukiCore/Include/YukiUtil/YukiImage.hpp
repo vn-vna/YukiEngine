@@ -6,6 +6,8 @@
 namespace Yuki::Utils
 {
 
+using Core::IYukiOGLTexture;
+
 class YUKIAPI YukiImage
 {
 protected:
@@ -23,8 +25,8 @@ public:
   const int&     GetHeight();
   const int&     GetDataChannel();
 
-  SharedPtr<Core::IYukiOGLTexture> Create2DTexture(const glm::ivec2& offset, const glm::ivec2& size);
-  SharedPtr<Core::IYukiOGLTexture> Create2DTexture();
+  SharedPtr<IYukiOGLTexture> Create2DTexture(const Vec2I& offset, const Vec2I& size);
+  SharedPtr<IYukiOGLTexture> Create2DTexture();
 };
 
 } // namespace Yuki::Utils

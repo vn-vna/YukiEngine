@@ -11,13 +11,20 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 
-constexpr const int ASSIMP_LOAD_FLAGS = aiProcessPreset_TargetRealtime_Fast;
+constexpr const int ASSIMP_LOAD_FLAGS = aiProcessPreset_TargetRealtime_MaxQuality;
 
 namespace Yuki::Comp
 {
 
-YukiModel::YukiModel(const MeshArrType& meshArr)
-    : m_apMeshes{meshArr}
+using Debug::YukiAssimpModelCantBeLoaded;
+
+using Core::IndexData;
+using Core::VertexFormat;
+using Core::GetYukiApp;
+
+YukiModel::YukiModel(String name, const MeshArrType& meshArr)
+    : m_sName{name},
+      m_apMeshes{meshArr}
 {
   Create();
 }
@@ -48,12 +55,17 @@ void YukiModel::Destroy()
   }
 }
 
+String& YukiModel::GetName()
+{
+  return m_sName;
+}
+
 MeshArrType& YukiModel::GetMeshes()
 {
   return m_apMeshes;
 }
 
-glm::mat4& YukiModel::GetModelMatrix()
+Mat4F& YukiModel::GetModelMatrix()
 {
   return m_tModelMatrix;
 }
@@ -78,33 +90,31 @@ void YukiModel::Render(SharedPtr<IYukiCamera> camera)
   }
 }
 
-SharedPtr<IYukiModel> LoadModel(String fileName)
+SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
 {
   Assimp::Importer importer = {};
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
 
-  AutoType defaultMaterial = Comp::CreateMaterial(0.6f, 0.02f);
+  AutoType defaultMaterial = CreateMaterial(0.6f, 0.02f);
 
   if (!pScene)
   {
-    Core::GetYukiApp()->GetLogger()->PushErrorMessage(importer.GetErrorString());
-    THROW_YUKI_ERROR(Debug::YukiAssimpModelCantBeLoaded);
+    GetYukiApp()->GetLogger()->PushErrorMessage(importer.GetErrorString());
+    THROW_YUKI_ERROR(AssimpModelCantBeLoaded);
   }
 
   MeshArrType meshes;
   meshes.reserve(pScene->mNumMeshes);
 
-  for (unsigned meshID = 0; meshID < pScene->mNumMeshes; ++meshID)
-  {
-    AutoType aimesh = pScene->mMeshes[meshID];
-    AutoType vcount = aimesh->mNumVertices;
-    AutoType varr   = aimesh->mVertices;
-    AutoType narr   = aimesh->mNormals;
-    AutoType fcount = aimesh->mNumFaces;
-    AutoType farr   = aimesh->mFaces;
+  std::for_each(pScene->mMeshes, pScene->mMeshes + pScene->mNumMeshes, [&](const aiMesh* aMesh) {
+    AutoType vcount = aMesh->mNumVertices;
+    AutoType varr   = aMesh->mVertices;
+    AutoType narr   = aMesh->mNormals;
+    AutoType fcount = aMesh->mNumFaces;
+    AutoType farr   = aMesh->mFaces;
 
-    Vector<Core::VertexData> vform;
+    Vector<VertexFormat> vform;
     vform.reserve(vcount);
     for (unsigned vID = 0; vID < vcount; ++vID)
     {
@@ -119,17 +129,14 @@ SharedPtr<IYukiModel> LoadModel(String fileName)
 
     Vector<unsigned> idata;
     idata.reserve(fcount * 3);
-    for (unsigned faceID = 0; faceID < fcount; ++faceID)
-    {
-      AutoType& face = farr[faceID];
-      for (unsigned i = 0; i < face.mNumIndices; ++i)
-      {
-        idata.emplace_back(face.mIndices[i]);
-      }
-    }
-    Core::IndexData iform = {Core::PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
+    std::for_each(farr, farr + fcount, [&](const aiFace& face) {
+      std::for_each(face.mIndices, face.mIndices + face.mNumIndices, [&](const unsigned& index) {
+        idata.emplace_back(index);
+      });
+    });
+    IndexData iform = {PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
 
-    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, defaultMaterial, aimesh->mName.C_Str());
+    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, defaultMaterial, aMesh->mName.C_Str());
 
 #ifndef _NDEBUG
     StringStream sstr = {};
@@ -139,9 +146,9 @@ SharedPtr<IYukiModel> LoadModel(String fileName)
         ->PushDebugMessage(sstr.str());
 #endif
     meshes[mesh->GetName()] = mesh;
-  }
+  });
 
-  return Core::CreateInterfaceInstance<IYukiModel, YukiModel>(meshes);
+  return Core::CreateInterfaceInstance<IYukiModel, YukiModel>(modelName, meshes);
 }
 
 } // namespace Yuki::Comp

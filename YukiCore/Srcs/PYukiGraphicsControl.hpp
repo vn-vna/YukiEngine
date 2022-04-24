@@ -7,12 +7,12 @@
 namespace Yuki::Core
 {
 
-class YukiGfxControl : virtual public IYukiGfxControl,
-                       virtual public YukiObject
+class YukiGfxControl final : virtual public IYukiGfxControl,
+                             virtual public YukiObject
 {
 public:
   YukiGfxControl();
-  virtual ~YukiGfxControl();
+  ~YukiGfxControl() override;
 
   void Create() override;
   void Awake() override;

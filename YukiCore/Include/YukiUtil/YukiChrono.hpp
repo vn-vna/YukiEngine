@@ -41,9 +41,9 @@ typedef struct YUKIAPI StDateTimeFormat
   String hour              = YUKI_TIMESTR_HOUR_NUMBER_FORMAT;
   String minute            = YUKI_TIMESTR_MINUTE_NUMBER_FORMAT;
   String second            = YUKI_TIMESTR_SECOND_NUMBER_FORMAT;
-  String dateSeperator     = YUKI_TIMESTR_SLASH_SEPERATOR;
-  String timeSeperator     = YUKI_TIMESTR_DOT_SEPERATOR;
-  String timeDateSeperator = YUKI_TIMESTR_SPACE_SEPERATOR;
+  String dateSeparator     = YUKI_TIMESTR_SLASH_SEPERATOR;
+  String timeSeparator     = YUKI_TIMESTR_DOT_SEPERATOR;
+  String timeDateSeparator = YUKI_TIMESTR_SPACE_SEPERATOR;
 } DateTimeFormat;
 
 const float YUKIAPI   CurrentTimeNanos();

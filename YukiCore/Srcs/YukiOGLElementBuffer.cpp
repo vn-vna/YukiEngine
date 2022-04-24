@@ -40,7 +40,7 @@ void YukiOGLElementBuffer::SetBufferData(unsigned* pData, size_t size)
   m_nElementCount = (unsigned) (size / sizeof(unsigned));
 }
 
-void YukiOGLElementBuffer::DrawElements(Core::PrimitiveTopology topology, const unsigned& start, const unsigned& count)
+void YukiOGLElementBuffer::DrawElements(Core::PrimitiveTopology topology, unsigned start, unsigned count)
 {
   GLenum glTopology = (GLenum) topology;
   glDrawElements(glTopology, count, GL_UNSIGNED_INT, (void*) (start * sizeof(unsigned)));

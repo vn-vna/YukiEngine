@@ -10,9 +10,10 @@
 namespace Yuki::Debug
 {
 
+using Core::IYukiObject;
 using OutputLogFileType = std::ofstream;
 
-class YUKIAPI IYukiLogger : virtual public Core::IYukiObject
+class YUKIAPI IYukiLogger : virtual public IYukiObject
 {
 public:
   virtual void               PushMessage(const String& message, const String& prioty) = 0;

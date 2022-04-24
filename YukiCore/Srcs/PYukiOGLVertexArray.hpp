@@ -8,15 +8,15 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexArray : virtual public IYukiOGLVertexArray,
-                           virtual public YukiObject
+class YukiOGLVertexArray final : virtual public IYukiOGLVertexArray,
+                                 virtual public YukiObject
 {
 protected:
   unsigned m_nVaoID;
 
 public:
   YukiOGLVertexArray();
-  virtual ~YukiOGLVertexArray();
+  ~YukiOGLVertexArray() override;
 
   bool            OnUse();
   const unsigned& GetID() override;
@@ -24,12 +24,10 @@ public:
   void            Create() override;
   void            Destroy() override;
 
-  void EnableAttribute(const unsigned& attrib) override;
-  void AttributeBinding(const unsigned& attrib, const unsigned& binding) override;
-  void SetVertexBuffer(
-      const SharedPtr<IYukiOGLVertexBuffer>& buffer, int bindIndex, size_t offset, size_t stride) override;
-  void SetAttributeFormat(
-      const unsigned& attrib, const unsigned& size, const size_t& offset, const bool& normalized = false) override;
+  void EnableAttribute(unsigned attrib) override;
+  void AttributeBinding(unsigned attrib, unsigned binding) override;
+  void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) override;
+  void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized) override;
   void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer) override;
 };
 

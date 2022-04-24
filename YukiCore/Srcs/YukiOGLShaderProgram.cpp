@@ -35,7 +35,7 @@ const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& sha
     Yuki::StringStream sstr;
     sstr << errStr;
     Yuki::Core::GetYukiApp()->GetLogger()->PushErrorMessage(sstr.str());
-    THROW_YUKI_ERROR(Yuki::Debug::YukiOGLCompileShaderError);
+    THROW_YUKI_ERROR(OGLCompileShaderError);
   }
   return shader;
 }
@@ -114,11 +114,11 @@ unsigned YukiOGLShaderProgram::GetUniformLocation(const String& prop)
   }
   else
   {
-    THROW_YUKI_ERROR(Debug::YukiOGLShaderProgramIsNotActived);
+    THROW_YUKI_ERROR(OGLShaderProgramIsNotActived);
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat2& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat, bool transpose)
 {
   try
   {
@@ -126,11 +126,11 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat2& ma
   }
   catch (Debug::YukiError& yer)
   {
-    GetYukiApp()->GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat3& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat, bool transpose)
 {
   try
   {
@@ -138,11 +138,11 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat3& ma
   }
   catch (Debug::YukiError& yer)
   {
-    GetYukiApp()->GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat4& mat, bool transpose)
+void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat, bool transpose)
 {
   try
   {
@@ -150,11 +150,11 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const glm::mat4& ma
   }
   catch (Debug::YukiError& yer)
   {
-    GetYukiApp()->GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec2& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec2F& vec)
 {
   try
   {
@@ -162,11 +162,11 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec2& ve
   }
   catch (Debug::YukiError& yer)
   {
-    GetYukiApp()->GetLogger()->PushErrorMessage(yer.getErrorMessage());
+    yer.PushErrorMessage();
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec3& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec3F& vec)
 {
   try
   {
@@ -178,7 +178,7 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec3& ve
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec4& vec)
+void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec4F& vec)
 {
   try
   {
@@ -190,7 +190,7 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const glm::vec4& ve
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const String& prop, const bool& value)
+void YukiOGLShaderProgram::UniformValue(const String& prop, bool value)
 {
   try
   {
@@ -202,7 +202,7 @@ void YukiOGLShaderProgram::UniformValue(const String& prop, const bool& value)
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const String& prop, const int& value)
+void YukiOGLShaderProgram::UniformValue(const String& prop, int value)
 {
   try
   {

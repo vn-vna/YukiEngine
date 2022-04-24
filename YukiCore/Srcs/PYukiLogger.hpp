@@ -7,17 +7,19 @@
 namespace Yuki::Debug
 {
 
-class YUKIAPI YukiLogger : virtual public IYukiLogger,
-                           virtual public Core::YukiObject
+using Core::YukiObject;
+
+class YukiLogger final : virtual public IYukiLogger,
+                         virtual public YukiObject
 {
 protected:
   SharedPtr<OutputLogFileType> m_pOutFileStream;
 
 public:
   YukiLogger();
-  virtual ~YukiLogger() = default;
+  ~YukiLogger() override;
 
-  void               PushMessage(const String& message, const String& prioty);
+  void               PushMessage(const String& message, const String& prioty) override;
   void               PushDebugMessage(const String& message) override;
   void               PushWarningMessage(const String& message) override;
   void               PushErrorMessage(const String& message) override;

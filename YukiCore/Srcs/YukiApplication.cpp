@@ -5,6 +5,9 @@
 namespace Yuki::Core
 {
 
+using Debug::YukiError;
+using Debug::CreateYukiLogger;
+
 SharedPtr<IYukiApp> g_pGlobalApplication(nullptr);
 
 YukiApp::YukiApp()
@@ -14,28 +17,35 @@ YukiApp::YukiApp()
       m_pWindow(nullptr),
       m_pLogger(nullptr)
 {
-  m_pLogger          = Debug::CreateYukiLogger();
+  m_pLogger          = CreateYukiLogger();
   m_pWindow          = CreateNewWindow();
   m_pInputController = CreateNewInputControl();
   m_pGfxController   = CreateGraphicsController();
 }
 
-SharedPtr<IYukiGfxControl>& YukiApp::GetGraphicsController()
+YukiApp::~YukiApp() = default;
+
+SharedPtr<IYukiScene> YukiApp::GetCurrentScene()
+{
+  return m_pCurrentScene;
+}
+
+SharedPtr<IYukiGfxControl> YukiApp::GetGraphicsController()
 {
   return m_pGfxController;
 }
 
-SharedPtr<IYukiInpControl>& YukiApp::GetInputController()
+SharedPtr<IYukiInpControl> YukiApp::GetInputController()
 {
   return m_pInputController;
 }
 
-SharedPtr<Debug::IYukiLogger>& YukiApp::GetLogger()
+SharedPtr<IYukiLogger> YukiApp::GetLogger()
 {
   return m_pLogger;
 }
 
-SharedPtr<IYukiWindow>& YukiApp::GetWindow()
+SharedPtr<IYukiWindow> YukiApp::GetWindow()
 {
   return m_pWindow;
 }
@@ -52,7 +62,7 @@ void YukiApp::RunApp()
       this->Update();
     }
   }
-  catch (const Yuki::Debug::YukiError& yer)
+  catch (const YukiError& yer)
   {
     yer.PushErrorMessage();
   }
@@ -61,7 +71,7 @@ void YukiApp::RunApp()
   {
     this->Destroy();
   }
-  catch (const Yuki::Debug::YukiError& yer)
+  catch (const YukiError& yer)
   {
     yer.PushErrorMessage();
   }
@@ -82,8 +92,13 @@ void YukiApp::Awake()
 
 void YukiApp::Update()
 {
+  if (!GetCurrentScene()->IsReady())
+  {
+    GetCurrentScene()->Create();
+  }
   GetWindow()->Update();
   GetGraphicsController()->Render();
+  GetCurrentScene()->Update();
   if (GetWindow()->ShouldClose())
   {
     m_bAlive = false;
@@ -95,6 +110,12 @@ void YukiApp::Destroy()
   GetGraphicsController()->Destroy();
   GetWindow()->Destroy();
   GetLogger()->Destroy();
+  GetCurrentScene()->Destroy();
+}
+
+void YukiApp::SetCurrentScene(SharedPtr<IYukiScene> scene)
+{
+  m_pCurrentScene = scene;
 }
 
 SharedPtr<IYukiApp> CreateYukiApp()

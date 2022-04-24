@@ -5,7 +5,9 @@
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiCamera.hpp"
+#include "PYukiWindow.hpp"
 
+// glm
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
@@ -14,54 +16,54 @@ static volatile unsigned g_CXIndex = 0;
 namespace Yuki::Comp
 {
 
+using Debug::YukiError;
+
 YukiCamera::YukiCamera()
     : m_nCamID(g_CXIndex++),
       m_ViewMatrix(1.00f),
-      m_ProjectionMatrix(1.00f)
-{
-  m_CamPos            = {0.00f, 0.00f, -1.00f};
-  m_CamDirection      = {0.00f, 0.00f, 1.00f};
-  m_CamTop            = {0.00f, 1.00f, 0.00f};
-  m_nFOV              = glm::radians(360.00f);
-  AutoType windowSize = Core::GetYukiApp()->GetWindow()->GetWindowSize();
-  m_nAspectRatio      = windowSize.x / windowSize.y;
-  m_nNear             = 0.01f;
-  m_nFar              = 100.00f;
-}
+      m_ProjectionMatrix(1.00f),
+      m_CamPos(0.00f, 0.00f, 0.00f),
+      m_CamDirection(0.00f, 0.00f, 1.00f),
+      m_CamTop(0.00f, 1.00f, 0.00f),
+      m_nFOV(glm::radians(120.00f)),
+      m_nAspectRatio((float) YUKI_DEFAULT_WINDOW_WIDTH / YUKI_DEFAULT_WINDOW_HEIGHT),
+      m_nNear(0.01f),
+      m_nFar(100.00f)
+{}
 
 YukiCamera::~YukiCamera() = default;
 
-const glm::mat4& YukiCamera::GetCameraViewMatrix() const
+const Mat4F& YukiCamera::GetCameraViewMatrix() const
 {
   return m_ViewMatrix;
 }
 
-const glm::mat4& YukiCamera::GetCameraProjectionMatrix() const
+const Mat4F& YukiCamera::GetCameraProjectionMatrix() const
 {
   return m_ProjectionMatrix;
 }
 
-const glm::vec3& YukiCamera::GetCameraPosition() const
+const Vec3F& YukiCamera::GetCameraPosition() const
 {
   return m_CamPos;
 }
 
-const glm::vec3& YukiCamera::GetCameraDirection() const
+const Vec3F& YukiCamera::GetCameraDirection() const
 {
   return m_CamDirection;
 }
 
-const glm::vec3 YukiCamera::GetCameraTopAxis() const
+const Vec3F YukiCamera::GetCameraTopAxis() const
 {
   return glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis());
 }
 
-const glm::vec3 YukiCamera::GetCameraHorizontalAxis() const
+const Vec3F YukiCamera::GetCameraHorizontalAxis() const
 {
   return glm::cross(GetCameraVerticalAxis(), m_CamTop);
 }
 
-const glm::vec3 YukiCamera::GetCameraVerticalAxis() const
+const Vec3F YukiCamera::GetCameraVerticalAxis() const
 {
   return m_CamDirection;
 }
@@ -91,22 +93,22 @@ void YukiCamera::CameraRotateViewport(float rad)
   m_CamTop = glm::rotateZ(m_CamTop, rad);
 }
 
-void YukiCamera::CameraRotateDirection(const glm::vec3& rotAxis, float rad)
+void YukiCamera::CameraRotateDirection(const Vec3F& rotAxis, float rad)
 {
   m_CamDirection = glm::rotate(m_CamDirection, rad, rotAxis);
 }
 
-void YukiCamera::LookAtPoint(const glm::vec3& point)
+void YukiCamera::LookAtPoint(const Vec3F& point)
 {
   m_CamDirection = glm::normalize(point - m_CamPos);
 }
 
-void YukiCamera::SetCameraDirection(const glm::vec3& direction)
+void YukiCamera::SetCameraDirection(const Vec3F& direction)
 {
   m_CamDirection = glm::normalize(direction);
 }
 
-void YukiCamera::SetCameraPosition(const glm::vec3& position)
+void YukiCamera::SetCameraPosition(const Vec3F& position)
 {
   m_CamPos = position;
 }
@@ -126,58 +128,14 @@ void YukiCamera::SetViewportAspectRatio(float width, float height)
   m_nAspectRatio = width / height;
 }
 
-void YukiCamera::SetNearPerspective(float pnear)
+void YukiCamera::SetNearPerspective(float nNear)
 {
-  m_nNear = pnear;
+  m_nNear = nNear;
 }
 
-void YukiCamera::SetFarPerspective(float pfar)
+void YukiCamera::SetFarPerspective(float nFar)
 {
-  m_nFar = pfar;
-}
-
-void YukiCamera::SetCameraKeyCallback(const Core::YukiInpKeyboardCallbackT& callback)
-{
-  StringStream sstr{};
-  sstr << L"Camera Key-control callback " << m_nCamID;
-  try
-  {
-    Core::GetYukiApp()
-        ->GetInputController()
-        ->RemoveKeyboardInputCallback(sstr.str());
-    Core::GetYukiApp()
-        ->GetLogger()
-        ->PushWarningMessage("Replacing old callback");
-  }
-  catch (Debug::YukiError& yer)
-  {
-    yer.PushErrorMessage();
-  }
-  Core::GetYukiApp()
-      ->GetInputController()
-      ->AddKeyboardInputCallback(sstr.str(), callback);
-}
-
-void YukiCamera::SetCameraCursorCallback(const Core::YukiInpCursorCallbackT& callback)
-{
-  StringStream sstr{};
-  sstr << L"Camera Cursor-control callback " << m_nCamID;
-  try
-  {
-    Core::GetYukiApp()
-        ->GetInputController()
-        ->RemoveCursorInputCallback(sstr.str());
-    Core::GetYukiApp()
-        ->GetLogger()
-        ->PushWarningMessage("Replacing old cursor callback");
-  }
-  catch (Debug::YukiError& yer)
-  {
-    yer.PushErrorMessage();
-  }
-  Core::GetYukiApp()
-      ->GetInputController()
-      ->AddCursorInputCallback(sstr.str(), callback);
+  m_nFar = nFar;
 }
 
 void YukiCamera::Update()
@@ -188,7 +146,6 @@ void YukiCamera::Update()
 
 SharedPtr<IYukiCamera> CreateYukiCamera()
 {
-  // return {(IYukiCamera*) new YukiCamera, std::default_delete<IYukiCamera>()};
   return Core::CreateInterfaceInstance<IYukiCamera, YukiCamera>();
 }
 

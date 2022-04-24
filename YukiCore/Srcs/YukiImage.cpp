@@ -2,10 +2,13 @@
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiUtil/YukiImage.hpp"
 
+// stb image
 #include <stb/stb_image.h>
 
 namespace Yuki::Utils
 {
+
+using Core::IYukiOGLTexture;
 
 YukiImage::YukiImage(const String& path, bool flip)
 {
@@ -39,12 +42,12 @@ const int& YukiImage::GetDataChannel()
   return m_nChannel;
 }
 
-SharedPtr<Core::IYukiOGLTexture> YukiImage::Create2DTexture(const glm::ivec2& offset, const glm::ivec2& size)
+SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture(const Vec2I& offset, const Vec2I& size)
 {
-  SharedPtr<Core::IYukiOGLTexture> texture = Core::CreateGLTexture(Core::TextureType::TEXTURE_2D);
+  SharedPtr<IYukiOGLTexture> texture = Core::CreateGLTexture(Core::TextureType::TEXTURE_2D);
   texture->Create();
   texture
-      ->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4, glm::vec2{m_nWidth, m_nHeight});
+      ->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4, Vec2F{m_nWidth, m_nHeight});
   texture
       ->SetTextureData2D(m_pData, 0, Core::PixelBasedInternalFormat::RGBA, offset, size);
   texture
@@ -56,9 +59,9 @@ SharedPtr<Core::IYukiOGLTexture> YukiImage::Create2DTexture(const glm::ivec2& of
   return texture;
 }
 
-SharedPtr<Core::IYukiOGLTexture> YukiImage::Create2DTexture()
+SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture()
 {
-  return Create2DTexture(glm::ivec2{0, 0}, glm::ivec2{m_nWidth, m_nHeight});
+  return Create2DTexture(Vec2I{0, 0}, Vec2I{m_nWidth, m_nHeight});
 }
 
 } // namespace Yuki::Utils

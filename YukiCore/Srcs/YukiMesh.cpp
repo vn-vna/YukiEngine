@@ -13,11 +13,13 @@ AutoType g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram("MeshShader");
 namespace Yuki::Comp
 {
 
-SharedPtr<Core::IYukiOGLTexture> NO_TEXTURE = SharedPtr<Core::IYukiOGLTexture>(nullptr);
+SharedPtr<IYukiOGLTexture> NO_TEXTURE = SharedPtr<IYukiOGLTexture>(nullptr);
 
 YukiMeshMaterial::YukiMeshMaterial(float specular, float ambient)
     : m_nSpecularStrength(specular), m_nAmbientStrength(ambient)
 {}
+
+YukiMeshMaterial::~YukiMeshMaterial() = default;
 
 float YukiMeshMaterial::GetSpecularStrength()
 {
@@ -48,8 +50,8 @@ YukiMesh::YukiMesh(
     : m_pShaderProgram(g_pDefaultMeshShader),
       m_pTexture(texture),
       m_Name(name),
-      m_tMeshMatrix(glm::identity<glm::mat4>()),
-      m_tReNormalMatrix(glm::identity<glm::mat4>()),
+      m_tMeshMatrix(glm::identity<Mat4F>()),
+      m_tReNormalMatrix(glm::identity<Mat4F>()),
       m_aVertexFormat(std::move(vertices)),
       m_tIndexFormat({indices.topology, std::move(indices.data)}),
       m_pMaterial(material)
@@ -61,27 +63,27 @@ YukiMesh::YukiMesh(
 
 YukiMesh::~YukiMesh() = default;
 
-SharedPtr<Core::IYukiOGLTexture> YukiMesh::GetMeshTexture() const
+SharedPtr<IYukiOGLTexture> YukiMesh::GetMeshTexture() const
 {
   return m_pTexture;
 }
 
-SharedPtr<Core::IYukiOGLElementBuffer> YukiMesh::GetElementBuffer() const
+SharedPtr<IYukiOGLElementBuffer> YukiMesh::GetElementBuffer() const
 {
   return m_pElementBuffer;
 }
 
-SharedPtr<Core::IYukiOGLVertexBuffer> YukiMesh::GetVertexBuffer() const
+SharedPtr<IYukiOGLVertexBuffer> YukiMesh::GetVertexBuffer() const
 {
   return m_pVertexBuffer;
 }
 
-SharedPtr<Core::IYukiOGLShaderProgram> YukiMesh::GetShaderProgram() const
+SharedPtr<IYukiOGLShaderProgram> YukiMesh::GetShaderProgram() const
 {
   return m_pShaderProgram;
 }
 
-SharedPtr<Core::IYukiOGLVertexArray> YukiMesh::GetVertexArray() const
+SharedPtr<IYukiOGLVertexArray> YukiMesh::GetVertexArray() const
 {
   return m_pVertexArray;
 }
@@ -101,28 +103,28 @@ const String& YukiMesh::GetName() const
   return m_Name;
 }
 
-const glm::mat4& YukiMesh::GetMeshMatrix() const
+const Mat4F& YukiMesh::GetMeshMatrix() const
 {
   return m_tMeshMatrix;
 }
 
-const Vector<Core::VertexData>& YukiMesh::GetVertexData() const
+const Vector<VertexFormat>& YukiMesh::GetVertexData() const
 {
   return m_aVertexFormat;
 }
 
-const Core::IndexData& YukiMesh::GetIndexData() const
+const IndexData& YukiMesh::GetIndexData() const
 {
   return m_tIndexFormat;
 }
 
 TransformationInfo YukiMesh::GetTransformationInfo() const
 {
-  glm::vec3 scale;
+  Vec3F     scale;
   glm::quat rotation;
-  glm::vec3 translation;
-  glm::vec3 skew;
-  glm::vec4 perspective;
+  Vec3F     translation;
+  Vec3F     skew;
+  Vec4F     perspective;
 
   glm::decompose(m_tMeshMatrix, scale, rotation, translation, skew, perspective);
 
@@ -148,15 +150,15 @@ void YukiMesh::Create()
     meshVAO->SetVertexBuffer(this->GetVertexBuffer(), 0, 0, sizeof(Core::VertexFormat));
 
     meshVAO->EnableAttribute(0);
-    meshVAO->SetAttributeFormat(0, 3, offsetof(Core::VertexFormat, position));
+    meshVAO->SetAttributeFormat(3, 0, offsetof(VertexFormat, position));
     meshVAO->AttributeBinding(0, 0);
 
     meshVAO->EnableAttribute(1);
-    meshVAO->SetAttributeFormat(1, 3, offsetof(Core::VertexFormat, normal));
+    meshVAO->SetAttributeFormat(3, 1, offsetof(VertexFormat, normal));
     meshVAO->AttributeBinding(1, 0);
 
     meshVAO->EnableAttribute(2);
-    meshVAO->SetAttributeFormat(2, 2, offsetof(Core::VertexFormat, texcoord));
+    meshVAO->SetAttributeFormat(2, 2, offsetof(VertexFormat, texcoord));
     meshVAO->AttributeBinding(2, 0);
 
     meshVAO->SetElementBuffer(this->GetElementBuffer());
@@ -194,49 +196,49 @@ void YukiMesh::SetMaterial(SharedPtr<IYukiMeshMaterial> material)
   m_pMaterial = material;
 }
 
-void YukiMesh::SetMeshMatrix(const glm::mat4& matrix)
+void YukiMesh::SetMeshMatrix(const Mat4F& matrix)
 {
   m_tMeshMatrix = matrix;
 }
 
-void YukiMesh::SetTranslation(const glm::vec3& position)
+void YukiMesh::SetTranslation(const Vec3F& position)
 {
   AutoType transformationInfo = this->GetTransformationInfo();
   this->TranslateMesh(-transformationInfo.translation);
   this->TranslateMesh(position);
 }
 
-void YukiMesh::SetRotation(const glm::vec3& axis, float rotationAngle)
+void YukiMesh::SetRotation(const Vec3F& axis, float rotationAngle)
 {
-  AutoType  transformationInfo = this->GetTransformationInfo();
-  float     crrAngle           = glm::angle(transformationInfo.rotation);
-  glm::vec3 crrAxis            = glm::axis(transformationInfo.rotation);
+  AutoType transformationInfo = this->GetTransformationInfo();
+  float    crrAngle           = glm::angle(transformationInfo.rotation);
+  Vec3F    crrAxis            = glm::axis(transformationInfo.rotation);
   this->RotateMesh(crrAxis, -crrAngle);
   this->RotateMesh(axis, rotationAngle);
 }
 
-void YukiMesh::SetScale(const glm::vec3& scaleVector)
+void YukiMesh::SetScale(const Vec3F& scaleVector)
 {
   AutoType transformationInfo = this->GetTransformationInfo();
   this->ScaleMesh(scaleVector / transformationInfo.scale);
 }
 
-void YukiMesh::TranslateMesh(const glm::vec3& direction)
+void YukiMesh::TranslateMesh(const Vec3F& direction)
 {
   m_tMeshMatrix     = glm::translate(m_tMeshMatrix, direction);
-  m_tReNormalMatrix = glm::transpose(glm::inverse(m_tMeshMatrix));
+  m_tReNormalMatrix = glm::inverse(m_tMeshMatrix);
 }
 
-void YukiMesh::RotateMesh(const glm::vec3& axis, float rotationAngle)
+void YukiMesh::RotateMesh(const Vec3F& axis, float rotationAngle)
 {
   m_tMeshMatrix     = glm::rotate(m_tMeshMatrix, rotationAngle, axis);
-  m_tReNormalMatrix = glm::transpose(glm::inverse(m_tMeshMatrix));
+  m_tReNormalMatrix = glm::inverse(m_tMeshMatrix);
 }
 
-void YukiMesh::ScaleMesh(const glm::vec3& scaleVector)
+void YukiMesh::ScaleMesh(const Vec3F& scaleVector)
 {
   m_tMeshMatrix     = glm::scale(m_tMeshMatrix, scaleVector);
-  m_tReNormalMatrix = glm::transpose(glm::inverse(m_tMeshMatrix));
+  m_tReNormalMatrix = glm::inverse(m_tMeshMatrix);
 }
 
 void YukiMesh::RenderMesh(SharedPtr<IYukiCamera> camera) const
@@ -250,7 +252,7 @@ void YukiMesh::RenderMesh(SharedPtr<IYukiCamera> camera) const
     m_pTexture->BindTexture(0);
   }
 
-  m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix);
+  m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
   m_pShaderProgram->UniformMatrix("U_ProjectionMatrix", camera->GetCameraProjectionMatrix());
@@ -260,19 +262,19 @@ void YukiMesh::RenderMesh(SharedPtr<IYukiCamera> camera) const
 
   // Some hard coding
   m_pShaderProgram->UniformValue("U_LightIntensity", 1.00f);
-  m_pShaderProgram->UniformVector("U_LightPos", glm::vec3{-1.30f, 1.30f, 2.00f});
-  m_pShaderProgram->UniformVector("U_LightColor", glm::vec4{1.00f, 1.00f, 1.00f, 1.00f});
+  m_pShaderProgram->UniformVector("U_LightPos", Vec3F{-1.30f, 1.30f, 2.00f});
+  m_pShaderProgram->UniformVector("U_LightColor", Vec4F{1.00f, 1.00f, 1.00f, 1.00f});
   m_pShaderProgram->UniformValue("U_MeshTextures", 0);
 
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }
 
 SharedPtr<IYukiMesh> CreateYukiMesh(
-    Vector<Core::VertexData>&         vertexData,
-    Core::IndexData&                  indexData,
-    SharedPtr<Core::IYukiOGLTexture>& texture,
-    SharedPtr<IYukiMeshMaterial>&     material,
-    const String&                     meshName)
+    Vector<Core::VertexData>&        vertexData,
+    Core::IndexData&                 indexData,
+    SharedPtr<Core::IYukiOGLTexture> texture,
+    SharedPtr<IYukiMeshMaterial>     material,
+    const String&                    meshName)
 {
   return Core::CreateInterfaceInstance<IYukiMesh, YukiMesh>(vertexData, indexData, texture, material, meshName);
 }

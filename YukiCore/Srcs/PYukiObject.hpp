@@ -11,11 +11,11 @@ public:
   YukiObject()          = default;
   virtual ~YukiObject() = default;
 
-  virtual void Create() override;
-  virtual void Awake() override;
-  virtual void Update() override;
-  virtual void Render() override;
-  virtual void Destroy() override;
+  void Create() override;
+  void Awake() override;
+  void Update() override;
+  void Render() override;
+  void Destroy() override;
 };
 
 } // namespace Yuki::Core

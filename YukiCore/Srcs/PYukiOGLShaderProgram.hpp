@@ -13,8 +13,8 @@
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram : virtual public IYukiOGLShaderProgram,
-                             virtual public YukiObject
+class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram,
+                                   virtual public YukiObject
 {
 protected:
   unsigned m_nSPId;
@@ -25,22 +25,22 @@ protected:
   unsigned GetUniformLocation(const String& prop);
 
 public:
-  YukiOGLShaderProgram(const String& shaderName);
-  virtual ~YukiOGLShaderProgram();
+  explicit YukiOGLShaderProgram(const String& shaderName);
+  ~YukiOGLShaderProgram() override;
 
   bool            OnUse();
   const unsigned& GetID() override;
   void            BindObject() override;
   void            Create() override;
   void            Destroy() override;
-  void            UniformMatrix(const String& prop, const glm::mat2& mat, bool transpose = false) override;
-  void            UniformMatrix(const String& prop, const glm::mat3& mat, bool transpose = false) override;
-  void            UniformMatrix(const String& prop, const glm::mat4& mat, bool transpose = false) override;
-  void            UniformVector(const String& prop, const glm::vec2& vec) override;
-  void            UniformVector(const String& prop, const glm::vec3& vec) override;
-  void            UniformVector(const String& prop, const glm::vec4& vec) override;
-  void            UniformValue(const String& prop, const bool& value) override;
-  void            UniformValue(const String& prop, const int& value) override;
+  void            UniformMatrix(const String& prop, const Mat2F& mat, bool transpose) override;
+  void            UniformMatrix(const String& prop, const Mat3F& mat, bool transpose) override;
+  void            UniformMatrix(const String& prop, const Mat4F& mat, bool transpose) override;
+  void            UniformVector(const String& prop, const Vec2F& vec) override;
+  void            UniformVector(const String& prop, const Vec3F& vec) override;
+  void            UniformVector(const String& prop, const Vec4F& vec) override;
+  void            UniformValue(const String& prop, bool value) override;
+  void            UniformValue(const String& prop, int value) override;
   void            UniformValue(const String& prop, float value) override;
 };
 

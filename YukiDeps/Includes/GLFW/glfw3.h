@@ -3283,7 +3283,7 @@ GLFWAPI void glfwRestoreWindow(GLFWwindow* window);
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED and @ref
  *  GLFW_PLATFORM_ERROR.
  *
- *  @par Thread Safety
+ *  @par ThreadType Safety
  *  This function may only be called from the main thread.
  *
  *  @sa @ref window_iconify

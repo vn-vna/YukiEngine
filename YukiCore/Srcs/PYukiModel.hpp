@@ -10,19 +10,23 @@
 namespace Yuki::Comp
 {
 
+using Core::YukiObject;
+
 class YukiModel final : virtual public IYukiModel,
-                        virtual public Core::YukiObject
+                        virtual public YukiObject
 {
 protected:
   MeshArrType m_apMeshes;
-  glm::mat4   m_tModelMatrix;
+  Mat4F       m_tModelMatrix;
+  String      m_sName;
 
 public:
-  YukiModel(const MeshArrType& meshArr);
-  ~YukiModel();
+  YukiModel(String name, const MeshArrType& meshArr);
+  ~YukiModel() override;
 
+  String&      GetName() override;
   MeshArrType& GetMeshes() override;
-  glm::mat4&   GetModelMatrix() override;
+  Mat4F&       GetModelMatrix() override;
   MeshType     GetMesh(const String& name) override;
 
 
