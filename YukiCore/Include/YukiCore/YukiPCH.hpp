@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
+#pragma once
 
 // #pragma warning(disable : 4251)
 // #pragma warning(disable : 4275)

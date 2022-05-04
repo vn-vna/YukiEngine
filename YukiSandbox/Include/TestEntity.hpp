@@ -9,7 +9,6 @@ public:
   explicit TestEntity(const Yuki::String& name);
   ~TestEntity() override;
 
-
   void OnCreate() override;
   void OnAwake() override;
   void OnUpdate() override;
@@ -45,6 +44,4 @@ inline TestEntity::TestEntity(const Yuki::String& name) : YukiEntity(name)
 {
 }
 
-inline TestEntity::~TestEntity()
-{
-}
+inline TestEntity::~TestEntity() = default;

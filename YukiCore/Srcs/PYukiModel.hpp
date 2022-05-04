@@ -1,3 +1,11 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
 
 #include "YukiComp/YukiModel.hpp"

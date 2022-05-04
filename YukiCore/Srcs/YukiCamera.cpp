@@ -55,17 +55,17 @@ const Vec3F& YukiCamera::GetCameraDirection() const
 
 const Vec3F YukiCamera::GetCameraTopAxis() const
 {
-  return glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis());
+  return glm::normalize(glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis()));
 }
 
 const Vec3F YukiCamera::GetCameraHorizontalAxis() const
 {
-  return glm::cross(GetCameraVerticalAxis(), m_CamTop);
+  return glm::normalize(glm::cross(GetCameraVerticalAxis(), m_CamTop));
 }
 
 const Vec3F YukiCamera::GetCameraVerticalAxis() const
 {
-  return m_CamDirection;
+  return glm::normalize(m_CamDirection);
 }
 
 float YukiCamera::GetFieldOfView() const
@@ -106,6 +106,11 @@ void YukiCamera::LookAtPoint(const Vec3F& point)
 void YukiCamera::SetCameraDirection(const Vec3F& direction)
 {
   m_CamDirection = glm::normalize(direction);
+}
+
+void YukiCamera::MoveCamera(const Vec3F& mov)
+{
+  m_CamPos += mov;
 }
 
 void YukiCamera::SetCameraPosition(const Vec3F& position)

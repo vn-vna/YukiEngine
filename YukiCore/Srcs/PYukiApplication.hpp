@@ -1,4 +1,13 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
+
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"

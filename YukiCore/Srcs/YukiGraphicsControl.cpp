@@ -17,8 +17,7 @@ using Comp::ReleaseMeshShader;
 using Comp::InitializeMeshShader;
 using Debug::YukiGladLoadGLLoaderError;
 
-YukiGfxControl::YukiGfxControl()
-{}
+YukiGfxControl::YukiGfxControl() = default;
 
 YukiGfxControl::~YukiGfxControl() = default;
 
@@ -28,6 +27,7 @@ void YukiGfxControl::Create()
   {
     THROW_YUKI_ERROR(GladLoadGLLoaderError);
   }
+  // Default shader for mesh rendering
   InitializeMeshShader();
 }
 
@@ -49,6 +49,7 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
+  // Release the default shader for mesh rendering
   ReleaseMeshShader();
 }
 

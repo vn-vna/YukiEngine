@@ -21,23 +21,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/YukiEngine.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/YukiSandbox/Include/TestEntity.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YukiCore/Include/YukiUtil/YukiUtilities.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YukiCore/Srcs/Utilities.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YukiSandbox/Include/CameraController.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuffs/sphere.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Stuffs/sphere.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiCamera.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiCamera.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiMesh.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiMesh.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiModel.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiModel.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiScene.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiComp/YukiScene.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiApplication.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiApplication.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiGraphics.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiGraphics.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiInputCtrl.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiInputCtrl.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiObject.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiObject.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiPCH.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiPCH.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiThread.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiThread.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiWindow.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiWindow.hpp" afterDir="false" />
@@ -59,31 +55,13 @@
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiOGLVertexArray.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiOGLVertexArray.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiOGLVertexBuffer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiOGLVertexBuffer.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiObject.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiObject.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiScene.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiScene.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiThread.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiThread.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiWindow.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiWindow.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiApplication.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiApplication.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiCamera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiCamera.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiChrono.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiChrono.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiEntity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiEntity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiError.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiError.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiGraphicsControl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiGraphicsControl.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiImage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiImage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiInputCtrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiInputCtrl.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiLogger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiMesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiMesh.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiModel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiModel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLElementBuffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLElementBuffer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLShaderProgram.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLShaderProgram.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLTexture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLTexture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLVertexArray.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiOGLVertexArray.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiPCH.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiPCH.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiWindow.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiDeps/Includes/GLFW/glfw3.h" beforeDir="false" afterPath="$PROJECT_DIR$/YukiDeps/Includes/GLFW/glfw3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiSandbox/Include/TestEntity.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Include/TestEntity.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiShader/MeshShader.frag" beforeDir="false" afterPath="$PROJECT_DIR$/YukiShader/MeshShader.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiShader/MeshShader.geom" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiShader/MeshShader.vert" beforeDir="false" afterPath="$PROJECT_DIR$/YukiShader/MeshShader.vert" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +73,11 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="yuki-backup-24-04-2022" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -113,20 +96,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cmake.loaded.for.project&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.advertisement.text.overridden": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "cmake.loaded.for.project": "true",
+    "settings.editor.selected.configurable": "copyright.profiles",
+    "structure.view.defaults.are.configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="CMake Application.yuki-sandbox">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="sandbox-stuffs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="yuki-engine" TARGET_NAME="sandbox-stuffs" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -170,8 +158,37 @@
       <workItem from="1650505120229" duration="1996000" />
       <workItem from="1650597094533" duration="50000" />
       <workItem from="1650767789615" duration="367000" />
-      <workItem from="1650768181183" duration="1065000" />
+      <workItem from="1650768181183" duration="2074000" />
+      <workItem from="1650770291972" duration="4559000" />
+      <workItem from="1650809907862" duration="30000" />
+      <workItem from="1650946119475" duration="35000" />
+      <workItem from="1651679298616" duration="5132000" />
     </task>
+    <task id="LOCAL-00001" summary="Entity system [working] + Change thread wrapper class [working]">
+      <created>1650769496863</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650769496863</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commit missing files">
+      <created>1650769555859</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1650769555859</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="SHOW_OTHER_BRANCHES" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Entity system [working] + Change thread wrapper class [working]" />
+    <MESSAGE value="Commit missing files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit missing files" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

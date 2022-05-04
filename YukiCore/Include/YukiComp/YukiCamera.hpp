@@ -1,3 +1,11 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
 
 #include "YukiCore/YukiObject.hpp"
@@ -8,6 +16,15 @@
 namespace Yuki::Comp
 {
 
+/**
+ * @details
+ * This class provide a camera to handle view in your scene.
+ * You need to create a camera first then your scene can bee rendered perfectly
+ * @code
+ * AutoType camera  = Yuki::Comp::CreateYukiCamera();
+ * AutoType scene   = Yuki::Comp::CreateYukiScene();
+ * scene->SetCamera(camera);
+ */
 class YUKIAPI IYukiCamera : virtual public Core::IYukiObject
 {
 public:
@@ -27,6 +44,7 @@ public:
   virtual void CameraRotateDirection(const Vec3F& rotAxis, float rad) = 0;
   virtual void LookAtPoint(const Vec3F& point)                        = 0;
   virtual void SetCameraDirection(const Vec3F& direction)             = 0;
+  virtual void MoveCamera(const Vec3F& mov)                           = 0;
   virtual void SetCameraPosition(const Vec3F& position)               = 0;
   virtual void SetFieldOfView(float fov)                              = 0;
   virtual void SetViewportAspectRatio(float ratio)                    = 0;
@@ -35,6 +53,10 @@ public:
   virtual void SetFarPerspective(float pfar)                          = 0;
 };
 
+/**
+ * Create a camera and return it's interface instance in shared pointer form
+ * @return A camera interface instance
+ */
 SharedPtr<IYukiCamera> YUKIAPI CreateYukiCamera();
 
 } // namespace Yuki::Comp

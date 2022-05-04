@@ -1,3 +1,11 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
 
 #include "YukiComp/YukiCamera.hpp"
@@ -46,6 +54,7 @@ public:
   void CameraRotateDirection(const Vec3F& rotAxis, float rad) override;
   void LookAtPoint(const Vec3F& point) override;
   void SetCameraDirection(const Vec3F& direction) override;
+  void MoveCamera(const Vec3F& mov) override;
   void SetCameraPosition(const Vec3F& position) override;
   void SetFieldOfView(float fov) override;
   void SetViewportAspectRatio(float ratio) override;
