@@ -12,7 +12,7 @@ int main(int, char**)
   AutoType camera        = Yuki::Comp::CreateYukiCamera();
   AutoType scene         = Yuki::Comp::CreateYukiScene();
   AutoType enTT1         = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::YukiEntity, TestEntity>("test_1");
-  AutoType cameraControl = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::YukiEntity, CameraController>("camcontrol");
+  AutoType cameraControl = CameraController::getInstance();
 
   scene->SetCamera(camera);
   scene->AddEntity(enTT1);
