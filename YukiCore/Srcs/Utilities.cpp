@@ -3,8 +3,6 @@
 namespace Yuki::Utils
 {
 
-using namespace Yuki::Core;
-
 bool isKeyPressed(KeyCode key)
 {
   return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::PRESS;

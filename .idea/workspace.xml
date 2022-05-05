@@ -20,9 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="">
+    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="Implement header-only singleton.">
+      <change beforePath="$PROJECT_DIR$/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/.clang-format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiSandbox/Include/CameraController.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Include/CameraController.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiUtil/YukiUtilities.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiUtil/YukiUtilities.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/Utilities.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/Utilities.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,29 +56,27 @@
     <option name="minorVersion" value="1" />
   </component>
   <component name="ProjectId" id="27yTMeW2ZnPZ1XziVBxfgktcv14" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.advertisement.text.has.clang-format": "true",
     "cf.advertisement.text.overridden": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "cmake.loaded.for.project": "true",
-    "settings.editor.selected.configurable": "copyright.profiles",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C/C++",
     "structure.view.defaults.are.configured": "true"
   }
 }]]></component>
   <component name="RunManager" selected="CMake Application.yuki-sandbox">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="sandbox-stuffs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="yuki-engine" TARGET_NAME="sandbox-stuffs" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -124,7 +124,9 @@
       <workItem from="1650770291972" duration="4559000" />
       <workItem from="1650809907862" duration="30000" />
       <workItem from="1650946119475" duration="35000" />
-      <workItem from="1651679298616" duration="5818000" />
+      <workItem from="1651679298616" duration="6118000" />
+      <workItem from="1651710215251" duration="666000" />
+      <workItem from="1651710931022" duration="315000" />
     </task>
     <task id="LOCAL-00001" summary="Entity system [working] + Change thread wrapper class [working]">
       <created>1650769496863</created>
@@ -147,17 +149,36 @@
       <option name="project" value="LOCAL" />
       <updated>1651684738603</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implement header-only singleton.">
+      <created>1651685216030</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1651685216030</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="SHOW_OTHER_BRANCHES" value="true" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Entity system [working] + Change thread wrapper class [working]" />
     <MESSAGE value="Commit missing files" />
     <MESSAGE value="Add YukiUtilities.hpp for shorten code. Some small fixes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add YukiUtilities.hpp for shorten code. Some small fixes." />
+    <MESSAGE value="Implement header-only singleton." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement header-only singleton." />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
