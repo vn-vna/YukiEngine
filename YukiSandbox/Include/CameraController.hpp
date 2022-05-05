@@ -10,7 +10,7 @@
 #include <YukiEntity/Entity.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 
-using Yuki::Utils::isKeyReleased;
+using Yuki::Utils::IsKeyReleased;
 using Yuki::Core::KeyCode;
 
 class CameraController : virtual public Yuki::Entity::YukiEntity
@@ -40,34 +40,33 @@ inline void CameraController::OnCreate()
 }
 
 inline void CameraController::OnAwake()
-{
-}
+{}
 
 inline void CameraController::OnUpdate()
 {
-  if (!isKeyReleased(KeyCode::KEY_D))
+  if (!IsKeyReleased(KeyCode::KEY_D))
   {
-    Yuki::Utils::moveCameraRight(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraRight(pCamera, 0.01f);
   }
-  if (!isKeyReleased(KeyCode::KEY_A))
+  if (!IsKeyReleased(KeyCode::KEY_A))
   {
-    Yuki::Utils::moveCameraLeft(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraLeft(pCamera, 0.01f);
   }
-  if (!isKeyReleased(KeyCode::KEY_W))
+  if (!IsKeyReleased(KeyCode::KEY_W))
   {
-    Yuki::Utils::moveCameraFront(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraFront(pCamera, 0.01f);
   }
-  if (!isKeyReleased(KeyCode::KEY_S))
+  if (!IsKeyReleased(KeyCode::KEY_S))
   {
-    Yuki::Utils::moveCameraBack(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraBack(pCamera, 0.01f);
   }
-  if (!isKeyReleased(KeyCode::KEY_Q))
+  if (!IsKeyReleased(KeyCode::KEY_Q))
   {
-    Yuki::Utils::moveCameraUp(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraUp(pCamera, 0.01f);
   }
-  if (!isKeyReleased(Yuki::Core::KeyCode::KEY_E))
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_E))
   {
-    Yuki::Utils::moveCameraDown(pCamera, 0.01f);
+    Yuki::Utils::MoveCameraDown(pCamera, 0.01f);
   }
 }
 
