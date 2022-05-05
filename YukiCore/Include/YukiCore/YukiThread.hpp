@@ -16,9 +16,9 @@
 namespace Yuki::Core
 {
 
-using YukiThreadCallbackFuncType = std::function<void()>;
-using ThreadType                 = std::thread;
-using ThreadIDType               = std::thread::id;
+using CallbackFuncType = std::function<void()>;
+using ThreadType       = std::thread;
+using ThreadIDType     = std::thread::id;
 
 class YUKIAPI IYukiThread
 {
@@ -40,10 +40,20 @@ public:
   virtual void UnLock() = 0;
 };
 
-unsigned YUKIAPI               GetHardwareConcurrency();
-SharedPtr<IYukiThread> YUKIAPI CreateYukiThread(const YukiThreadCallbackFuncType& callback);
-SharedPtr<IYukiThread> YUKIAPI CreateYukiThread(SharedPtr<YukiThreadCallbackFuncType> pcallback);
-SharedPtr<IYukiMutex> YUKIAPI  CreateYukiMutex();
-void YUKIAPI                   WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll = true, unsigned long timeOut = INFINITE);
+class YUKIAPI IYukiThreadPool
+{
+public:
+  virtual void Start()                                    = 0;
+  virtual void Join()                                     = 0;
+  virtual void PushAction(const CallbackFuncType& action) = 0;
+  virtual void Terminate()                                = 0;
+};
+
+unsigned YUKIAPI                   GetHardwareConcurrency();
+SharedPtr<IYukiThread> YUKIAPI     CreateYukiThread(const CallbackFuncType& callback);
+SharedPtr<IYukiThread> YUKIAPI     CreateYukiThread(SharedPtr<CallbackFuncType> pcallback);
+SharedPtr<IYukiMutex> YUKIAPI      CreateYukiMutex();
+SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize = -1, long long invokeInterval = 30);
+void YUKIAPI                       WaitForThreads(std::initializer_list<SharedPtr<IYukiThread>> threads, bool waitAll = true, unsigned long timeOut = INFINITE);
 
 } // namespace Yuki::Core

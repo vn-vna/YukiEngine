@@ -1,6 +1,7 @@
 #include <YukiCore/YukiApplication.hpp>
 #include <YukiComp/YukiCamera.hpp>
 #include <YukiComp/YukiScene.hpp>
+#include <YukiCore/YukiThread.hpp>
 
 #include "TestEntity.hpp"
 #include "CameraController.hpp"
@@ -8,6 +9,7 @@
 
 int main(int, char**)
 {
+
   AutoType yukiApp       = Yuki::Core::CreateYukiApp();
   AutoType camera        = Yuki::Comp::CreateYukiCamera();
   AutoType scene         = Yuki::Comp::CreateYukiScene();
