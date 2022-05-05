@@ -20,7 +20,7 @@ YukiThreadPool::YukiThreadPool(int poolSize, long long invokeInterval)
         while (true)
         {
           locker.lock();
-          
+
           if (this->m_ActionQueue.empty())
           {
             this->m_ActionQueueWaiter.wait(locker);
@@ -90,6 +90,56 @@ void YukiThreadPool::PushAction(const CallbackFuncType& callback)
 void YukiThreadPool::Terminate()
 {
   m_bPoolActive = false;
+}
+
+const Vector<Thread>& YukiThreadPool::GetWorkers()
+{
+  return m_aWorkers;
+}
+
+const Thread& YukiThreadPool::GetManagerThread()
+{
+  return m_ManagerThread;
+}
+
+const ConditionVariable& YukiThreadPool::GetWorkerWaiter()
+{
+  return m_ActionQueueWaiter;
+}
+
+const Mutex& YukiThreadPool::GetActionQueueMutex()
+{
+  return m_ActionQueueMutex;
+}
+
+const Queue<CallbackFuncType>& YukiThreadPool::GetActionQueue()
+{
+  return m_ActionQueue;
+}
+
+const CallbackFuncType& YukiThreadPool::GetWorkerFuncCallback()
+{
+  return m_WorkerFunc;
+}
+
+const CallbackFuncType& YukiThreadPool::GetManagerFuncCallback()
+{
+  return m_ManagerFunc;
+}
+
+bool YukiThreadPool::IsPoolActive()
+{
+  return m_bPoolActive;
+}
+
+bool YukiThreadPool::IsPoolStarted()
+{
+  return m_bPoolStarted;
+}
+
+long long YukiThreadPool::GetInvokeInterval()
+{
+  return std::chrono::duration_cast<std::chrono::milliseconds>(m_tInvokeInterval).count();
 }
 
 SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize, long long invokeInterval)

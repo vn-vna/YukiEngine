@@ -13,25 +13,21 @@
 #include "YukiCore/YukiThreadPool.hpp"
 #include "YukiDebug/YukiError.hpp"
 
-#include <condition_variable>
-#include <chrono>
-#include <thread>
-
 namespace Yuki::Core
 {
 
 class YukiThreadPool final : virtual public IYukiThreadPool
 {
 protected:
-  Vector<std::thread>       m_aWorkers;
-  std::thread               m_ManagerThread;
-  std::condition_variable   m_ActionQueueWaiter;
-  std::mutex                m_ActionQueueMutex;
+  Vector<Thread>            m_aWorkers;
+  Thread                    m_ManagerThread;
+  ConditionVariable         m_ActionQueueWaiter;
+  Mutex                     m_ActionQueueMutex;
   Queue<CallbackFuncType>   m_ActionQueue;
   CallbackFuncType          m_WorkerFunc;
   CallbackFuncType          m_ManagerFunc;
-  bool                      m_bPoolActive;
-  bool                      m_bPoolStarted;
+  Atomic<bool>              m_bPoolActive;
+  Atomic<bool>              m_bPoolStarted;
   std::chrono::milliseconds m_tInvokeInterval;
 
 
@@ -43,6 +39,17 @@ public:
   void Join() override;
   void PushAction(const CallbackFuncType& callback) override;
   void Terminate() override;
+
+  const Vector<Thread>&          GetWorkers() override;
+  const Thread&                  GetManagerThread() override;
+  const ConditionVariable&       GetWorkerWaiter() override;
+  const Mutex&                   GetActionQueueMutex() override;
+  const Queue<CallbackFuncType>& GetActionQueue() override;
+  const CallbackFuncType&        GetWorkerFuncCallback() override;
+  const CallbackFuncType&        GetManagerFuncCallback() override;
+  bool                           IsPoolActive() override;
+  bool                           IsPoolStarted() override;
+  long long                      GetInvokeInterval() override;
 };
 
 } // namespace Yuki::Core

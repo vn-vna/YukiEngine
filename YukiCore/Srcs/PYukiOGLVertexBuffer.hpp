@@ -10,7 +10,6 @@
 
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiGraphics.hpp"
-#include "YukiCore/YukiThread.hpp"
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiObject.hpp"
