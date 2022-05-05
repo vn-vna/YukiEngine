@@ -20,16 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiPCH.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiPCH.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiThread.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiCore/YukiThread.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiDebug/YukiError.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiDebug/YukiError.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/PYukiThread.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/PYukiThread.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiError.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiError.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,7 +122,7 @@
       <workItem from="1651710215251" duration="666000" />
       <workItem from="1651710931022" duration="315000" />
       <workItem from="1651720494168" duration="47000" />
-      <workItem from="1651724966738" duration="1144000" />
+      <workItem from="1651724966738" duration="1785000" />
     </task>
     <task id="LOCAL-00001" summary="Entity system [working] + Change thread wrapper class [working]">
       <created>1650769496863</created>
@@ -161,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651685216030</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implement thread pool">
+      <created>1651734128716</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651734128716</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -183,7 +181,8 @@
     <MESSAGE value="Commit missing files" />
     <MESSAGE value="Add YukiUtilities.hpp for shorten code. Some small fixes." />
     <MESSAGE value="Implement header-only singleton." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement header-only singleton." />
+    <MESSAGE value="Implement thread pool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement thread pool" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

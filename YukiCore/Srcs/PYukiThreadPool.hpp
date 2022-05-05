@@ -10,7 +10,7 @@
 
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiDebug/YukiLogger.hpp"
-#include "YukiCore/YukiThread.hpp"
+#include "YukiCore/YukiThreadPool.hpp"
 #include "YukiDebug/YukiError.hpp"
 
 #include <condition_variable>
@@ -19,33 +19,6 @@
 
 namespace Yuki::Core
 {
-
-class YukiThread final : virtual public IYukiThread
-{
-protected:
-  ThreadType       m_CppThread;
-  CallbackFuncType m_fnCallback;
-  bool             m_bThreadReady;
-
-public:
-  explicit YukiThread(const CallbackFuncType& callback);
-  ~YukiThread();
-
-  void Start() override;
-  void Join() override;
-  void Detach() override;
-  void Swap(SharedPtr<IYukiThread> thread) override;
-
-  bool         IsJoinable() override;
-  ThreadIDType GetThreadID() override;
-  ThreadType&  GetRawThread() override;
-};
-
-class YukiMutex final : public IYukiMutex
-{
-protected:
-public:
-};
 
 class YukiThreadPool final : virtual public IYukiThreadPool
 {

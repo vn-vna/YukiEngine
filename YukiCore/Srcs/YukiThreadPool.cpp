@@ -2,54 +2,10 @@
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiObject.hpp"
 
-#include "PYukiThread.hpp"
+#include "PYukiThreadPool.hpp"
 
 namespace Yuki::Core
 {
-
-YukiThread::YukiThread(const CallbackFuncType& callback)
-    : m_fnCallback(callback),
-      m_bThreadReady(false),
-      m_CppThread()
-{}
-
-YukiThread::~YukiThread() = default;
-
-void YukiThread::Start()
-{
-  m_CppThread    = ThreadType{m_fnCallback};
-  m_bThreadReady = true;
-}
-
-void YukiThread::Join()
-{
-  m_CppThread.join();
-}
-
-void YukiThread::Detach()
-{
-  m_CppThread.detach();
-}
-
-void YukiThread::Swap(SharedPtr<IYukiThread> thread)
-{
-  m_CppThread.swap(thread->GetRawThread());
-}
-
-bool YukiThread::IsJoinable()
-{
-  return m_CppThread.joinable();
-}
-
-ThreadIDType YukiThread::GetThreadID()
-{
-  return m_CppThread.get_id();
-}
-
-ThreadType& YukiThread::GetRawThread()
-{
-  return m_CppThread;
-}
 
 YukiThreadPool::YukiThreadPool(int poolSize, long long invokeInterval)
     : m_aWorkers(),
@@ -64,11 +20,13 @@ YukiThreadPool::YukiThreadPool(int poolSize, long long invokeInterval)
         while (true)
         {
           locker.lock();
+          
           if (this->m_ActionQueue.empty())
           {
             this->m_ActionQueueWaiter.wait(locker);
             continue;
           }
+
           AutoType action = this->m_ActionQueue.front();
           this->m_ActionQueue.pop();
           locker.unlock();
