@@ -11,7 +11,6 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
 #include "YukiDebug/YukiLogger.hpp"
-#include "YukiCore/YukiThread.hpp"
 
 #include <glm/glm.hpp>
 
