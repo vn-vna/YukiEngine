@@ -8,6 +8,7 @@
 
 int main(int, char**)
 {
+
   AutoType yukiApp       = Yuki::Core::CreateYukiApp();
   AutoType camera        = Yuki::Comp::CreateYukiCamera();
   AutoType scene         = Yuki::Comp::CreateYukiScene();
