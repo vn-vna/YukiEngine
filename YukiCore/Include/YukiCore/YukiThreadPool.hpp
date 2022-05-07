@@ -15,7 +15,6 @@
 #include <condition_variable>
 #include <chrono>
 #include <thread>
-#include <atomic>
 
 namespace Yuki::Core
 {
@@ -25,9 +24,6 @@ using Thread            = std::thread;
 using ThreadID          = std::thread::id;
 using ConditionVariable = std::condition_variable;
 using Mutex             = std::mutex;
-
-template <typename T>
-using Atomic = std::atomic<T>;
 
 class YUKIAPI IYukiThreadPool
 {

@@ -44,6 +44,7 @@
 #include <stack>
 #include <iosfwd>
 #include <filesystem>
+#include <atomic>
 
 // glm types
 #include <glm/vec2.hpp>
@@ -103,6 +104,9 @@ using Map = std::map<K, V>;
 
 template <typename T, int SIZE>
 using Array = std::array<T, SIZE>;
+
+template <typename T>
+using Atomic = std::atomic<T>;
 
 using String       = std::string;
 using StringStream = std::stringstream;
