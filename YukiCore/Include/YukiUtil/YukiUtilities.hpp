@@ -31,7 +31,7 @@ void YUKIAPI moveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
 void YUKIAPI moveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
 
 template <class EntityClass, typename... Args>
-SharedPtr<Entity::YukiEntity> createEntity(Args&&... args)
+inline SharedPtr<Entity::YukiEntity> createEntity(Args&&... args)
 {
   return CreateInterfaceInstance<Entity::YukiEntity, EntityClass>(std::forward<Args...>(args...));
 }

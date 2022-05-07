@@ -11,7 +11,7 @@ int main(int, char**)
   AutoType yukiApp       = Yuki::Core::CreateYukiApp();
   AutoType camera        = Yuki::Comp::CreateYukiCamera();
   AutoType scene         = Yuki::Comp::CreateYukiScene();
-  AutoType enTT1         = Yuki::Utils::createEntity<TestEntity>("test_1");
+  AutoType enTT1         = TestEntity::getInstance();
   AutoType cameraControl = CameraController::getInstance();
   AutoType sysCtrl       = SystemControl::getInstance();
 
