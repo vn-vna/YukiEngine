@@ -29,7 +29,7 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> getInstance();
+  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
 };
 
 inline SystemControl::SystemControl(const Yuki::String& name)
@@ -69,7 +69,7 @@ inline void SystemControl::OnDestroy()
 {
 }
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> SystemControl::getInstance()
+inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> SystemControl::GetInstance()
 {
   static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
   if (!instance.get())

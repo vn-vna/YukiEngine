@@ -15,7 +15,7 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> getInstance();
+  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
 };
 
 inline void TestEntity::OnCreate()
@@ -48,7 +48,7 @@ inline TestEntity::TestEntity(const Yuki::String& name) : YukiEntity(name)
 
 inline TestEntity::~TestEntity() = default;
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> TestEntity::getInstance()
+inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> TestEntity::GetInstance()
 {
   static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
   if (!instance.get())
