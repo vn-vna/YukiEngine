@@ -108,6 +108,7 @@ void YukiApp::Update()
     GetCurrentScene()->Create();
   }
 
+  GetInputController()->Update();
   GetGraphicsController()->Render();
   GetWindow()->Update();
 

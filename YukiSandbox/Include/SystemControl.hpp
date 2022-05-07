@@ -7,17 +7,19 @@
 
 #pragma once
 
+#include <YukiCore/YukiWindow.hpp>
 #include <YukiEntity/Entity.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 
-using Yuki::Utils::isKeyReleased;
+using Yuki::Utils::IsKeyReleased;
 using Yuki::Core::KeyCode;
 
 class SystemControl : virtual public Yuki::Entity::YukiEntity
 {
 protected:
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
   Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
+  Yuki::SharedPtr<Yuki::Debug::IYukiLogger>    pLogger;
+  Yuki::SharedPtr<Yuki::Core::IYukiWindow>     pWindow;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -40,6 +42,9 @@ inline SystemControl::~SystemControl() = default;
 
 inline void SystemControl::OnCreate()
 {
+  pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
+  pLogger     = Yuki::Core::GetYukiApp()->GetLogger();
+  pWindow     = Yuki::Core::GetYukiApp()->GetWindow();
 }
 
 inline void SystemControl::OnAwake()
@@ -48,16 +53,27 @@ inline void SystemControl::OnAwake()
 
 inline void SystemControl::OnUpdate()
 {
-  AutoType keyT = Yuki::Core::GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_T);
+  AutoType keyT = pInpControl->GetKeyStatus(KeyCode::KEY_T);
   if (keyT.ctrl && keyT.state == Yuki::Core::KeyState::PRESS)
   {
     Yuki::Core::GetYukiApp()->Terminate();
   }
 
-  AutoType keyR = Yuki::Core::GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_R);
+  AutoType keyR = pInpControl->GetKeyStatus(KeyCode::KEY_R);
   if (keyR.ctrl && keyR.state == Yuki::Core::KeyState::PRESS)
   {
     Yuki::Core::GetYukiApp()->Reload();
+  }
+
+  if (!Yuki::Utils::IsKeyReleased(Yuki::Core::KeyCode::KEY_F3))
+  {
+    AutoType windowSize = pWindow->GetWindowSize();
+    pInpControl->LockMouse(windowSize.x / 2, windowSize.y / 2);
+  }
+
+  if (!Yuki::Utils::IsKeyReleased(Yuki::Core::KeyCode::KEY_F2))
+  {
+    pInpControl->UnlockMouse();
   }
 }
 

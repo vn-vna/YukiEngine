@@ -63,7 +63,9 @@ void YukiWindow::SetPosition(int wx, int wy)
 
 void YukiWindow::SetCursorPos(int cx, int cy)
 {
-  glfwSetCursorPos(m_pGLFWWindow, cx, cy);
+  int wx, wy;
+  glfwGetWindowPos(m_pGLFWWindow, &wx, &wy);
+  glfwSetCursorPos(m_pGLFWWindow, wx + cx, wy + cy);
 }
 
 void YukiWindow::SetTitle(const String& title)

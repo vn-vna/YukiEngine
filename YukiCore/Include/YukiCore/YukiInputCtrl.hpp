@@ -17,7 +17,7 @@ namespace Yuki::Core
 using YukiInpCursorCallbackT   = std::function<void(int x, int y)>;
 using YukiInpKeyboardCallbackT = std::function<void(const int& key, const int& scancode, const int& action, const int& modifier)>;
 
-// Store state of the key 
+// Store state of the key
 enum class KeyState
 {
   RELEASE = GLFW_RELEASE,
@@ -269,14 +269,14 @@ typedef struct StKeyStatus
 
 typedef struct StMouseStatus
 {
-  int x, y;
-  int vx, vy;
+  float x, y;
+  float vx, vy;
 } MouseStatus;
 
 typedef struct StMouseLock
 {
-  int  lx, ly;
-  bool lock;
+  float lx, ly;
+  bool  lock;
 } MouseLock;
 
 class YUKIAPI IYukiInpControl : virtual public IYukiObject

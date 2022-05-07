@@ -1,4 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
 
 #include "PYukiInputControl.hpp"
 
@@ -10,7 +12,8 @@ YukiInpControl::YukiInpControl()
       m_mpCursorCallbacksPool{},
       m_tCrrMouseStatus{},
       m_tPrevMouseStatus{},
-      m_tKeyStatuses{}
+      m_tKeyStatuses{},
+      m_tLockMouse{}
 {}
 
 YukiInpControl::~YukiInpControl() = default;
@@ -80,7 +83,7 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 {
   // Default callback
   m_tPrevMouseStatus = {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y};
-  m_tCrrMouseStatus  = {x, y, x - m_tPrevMouseStatus.x, y - m_tPrevMouseStatus.y};
+  m_tCrrMouseStatus  = {(float) x, (float) y, x - m_tPrevMouseStatus.x, y - m_tPrevMouseStatus.y};
 
   if (m_mpCursorCallbacksPool.empty())
   {
@@ -98,7 +101,7 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 
 void YukiInpControl::LockMouse(int x, int y)
 {
-  m_tLockMouse = {x, y, true};
+  m_tLockMouse = {(float) x, (float) y, true};
 }
 
 void YukiInpControl::UnlockMouse()
@@ -165,6 +168,17 @@ void YukiInpControl::Create()
     m_tKeyStatuses[i].modifiers = 0;
     m_tKeyStatuses[i].scancode  = 0;
     m_tKeyStatuses[i].state     = KeyState::RELEASE;
+  }
+}
+
+void YukiInpControl::Update()
+{
+  m_tCrrMouseStatus.vx = 0;
+  m_tCrrMouseStatus.vy = 0;
+
+  if (m_tLockMouse.lock)
+  {
+    GetYukiApp()->GetWindow()->SetCursorPos(m_tLockMouse.lx, m_tLockMouse.ly);
   }
 }
 
