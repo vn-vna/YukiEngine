@@ -21,9 +21,12 @@ class YukiInpControl final : virtual public IYukiInpControl,
                              virtual public YukiObject
 {
 protected:
-  Map<String, YukiInpKeyboardCallbackT> m_mpKeyCallbacksPool;
-  Map<String, YukiInpCursorCallbackT>   m_mpCursorCallbacksPool;
-  KeyStatus                             m_tKeyStatuses[(int) KeyCode::KEY_LAST + 1];
+  Map<String, YukiInpKeyboardCallbackT>         m_mpKeyCallbacksPool;
+  Map<String, YukiInpCursorCallbackT>           m_mpCursorCallbacksPool;
+  Array<KeyStatus, (int) KeyCode::KEY_LAST + 1> m_tKeyStatuses;
+  MouseStatus                                   m_tCrrMouseStatus;
+  MouseStatus                                   m_tPrevMouseStatus;
+  MouseLock                                     m_tLockMouse;
 
 public:
   YukiInpControl();
@@ -35,8 +38,19 @@ public:
   void RemoveKeyboardInputCallback(const String& name) override;
   void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) override;
   void ExecuteCursorPosCallback(int x, int y) override;
+  void LockMouse(int x, int y) override;
+  void UnlockMouse() override;
 
-  YUKI_NODISCARD StKeyStatus& GetKeyStatus(const KeyCode& keyCode) override;
+  StKeyStatus& GetKeyStatus(const KeyCode& keyCode) override;
+  MouseStatus& GetMouseStatus() override;
+  Vec2F        GetMousePosition() override;
+  Vec2F        GetMouseVelocity() override;
+  int          GetKeyHorizontalAxis() override;
+  int          GetKeyVerticalAxis() override;
+  bool         IsMouseLocked() override;
+
+  void Create() override;
+  void Destroy() override;
 };
 
 } // namespace Yuki::Core

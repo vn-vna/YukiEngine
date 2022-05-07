@@ -31,6 +31,8 @@ public:
   virtual SharedPtr<IYukiLogger>     GetLogger()             = 0;
 
   virtual void SetCurrentScene(SharedPtr<IYukiScene> scene) = 0;
+  virtual void Reload()                                     = 0;
+  virtual void Terminate()                                  = 0;
 };
 
 SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();

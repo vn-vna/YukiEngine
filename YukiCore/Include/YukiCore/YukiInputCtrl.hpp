@@ -14,10 +14,10 @@
 namespace Yuki::Core
 {
 
-typedef std::function<void(int x, int y)> YukiInpCursorCallbackT;
+using YukiInpCursorCallbackT   = std::function<void(int x, int y)>;
+using YukiInpKeyboardCallbackT = std::function<void(const int& key, const int& scancode, const int& action, const int& modifier)>;
 
-typedef std::function<void(const int& key, const int& scancode, const int& action, const int& modifier)> YukiInpKeyboardCallbackT;
-
+// Store state of the key 
 enum class KeyState
 {
   RELEASE = GLFW_RELEASE,
@@ -25,6 +25,7 @@ enum class KeyState
   REPEAT  = GLFW_REPEAT
 };
 
+// Joy stick hat key state
 enum class JoyStickHatState
 {
   JSHAT_CENTERED   = GLFW_HAT_CENTERED,
@@ -266,16 +267,37 @@ typedef struct StKeyStatus
   };
 } KeyStatus;
 
+typedef struct StMouseStatus
+{
+  int x, y;
+  int vx, vy;
+} MouseStatus;
+
+typedef struct StMouseLock
+{
+  int  lx, ly;
+  bool lock;
+} MouseLock;
+
 class YUKIAPI IYukiInpControl : virtual public IYukiObject
 {
 public:
-  virtual void         AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback)     = 0;
-  virtual void         AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallbackT& pcallback) = 0;
-  virtual void         RemoveCursorInputCallback(const String& name)                                           = 0;
-  virtual void         RemoveKeyboardInputCallback(const String& name)                                         = 0;
-  virtual void         ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                   = 0;
-  virtual void         ExecuteCursorPosCallback(int x, int y)                                                  = 0;
-  virtual StKeyStatus& GetKeyStatus(const KeyCode& keyCode)                                                    = 0;
+  virtual void AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback)     = 0;
+  virtual void AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallbackT& pcallback) = 0;
+  virtual void RemoveCursorInputCallback(const String& name)                                           = 0;
+  virtual void RemoveKeyboardInputCallback(const String& name)                                         = 0;
+  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                   = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)                                                  = 0;
+  virtual void LockMouse(int x, int y)                                                                 = 0;
+  virtual void UnlockMouse()                                                                           = 0;
+
+  virtual KeyStatus&   GetKeyStatus(const KeyCode& keyCode) = 0;
+  virtual MouseStatus& GetMouseStatus()                     = 0;
+  virtual Vec2F        GetMousePosition()                   = 0;
+  virtual Vec2F        GetMouseVelocity()                   = 0;
+  virtual int          GetKeyHorizontalAxis()               = 0;
+  virtual int          GetKeyVerticalAxis()                 = 0;
+  virtual bool         IsMouseLocked()                      = 0;
 };
 
 SharedPtr<IYukiInpControl> CreateNewInputControl();

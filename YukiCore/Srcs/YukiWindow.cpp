@@ -139,6 +139,7 @@ void YukiWindow::Destroy()
   if (g_bGLFWInited)
   {
     glfwTerminate();
+    g_bGLFWInited = false;
   }
 }
 
