@@ -20,13 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Docs/Developers/INDEX.MD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Docs/Developers/en-intro.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Docs/Developers/vi-intro.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Docs/Developers/vi-references.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="multi-threading" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -127,6 +121,8 @@
       <workItem from="1651679298616" duration="6118000" />
       <workItem from="1651710215251" duration="666000" />
       <workItem from="1651710931022" duration="315000" />
+      <workItem from="1651720494168" duration="47000" />
+      <workItem from="1651724966738" duration="1785000" />
     </task>
     <task id="LOCAL-00001" summary="Entity system [working] + Change thread wrapper class [working]">
       <created>1650769496863</created>
@@ -156,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651685216030</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implement thread pool">
+      <created>1651734128716</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651734128716</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -178,8 +181,25 @@
     <MESSAGE value="Commit missing files" />
     <MESSAGE value="Add YukiUtilities.hpp for shorten code. Some small fixes." />
     <MESSAGE value="Implement header-only singleton." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement header-only singleton." />
+    <MESSAGE value="Implement thread pool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement thread pool" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp</url>
+          <line>66</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/YukiCore/Srcs/YukiThread.cpp</url>
+          <line>95</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

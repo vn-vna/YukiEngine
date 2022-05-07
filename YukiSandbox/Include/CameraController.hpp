@@ -29,7 +29,7 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> getInstance();
+  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
 };
 
 
@@ -86,7 +86,7 @@ inline CameraController::CameraController(const Yuki::String& name)
 
 inline CameraController::~CameraController() = default;
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> CameraController::getInstance()
+inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> CameraController::GetInstance()
 {
   static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
   if (!instance.get())

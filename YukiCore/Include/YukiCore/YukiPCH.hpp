@@ -40,6 +40,8 @@
 #include <array>
 #include <unordered_map>
 #include <set>
+#include <queue>
+#include <stack>
 #include <iosfwd>
 #include <filesystem>
 
@@ -86,6 +88,12 @@ using WeakPtr = std::weak_ptr<T>;
 
 template <typename T>
 using Vector = std::vector<T>;
+
+template <typename T>
+using Queue = std::queue<T>;
+
+template <typename T>
+using Stack = std::stack<T>;
 
 template <typename K, typename V>
 using UnorderedMap = std::unordered_map<K, V>;
