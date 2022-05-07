@@ -106,7 +106,7 @@ void YukiScene::Destroy()
       entity.second->Destroy();
     }
   }
-  m_bIsReady = true;
+  m_bIsReady = false;
 }
 
 bool YukiScene::IsReady()
