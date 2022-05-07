@@ -4,7 +4,7 @@
 
 #include "TestEntity.hpp"
 #include "CameraController.hpp"
-
+#include "SystemControl.hpp"
 
 int main(int, char**)
 {
@@ -13,10 +13,12 @@ int main(int, char**)
   AutoType scene         = Yuki::Comp::CreateYukiScene();
   AutoType enTT1         = Yuki::Utils::createEntity<TestEntity>("test_1");
   AutoType cameraControl = CameraController::getInstance();
+  AutoType sysCtrl       = SystemControl::getInstance();
 
   scene->SetCamera(camera);
   scene->AddEntity(enTT1);
   scene->AddEntity(cameraControl);
+  scene->AddEntity(sysCtrl);
 
   yukiApp->SetCurrentScene(scene);
 

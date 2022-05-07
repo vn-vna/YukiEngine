@@ -20,12 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="Implement header-only singleton.">
-      <change beforePath="$PROJECT_DIR$/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/.clang-format" afterDir="false" />
+    <list default="true" id="b79f9b5b-ecf6-48c1-b49e-513faa6cf3f1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Docs/Developers/INDEX.MD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Docs/Developers/en-intro.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Docs/Developers/vi-intro.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Docs/Developers/vi-references.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Include/YukiUtil/YukiUtilities.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Include/YukiUtil/YukiUtilities.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiCore/Srcs/Utilities.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiCore/Srcs/Utilities.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/YukiSandbox/Srcs/Main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="yuki-backup-24-04-2022" />
+        <entry key="$PROJECT_DIR$" value="multi-threading" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,21 +61,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cf.advertisement.text.has.clang-format": "true",
-    "cf.advertisement.text.overridden": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "cmake.loaded.for.project": "true",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C/C++",
-    "structure.view.defaults.are.configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cmake.loaded.for.project&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C/C++&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="CMake Application.yuki-sandbox">
     <configuration name="sandbox-stuffs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="yuki-engine" TARGET_NAME="sandbox-stuffs" CONFIG_NAME="Debug">
       <method v="2">

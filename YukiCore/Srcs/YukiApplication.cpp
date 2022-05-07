@@ -15,7 +15,11 @@ YukiApp::YukiApp()
       m_pGfxController(nullptr),
       m_pInputController(nullptr),
       m_pWindow(nullptr),
-      m_pLogger(nullptr)
+      m_pLogger(nullptr),
+      m_bWillCreate(true),
+      m_bWillUpdate(false),
+      m_bWillDestroy(false),
+      m_bWillTerminate(false)
 {
   m_pLogger          = CreateYukiLogger();
   m_pWindow          = CreateNewWindow();
@@ -54,22 +58,26 @@ void YukiApp::RunApp()
 {
   try
   {
-    this->Create();
-    this->Awake();
     m_bAlive = true;
+
     while (m_bAlive)
     {
-      this->Update();
-    }
-  }
-  catch (const YukiError& yer)
-  {
-    yer.PushErrorMessage();
-  }
+      if (m_bWillCreate)
+      {
+        this->Create();
+        this->Awake();
+      }
 
-  try
-  {
-    this->Destroy();
+      if (m_bWillUpdate)
+      {
+        this->Update();
+      }
+
+      if (m_bWillDestroy || m_bWillTerminate)
+      {
+        this->Destroy();
+      }
+    }
   }
   catch (const YukiError& yer)
   {
@@ -81,13 +89,16 @@ void YukiApp::Create()
 {
   GetLogger()->Create();
   GetWindow()->Create();
+  GetInputController()->Create();
   GetGraphicsController()->Create();
+  m_bWillCreate = false;
 }
 
 void YukiApp::Awake()
 {
   GetWindow()->Awake();
   GetGraphicsController()->Awake();
+  m_bWillUpdate = true;
 }
 
 void YukiApp::Update()
@@ -96,26 +107,51 @@ void YukiApp::Update()
   {
     GetCurrentScene()->Create();
   }
-  GetWindow()->Update();
+
   GetGraphicsController()->Render();
+  GetWindow()->Update();
+
   GetCurrentScene()->Update();
+
   if (GetWindow()->ShouldClose())
   {
-    m_bAlive = false;
+    Terminate();
   }
 }
 
 void YukiApp::Destroy()
 {
+  GetCurrentScene()->Destroy();
   GetGraphicsController()->Destroy();
+  GetInputController()->Destroy();
   GetWindow()->Destroy();
   GetLogger()->Destroy();
-  GetCurrentScene()->Destroy();
+
+  if (m_bWillTerminate)
+  {
+    m_bAlive = false;
+  }
+  else
+  {
+    m_bWillCreate    = true;
+    m_bWillDestroy   = false;
+    m_bWillTerminate = false;
+  }
 }
 
 void YukiApp::SetCurrentScene(SharedPtr<IYukiScene> scene)
 {
   m_pCurrentScene = scene;
+}
+
+void YukiApp::Reload()
+{
+  m_bWillDestroy = true;
+}
+
+void YukiApp::Terminate()
+{
+  m_bWillTerminate = true;
 }
 
 SharedPtr<IYukiApp> CreateYukiApp()

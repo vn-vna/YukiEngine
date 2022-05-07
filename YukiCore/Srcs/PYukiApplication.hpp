@@ -35,6 +35,10 @@ protected:
   SharedPtr<IYukiLogger>     m_pLogger;
   SharedPtr<IYukiScene>      m_pCurrentScene;
   bool                       m_bAlive;
+  bool                       m_bWillCreate;
+  bool                       m_bWillDestroy;
+  bool                       m_bWillUpdate;
+  bool                       m_bWillTerminate;
 
 public:
   YukiApp();
@@ -47,6 +51,8 @@ public:
   SharedPtr<IYukiLogger>     GetLogger() override;
 
   void SetCurrentScene(SharedPtr<IYukiScene> scene) override;
+  void Reload() override;
+  void Terminate() override;
 
   void RunApp() override;
   void Create() override;

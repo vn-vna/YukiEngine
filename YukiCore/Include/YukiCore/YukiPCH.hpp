@@ -37,6 +37,7 @@
 #include <functional>
 #include <vector>
 #include <map>
+#include <array>
 #include <unordered_map>
 #include <set>
 #include <iosfwd>
@@ -91,6 +92,9 @@ using UnorderedMap = std::unordered_map<K, V>;
 
 template <typename K, typename V>
 using Map = std::map<K, V>;
+
+template <typename T, int SIZE>
+using Array = std::array<T, SIZE>;
 
 using String       = std::string;
 using StringStream = std::stringstream;
