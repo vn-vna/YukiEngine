@@ -1,10 +1,12 @@
 #include "YukiCore/YukiPCH.hpp"
 
 #include "PYukiApplication.hpp"
+#include "PYukiTimer.hpp"
 
 namespace Yuki::Core
 {
 
+using Chrono::YukiTimer;
 using Debug::YukiError;
 using Debug::CreateYukiLogger;
 
@@ -108,6 +110,7 @@ void YukiApp::Update()
     GetCurrentScene()->Create();
   }
 
+  YukiTimer::UpdateTimers();
   GetGraphicsController()->Render();
   GetWindow()->Update();
 

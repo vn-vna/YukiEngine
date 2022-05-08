@@ -7,35 +7,35 @@
 namespace Yuki::Chrono
 {
 
-const float CurrentTimeNanos()
+long long Clock::CurrentTimeNanos()
 {
-  return (float) std::chrono::duration_cast<SystemClockNS>(CurrentTimePoint().time_since_epoch()).count();
+  return std::chrono::duration_cast<SystemClockNS>(CurrentTimePoint().time_since_epoch()).count();
 }
 
-const float CurrentTimeMilis()
+long long Clock::CurrentTimeMilis()
 {
-  return CurrentTimeNanos() / 1'000'000.0f;
+  return Clock::CurrentTimeNanos() / 1'000'000.0f;
 }
 
-TimePointType CurrentTimePoint()
+TimePoint Clock::CurrentTimePoint()
 {
   return std::chrono::system_clock::now();
 }
 
-TimeType CurrentTimePointTT()
+TimeType Clock::CurrentTimePointTT()
 {
-  return std::chrono::system_clock::to_time_t(CurrentTimePoint());
+  return std::chrono::system_clock::to_time_t(Clock::CurrentTimePoint());
 }
 
-TMType CurrentTimePointTM()
+TMType Clock::CurrentTimePointTM()
 {
-  AutoType point_tt = CurrentTimePointTT();
+  AutoType point_tt = Clock::CurrentTimePointTT();
   TMType   tm{};
   gmtime_s(&tm, &point_tt);
   return tm;
 }
 
-const String DateTimeString(const DateTimeFormat& format)
+const String Clock::DateTimeString(const DateTimeFormat& format)
 {
   StringStream asstr{};
   asstr << format.year
@@ -53,7 +53,7 @@ const String DateTimeString(const DateTimeFormat& format)
   String tformat = asstr.str();
   asstr.str("");
 
-  AutoType crrTMTime = CurrentTimePointTM();
+  AutoType crrTMTime = Clock::CurrentTimePointTM();
 
   asstr << std::put_time(&crrTMTime, tformat.c_str());
 

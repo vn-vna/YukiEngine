@@ -1,6 +1,7 @@
 #include <YukiCore/YukiApplication.hpp>
 #include <YukiComp/YukiCamera.hpp>
 #include <YukiComp/YukiScene.hpp>
+#include <YukiUtil/YukiChrono.hpp>
 
 #include "TestEntity.hpp"
 #include "CameraController.hpp"

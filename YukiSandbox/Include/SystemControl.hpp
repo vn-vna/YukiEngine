@@ -10,7 +10,6 @@
 #include <YukiEntity/Entity.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 
-using Yuki::Utils::isKeyReleased;
 using Yuki::Core::KeyCode;
 
 class SystemControl : virtual public Yuki::Entity::YukiEntity
@@ -18,6 +17,7 @@ class SystemControl : virtual public Yuki::Entity::YukiEntity
 protected:
   Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
   Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
+  Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -40,6 +40,13 @@ inline SystemControl::~SystemControl() = default;
 
 inline void SystemControl::OnCreate()
 {
+  pTimer = Yuki::Chrono::CreateTimer([](Yuki::Chrono::IYukiTimer* pTimer) {
+    std::cout << "Hello from timer "
+              << pTimer->GetElapsedTime() << "\n";
+  },
+      100'000'000);
+
+  pTimer->Start();
 }
 
 inline void SystemControl::OnAwake()
@@ -58,6 +65,21 @@ inline void SystemControl::OnUpdate()
   if (keyR.ctrl && keyR.state == Yuki::Core::KeyState::PRESS)
   {
     Yuki::Core::GetYukiApp()->Reload();
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_1))
+  {
+    pTimer->Pause();
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_2))
+  {
+    pTimer->Resume();
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_3))
+  {
+    pTimer->Terminate();
   }
 }
 

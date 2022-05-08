@@ -39,6 +39,7 @@
 #include <map>
 #include <array>
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
 #include <queue>
 #include <stack>
@@ -101,6 +102,12 @@ using UnorderedMap = std::unordered_map<K, V>;
 
 template <typename K, typename V>
 using Map = std::map<K, V>;
+
+template <typename T>
+using UnorderedSet = std::unordered_set<T>;
+
+template <typename T>
+using Set = std::set<T>;
 
 template <typename T, int SIZE>
 using Array = std::array<T, SIZE>;

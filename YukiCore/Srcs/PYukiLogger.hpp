@@ -15,6 +15,7 @@
 namespace Yuki::Debug
 {
 
+using Chrono::Clock;
 using Core::YukiObject;
 
 class YukiLogger final : virtual public IYukiLogger,
