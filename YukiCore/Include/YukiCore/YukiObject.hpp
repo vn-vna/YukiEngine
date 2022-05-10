@@ -21,7 +21,7 @@ class IYukiGfxControl;
 class IYukiShaderProgram;
 class IYukiWindow;
 class IYukiInpControl;
-class IYukiThread;
+class IYukiThreadPool;
 class IYukiOGLObject;
 class IYukiOGLVertexBuffer;
 class IYukiOGLShaderProgram;

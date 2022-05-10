@@ -9,6 +9,8 @@
 #pragma once
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiThreadPool.hpp"
 
 // std
 #include <chrono>
@@ -40,11 +42,14 @@ using TimePoint     = std::chrono::system_clock::time_point;
 using TimeType      = std::time_t;
 using TMType        = std::tm;
 using SystemClockNS = std::chrono::nanoseconds;
-using TimerAction   = std::function<void(IYukiTimer*)>;
 using MiliSeconds   = std::chrono::milliseconds;
 using NanoSeconds   = std::chrono::nanoseconds;
 using Seconds       = std::chrono::seconds;
-using TimerManager  = UnorderedSet<IYukiTimer*>;
+
+using Core::GetYukiApp;
+
+typedef std::function<void(IYukiTimer*)> TimerAction;
+typedef UnorderedSet<IYukiTimer*>        TimerManager;
 
 typedef struct YUKIAPI StDateTimeFormat
 {
@@ -86,14 +91,14 @@ public:
   virtual void Restart()         = 0;
   virtual void ExecuteCallback() = 0;
 
-  virtual void SeekTimer(long long millis, long long nanos = 0) = 0;
-  virtual void SeekTimer(float seconds)                         = 0;
-  virtual void SeekCycle(long long cycles)                      = 0;
+  virtual void SeekTimer(long long millis, long long nanos) = 0;
+  virtual void SeekTimer(float seconds)                     = 0;
+  virtual void SeekCycle(long long cycles)                  = 0;
 
-  virtual void SetInterval(long long milis, long long nanos = 0) = 0;
-  virtual void SetEstimateCycle(long long cycles)                = 0; // Set the estimate cycle, -1 for infinite
-  virtual void SetParallelExecution(bool sep)                    = 0; // Execute callback from thread pool
-  virtual void SetCallback(const TimerAction& callback)          = 0;
+  virtual void SetInterval(long long milis, long long nanos) = 0;
+  virtual void SetEstimateCycle(long long cycles)            = 0; // Set the estimate cycle, -1 for infinite
+  virtual void SetParallelExecution(bool sep)                = 0; // Execute callback from thread pool
+  virtual void SetCallback(const TimerAction& callback)      = 0;
 
   virtual long long          GetCycle()            = 0; // Return the defined Cycle or -1 for infinite
   virtual long long          GetInterval()         = 0;

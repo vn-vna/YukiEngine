@@ -21,8 +21,8 @@ class YukiInpControl final : virtual public IYukiInpControl,
                              virtual public YukiObject
 {
 protected:
-  Map<String, YukiInpKeyboardCallbackT>         m_mpKeyCallbacksPool;
-  Map<String, YukiInpCursorCallbackT>           m_mpCursorCallbacksPool;
+  Map<String, YukiInpKeyboardCallback>         m_mpKeyCallbacksPool;
+  Map<String, YukiInpCursorCallback>           m_mpCursorCallbacksPool;
   Array<KeyStatus, (int) KeyCode::KEY_LAST + 1> m_tKeyStatuses;
   MouseStatus                                   m_tCrrMouseStatus;
   MouseStatus                                   m_tPrevMouseStatus;
@@ -32,8 +32,8 @@ public:
   YukiInpControl();
   ~YukiInpControl() override;
 
-  void AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallbackT& pcallback) override;
-  void AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback) override;
+  void AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallback& pcallback) override;
+  void AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback) override;
   void RemoveCursorInputCallback(const String& name) override;
   void RemoveKeyboardInputCallback(const String& name) override;
   void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) override;

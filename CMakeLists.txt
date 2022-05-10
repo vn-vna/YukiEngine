@@ -195,3 +195,18 @@ if (WIN32)
                 )
     endif ()
 endif ()
+
+# ----- Playground projects
+add_executable(OpenGLMultithreadTest "Playground/OpenGLMultithreadTest.cpp")
+target_include_directories(OpenGLMultithreadTest
+        PUBLIC "${YUKIDEPS_INCLUDE_DIR}"
+        )
+target_link_directories(OpenGLMultithreadTest
+        PUBLIC "${YUKIDEPS_DIR}/Debug/Libraries")
+target_link_libraries(OpenGLMultithreadTest
+        GLU32
+        OpenGL32
+        freetyped
+        glad
+        glfw3dll
+        )

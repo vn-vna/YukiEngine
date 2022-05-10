@@ -115,13 +115,22 @@ using Array = std::array<T, SIZE>;
 template <typename T>
 using Atomic = std::atomic<T>;
 
+template <typename T>
+using Function = std::function<T>;
+
 using String       = std::string;
 using StringStream = std::stringstream;
+
+using FileStream       = std::fstream;
+using InpuFileStream   = std::ifstream;
+using OutputFileStream = std::ofstream;
 
 typedef char           Char, *CharPtr, &CharRef;
 typedef const char*    ConstCharPtr;
 typedef wchar_t        WChar, *WCharPtr, &WCharRef;
 typedef const wchar_t* WConstCharPtr;
+
+typedef Function<void()> VoidNParamFunc, VoidNParamCallback;
 
 typedef glm::vec1    Vec1F;
 typedef glm::vec2    Vec2F;

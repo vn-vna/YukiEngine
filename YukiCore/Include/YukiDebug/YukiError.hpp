@@ -35,6 +35,8 @@ enum class YukiErrCode
   YUKI_THREAD_DETACHMENT_NEXIST,
   YUKI_MUTEX_CREATION_FAILED,
   YUKI_TPOOL_ALREADY_STARTED,
+  YUKI_TPOOL_MANAGER_DUPLICATE,
+  YUKI_TPOOL_MANAGER_NEXIST,
   YUKI_MUTEX_WAIT_ABANDONED,
   YUKI_MUTEX_WAIT_FUNC_FAILED,
   GLFW_INITIALIZATION_FAILED,
@@ -47,7 +49,7 @@ enum class YukiErrCode
   SCENE_DUPLICATE_ENTITY_NAME
 };
 
-class YUKIAPI YukiError : virtual protected std::exception
+class YUKIAPI YukiError : virtual public std::runtime_error
 {
 protected:
   YukiErrCode m_ErrCode;
@@ -75,6 +77,8 @@ DECLARE_YUKI_ERROR(MutexCreationError);
 DECLARE_YUKI_ERROR(MutexWaitAbandoned);
 DECLARE_YUKI_ERROR(MutexWaitFunctionFailed);
 DECLARE_YUKI_ERROR(ThreadPoolAlreadyStarted);
+DECLARE_YUKI_ERROR(ThreadPoolManagerDuplicateKey);
+DECLARE_YUKI_ERROR(ThreadPoolManagerNExistsKey);
 DECLARE_YUKI_ERROR(GLFWInitError);
 DECLARE_YUKI_ERROR(WindowCreationError);
 DECLARE_YUKI_ERROR(GladLoadGLLoaderError);
