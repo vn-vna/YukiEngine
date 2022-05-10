@@ -13,6 +13,8 @@ namespace Yuki::Chrono
 
 using Core::CreateInterfaceInstance;
 
+static SharedPtr<TimerManager> pManager;
+
 YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool parallel)
     : m_nCycleSkipped(0),
       m_nEstimateCycle(0),
@@ -25,23 +27,9 @@ YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool paral
       m_bStarted(false),
       m_bWillExecute(false),
       m_fnCallback(callback)
-{
-  AutoType manager = GetTimerManager();
-  if (manager->find(this) == manager->end())
-  {
-    manager->insert({this, 0});
-  }
-}
+{}
 
-YukiTimer::~YukiTimer()
-{
-  AutoType manager   = GetTimerManager();
-  AutoType thisTimer = manager->find(this);
-  if (thisTimer != manager->end())
-  {
-    manager->erase(this);
-  }
-}
+YukiTimer::~YukiTimer() = default;
 
 void YukiTimer::Start()
 {
@@ -77,7 +65,7 @@ void YukiTimer::SeekTimer(long long millis, long long nanos)
 
 void YukiTimer::SeekTimer(float seconds)
 {
-  m_nTimeSkipped += seconds * 1'000'000'000;
+  m_nTimeSkipped += (long long) (seconds * 1'000'000'000.0f);
 }
 
 void YukiTimer::SeekCycle(long long cycles)
@@ -182,7 +170,9 @@ void YukiTimer::UpdateTimers()
 
     if (pTimer->IsParallelExecution())
     {
-      // TODO: Add parallel execution method
+      Core::GetYukiApp()->GetWorkerPool()->PushAction([pTimer]() {
+        pTimer->ExecuteCallback();
+      });
     }
     else
     {
@@ -193,7 +183,6 @@ void YukiTimer::UpdateTimers()
 
 SharedPtr<TimerManager> GetTimerManager()
 {
-  static SharedPtr<TimerManager> pManager;
   if (!pManager.get())
   {
     pManager = std::make_shared<TimerManager>();
@@ -203,7 +192,16 @@ SharedPtr<TimerManager> GetTimerManager()
 
 SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback, long long interval, bool parallexEx)
 {
-  return CreateInterfaceInstance<IYukiTimer, YukiTimer>(callback, interval, parallexEx);
+  AutoType manager = GetTimerManager();
+
+  AutoType deleter = [manager](IYukiTimer* p) {
+    manager->erase(p);
+    delete dynamic_cast<YukiTimer*>(p);
+  };
+
+  SharedPtr<IYukiTimer> pTimer{dynamic_cast<IYukiTimer*>(new YukiTimer{callback, interval, parallexEx}), deleter};
+  manager->emplace(pTimer.get());
+  return pTimer;
 }
 
 

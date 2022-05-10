@@ -40,11 +40,12 @@ inline SystemControl::~SystemControl() = default;
 
 inline void SystemControl::OnCreate()
 {
-  pTimer = Yuki::Chrono::CreateTimer([](Yuki::Chrono::IYukiTimer* pTimer) {
+  pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
+  pTimer      = Yuki::Chrono::CreateTimer([](Yuki::Chrono::IYukiTimer* pTimer) {
     std::cout << "Hello from timer "
               << pTimer->GetElapsedTime() << "\n";
-  },
-      100'000'000);
+       },
+           1'000'000'000);
 
   pTimer->Start();
 }
@@ -55,13 +56,13 @@ inline void SystemControl::OnAwake()
 
 inline void SystemControl::OnUpdate()
 {
-  AutoType keyT = Yuki::Core::GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_T);
+  AutoType keyT = pInpControl->GetKeyStatus(KeyCode::KEY_T);
   if (keyT.ctrl && keyT.state == Yuki::Core::KeyState::PRESS)
   {
     Yuki::Core::GetYukiApp()->Terminate();
   }
 
-  AutoType keyR = Yuki::Core::GetYukiApp()->GetInputController()->GetKeyStatus(KeyCode::KEY_R);
+  AutoType keyR = pInpControl->GetKeyStatus(KeyCode::KEY_R);
   if (keyR.ctrl && keyR.state == Yuki::Core::KeyState::PRESS)
   {
     Yuki::Core::GetYukiApp()->Reload();
@@ -80,6 +81,13 @@ inline void SystemControl::OnUpdate()
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_3))
   {
     pTimer->Terminate();
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V))
+  {
+    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {
+      std::cout << "Pressed V\n";
+    });
   }
 }
 

@@ -42,7 +42,7 @@ void YukiLogger::PushErrorMessage(const String& message)
   PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR);
 }
 
-OutputLogFileType& YukiLogger::GetOutFileStream()
+OutputLogFile& YukiLogger::GetOutFileStream()
 {
   return *m_pOutFileStream;
 }
@@ -50,7 +50,7 @@ OutputLogFileType& YukiLogger::GetOutFileStream()
 void YukiLogger::Create()
 {
   Chrono::DateTimeFormat format{};
-  m_pOutFileStream = std::make_shared<OutputLogFileType>(Clock::DateTimeString(format) + ".ylg");
+  m_pOutFileStream = std::make_shared<OutputLogFile>(Clock::DateTimeString(format) + ".ylg");
 #ifndef NDEBUG
   // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
   PushDebugMessage("Application is running in DEBUG MODE");

@@ -15,7 +15,7 @@ YukiInpControl::YukiInpControl()
 
 YukiInpControl::~YukiInpControl() = default;
 
-void YukiInpControl::AddCursorInputCallback(const String& name, const YukiInpCursorCallbackT& pcallback)
+void YukiInpControl::AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback)
 {
   if (m_mpCursorCallbacksPool.find(name) != m_mpCursorCallbacksPool.end())
   {
@@ -42,7 +42,7 @@ void YukiInpControl::RemoveKeyboardInputCallback(const String& name)
   m_mpKeyCallbacksPool.erase(name);
 }
 
-void YukiInpControl::AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallbackT& pcallback)
+void YukiInpControl::AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallback& pcallback)
 {
   if (m_mpKeyCallbacksPool.find(name) != m_mpKeyCallbacksPool.end())
   {

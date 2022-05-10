@@ -29,6 +29,7 @@ public:
   virtual SharedPtr<IYukiInpControl> GetInputController()    = 0;
   virtual SharedPtr<IYukiWindow>     GetWindow()             = 0;
   virtual SharedPtr<IYukiLogger>     GetLogger()             = 0;
+  virtual SharedPtr<IYukiThreadPool> GetWorkerPool()         = 0;
 
   virtual void SetCurrentScene(SharedPtr<IYukiScene> scene) = 0;
   virtual void Reload()                                     = 0;

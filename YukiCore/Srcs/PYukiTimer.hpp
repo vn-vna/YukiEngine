@@ -42,7 +42,7 @@ public:
   void Restart() override;
   void ExecuteCallback() override;
 
-  void SeekTimer(long long millis, long long nanos = 0) override;
+  void SeekTimer(long long millis, long long nanos) override;
   void SeekTimer(float seconds) override;
   void SeekCycle(long long cycles) override;
 

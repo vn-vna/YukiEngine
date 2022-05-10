@@ -34,6 +34,7 @@ protected:
   SharedPtr<IYukiInpControl> m_pInputController;
   SharedPtr<IYukiLogger>     m_pLogger;
   SharedPtr<IYukiScene>      m_pCurrentScene;
+  SharedPtr<IYukiThreadPool> m_pWorkerPool;
   Atomic<bool>               m_bAlive;
   Atomic<bool>               m_bWillCreate;
   Atomic<bool>               m_bWillDestroy;
@@ -49,6 +50,7 @@ public:
   SharedPtr<IYukiInpControl> GetInputController() override;
   SharedPtr<IYukiWindow>     GetWindow() override;
   SharedPtr<IYukiLogger>     GetLogger() override;
+  SharedPtr<IYukiThreadPool> GetWorkerPool() override;
 
   void SetCurrentScene(SharedPtr<IYukiScene> scene) override;
   void Reload() override;
