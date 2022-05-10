@@ -3,47 +3,47 @@
 namespace Yuki::Utils
 {
 
-bool isKeyPressed(KeyCode key)
+bool IsKeyPressed(KeyCode key)
 {
   return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::PRESS;
 }
 
-bool isKeyRepeated(KeyCode key)
+bool IsKeyRepeated(KeyCode key)
 {
   return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::REPEAT;
 }
 
-bool isKeyReleased(KeyCode key)
+bool IsKeyReleased(KeyCode key)
 {
   return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::RELEASE;
 }
 
-void moveCameraRight(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(speed * camera->GetCameraHorizontalAxis());
 }
 
-void moveCameraLeft(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraLeft(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(-speed * camera->GetCameraHorizontalAxis());
 }
 
-void moveCameraFront(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraFront(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(speed * camera->GetCameraVerticalAxis());
 }
 
-void moveCameraBack(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(-speed * camera->GetCameraVerticalAxis());
 }
 
-void moveCameraUp(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(speed * camera->GetCameraTopAxis());
 }
 
-void moveCameraDown(SharedPtr<IYukiCamera> camera, float speed)
+void MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed)
 {
   camera->MoveCamera(-speed * camera->GetCameraTopAxis());
 }

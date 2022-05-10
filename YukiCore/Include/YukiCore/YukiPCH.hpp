@@ -39,11 +39,13 @@
 #include <map>
 #include <array>
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
 #include <queue>
 #include <stack>
 #include <iosfwd>
 #include <filesystem>
+#include <atomic>
 
 // glm types
 #include <glm/vec2.hpp>
@@ -101,16 +103,34 @@ using UnorderedMap = std::unordered_map<K, V>;
 template <typename K, typename V>
 using Map = std::map<K, V>;
 
+template <typename T>
+using UnorderedSet = std::unordered_set<T>;
+
+template <typename T>
+using Set = std::set<T>;
+
 template <typename T, int SIZE>
 using Array = std::array<T, SIZE>;
 
+template <typename T>
+using Atomic = std::atomic<T>;
+
+template <typename T>
+using Function = std::function<T>;
+
 using String       = std::string;
 using StringStream = std::stringstream;
+
+using FileStream       = std::fstream;
+using InpuFileStream   = std::ifstream;
+using OutputFileStream = std::ofstream;
 
 typedef char           Char, *CharPtr, &CharRef;
 typedef const char*    ConstCharPtr;
 typedef wchar_t        WChar, *WCharPtr, &WCharRef;
 typedef const wchar_t* WConstCharPtr;
+
+typedef Function<void()> VoidNParamFunc, VoidNParamCallback;
 
 typedef glm::vec1    Vec1F;
 typedef glm::vec2    Vec2F;

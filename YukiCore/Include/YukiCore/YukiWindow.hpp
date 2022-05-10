@@ -13,10 +13,13 @@
 
 #include <glm/vec2.hpp>
 
+#define YUKI_DEFAULT_WINDOW_WIDTH  1366
+#define YUKI_DEFAULT_WINDOW_HEIGHT 768
+#define YUKI_DEFAULT_WINDOW_TITLE  "Window"
+#define YUKI_WINDOW_SAMPLES        4
+
 namespace Yuki::Core
 {
-
-extern bool YUKIAPI g_bGLFWInited;
 
 class YUKIAPI IYukiWindow : virtual public IYukiObject
 {

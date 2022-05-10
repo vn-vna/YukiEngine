@@ -15,13 +15,14 @@
 namespace Yuki::Debug
 {
 
+using Chrono::Clock;
 using Core::YukiObject;
 
 class YukiLogger final : virtual public IYukiLogger,
                          virtual public YukiObject
 {
 protected:
-  SharedPtr<OutputLogFileType> m_pOutFileStream;
+  SharedPtr<OutputLogFile> m_pOutFileStream;
 
 public:
   YukiLogger();
@@ -31,7 +32,7 @@ public:
   void               PushDebugMessage(const String& message) override;
   void               PushWarningMessage(const String& message) override;
   void               PushErrorMessage(const String& message) override;
-  OutputLogFileType& GetOutFileStream() override;
+  OutputLogFile& GetOutFileStream() override;
   void               Create() override;
   void               Destroy() override;
 };

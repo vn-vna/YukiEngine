@@ -1,5 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
 #include "YukiCore/YukiObject.hpp"
 
 #include "PYukiThreadPool.hpp"
@@ -7,52 +8,65 @@
 namespace Yuki::Core
 {
 
-YukiThreadPool::YukiThreadPool(int poolSize, long long invokeInterval)
-    : m_aWorkers(),
+YukiThreadPool::YukiThreadPool(int poolSize)
+    : m_pManager(GetThreadPoolManager()),
+      m_aWorkers(),
       m_ActionQueue(),
       m_ActionQueueMutex(),
       m_ActionQueueWaiter(),
-      m_tInvokeInterval(invokeInterval),
+      m_PoolWaiter(),
       m_bPoolActive(false),
       m_bPoolStarted(false),
+      m_nNumThreadReady(0),
       m_WorkerFunc([&]() {
-        std::unique_lock<std::mutex> locker{this->m_ActionQueueMutex, std::defer_lock};
-        while (true)
+        bool threadReady = false;
+        ++m_nNumThreadReady;
+        if (m_nNumThreadReady == m_aWorkers.capacity())
         {
-          locker.lock();
+          m_PoolWaiter.notify_all();
+        }
 
-          if (this->m_ActionQueue.empty())
+        while (m_bPoolActive)
+        {
+          std::unique_lock<std::mutex> locker{m_ActionQueueMutex, std::defer_lock};
+
+          locker.lock();
+          bool queueEmpty = m_ActionQueue.empty();
+
+          if (queueEmpty)
           {
-            this->m_ActionQueueWaiter.wait(locker);
+            m_ActionQueueWaiter.wait(locker);
+            locker.unlock();
             continue;
           }
 
-          AutoType action = this->m_ActionQueue.front();
-          this->m_ActionQueue.pop();
-          locker.unlock();
-          action();
-        }
-      }),
-      m_ManagerFunc([&]() {
-        this->m_bPoolStarted = true;
-        while (this->m_bPoolActive)
-        {
-          std::lock_guard<std::mutex> queue_lock_guard{this->m_ActionQueueMutex};
-          if (!this->m_ActionQueue.empty())
+          if (!m_bPoolActive)
           {
-            this->m_ActionQueueWaiter.notify_all();
+            break;
           }
-          std::this_thread::sleep_for(this->m_tInvokeInterval);
+
+          AutoType action = this->m_ActionQueue.front();
+          m_ActionQueue.pop();
+          locker.unlock();
+          if (action)
+          {
+            action();
+          }
         }
-        m_bPoolStarted = false;
+
+        --m_nNumThreadReady;
       })
 {
   if (poolSize < 1)
   {
-    poolSize = std::thread::hardware_concurrency();
+    poolSize = GetHardwareConcurrency();
   }
   m_aWorkers.reserve(poolSize);
 }
+
+
+YukiThreadPool::~YukiThreadPool()
+{}
 
 void YukiThreadPool::Start()
 {
@@ -67,22 +81,23 @@ void YukiThreadPool::Start()
     m_aWorkers.emplace_back(m_WorkerFunc);
   }
 
-
-  m_ManagerThread = std::thread(m_ManagerFunc);
+  // m_ManagerThread = std::thread(m_ManagerFunc);
 }
 
 void YukiThreadPool::Join()
 {
-
-  for (AutoType& worker : m_aWorkers)
+  for (AutoType& worker : this->m_aWorkers)
   {
-    worker.join();
+    if (worker.joinable())
+    {
+      worker.join();
+    }
   }
 
-  m_ManagerThread.join();
+  // m_ManagerThread.join();
 }
 
-void YukiThreadPool::PushAction(const CallbackFuncType& callback)
+void YukiThreadPool::PushAction(const CallbackFunc& callback)
 {
   m_ActionQueue.push(callback);
 }
@@ -90,41 +105,47 @@ void YukiThreadPool::PushAction(const CallbackFuncType& callback)
 void YukiThreadPool::Terminate()
 {
   m_bPoolActive = false;
+
+  while (m_nNumThreadReady)
+  {
+    this->NotifyWorkers();
+  }
 }
 
-const Vector<Thread>& YukiThreadPool::GetWorkers()
+void YukiThreadPool::WaitForPoolReady()
+{
+  std::unique_lock<std::mutex> locker{m_PoolMutex};
+  m_PoolWaiter.wait(locker);
+}
+
+void YukiThreadPool::NotifyWorkers()
+{
+  m_ActionQueueWaiter.notify_all();
+}
+
+Vector<Thread>& YukiThreadPool::GetWorkers()
 {
   return m_aWorkers;
 }
 
-const Thread& YukiThreadPool::GetManagerThread()
-{
-  return m_ManagerThread;
-}
-
-const ConditionVariable& YukiThreadPool::GetWorkerWaiter()
+ConditionVariable& YukiThreadPool::GetWorkerWaiter()
 {
   return m_ActionQueueWaiter;
 }
 
-const Mutex& YukiThreadPool::GetActionQueueMutex()
+Mutex& YukiThreadPool::GetActionQueueMutex()
 {
   return m_ActionQueueMutex;
 }
 
-const Queue<CallbackFuncType>& YukiThreadPool::GetActionQueue()
+Queue<CallbackFunc>& YukiThreadPool::GetActionQueue()
 {
   return m_ActionQueue;
 }
 
-const CallbackFuncType& YukiThreadPool::GetWorkerFuncCallback()
+CallbackFunc& YukiThreadPool::GetWorkerFuncCallback()
 {
   return m_WorkerFunc;
-}
-
-const CallbackFuncType& YukiThreadPool::GetManagerFuncCallback()
-{
-  return m_ManagerFunc;
 }
 
 bool YukiThreadPool::IsPoolActive()
@@ -137,14 +158,56 @@ bool YukiThreadPool::IsPoolStarted()
   return m_bPoolStarted;
 }
 
-long long YukiThreadPool::GetInvokeInterval()
+void InvokeAllThreads()
 {
-  return std::chrono::duration_cast<std::chrono::milliseconds>(m_tInvokeInterval).count();
+  AutoType manager = GetThreadPoolManager();
+  for (AutoType pool : *manager)
+  {
+    if (pool)
+    {
+      if (pool->GetActionQueue().empty())
+      {
+        continue;
+      }
+      pool->GetWorkerWaiter().notify_all();
+    }
+  }
 }
 
-SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize, long long invokeInterval)
+unsigned GetHardwareConcurrency()
 {
-  return CreateInterfaceInstance<IYukiThreadPool, YukiThreadPool>(poolSize, invokeInterval);
+  return std::thread::hardware_concurrency();
+}
+
+SharedPtr<ThreadPoolManager> GetThreadPoolManager()
+{
+  static SharedPtr<ThreadPoolManager> pTPManager;
+  if (!pTPManager.get())
+  {
+    pTPManager = std::make_shared<ThreadPoolManager>();
+  }
+  return pTPManager;
+}
+
+SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize)
+{
+  AutoType manager = GetThreadPoolManager();
+
+  AutoType deleter = [manager](IYukiThreadPool* p) {
+    manager->erase(p);
+    delete dynamic_cast<YukiThreadPool*>(p);
+  };
+
+  SharedPtr<IYukiThreadPool> pThreadPool{dynamic_cast<IYukiThreadPool*>(new YukiThreadPool{poolSize}), deleter};
+  if (manager->find(pThreadPool.get()) != manager->end())
+  {
+    THROW_YUKI_ERROR(ThreadPoolManagerDuplicateKey);
+  }
+
+  manager->emplace(pThreadPool.get());
+  return pThreadPool;
+
+  return pThreadPool;
 }
 
 } // namespace Yuki::Core

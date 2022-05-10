@@ -16,7 +16,7 @@ YukiLogger::~YukiLogger() = default;
 
 void YukiLogger::PushMessage(const String& message, const String& prioty)
 {
-  String sstr = "[YUKI " + prioty + " REPORT] - >> " + Chrono::DateTimeString() + " <<\n\t" + message.c_str() + "\n";
+  String sstr = "[YUKI " + prioty + " REPORT] - >> " + Clock::DateTimeString() + " <<\n\t" + message.c_str() + "\n";
 #ifndef NDEBUG
   std::cout << sstr;
 #endif // !NDEBUG
@@ -42,7 +42,7 @@ void YukiLogger::PushErrorMessage(const String& message)
   PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR);
 }
 
-OutputLogFileType& YukiLogger::GetOutFileStream()
+OutputLogFile& YukiLogger::GetOutFileStream()
 {
   return *m_pOutFileStream;
 }
@@ -50,7 +50,7 @@ OutputLogFileType& YukiLogger::GetOutFileStream()
 void YukiLogger::Create()
 {
   Chrono::DateTimeFormat format{};
-  m_pOutFileStream = std::make_shared<OutputLogFileType>(Chrono::DateTimeString(format) + ".ylg");
+  m_pOutFileStream = std::make_shared<OutputLogFile>(Clock::DateTimeString(format) + ".ylg");
 #ifndef NDEBUG
   // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
   PushDebugMessage("Application is running in DEBUG MODE");

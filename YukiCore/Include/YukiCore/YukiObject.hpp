@@ -16,17 +16,17 @@ namespace Yuki
 namespace Core
 {
 
-class YUKIAPI IYukiApp;
-class YUKIAPI IYukiGfxControl;
-class YUKIAPI IYukiShaderProgram;
-class YUKIAPI IYukiWindow;
-class YUKIAPI IYukiInpControl;
-class YUKIAPI IYukiThread;
-class YUKIAPI IYukiOGLObject;
-class YUKIAPI IYukiOGLVertexBuffer;
-class YUKIAPI IYukiOGLShaderProgram;
-class YUKIAPI IYukiOGLElementBuffer;
-class YUKIAPI IYukiOGLTexture;
+class IYukiApp;
+class IYukiGfxControl;
+class IYukiShaderProgram;
+class IYukiWindow;
+class IYukiInpControl;
+class IYukiThreadPool;
+class IYukiOGLObject;
+class IYukiOGLVertexBuffer;
+class IYukiOGLShaderProgram;
+class IYukiOGLElementBuffer;
+class IYukiOGLTexture;
 
 enum class PrimitiveTopology;
 enum class TextureType;
@@ -56,37 +56,40 @@ struct StKeyStatus;
 namespace Debug
 {
 
-enum class YUKIAPI YukiErrCode;
-class YUKIAPI      YukiError;
-class YUKIAPI      IYukiLogger;
+class YukiError;
+class IYukiLogger;
+
+enum class YukiErrCode;
 
 } // namespace Debug
 
 namespace Chrono
 {
 
-struct YUKIAPI StDateTimeFormat;
-struct YUKIAPI StDateTimeFormat;
-class YUKIAPI  IYukiTimer;
+class IYukiTimer;
+class IYukiStopwatch;
+
+struct StDateTimeFormat;
+struct StDateTimeFormat;
 
 } // namespace Chrono
 
 namespace Comp
 {
 
-struct YUKIAPI StTransformationInfo;
+class IYukiMesh;
+class IYukiScene;
+class IYukiCamera;
+class IYukiModel;
 
-class YUKIAPI IYukiMesh;
-class YUKIAPI IYukiScene;
-class YUKIAPI IYukiCamera;
-class YUKIAPI IYukiModel;
+struct StTransformationInfo;
 
 } // namespace Comp
 
 namespace Entity
 {
 
-class YUKIAPI YukiEntity;
+class YukiEntity;
 
 }
 
@@ -95,7 +98,7 @@ class YUKIAPI YukiEntity;
 namespace Yuki::Core
 {
 
-class YUKIAPI IYukiObject
+class IYukiObject
 {
 public:
   virtual void Create()  = 0;
@@ -105,10 +108,16 @@ public:
   virtual void Destroy() = 0;
 };
 
-template <typename I, typename D, typename... Args>
-SharedPtr<I> CreateInterfaceInstance(Args&&... args)
+template <class Des, class Res>
+inline SharedPtr<Des> DynamicPtrCast(SharedPtr<Res> ptr)
 {
-  return std::dynamic_pointer_cast<I>(std::make_shared<D>(args...));
+  return std::dynamic_pointer_cast<Des>(ptr);
+}
+
+template <typename I, typename D, typename... Args>
+inline SharedPtr<I> CreateInterfaceInstance(Args&&... args)
+{
+  return DynamicPtrCast<I>(std::make_shared<D>(args...));
 }
 
 } // namespace Yuki::Core

@@ -4,7 +4,8 @@
 
 #define MAKE_ERROR_DEFINITION(__err_name, __err_code)                     \
   Yuki##__err_name::Yuki##__err_name(const String& file, const int& line) \
-      : YukiError(YukiErrCode::__err_code, file, line)                    \
+      : std::runtime_error("yuki-rte"),                                   \
+        YukiError(YukiErrCode::__err_code, file, line)                    \
   {}
 
 #define YUKI_CORE_ERROR   "[YUKI CORE]"
@@ -23,7 +24,8 @@ namespace Yuki::Debug
 using Core::GetYukiApp;
 
 YukiError::YukiError(const YukiErrCode& code, const String& file, const int& line)
-    : m_File(file),
+    : std::runtime_error("yuki-rte"),
+      m_File(file),
       m_nLine(line),
       m_ErrCode(code)
 {}
@@ -47,6 +49,8 @@ String YukiError::getErrorMessage() const
     CHECK_CASE_OF_ERROR(YUKI_MUTEX_WAIT_ABANDONED,                YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(YUKI_MUTEX_WAIT_FUNC_FAILED,              YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(YUKI_TPOOL_ALREADY_STARTED,               YUKI_CORE_ERROR);
+    CHECK_CASE_OF_ERROR(YUKI_TPOOL_MANAGER_DUPLICATE,             YUKI_CORE_ERROR);
+    CHECK_CASE_OF_ERROR(YUKI_TPOOL_MANAGER_NEXIST,                YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(GLFW_INITIALIZATION_FAILED,               YUKI_GLFW_ERROR);
     CHECK_CASE_OF_ERROR(GLFW_WINDOW_CREATION_FAILED,              YUKI_GLFW_ERROR);
     CHECK_CASE_OF_ERROR(GLAD_LOAD_GLLOADER_FAILED,                YUKI_GLAD_ERROR);
@@ -85,6 +89,8 @@ MAKE_ERROR_DEFINITION(MutexCreationError,                         YUKI_MUTEX_CRE
 MAKE_ERROR_DEFINITION(MutexWaitAbandoned,                         YUKI_MUTEX_WAIT_ABANDONED)
 MAKE_ERROR_DEFINITION(MutexWaitFunctionFailed,                    YUKI_MUTEX_WAIT_FUNC_FAILED)
 MAKE_ERROR_DEFINITION(ThreadPoolAlreadyStarted,                   YUKI_TPOOL_ALREADY_STARTED)
+MAKE_ERROR_DEFINITION(ThreadPoolManagerDuplicateKey,              YUKI_TPOOL_MANAGER_DUPLICATE)
+MAKE_ERROR_DEFINITION(ThreadPoolManagerNExistsKey,                YUKI_TPOOL_MANAGER_NEXIST)
 MAKE_ERROR_DEFINITION(GLFWInitError,                              GLFW_INITIALIZATION_FAILED)
 MAKE_ERROR_DEFINITION(WindowCreationError,                        GLFW_WINDOW_CREATION_FAILED)
 MAKE_ERROR_DEFINITION(GladLoadGLLoaderError,                      GLAD_LOAD_GLLOADER_FAILED)

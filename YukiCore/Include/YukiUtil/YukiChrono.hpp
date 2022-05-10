@@ -8,6 +8,9 @@
 
 #pragma once
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiObject.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiThreadPool.hpp"
 
 // std
 #include <chrono>
@@ -35,11 +38,18 @@
 namespace Yuki::Chrono
 {
 
-using TimePointType = std::chrono::system_clock::time_point;
+using TimePoint     = std::chrono::system_clock::time_point;
 using TimeType      = std::time_t;
 using TMType        = std::tm;
 using SystemClockNS = std::chrono::nanoseconds;
-using TimerAction   = std::function<void(float, long long)>;
+using MiliSeconds   = std::chrono::milliseconds;
+using NanoSeconds   = std::chrono::nanoseconds;
+using Seconds       = std::chrono::seconds;
+
+using Core::GetYukiApp;
+
+typedef std::function<void(IYukiTimer*)> TimerAction;
+typedef UnorderedSet<IYukiTimer*>        TimerManager;
 
 typedef struct YUKIAPI StDateTimeFormat
 {
@@ -54,21 +64,55 @@ typedef struct YUKIAPI StDateTimeFormat
   String timeDateSeparator = YUKI_TIMESTR_SPACE_SEPERATOR;
 } DateTimeFormat;
 
-const float YUKIAPI   CurrentTimeNanos();
-const float YUKIAPI   CurrentTimeMilis();
-TimePointType YUKIAPI CurrentTimePoint();
-TimeType YUKIAPI      CurrentTimePointTT();
-TMType YUKIAPI        CurrentTimePointTM();
-const String YUKIAPI  DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
+class YUKIAPI Clock
+{
+public:
+  static long long    CurrentTimeNanos();
+  static long long    CurrentTimeMilis();
+  static TimePoint    CurrentTimePoint();
+  static TimeType     CurrentTimePointTT();
+  static TMType       CurrentTimePointTM();
+  static const String DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
+};
+
+class YUKIAPI IYukiStopwatch
+{
+public:
+  virtual void Start() = 0;
+};
 
 class YUKIAPI IYukiTimer
-{};
-
-class YUKIAPI YukiTimer : public IYukiTimer
 {
-protected:
-  const float m_nStartTimePoint;
-  const float m_nInterval;
+public:
+  virtual void Start()           = 0;
+  virtual void Pause()           = 0;
+  virtual void Resume()          = 0;
+  virtual void Terminate()       = 0;
+  virtual void Restart()         = 0;
+  virtual void ExecuteCallback() = 0;
+
+  virtual void SeekTimer(long long millis, long long nanos) = 0;
+  virtual void SeekTimer(float seconds)                     = 0;
+  virtual void SeekCycle(long long cycles)                  = 0;
+
+  virtual void SetInterval(long long milis, long long nanos) = 0;
+  virtual void SetEstimateCycle(long long cycles)            = 0; // Set the estimate cycle, -1 for infinite
+  virtual void SetParallelExecution(bool sep)                = 0; // Execute callback from thread pool
+  virtual void SetCallback(const TimerAction& callback)      = 0;
+
+  virtual long long          GetCycle()            = 0; // Return the defined Cycle or -1 for infinite
+  virtual long long          GetInterval()         = 0;
+  virtual long long          GetRawElapsedTime()   = 0;
+  virtual long long          GetElapsedTime()      = 0;
+  virtual long long          GetElapsedCycle()     = 0;
+  virtual long long          GetRawElapsedCycle()  = 0;
+  virtual bool               IsParallelExecution() = 0;
+  virtual bool               IsPaused()            = 0;
+  virtual bool               IsStarted()           = 0;
+  virtual const TimerAction& GetCallback()         = 0;
 };
+
+SharedPtr<TimerManager> YUKIAPI GetTimerManager();
+SharedPtr<IYukiTimer> YUKIAPI   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
 
 } // namespace Yuki::Chrono

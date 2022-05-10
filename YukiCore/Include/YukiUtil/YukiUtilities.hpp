@@ -19,16 +19,16 @@ namespace Yuki::Utils
 using namespace Yuki::Core;
 using namespace Yuki::Comp;
 
-bool YUKIAPI isKeyPressed(KeyCode key);
-bool YUKIAPI isKeyRepeated(KeyCode key);
-bool YUKIAPI isKeyReleased(KeyCode key);
+bool YUKIAPI IsKeyPressed(KeyCode key);
+bool YUKIAPI IsKeyRepeated(KeyCode key);
+bool YUKIAPI IsKeyReleased(KeyCode key);
 
-void YUKIAPI moveCameraRight(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI moveCameraLeft(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI moveCameraFront(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI moveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI moveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI moveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraLeft(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraFront(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
+void YUKIAPI MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
 
 template <class EntityClass, typename... Args>
 inline SharedPtr<Entity::YukiEntity> createEntity(Args&&... args)

@@ -1,10 +1,13 @@
 #include "YukiCore/YukiPCH.hpp"
 
 #include "PYukiApplication.hpp"
+#include "PYukiTimer.hpp"
+#include "PYukiThreadPool.hpp"
 
 namespace Yuki::Core
 {
 
+using Chrono::YukiTimer;
 using Debug::YukiError;
 using Debug::CreateYukiLogger;
 
@@ -25,6 +28,7 @@ YukiApp::YukiApp()
   m_pWindow          = CreateNewWindow();
   m_pInputController = CreateNewInputControl();
   m_pGfxController   = CreateGraphicsController();
+  m_pWorkerPool      = CreateThreadPool();
 }
 
 YukiApp::~YukiApp() = default;
@@ -47,6 +51,11 @@ SharedPtr<IYukiInpControl> YukiApp::GetInputController()
 SharedPtr<IYukiLogger> YukiApp::GetLogger()
 {
   return m_pLogger;
+}
+
+SharedPtr<IYukiThreadPool> YukiApp::GetWorkerPool()
+{
+  return m_pWorkerPool;
 }
 
 SharedPtr<IYukiWindow> YukiApp::GetWindow()
@@ -87,17 +96,23 @@ void YukiApp::RunApp()
 
 void YukiApp::Create()
 {
-  GetLogger()->Create();
-  GetWindow()->Create();
-  GetInputController()->Create();
-  GetGraphicsController()->Create();
+  this->GetLogger()->Create();
+
+  this->GetWindow()->Create();
+  this->GetGraphicsController()->Create();
+
+  this->GetWorkerPool()->Start();
+  this->GetWorkerPool()->WaitForPoolReady();
+
+  this->GetInputController()->Create();
+
   m_bWillCreate = false;
 }
 
 void YukiApp::Awake()
 {
-  GetWindow()->Awake();
-  GetGraphicsController()->Awake();
+  this->GetWindow()->Awake();
+  this->GetGraphicsController()->Awake();
   m_bWillUpdate = true;
 }
 
@@ -105,27 +120,34 @@ void YukiApp::Update()
 {
   if (!GetCurrentScene()->IsReady())
   {
-    GetCurrentScene()->Create();
+    this->GetCurrentScene()->Create();
   }
 
-  GetGraphicsController()->Render();
-  GetWindow()->Update();
+  InvokeAllThreads();
+  YukiTimer::UpdateTimers();
+  this->GetWorkerPool()->NotifyWorkers();
+  this->GetGraphicsController()->Render();
+  this->GetWindow()->Update();
 
-  GetCurrentScene()->Update();
+  this->GetCurrentScene()->Update();
 
-  if (GetWindow()->ShouldClose())
+  if (this->GetWindow()->ShouldClose())
   {
-    Terminate();
+    this->Terminate();
   }
 }
 
 void YukiApp::Destroy()
 {
-  GetCurrentScene()->Destroy();
-  GetGraphicsController()->Destroy();
-  GetInputController()->Destroy();
-  GetWindow()->Destroy();
-  GetLogger()->Destroy();
+  this->GetCurrentScene()->Destroy();
+  this->GetInputController()->Destroy();
+  this->GetGraphicsController()->Destroy();
+  this->GetWindow()->Destroy();
+
+  this->GetWorkerPool()->Terminate();
+  this->GetWorkerPool()->Join();
+
+  this->GetLogger()->Destroy();
 
   if (m_bWillTerminate)
   {
