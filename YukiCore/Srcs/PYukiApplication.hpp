@@ -25,8 +25,8 @@ namespace Yuki::Core
 using Debug::IYukiLogger;
 using Comp::IYukiScene;
 
-class YUKIAPI YukiApp final : virtual public IYukiApp,
-                              virtual public YukiObject
+class YukiApp final : virtual public IYukiApp,
+                      virtual public YukiObject
 {
 protected:
   SharedPtr<IYukiWindow>     m_pWindow;

@@ -10,6 +10,7 @@ set(CMAKE_C_STANDARD 20)
 set(VERBOSE_CONFIGURATION ON)
 set(YUKI_BUILD_LIBRARY ON)
 set(YUKI_BUILD_SANDBOX ON)
+set(YUKI_BUILD_PLAYGROUND ON)
 set(CPP_FILE_EXTENSIONS "cpp" "hpp" "cx" "cxx" "hxx" "h")
 set(GLSL_FILE_EXTENSIONS "glsl" "vert" "geom" "frag")
 
@@ -197,16 +198,7 @@ if (WIN32)
 endif ()
 
 # ----- Playground projects
-add_executable(OpenGLMultithreadTest "Playground/OpenGLMultithreadTest.cpp")
-target_include_directories(OpenGLMultithreadTest
-        PUBLIC "${YUKIDEPS_INCLUDE_DIR}"
-        )
-target_link_directories(OpenGLMultithreadTest
-        PUBLIC "${YUKIDEPS_DIR}/Debug/Libraries")
-target_link_libraries(OpenGLMultithreadTest
-        GLU32
-        OpenGL32
-        freetyped
-        glad
-        glfw3dll
-        )
+if (YUKI_BUILD_PLAYGROUND)
+    add_executable(OpenGLMultithreadTest "Playground/OpenGLMultithreadTest.cpp")
+    target_link_libraries(OpenGLMultithreadTest yuki-core)
+endif ()

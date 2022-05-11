@@ -11,6 +11,9 @@
 #include <cmath>
 #include <random>
 #include <iostream>
+#include <thread>
+
+#include <YukiUtil/YukiRandomMachine.hpp>
 
 int main()
 {
@@ -21,15 +24,13 @@ int main()
 
   std::vector<float> v;
   v.reserve(1'000'000);
-  std::random_device                    rd;
-  std::mt19937                          mt(rd());
-  std::uniform_real_distribution<float> dist(1.0, 10.0);
 
   long long sum = 0;
 
-  for (int i = 0; i < 1'000'000; ++i)
+  for (int i = 0; i < 1'0; ++i)
   {
-    v.emplace_back(dist(mt));
+    v.emplace_back(Yuki::Utils::GetRandomMachine()->GetRandomNumber());
+    std::cout << v.at(v.size() - 1) << " ";
   }
 
   glfwDefaultWindowHints();
@@ -39,27 +40,41 @@ int main()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  GLFWwindow* mainWindow = glfwCreateWindow(100, 100, "", nullptr, nullptr);
+  GLFWwindow* mainWindow       = glfwCreateWindow(100, 100, "", nullptr, nullptr);
+  GLFWwindow* offscreenContext = glfwCreateWindow(100, 100, "", nullptr, mainWindow);
+
   glfwMakeContextCurrent(mainWindow);
   gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
-  for (int bench = 0; bench < 30; ++bench)
+  for (int bench = 0; bench < 1; ++bench)
   {
     auto     start = std::chrono::steady_clock::now();
     unsigned vbo;
 
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 1; ++i)
     {
       glGenBuffers(1, &vbo);
 
-      glBindBuffer(GL_ARRAY_BUFFER, vbo);
-      glBufferData(GL_ARRAY_BUFFER, sizeof(float) * v.size(), v.data(), GL_STATIC_DRAW);
+      std::thread t{[&]() {
+        glfwMakeContextCurrent(offscreenContext);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * v.size(), v.data(), GL_STATIC_DRAW);
+
+        std::cout << "\n";
+        float* c = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY);
+        for (int i = 0; i < v.size(); ++i)
+        {
+          std::cout << c[i] << ' ';
+        }
+      }};
+      t.join();
 
       glDeleteBuffers(1, &vbo);
     }
     auto dur = std::chrono::steady_clock::now() - start;
     sum += std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-    std::cout << "Time elapsed: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << "\n";
+    std::cout << "\nTime elapsed: " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << "\n";
   }
 
   sum /= 30;
