@@ -8,7 +8,7 @@
 namespace Yuki::Core
 {
 
-YukiThreadPool::YukiThreadPool(int poolSize)
+YukiThreadPool::YukiThreadPool(int poolSize, bool oglContext)
     : m_pManager(GetThreadPoolManager()),
       m_aWorkers(),
       m_ActionQueue(),
@@ -18,6 +18,7 @@ YukiThreadPool::YukiThreadPool(int poolSize)
       m_bPoolActive(false),
       m_bPoolStarted(false),
       m_nNumThreadReady(0),
+      m_bCreateOGLContext(oglContext),
       m_WorkerFunc([&]() {
         bool threadReady = false;
         ++m_nNumThreadReady;
@@ -59,20 +60,24 @@ YukiThreadPool::YukiThreadPool(int poolSize)
 {
   if (poolSize < 1)
   {
-    poolSize = GetHardwareConcurrency();
+    poolSize = (int) GetHardwareConcurrency();
   }
   m_aWorkers.reserve(poolSize);
 }
 
 
-YukiThreadPool::~YukiThreadPool()
-{}
+YukiThreadPool::~YukiThreadPool() = default;
 
 void YukiThreadPool::Start()
 {
   if (m_bPoolStarted)
   {
     THROW_YUKI_ERROR(ThreadPoolAlreadyStarted);
+  }
+
+  if (m_bCreateOGLContext)
+  {
+
   }
 
   m_bPoolActive = true;
@@ -189,7 +194,7 @@ SharedPtr<ThreadPoolManager> GetThreadPoolManager()
   return pTPManager;
 }
 
-SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize)
+SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize, bool oglContext)
 {
   AutoType manager = GetThreadPoolManager();
 
@@ -198,7 +203,9 @@ SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize)
     delete dynamic_cast<YukiThreadPool*>(p);
   };
 
-  SharedPtr<IYukiThreadPool> pThreadPool{dynamic_cast<IYukiThreadPool*>(new YukiThreadPool{poolSize}), deleter};
+  SharedPtr<IYukiThreadPool> pThreadPool{
+      dynamic_cast<IYukiThreadPool*>(new YukiThreadPool{poolSize, oglContext}),
+      deleter};
   if (manager->find(pThreadPool.get()) != manager->end())
   {
     THROW_YUKI_ERROR(ThreadPoolManagerDuplicateKey);

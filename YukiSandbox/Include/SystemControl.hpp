@@ -83,6 +83,16 @@ inline void SystemControl::OnUpdate()
     pTimer->Terminate();
   }
 
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_F1))
+  {
+    pInpControl->LockMouse(1336 / 2, 768 / 2);
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_F2))
+  {
+    pInpControl->UnlockMouse();
+  }
+
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V))
   {
     Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {

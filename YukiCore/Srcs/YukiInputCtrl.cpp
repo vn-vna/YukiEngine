@@ -1,4 +1,6 @@
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/YukiWindow.hpp"
 
 #include "PYukiInputControl.hpp"
 
@@ -6,11 +8,12 @@ namespace Yuki::Core
 {
 
 YukiInpControl::YukiInpControl()
-    : m_mpKeyCallbacksPool{},
-      m_mpCursorCallbacksPool{},
-      m_tCrrMouseStatus{},
-      m_tPrevMouseStatus{},
-      m_tKeyStatuses{}
+    : m_mpKeyCallbacksPool(),
+      m_mpCursorCallbacksPool(),
+      m_tCrrMouseStatus(),
+      m_tPrevMouseStatus(),
+      m_tKeyStatuses(),
+      m_tLockMouse()
 {}
 
 YukiInpControl::~YukiInpControl() = default;
@@ -81,6 +84,11 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
   // Default callback
   m_tPrevMouseStatus = {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y};
   m_tCrrMouseStatus  = {x, y, x - m_tPrevMouseStatus.x, y - m_tPrevMouseStatus.y};
+
+  if (m_tLockMouse.lock)
+  {
+    Core::GetYukiApp()->GetWindow()->SetCursorPos(m_tLockMouse.lx, m_tLockMouse.ly);
+  }
 
   if (m_mpCursorCallbacksPool.empty())
   {

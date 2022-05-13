@@ -5,6 +5,8 @@
 
 #include "PYukiLogger.hpp"
 
+#include <fmt/format.h>
+
 namespace Yuki::Debug
 {
 
@@ -16,15 +18,15 @@ YukiLogger::~YukiLogger() = default;
 
 void YukiLogger::PushMessage(const String& message, const String& prioty)
 {
-  String sstr = "[YUKI " + prioty + " REPORT] - >> " + Clock::DateTimeString() + " <<\n\t" + message.c_str() + "\n";
+  String outMessage = fmt::format("[YUKI {} REPORT] - {}\n\t{}\n", prioty, Clock::DateTimeString(), message);
 #ifndef NDEBUG
-  std::cout << sstr;
+  std::cout << outMessage;
 #endif // !NDEBUG
   if (!m_pOutFileStream->good())
   {
     THROW_YUKI_ERROR(CreateLogFileError);
   }
-  GetOutFileStream() << sstr;
+  GetOutFileStream() << outMessage;
 }
 
 void YukiLogger::PushDebugMessage(const String& message)

@@ -35,6 +35,10 @@ public:
   virtual GLFWwindow* GetGLFWWindow()                = 0;
 };
 
+class YUKIAPI IYukiOffScreenContext : virtual public IYukiObject
+{
+};
+
 SharedPtr<IYukiWindow> CreateNewWindow();
 
 } // namespace Yuki::Core

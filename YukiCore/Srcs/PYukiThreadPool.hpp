@@ -33,9 +33,10 @@ protected:
   Atomic<bool>                 m_bPoolStarted;
   Atomic<int>                  m_nNumThreadReady;
   ConditionVariable            m_PoolWaiter;
+  bool                         m_bCreateOGLContext;
 
 public:
-  explicit YukiThreadPool(int poolSize);
+  YukiThreadPool(int poolSize, bool oglContext);
   ~YukiThreadPool();
 
   void Start() override;

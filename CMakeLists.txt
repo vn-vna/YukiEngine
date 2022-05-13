@@ -184,6 +184,7 @@ if (WIN32)
                 freetyped
                 glad
                 glfw3dll
+                fmtd
                 )
     else ()
         target_link_libraries(yuki-core
@@ -193,6 +194,7 @@ if (WIN32)
                 freetype
                 glad
                 glfw3dll
+                fmt
                 )
     endif ()
 endif ()

@@ -9,9 +9,37 @@
 
 #include "PYukiGraphicsControl.hpp"
 
+#include <fmt/format.h>
 
 namespace Yuki::Core
 {
+
+String GetGraphicsCardVendorName()
+{
+  const GLubyte* vendor = glGetString(GL_VENDOR);
+  return (const char*) vendor;
+}
+
+String GetGraphicsCardRendererName()
+{
+  const GLubyte* renderer = glGetString(GL_RENDERER);
+  return (const char*) renderer;
+}
+
+String GetShadingLanguageVersion()
+{
+  const GLubyte* lvs = glGetString(GL_SHADING_LANGUAGE_VERSION);
+  return (const char*) lvs;
+}
+
+void PrintGraphicProperties()
+{
+  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format(
+      "Graphic device information: \n\tVendor: {} \n\tRenderer: {} \n\tShading language version: {}",
+      GetGraphicsCardVendorName(),
+      GetGraphicsCardRendererName(),
+      GetShadingLanguageVersion()));
+}
 
 using Comp::ReleaseMeshShader;
 using Comp::InitializeMeshShader;
@@ -33,6 +61,7 @@ void YukiGfxControl::Create()
 
 void YukiGfxControl::Awake()
 {
+  PrintGraphicProperties();
 }
 
 void YukiGfxControl::Render()

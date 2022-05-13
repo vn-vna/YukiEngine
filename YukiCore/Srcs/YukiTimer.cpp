@@ -27,7 +27,9 @@ YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool paral
       m_bStarted(false),
       m_bWillExecute(false),
       m_fnCallback(callback)
-{}
+{
+
+}
 
 YukiTimer::~YukiTimer() = default;
 

@@ -25,7 +25,7 @@ protected:
   int      m_nChannel;
 
 public:
-  YukiImage(const String& path, bool flip = false);
+  explicit YukiImage(const String& path, bool flip = false);
   virtual ~YukiImage();
 
   const uint8_t* GetData();
