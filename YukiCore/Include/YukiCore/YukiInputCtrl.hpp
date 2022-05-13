@@ -269,14 +269,14 @@ typedef struct StKeyStatus
 
 typedef struct StMouseStatus
 {
-  int x, y;
-  int vx, vy;
+  float x, y;
+  float vx, vy;
 } MouseStatus;
 
 typedef struct StMouseLock
 {
-  int  lx, ly;
-  bool lock;
+  float lx, ly;
+  bool  lock;
 } MouseLock;
 
 class YUKIAPI IYukiInpControl : virtual public IYukiObject
