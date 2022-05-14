@@ -50,7 +50,6 @@ public:
   bool         IsMouseLocked() override;
 
   void Create() override;
-  void Update() override;
   void Destroy() override;
 };
 

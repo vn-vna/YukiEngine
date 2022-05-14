@@ -3,6 +3,7 @@
 #include <YukiComp/YukiScene.hpp>
 #include <YukiUtil/YukiChrono.hpp>
 #include <YukiCore/YukiThreadPool.hpp>
+#include <YukiUtil/YukiSystem.hpp>
 
 #include "TestEntity.hpp"
 #include "CameraController.hpp"
@@ -10,6 +11,8 @@
 
 int main(int, char**)
 {
+
+  AutoType sysctrl = Yuki::Utils::GetYukiSystemController();
 
   AutoType yukiApp       = Yuki::Core::CreateYukiApp();
   AutoType camera        = Yuki::Comp::CreateYukiCamera();

@@ -83,7 +83,7 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 {
   // Default callback
   m_tPrevMouseStatus = {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y};
-  m_tCrrMouseStatus  = {x, y, x - m_tPrevMouseStatus.x, y - m_tPrevMouseStatus.y};
+  m_tCrrMouseStatus  = {x, y, (float) x - m_tPrevMouseStatus.x, (float) y - m_tPrevMouseStatus.y};
 
   if (m_tLockMouse.lock)
   {

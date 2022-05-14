@@ -151,6 +151,7 @@ void YukiCamera::Update()
 
 SharedPtr<IYukiCamera> CreateYukiCamera()
 {
+
   return Core::CreateInterfaceInstance<IYukiCamera, YukiCamera>();
 }
 

@@ -269,14 +269,14 @@ typedef struct StKeyStatus
 
 typedef struct StMouseStatus
 {
-  float x, y;
+  int   x, y;
   float vx, vy;
 } MouseStatus;
 
 typedef struct StMouseLock
 {
-  float lx, ly;
-  bool  lock;
+  int  lx, ly;
+  bool lock;
 } MouseLock;
 
 class YUKIAPI IYukiInpControl : virtual public IYukiObject
@@ -284,12 +284,12 @@ class YUKIAPI IYukiInpControl : virtual public IYukiObject
 public:
   virtual void AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback)     = 0;
   virtual void AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallback& pcallback) = 0;
-  virtual void RemoveCursorInputCallback(const String& name)                                           = 0;
-  virtual void RemoveKeyboardInputCallback(const String& name)                                         = 0;
-  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                   = 0;
-  virtual void ExecuteCursorPosCallback(int x, int y)                                                  = 0;
-  virtual void LockMouse(int x, int y)                                                                 = 0;
-  virtual void UnlockMouse()                                                                           = 0;
+  virtual void RemoveCursorInputCallback(const String& name)                                          = 0;
+  virtual void RemoveKeyboardInputCallback(const String& name)                                        = 0;
+  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                  = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)                                                 = 0;
+  virtual void LockMouse(int x, int y)                                                                = 0;
+  virtual void UnlockMouse()                                                                          = 0;
 
   virtual KeyStatus&   GetKeyStatus(const KeyCode& keyCode) = 0;
   virtual MouseStatus& GetMouseStatus()                     = 0;
