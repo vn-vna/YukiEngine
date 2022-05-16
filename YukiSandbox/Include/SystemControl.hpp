@@ -9,6 +9,7 @@
 
 #include <YukiEntity/Entity.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
+#include <YukiUtil/YukiSystem.hpp>
 
 using Yuki::Core::KeyCode;
 
@@ -18,6 +19,7 @@ protected:
   Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
   Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
+  Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -41,11 +43,14 @@ inline SystemControl::~SystemControl() = default;
 inline void SystemControl::OnCreate()
 {
   pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
-  pTimer      = Yuki::Chrono::CreateTimer([](Yuki::Chrono::IYukiTimer* pTimer) {
-    std::cout << "Hello from timer "
-              << pTimer->GetElapsedTime() << "\n";
-       },
-           1'000'000'000);
+  pSysControl = Yuki::Utils::GetYukiSystemController();
+
+  pTimer = Yuki::Chrono::CreateTimer([&](Yuki::Chrono::IYukiTimer* pTimer) {
+    AutoType info = pSysControl->GetResourceActivityInfo();
+    std::cout << "Cpu AVG = " << info.avgCpuLoad << "%\n"
+              << "Ram Usage = " << (float) info.memoryUsed / std::pow(1024, 3) << "GB\n";
+  },
+      1'000'000'000);
 
   pTimer->Start();
 }
@@ -56,6 +61,7 @@ inline void SystemControl::OnAwake()
 
 inline void SystemControl::OnUpdate()
 {
+
   AutoType keyT = pInpControl->GetKeyStatus(KeyCode::KEY_T);
   if (keyT.ctrl && keyT.state == Yuki::Core::KeyState::PRESS)
   {

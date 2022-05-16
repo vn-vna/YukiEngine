@@ -185,6 +185,7 @@ if (WIN32)
                 glad
                 glfw3dll
                 fmtd
+                pdh
                 )
     else ()
         target_link_libraries(yuki-core
@@ -195,6 +196,7 @@ if (WIN32)
                 glad
                 glfw3dll
                 fmt
+                pdh
                 )
     endif ()
 endif ()
@@ -203,4 +205,7 @@ endif ()
 if (YUKI_BUILD_PLAYGROUND)
     add_executable(OpenGLMultithreadTest "Playground/OpenGLMultithreadTest.cpp")
     target_link_libraries(OpenGLMultithreadTest yuki-core)
+
+    add_executable(PdhQueryTest "Playground/PdhQueryTest.cpp")
+    target_link_libraries(PdhQueryTest pdh)
 endif ()
