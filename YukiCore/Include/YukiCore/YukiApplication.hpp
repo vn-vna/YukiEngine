@@ -19,7 +19,7 @@ namespace Yuki::Core
 using Comp::IYukiScene;
 using Debug::IYukiLogger;
 
-class YUKIAPI IYukiApp : virtual public IYukiObject
+class IYukiApp : virtual public IYukiObject
 {
 public:
   virtual void RunApp() = 0;
@@ -36,7 +36,7 @@ public:
   virtual void Terminate()                                  = 0;
 };
 
-SharedPtr<IYukiApp> YUKIAPI CreateYukiApp();
-SharedPtr<IYukiApp> YUKIAPI GetYukiApp();
+SharedPtr<IYukiApp> CreateYukiApp();
+SharedPtr<IYukiApp> GetYukiApp();
 
 } // namespace Yuki::Core

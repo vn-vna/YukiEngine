@@ -333,13 +333,13 @@ typedef struct StIndexData
 
 // This object is only used once in Application. This is the class
 // controls every graphics actions.
-class YUKIAPI IYukiGfxControl : virtual public IYukiObject
+class IYukiGfxControl : virtual public IYukiObject
 {
 public:
 };
 
 // OpenGL Object abstraction.
-class YUKIAPI IYukiOGLObject : virtual public IYukiObject
+class IYukiOGLObject : virtual public IYukiObject
 {
 public:
   virtual const unsigned& GetID()      = 0;
@@ -347,7 +347,7 @@ public:
 };
 
 // Vertex Buffer Object abstraction.
-class YUKIAPI IYukiOGLVertexBuffer : virtual public IYukiOGLObject
+class IYukiOGLVertexBuffer : virtual public IYukiOGLObject
 {
 public:
   virtual void SetBufferData(Vector<float>& data)       = 0;
@@ -355,7 +355,7 @@ public:
 };
 
 // Element Buffer Object abstraction.
-class YUKIAPI IYukiOGLElementBuffer : virtual public IYukiOGLObject
+class IYukiOGLElementBuffer : virtual public IYukiOGLObject
 {
 public:
   virtual void SetBufferData(Vector<unsigned>& data)                                    = 0;
@@ -365,7 +365,7 @@ public:
 };
 
 // Vertex Array Object abstraction.
-class YUKIAPI IYukiOGLVertexArray : virtual public IYukiOGLObject
+class IYukiOGLVertexArray : virtual public IYukiOGLObject
 {
 public:
   virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
@@ -376,7 +376,7 @@ public:
 };
 
 // Shader Program abstraction.
-class YUKIAPI IYukiOGLShaderProgram : virtual public IYukiOGLObject
+class IYukiOGLShaderProgram : virtual public IYukiOGLObject
 {
 public:
   virtual void UniformMatrix(const String& prop, const Mat2F& mat, bool transopse = false) = 0;
@@ -393,7 +393,7 @@ public:
 };
 
 // OpenGL Texture abstraction.
-class YUKIAPI IYukiOGLTexture : virtual public IYukiOGLObject
+class IYukiOGLTexture : virtual public IYukiOGLObject
 {
 public:
   virtual void SetTextureMinFilter(TextureMinFilter minFilter)          = 0;
@@ -429,11 +429,11 @@ public:
   virtual void BindTexture(unsigned slot) = 0;
 };
 
-SharedPtr<IYukiGfxControl> YUKIAPI       CreateGraphicsController();
-SharedPtr<IYukiOGLVertexBuffer> YUKIAPI  CreateGLVertexBuffer();
-SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer();
-SharedPtr<IYukiOGLShaderProgram> YUKIAPI CreateGLShaderProgram(const String& shaderName);
-SharedPtr<IYukiOGLVertexArray> YUKIAPI   CreateGLVertexArray();
-SharedPtr<IYukiOGLTexture> YUKIAPI       CreateGLTexture(TextureType type);
+SharedPtr<IYukiGfxControl>       CreateGraphicsController();
+SharedPtr<IYukiOGLVertexBuffer>  CreateGLVertexBuffer();
+SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
+SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
+SharedPtr<IYukiOGLVertexArray>   CreateGLVertexArray();
+SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
 
 } // namespace Yuki::Core

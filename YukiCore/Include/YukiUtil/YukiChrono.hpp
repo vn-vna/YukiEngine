@@ -51,7 +51,7 @@ using Core::GetYukiApp;
 typedef std::function<void(IYukiTimer*)> TimerAction;
 typedef UnorderedSet<IYukiTimer*>        TimerManager;
 
-typedef struct YUKIAPI StDateTimeFormat
+typedef struct StDateTimeFormat
 {
   String year              = YUKI_TIMESTR_YEAR_LONG_FORMAT;
   String month             = YUKI_TIMESTR_MONTH_NUMBER_FORMAT;
@@ -64,7 +64,7 @@ typedef struct YUKIAPI StDateTimeFormat
   String timeDateSeparator = YUKI_TIMESTR_SPACE_SEPERATOR;
 } DateTimeFormat;
 
-class YUKIAPI Clock
+class Clock
 {
 public:
   static long long    CurrentTimeNanos();
@@ -75,13 +75,13 @@ public:
   static const String DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
 };
 
-class YUKIAPI IYukiStopwatch
+class IYukiStopwatch
 {
 public:
   virtual void Start() = 0;
 };
 
-class YUKIAPI IYukiTimer
+class IYukiTimer
 {
 public:
   virtual void Start()           = 0;
@@ -112,7 +112,7 @@ public:
   virtual const TimerAction& GetCallback()         = 0;
 };
 
-SharedPtr<TimerManager> YUKIAPI GetTimerManager();
-SharedPtr<IYukiTimer> YUKIAPI   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
+SharedPtr<TimerManager> GetTimerManager();
+SharedPtr<IYukiTimer>   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
 
 } // namespace Yuki::Chrono

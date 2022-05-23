@@ -13,9 +13,15 @@
 // #pragma warning(disable : 26812)
 
 // Windows headers
+#include <deque>
 #if defined(_WIN32) || defined(WIN32)
 #  define WIN32_LEAN_AND_MEAN
 #  include <Windows.h>
+#  include <Pdh.h>
+#  include <Psapi.h>
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+#  include <sys/types.h>
+#  include <sys/sysinfo.h>
 #endif
 
 // OpenGL header
@@ -89,13 +95,13 @@ template <typename T>
 using WeakPtr = std::weak_ptr<T>;
 
 template <typename T>
-using Vector = std::vector<T>;
+using Vector = std::vector<T, std::allocator<T>>;
 
 template <typename T>
-using Queue = std::queue<T>;
+using Queue = std::queue<T, std::deque<T>>;
 
 template <typename T>
-using Stack = std::stack<T>;
+using Stack = std::stack<T, std::deque<T>>;
 
 template <typename K, typename V>
 using UnorderedMap = std::unordered_map<K, V>;
@@ -122,7 +128,7 @@ using String       = std::string;
 using StringStream = std::stringstream;
 
 using FileStream       = std::fstream;
-using InpuFileStream   = std::ifstream;
+using InputFileStream  = std::ifstream;
 using OutputFileStream = std::ofstream;
 
 typedef char           Char, *CharPtr, &CharRef;

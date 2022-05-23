@@ -3,7 +3,7 @@
 #include "YukiUtil/YukiImage.hpp"
 
 // stb image
-#include <stb/stb_image.h>
+#include <stb_image.h>
 
 namespace Yuki::Utils
 {

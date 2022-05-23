@@ -1,12 +1,14 @@
 /**
-* ===========================================
-* Author:          vn-vna (Anh Vu)
-* Country:         Vietnam
-* License:         MIT
-* ===========================================
-*/
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
 
 #pragma once
+
+#include <YukiCore/YukiObject.hpp>
 
 #include <random>
 
@@ -30,6 +32,6 @@ public:
   virtual MT19937&      GetRandomType()   = 0;
 };
 
-SharedPtr<IYukiRandomMachine> YUKIAPI GetRandomMachine();
+SharedPtr<IYukiRandomMachine> GetRandomMachine();
 
 } // namespace Yuki::Utils

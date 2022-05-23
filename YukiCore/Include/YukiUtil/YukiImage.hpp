@@ -16,7 +16,7 @@ namespace Yuki::Utils
 
 using Core::IYukiOGLTexture;
 
-class YUKIAPI YukiImage
+class YukiImage
 {
 protected:
   uint8_t* m_pData;

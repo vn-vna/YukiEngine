@@ -30,7 +30,7 @@ const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& sha
   if (!status)
   {
     char errStr[512];
-    ZeroMemory(errStr, sizeof(errStr));
+    std::memset(errStr, 0x00, sizeof(errStr));
     glGetShaderInfoLog(shader, 512, nullptr, errStr);
     Yuki::StringStream sstr;
     sstr << errStr;
@@ -83,7 +83,7 @@ void YukiOGLShaderProgram::Create()
   if (!status)
   {
     char errStr[512];
-    ZeroMemory(errStr, sizeof(errStr));
+    std::memset(errStr, 0x00, sizeof(errStr));
     glGetProgramInfoLog(pid, 512, nullptr, errStr);
     Yuki::StringStream sstr;
     sstr << errStr;

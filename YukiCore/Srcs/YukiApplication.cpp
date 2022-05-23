@@ -113,6 +113,7 @@ void YukiApp::Awake()
 {
   this->GetWindow()->Awake();
   this->GetGraphicsController()->Awake();
+  this->GetCurrentScene()->Awake();
   m_bWillUpdate = true;
 }
 

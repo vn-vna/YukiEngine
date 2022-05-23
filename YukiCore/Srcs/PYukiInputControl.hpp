@@ -21,8 +21,8 @@ class YukiInpControl final : virtual public IYukiInpControl,
                              virtual public YukiObject
 {
 protected:
-  Map<String, YukiInpKeyboardCallback>         m_mpKeyCallbacksPool;
-  Map<String, YukiInpCursorCallback>           m_mpCursorCallbacksPool;
+  Map<String, YukiInpKeyboardCallback>          m_mpKeyCallbacksPool;
+  Map<String, YukiInpCursorCallback>            m_mpCursorCallbacksPool;
   Array<KeyStatus, (int) KeyCode::KEY_LAST + 1> m_tKeyStatuses;
   MouseStatus                                   m_tCrrMouseStatus;
   MouseStatus                                   m_tPrevMouseStatus;

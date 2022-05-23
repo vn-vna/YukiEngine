@@ -279,7 +279,7 @@ typedef struct StMouseLock
   bool lock;
 } MouseLock;
 
-class YUKIAPI IYukiInpControl : virtual public IYukiObject
+class IYukiInpControl : virtual public IYukiObject
 {
 public:
   virtual void AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback)     = 0;

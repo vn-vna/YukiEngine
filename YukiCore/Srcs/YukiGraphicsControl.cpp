@@ -14,6 +14,9 @@
 namespace Yuki::Core
 {
 
+using Comp::ReleaseMeshShader;
+using Comp::InitializeMeshShader;
+
 String GetGraphicsCardVendorName()
 {
   const GLubyte* vendor = glGetString(GL_VENDOR);
@@ -35,15 +38,11 @@ String GetShadingLanguageVersion()
 void PrintGraphicProperties()
 {
   GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format(
-      "Graphic device information: \n\tVendor: {} \n\tRenderer: {} \n\tShading language version: {}",
+      "-- Graphic device information: \n\tVendor: {} \n\tRenderer: {} \n\tShading language version: {}",
       GetGraphicsCardVendorName(),
       GetGraphicsCardRendererName(),
       GetShadingLanguageVersion()));
 }
-
-using Comp::ReleaseMeshShader;
-using Comp::InitializeMeshShader;
-using Debug::YukiGladLoadGLLoaderError;
 
 YukiGfxControl::YukiGfxControl() = default;
 

@@ -7,13 +7,11 @@
  */
 
 #include "YukiCore/YukiObject.hpp"
+#include "YukiCore/YukiPCH.hpp"
 #include "YukiUtil/YukiSystem.hpp"
 #include "YukiUtil/YukiChrono.hpp"
 
-#if defined(WIN32) | defined(_WIN32)
-#  include <Pdh.h>
-#  include <Psapi.h>
-#endif
+#include <cstddef>
 
 namespace Yuki::Utils
 {
@@ -49,6 +47,10 @@ private:
   void _InitInformationsWin32();
   void _InitPDH();
   void _DestroyPDH();
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+  void _InitInformationLinux();
+  void _ProcessCpuInfoFile();
+  void _ProcessMemInfoFile();
 #endif
 };
 

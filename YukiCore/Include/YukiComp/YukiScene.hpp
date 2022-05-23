@@ -16,7 +16,7 @@ namespace Yuki::Comp
 
 using Entity::YukiEntity;
 
-class YUKIAPI IYukiScene : virtual public Core::IYukiObject
+class IYukiScene : virtual public Core::IYukiObject
 {
 public:
   virtual void AddEntity(SharedPtr<YukiEntity> entity)   = 0;
@@ -28,6 +28,6 @@ public:
   virtual bool                                         IsReady()              = 0;
 };
 
-SharedPtr<IYukiScene> YUKIAPI CreateYukiScene();
+SharedPtr<IYukiScene> CreateYukiScene();
 
 } // namespace Yuki::Comp

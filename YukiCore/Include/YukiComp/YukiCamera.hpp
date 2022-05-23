@@ -25,7 +25,7 @@ namespace Yuki::Comp
  * AutoType scene   = Yuki::Comp::CreateYukiScene();
  * scene->SetCamera(camera);
  */
-class YUKIAPI IYukiCamera : virtual public Core::IYukiObject
+class IYukiCamera : virtual public Core::IYukiObject
 {
 public:
   virtual const Mat4F& GetCameraViewMatrix() const       = 0;
@@ -57,6 +57,6 @@ public:
  * Create a camera and return it's interface instance in shared pointer form
  * @return A camera interface instance
  */
-SharedPtr<IYukiCamera> YUKIAPI CreateYukiCamera();
+SharedPtr<IYukiCamera> CreateYukiCamera();
 
 } // namespace Yuki::Comp

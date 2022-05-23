@@ -1,0 +1,12 @@
+{
+    "name": "yuki-engine",
+    "version-string": "1.0",
+    "dependencies": [
+        "assimp",
+        "freetype",
+        "glad",
+        "glfw3",
+        "fmt",
+        "glm"
+    ]
+}

@@ -21,7 +21,7 @@ typedef SharedPtr<IYukiModel> ModelType;
 
 extern SharedPtr<IYukiModel> NO_MODEL;
 
-class YUKIAPI YukiEntity : virtual public Core::IYukiObject
+class YukiEntity : virtual public Core::IYukiObject
 {
 
 protected:

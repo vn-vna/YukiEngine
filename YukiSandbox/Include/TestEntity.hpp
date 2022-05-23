@@ -1,5 +1,6 @@
 #pragma once
 
+#include <YukiCore/YukiApplication.hpp>
 #include <YukiEntity/Entity.hpp>
 
 class TestEntity : virtual public Yuki::Entity::YukiEntity

@@ -31,7 +31,7 @@ extern SharedPtr<IYukiOGLTexture> NO_TEXTURE;
 /**
  * Struct that use to destruct the model matrix to separate properties.
  */
-typedef struct YUKIAPI StTransformationInfo
+typedef struct StTransformationInfo
 {
   Vec3F       scale;
   QuaternionF rotation;
@@ -45,7 +45,7 @@ typedef struct YUKIAPI StTransformationInfo
  * Maybe plastic, metal, or something else
  * @TODO Material class need to be improved in the future.
  */
-class YUKIAPI IYukiMeshMaterial
+class IYukiMeshMaterial
 {
 public:
   virtual float GetSpecularStrength() = 0;
@@ -61,7 +61,7 @@ public:
  * IYukiModel
  * @TODO Mesh class is very simple now, it must be improved much more.
  */
-class YUKIAPI IYukiMesh : virtual public Core::IYukiObject
+class IYukiMesh : virtual public Core::IYukiObject
 {
 public:
   virtual SharedPtr<IYukiOGLTexture>       GetMeshTexture() const        = 0;
@@ -98,7 +98,7 @@ public:
  * @param meshName provide a name for it
  * @return an interface instance for the mesh
  */
-SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
+SharedPtr<IYukiMesh> CreateYukiMesh(
     Vector<VertexFormat>&            vertexData,
     IndexData&                       indexData,
     SharedPtr<Core::IYukiOGLTexture> texture,
@@ -112,12 +112,12 @@ SharedPtr<IYukiMesh> YUKIAPI CreateYukiMesh(
  * @return an interface instance of the material
  * @TODO Provide a method to create material from ambient map or specular map in the future.
  */
-SharedPtr<IYukiMeshMaterial> YUKIAPI CreateMaterial(float specular, float ambient);
+SharedPtr<IYukiMeshMaterial> CreateMaterial(float specular, float ambient);
 
 // Initialize the default shader for mesh rendering
-void YUKIAPI InitializeMeshShader();
+void InitializeMeshShader();
 
 // Destroy the default shader for mesh rendering
-void YUKIAPI ReleaseMeshShader();
+void ReleaseMeshShader();
 
 } // namespace Yuki::Comp

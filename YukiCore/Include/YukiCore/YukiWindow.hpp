@@ -21,7 +21,7 @@
 namespace Yuki::Core
 {
 
-class YUKIAPI IYukiWindow : virtual public IYukiObject
+class IYukiWindow : virtual public IYukiObject
 {
 public:
   virtual void        ShowWindow()                   = 0;
@@ -35,7 +35,7 @@ public:
   virtual GLFWwindow* GetGLFWWindow()                = 0;
 };
 
-class YUKIAPI IYukiOffScreenContext : virtual public IYukiObject
+class IYukiOffScreenContext : virtual public IYukiObject
 {
 };
 

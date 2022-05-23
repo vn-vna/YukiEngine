@@ -26,12 +26,12 @@ typedef UnorderedMap<String, MeshType> MeshArrType;
  * @return An interface instance of the model
  * @bug Blender ^2.8 files can't be loaded
  */
-SharedPtr<IYukiModel> YUKIAPI LoadModel(String fileName, String modelName);
+SharedPtr<IYukiModel> LoadModel(String fileName, String modelName);
 
 /**
  * A collection of meshes that will be rendered by the Entities
  */
-class YUKIAPI IYukiModel : virtual public Core::IYukiObject
+class IYukiModel : virtual public Core::IYukiObject
 {
 public:
   virtual String&      GetName()                   = 0;

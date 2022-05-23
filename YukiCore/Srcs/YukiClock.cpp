@@ -30,9 +30,8 @@ TimeType Clock::CurrentTimePointTT()
 TMType Clock::CurrentTimePointTM()
 {
   AutoType point_tt = Clock::CurrentTimePointTT();
-  TMType   tm{};
-  gmtime_s(&tm, &point_tt);
-  return tm;
+  AutoType tm = gmtime(&point_tt);
+  return *tm;
 }
 
 const String Clock::DateTimeString(const DateTimeFormat& format)

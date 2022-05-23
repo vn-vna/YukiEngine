@@ -7,11 +7,13 @@
 
 #pragma once
 
+#include <YukiUtil/YukiChrono.hpp>
 #include <YukiEntity/Entity.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 #include <YukiUtil/YukiSystem.hpp>
 
 using Yuki::Core::KeyCode;
+using Yuki::Utils::IsKeyReleased;
 
 class SystemControl : virtual public Yuki::Entity::YukiEntity
 {

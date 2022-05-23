@@ -22,13 +22,13 @@ using Core::IYukiObject;
 
 typedef OutputFileStream OutputLogFile;
 
-class YUKIAPI IYukiLogger : virtual public IYukiObject
+class IYukiLogger : virtual public IYukiObject
 {
 public:
-  virtual void               PushMessage(const String& message, const String& prioty) = 0;
-  virtual void               PushDebugMessage(const String& message)                  = 0;
-  virtual void               PushWarningMessage(const String& message)                = 0;
-  virtual void               PushErrorMessage(const String& message)                  = 0;
+  virtual void           PushMessage(const String& message, const String& prioty) = 0;
+  virtual void           PushDebugMessage(const String& message)                  = 0;
+  virtual void           PushWarningMessage(const String& message)                = 0;
+  virtual void           PushErrorMessage(const String& message)                  = 0;
   virtual OutputLogFile& GetOutFileStream()                                       = 0;
 };
 

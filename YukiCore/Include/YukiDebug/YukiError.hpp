@@ -10,12 +10,12 @@
 
 #include "YukiCore/YukiPCH.hpp"
 
-#define DECLARE_YUKI_ERROR(__err_name)                      \
-  class YUKIAPI Yuki##__err_name : virtual public YukiError \
-  {                                                         \
-  public:                                                   \
-    Yuki##__err_name(const String& file, const int& line);  \
-    virtual ~Yuki##__err_name() = default;                  \
+#define DECLARE_YUKI_ERROR(__err_name)                     \
+  class Yuki##__err_name : virtual public YukiError        \
+  {                                                        \
+  public:                                                  \
+    Yuki##__err_name(const String& file, const int& line); \
+    virtual ~Yuki##__err_name() = default;                 \
   }
 
 #define THROW_YUKI_ERROR(__err_name) throw Yuki::Debug::Yuki##__err_name(__FILE__, __LINE__)
@@ -49,7 +49,7 @@ enum class YukiErrCode
   SCENE_DUPLICATE_ENTITY_NAME
 };
 
-class YUKIAPI YukiError : virtual public std::runtime_error
+class YukiError : virtual public std::runtime_error
 {
 protected:
   YukiErrCode m_ErrCode;
