@@ -112,6 +112,11 @@ target_link_libraries(yuki-core
   PUBLIC glad::glad 
   PUBLIC glfw 
   PUBLIC fmt::fmt)
+
+if (WIN32)
+  target_link_libraries(yuki-core
+    PUBLIC pdh)
+endif()
 find_path(STB_INCLUDE_DIRS "stb_image.h")
 target_include_directories(yuki-core PUBLIC ${STB_INCLUDE_DIRS})
 

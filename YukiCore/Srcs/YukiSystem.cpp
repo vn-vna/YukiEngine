@@ -16,12 +16,6 @@
 
 #include <fmt/format.h>
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#  include <linux/sysinfo.h>
-#  include <sys/sysinfo.h>
-#  include <sys/types.h>
-#endif
-
 #define YUKI_ALL_PROCESSOR_QUERY_STRING    "\\Processor(*)\\% Processor Time"
 #define YUKI_ACTIVITY_INFO_UPDATE_INTERVAL 500'000'000 // ns
 
@@ -30,6 +24,8 @@ namespace Yuki::Utils
 
 using Core::CreateInterfaceInstance;
 using Chrono::CreateTimer;
+
+#if defined(linux) || defined(__linux) || defined(__linux__)
 
 typedef struct StParsedCpuInfo
 {
@@ -85,6 +81,8 @@ typedef struct StLastCpuStatus
   uint64_t lastTotalSys;
   uint64_t lastTotalIdle;
 } LastCpuStatus;
+
+#endif
 
 YukiSystem::YukiSystem()
     : m_tCpuInfo(),
@@ -193,8 +191,18 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 
   PdhCollectQueryData(m_hPdhQuery);
 
-  AutoType arret = PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, NULL);
-  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, stat);
+  AutoType arret = PdhGetFormattedCounterArrayA(
+      m_hCounterCPU,
+      PDH_FMT_DOUBLE,
+      &bufferSz,
+      &itemCount,
+      NULL);
+  PdhGetFormattedCounterArrayA(
+      m_hCounterCPU,
+      PDH_FMT_DOUBLE,
+      &bufferSz,
+      &itemCount,
+      stat);
 
   if (itemCount < 1)
   {

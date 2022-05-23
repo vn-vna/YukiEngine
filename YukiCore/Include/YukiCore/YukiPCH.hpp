@@ -22,6 +22,7 @@
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 #  include <sys/types.h>
 #  include <sys/sysinfo.h>
+#  include <linux/sysinfo.h>
 #endif
 
 // OpenGL header

@@ -376,3 +376,5 @@ cmake-build-relwithdebinfo/
 compile_commands.json
 neovim.json
 a.out
+
+vcpkg_installed
