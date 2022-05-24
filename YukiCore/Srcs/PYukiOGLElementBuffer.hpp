@@ -19,10 +19,6 @@ namespace Yuki::Core
 class YukiOGLElementBuffer final : virtual public IYukiOGLElementBuffer,
                                    virtual public YukiObject
 {
-protected:
-  unsigned m_nEboID;
-  unsigned m_nElementCount;
-
 public:
   YukiOGLElementBuffer();
   ~YukiOGLElementBuffer() override;
@@ -36,6 +32,10 @@ public:
   void            DrawAllElements(PrimitiveTopology topology) override;
   void            Create() override;
   void            Destroy() override;
+
+private:
+  unsigned m_nEboID;
+  unsigned m_nElementCount;
 };
 
 } // namespace Yuki::Core

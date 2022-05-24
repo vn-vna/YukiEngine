@@ -24,14 +24,6 @@ namespace Yuki::Core
 class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram,
                                    virtual public YukiObject
 {
-protected:
-  unsigned m_nSPId;
-  String   m_VSShaderFile;
-  String   m_FSShaderFile;
-  String   m_GSShaderFile;
-
-  unsigned GetUniformLocation(const String& prop);
-
 public:
   explicit YukiOGLShaderProgram(const String& shaderName);
   ~YukiOGLShaderProgram() override;
@@ -50,6 +42,15 @@ public:
   void            UniformValue(const String& prop, bool value) override;
   void            UniformValue(const String& prop, int value) override;
   void            UniformValue(const String& prop, float value) override;
+
+private:
+  unsigned GetUniformLocation(const String& prop);
+
+private:
+  unsigned m_nSPId;
+  String   m_VSShaderFile;
+  String   m_FSShaderFile;
+  String   m_GSShaderFile;
 };
 
 } // namespace Yuki::Core

@@ -7,10 +7,16 @@
 
 #pragma once
 
-#include <YukiUtil/YukiChrono.hpp>
+#include "YukiCore/YukiInputCtrl.hpp"
+#include <YukiCore/YukiPCH.hpp>
+#include <YukiCore/YukiApplication.hpp>
+#include <YukiDebug/YukiLogger.hpp>
 #include <YukiEntity/Entity.hpp>
+#include <YukiUtil/YukiChrono.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 #include <YukiUtil/YukiSystem.hpp>
+
+#include <fmt/format.h>
 
 using Yuki::Core::KeyCode;
 using Yuki::Utils::IsKeyReleased;
@@ -18,10 +24,13 @@ using Yuki::Utils::IsKeyReleased;
 class SystemControl : virtual public Yuki::Entity::YukiEntity
 {
 protected:
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
+  Yuki::SharedPtr<Yuki::Core::IYukiApp>        pApp;
+  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
+  Yuki::SharedPtr<Yuki::Debug::IYukiLogger>    pLogger;
   Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
+  bool                                         bDefaultCursor;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -37,20 +46,22 @@ public:
 };
 
 inline SystemControl::SystemControl(const Yuki::String& name)
-    : Yuki::Entity::YukiEntity(name)
+    : Yuki::Entity::YukiEntity(name),
+      bDefaultCursor(true)
 {}
 
 inline SystemControl::~SystemControl() = default;
 
 inline void SystemControl::OnCreate()
 {
-  pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
-  pSysControl = Yuki::Utils::GetYukiSystemController();
+  pApp        = Yuki::Core::GetYukiApp();
+  pInpControl = pApp->GetInputController();
+  pSysControl = pApp->GetSystemController();
+  pLogger     = pApp->GetLogger();
 
   pTimer = Yuki::Chrono::CreateTimer([&](Yuki::Chrono::IYukiTimer* pTimer) {
-    AutoType info = pSysControl->GetResourceActivityInfo();
-    std::cout << "Cpu AVG = " << info.avgCpuLoad << "%\n"
-              << "Ram Usage = " << (float) info.memoryUsed / std::pow(1024, 3) << "GB\n";
+    AutoType resActivity = pSysControl->GetResourceActivityInfo();
+    pLogger->PushDebugMessage(fmt::format("CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad, resActivity.memoryUsed));
   },
       1'000'000'000);
 
@@ -106,6 +117,18 @@ inline void SystemControl::OnUpdate()
     Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {
       std::cout << "Pressed V\n";
     });
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V) && bDefaultCursor)
+  {
+    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::CURSOR_HAND);
+    bDefaultCursor = false;
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_X) && !bDefaultCursor)
+  {
+    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::DEFAULT);
+    bDefaultCursor = true;
   }
 }
 

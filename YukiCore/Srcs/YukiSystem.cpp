@@ -25,7 +25,7 @@ namespace Yuki::Utils
 using Core::CreateInterfaceInstance;
 using Chrono::CreateTimer;
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#ifdef IS_LINUX
 
 typedef struct StParsedCpuInfo
 {
@@ -59,21 +59,6 @@ typedef struct StParsedCpuInfo
   } addrSz;
 } ParsedCpuInfo;
 
-typedef struct StMemoryMeasure
-{
-  unsigned value;
-  String   unit;
-} MemoryMeasure;
-
-typedef struct StParsedMemoryInfo
-{
-  MemoryMeasure tMemTotal;
-  MemoryMeasure tMemFree;
-  MemoryMeasure tMemAvailable;
-  MemoryMeasure tSwapTotal;
-  MemoryMeasure tSwapFree;
-} ParsedMemoryInfo;
-
 typedef struct StLastCpuStatus
 {
   uint64_t lastTotalUser;
@@ -92,16 +77,25 @@ YukiSystem::YukiSystem()
       m_tActivityInfo()
 {
   // Initialize information of system, cpus, memories
-#if defined(WIN32) || defined(_WIN32)
+#if IS_WINDOWS
   this->_InitInformationsWin32();
   this->_InitPDH();
-#endif
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#elifdef IS_LINUX
   this->_InitInformationLinux();
 #endif
 
   m_tActivityInfo.cpuLoads.resize(this->m_tCpuInfo.numberOfCores);
+}
 
+YukiSystem::~YukiSystem()
+{
+#if IS_WINDOWS
+  this->_DestroyPDH();
+#endif
+}
+
+void YukiSystem::Create()
+{
   m_pTimerUpdate = CreateTimer([this](IYukiTimer*) {
     this->_GetCpuActivity(&m_tActivityInfo);
     this->_GetMemoryActivity(&m_tActivityInfo);
@@ -110,12 +104,9 @@ YukiSystem::YukiSystem()
   m_pTimerUpdate->Start();
 }
 
-YukiSystem::~YukiSystem()
+void YukiSystem::Destroy()
 {
   m_pTimerUpdate->Terminate();
-#if defined(WIN32) || defined(_WIN32)
-  this->_DestroyPDH();
-#endif
 }
 
 const CpuInformation& YukiSystem::GetCpuInformation()
@@ -133,15 +124,9 @@ const ResourceActivityInfo& YukiSystem::GetResourceActivityInfo()
   return m_tActivityInfo;
 }
 
-SharedPtr<IYukiSystem> GetYukiSystemController()
-{
-  SharedPtr<IYukiSystem> pSysCtrl = CreateInterfaceInstance<IYukiSystem, YukiSystem>();
-  return pSysCtrl;
-}
-
 void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 {
-#if defined(WIN32) || defined(_WIN32)
+#ifdef IS_WINDOWS
   // Get memory usaged
   MEMORYSTATUSEX memstat;
   ZeroMemory(&memstat, sizeof(memstat));
@@ -154,7 +139,7 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
   PROCESS_MEMORY_COUNTERS_EX pmc;
   GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
   info->memoryUsedByProc = pmc.WorkingSetSize;
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#elifdef IS_LINUX
   struct sysinfo si;
   sysinfo(&si);
 
@@ -184,14 +169,14 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 
 void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 {
-#if defined(WIN32) || defined(_WIN32)
+#ifdef IS_WINDOWS
   PDH_FMT_COUNTERVALUE_ITEM_A stat[100];
   DWORD                       bufferSz = 0;
   DWORD                       itemCount;
 
   PdhCollectQueryData(m_hPdhQuery);
 
-  AutoType arret = PdhGetFormattedCounterArrayA(
+  PdhGetFormattedCounterArrayA(
       m_hCounterCPU,
       PDH_FMT_DOUBLE,
       &bufferSz,
@@ -215,7 +200,7 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
   {
     info->cpuLoads.emplace_back((float) stat[i].FmtValue.doubleValue);
   }
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#elifdef IS_LINUX
 
   // Zero index is average cpu load value
   static bool                  isInited   = false;
@@ -305,7 +290,7 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 #endif
 }
 
-#if defined(WIN32) || defined(_WIN32)
+#ifdef IS_WINDOWS
 
 void parse_cpu_info(CpuInformation& info)
 {
@@ -366,7 +351,7 @@ void YukiSystem::_DestroyPDH()
 }
 #endif
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#ifdef IS_LINUX
 
 void YukiSystem::_InitInformationLinux()
 {
@@ -601,5 +586,10 @@ void YukiSystem::_ProcessMemInfoFile()
 }
 
 #endif
+
+SharedPtr<IYukiSystem> CreateYukiSystemControl()
+{
+  return CreateInterfaceInstance<IYukiSystem, YukiSystem>();
+}
 
 } // namespace Yuki::Utils

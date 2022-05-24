@@ -9,9 +9,12 @@
 #pragma once
 
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiObject.hpp"
 
 namespace Yuki::Utils
 {
+
+using Core::IYukiObject;
 
 enum class ProcessorArchitecture
 {
@@ -61,15 +64,14 @@ typedef struct StSysInfo
   String brandName;
 } SysInfo;
 
-class IYukiSystem
+class IYukiSystem : virtual public IYukiObject
 {
 public:
   virtual const CpuInformation&       GetCpuInformation()       = 0;
   virtual const MemoryInformation&    GetMemoryInformation()    = 0;
-  /// Don't call this function too quickly, if you do that, you can get unexpected result
   virtual const ResourceActivityInfo& GetResourceActivityInfo() = 0;
 };
 
-SharedPtr<IYukiSystem> GetYukiSystemController();
+SharedPtr<IYukiSystem> CreateYukiSystemControl();
 
 } // namespace Yuki::Utils

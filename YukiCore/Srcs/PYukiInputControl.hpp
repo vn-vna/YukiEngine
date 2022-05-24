@@ -13,6 +13,9 @@
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiObject.hpp"
+#include <GLFW/glfw3.h>
+
+#define YUKI_MAX_KEYARRLEN (int) KeyCode::KEY_LAST + 1
 
 namespace Yuki::Core
 {
@@ -20,14 +23,6 @@ namespace Yuki::Core
 class YukiInpControl final : virtual public IYukiInpControl,
                              virtual public YukiObject
 {
-protected:
-  Map<String, YukiInpKeyboardCallback>          m_mpKeyCallbacksPool;
-  Map<String, YukiInpCursorCallback>            m_mpCursorCallbacksPool;
-  Array<KeyStatus, (int) KeyCode::KEY_LAST + 1> m_tKeyStatuses;
-  MouseStatus                                   m_tCrrMouseStatus;
-  MouseStatus                                   m_tPrevMouseStatus;
-  MouseLock                                     m_tLockMouse;
-
 public:
   YukiInpControl();
   ~YukiInpControl() override;
@@ -38,8 +33,13 @@ public:
   void RemoveKeyboardInputCallback(const String& name) override;
   void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) override;
   void ExecuteCursorPosCallback(int x, int y) override;
+
+  void SetCursorStandardStyle(const StandardCursorType& type) override;
+
   void LockMouse(int x, int y) override;
   void UnlockMouse() override;
+  void HideMouse() override;
+  void UnhideMouse() override;
 
   StKeyStatus& GetKeyStatus(const KeyCode& keyCode) override;
   MouseStatus& GetMouseStatus() override;
@@ -51,6 +51,16 @@ public:
 
   void Create() override;
   void Destroy() override;
+
+private:
+  Map<String, YukiInpKeyboardCallback> m_mpKeyCallbacksPool;
+  Map<String, YukiInpCursorCallback>   m_mpCursorCallbacksPool;
+  Array<KeyStatus, YUKI_MAX_KEYARRLEN> m_tKeyStatuses;
+  MouseStatus                          m_tCrrMouseStatus;
+  MouseStatus                          m_tPrevMouseStatus;
+  MouseLock                            m_tLockMouse;
+  bool                                 m_bMouseHide;
+  GLFWcursor*                          m_pCursor;
 };
 
 } // namespace Yuki::Core

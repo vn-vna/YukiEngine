@@ -10,6 +10,8 @@
 namespace Yuki::Debug
 {
 
+using Chrono::Clock;
+
 YukiLogger::YukiLogger()
     : m_pOutFileStream(nullptr)
 {}

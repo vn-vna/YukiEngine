@@ -21,20 +21,6 @@ using Chrono::MiliSeconds;
 
 class YukiThreadPool final : virtual public IYukiThreadPool
 {
-protected:
-  SharedPtr<ThreadPoolManager> m_pManager;
-  Mutex                        m_PoolMutex;
-  Mutex                        m_ActionQueueMutex;
-  Vector<Thread>               m_aWorkers;
-  ConditionVariable            m_ActionQueueWaiter;
-  Queue<CallbackFunc>          m_ActionQueue;
-  CallbackFunc                 m_WorkerFunc;
-  Atomic<bool>                 m_bPoolActive;
-  Atomic<bool>                 m_bPoolStarted;
-  Atomic<int>                  m_nNumThreadReady;
-  ConditionVariable            m_PoolWaiter;
-  bool                         m_bCreateOGLContext;
-
 public:
   YukiThreadPool(int poolSize, bool oglContext);
   ~YukiThreadPool();
@@ -53,6 +39,20 @@ public:
   CallbackFunc&        GetWorkerFuncCallback() override;
   bool                 IsPoolActive() override;
   bool                 IsPoolStarted() override;
+
+private:
+  SharedPtr<ThreadPoolManager> m_pManager;
+  Mutex                        m_PoolMutex;
+  Mutex                        m_ActionQueueMutex;
+  Vector<Thread>               m_aWorkers;
+  ConditionVariable            m_ActionQueueWaiter;
+  Queue<CallbackFunc>          m_ActionQueue;
+  CallbackFunc                 m_WorkerFunc;
+  Atomic<bool>                 m_bPoolActive;
+  Atomic<bool>                 m_bPoolStarted;
+  Atomic<int>                  m_nNumThreadReady;
+  ConditionVariable            m_PoolWaiter;
+  bool                         m_bCreateOGLContext;
 };
 
 } // namespace Yuki::Core

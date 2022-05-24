@@ -17,20 +17,6 @@ namespace Yuki::Chrono
 
 class YukiTimer final : virtual public IYukiTimer
 {
-protected:
-  long long    m_nTimeStartNanos;
-  long long    m_nEstimateCycle;
-  long long    m_nTimeSkipped;
-  long long    m_nCycleSkipped;
-  long long    m_nInterval;
-  long long    m_nPrevExecuteCycle;
-  Atomic<bool> m_bExecuteParallel;
-  Atomic<bool> m_bPaused;
-  Atomic<bool> m_bStarted;
-  Atomic<bool> m_bWillExecute;
-  TimerAction  m_fnCallback;
-
-
 public:
   explicit YukiTimer(const TimerAction& callback, long long interval, bool parallel = false);
   ~YukiTimer();
@@ -63,6 +49,19 @@ public:
   const TimerAction& GetCallback() override;
 
   static void UpdateTimers();
+
+private:
+  long long    m_nTimeStartNanos;
+  long long    m_nEstimateCycle;
+  long long    m_nTimeSkipped;
+  long long    m_nCycleSkipped;
+  long long    m_nInterval;
+  long long    m_nPrevExecuteCycle;
+  Atomic<bool> m_bExecuteParallel;
+  Atomic<bool> m_bPaused;
+  Atomic<bool> m_bStarted;
+  Atomic<bool> m_bWillExecute;
+  TimerAction  m_fnCallback;
 };
 
 } // namespace Yuki::Chrono

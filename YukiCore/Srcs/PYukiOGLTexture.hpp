@@ -18,10 +18,6 @@ namespace Yuki::Core
 class YukiOGLTexture final : virtual public IYukiOGLTexture,
                              virtual public YukiObject
 {
-protected:
-  unsigned    m_nTexID;
-  TextureType m_eTexType;
-
 public:
   explicit YukiOGLTexture(const TextureType& type);
   ~YukiOGLTexture() override;
@@ -63,6 +59,10 @@ public:
 
   void Create() override;
   void Destroy() override;
+
+private:
+  unsigned    m_nTexID;
+  TextureType m_eTexType;
 };
 
 } // namespace Yuki::Core

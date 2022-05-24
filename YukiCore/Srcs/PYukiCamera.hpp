@@ -20,20 +20,6 @@ using Core::YukiObject;
 class YukiCamera final : virtual public IYukiCamera,
                          virtual public YukiObject
 {
-protected:
-  Mat4F m_ViewMatrix;
-  Vec3F m_CamPos;
-  Vec3F m_CamDirection;
-  Vec3F m_CamTop;
-
-  Mat4F m_ProjectionMatrix;
-  float m_nFOV;
-  float m_nAspectRatio;
-  float m_nNear;
-  float m_nFar;
-
-  const unsigned m_nCamID;
-
 public:
   YukiCamera();
   ~YukiCamera() override;
@@ -63,6 +49,20 @@ public:
   void SetFarPerspective(float nFar) override;
 
   void Update() override;
+
+private:
+  Mat4F m_ViewMatrix;
+  Vec3F m_CamPos;
+  Vec3F m_CamDirection;
+  Vec3F m_CamTop;
+
+  Mat4F m_ProjectionMatrix;
+  float m_nFOV;
+  float m_nAspectRatio;
+  float m_nNear;
+  float m_nFar;
+
+  const unsigned m_nCamID;
 };
 
 } // namespace Yuki::Comp

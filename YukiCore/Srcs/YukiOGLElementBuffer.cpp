@@ -61,7 +61,7 @@ void YukiOGLElementBuffer::Destroy()
   glDeleteBuffers(1, &m_nEboID);
 }
 
-SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer()
+SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer()
 {
   return CreateInterfaceInstance<IYukiOGLElementBuffer, YukiOGLElementBuffer>();
 }

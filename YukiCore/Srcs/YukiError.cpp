@@ -37,6 +37,7 @@ String YukiError::getErrorMessage() const
   switch (m_ErrCode)
   {
     // clang-format off
+    CHECK_CASE_OF_ERROR(YUKI_APP_CREATED,                         YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(YUKI_LOGGER_CREATE_LOGFILE_ERROR,         YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,      YUKI_CORE_ERROR);
     CHECK_CASE_OF_ERROR(YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,      YUKI_CORE_ERROR);
@@ -77,6 +78,7 @@ void YukiError::PushErrorMessage() const
 }
 
 // clang-format off
+MAKE_ERROR_DEFINITION(AppCreated,                                 YUKI_APP_CREATED)
 MAKE_ERROR_DEFINITION(CreateLogFileError,                         YUKI_LOGGER_CREATE_LOGFILE_ERROR)
 MAKE_ERROR_DEFINITION(InpCtrlInsertCallbackExistsError,           YUKI_INPCTRL_INSERT_CALLBACK_EXISTS)
 MAKE_ERROR_DEFINITION(InpCtrlRemoveCallbackNExistsError,          YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST)

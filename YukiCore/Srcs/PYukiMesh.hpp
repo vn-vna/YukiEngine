@@ -33,10 +33,6 @@ using Core::PrimitiveTopology;
 class YukiMeshMaterial final : virtual public IYukiMeshMaterial,
                                virtual public YukiObject
 {
-protected:
-  float m_nSpecularStrength;
-  float m_nAmbientStrength;
-
 public:
   YukiMeshMaterial(float specular, float ambient);
   ~YukiMeshMaterial() override;
@@ -46,24 +42,15 @@ public:
 
   void SetSpecularStrength(float strength) override;
   void SetAmbientStrength(float strength) override;
+
+private:
+  float m_nSpecularStrength;
+  float m_nAmbientStrength;
 };
 
 class YukiMesh : virtual public IYukiMesh,
                  virtual public Core::YukiObject
 {
-protected:
-  SharedPtr<IYukiOGLElementBuffer> m_pElementBuffer;
-  SharedPtr<IYukiOGLVertexBuffer>  m_pVertexBuffer;
-  SharedPtr<IYukiOGLVertexArray>   m_pVertexArray;
-  SharedPtr<IYukiOGLShaderProgram> m_pShaderProgram;
-  SharedPtr<IYukiOGLTexture>       m_pTexture;
-  SharedPtr<IYukiMeshMaterial>     m_pMaterial;
-  Vector<VertexFormat>             m_aVertexFormat;
-  IndexData                        m_tIndexFormat;
-  Mat4F                            m_tMeshMatrix;
-  Mat4F                            m_tReNormalMatrix;
-  String                           m_Name;
-
 public:
   YukiMesh(
       Vector<VertexFormat>&        vertices,
@@ -99,6 +86,19 @@ public:
   void ScaleMesh(const Vec3F& scaleVector) override;
 
   void RenderMesh(SharedPtr<IYukiCamera> camera) const override;
+
+private:
+  SharedPtr<IYukiOGLElementBuffer> m_pElementBuffer;
+  SharedPtr<IYukiOGLVertexBuffer>  m_pVertexBuffer;
+  SharedPtr<IYukiOGLVertexArray>   m_pVertexArray;
+  SharedPtr<IYukiOGLShaderProgram> m_pShaderProgram;
+  SharedPtr<IYukiOGLTexture>       m_pTexture;
+  SharedPtr<IYukiMeshMaterial>     m_pMaterial;
+  Vector<VertexFormat>             m_aVertexFormat;
+  IndexData                        m_tIndexFormat;
+  Mat4F                            m_tMeshMatrix;
+  Mat4F                            m_tReNormalMatrix;
+  String                           m_Name;
 };
 
 } // namespace Yuki::Comp

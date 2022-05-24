@@ -11,9 +11,6 @@
 #include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 
-// glm
-#include <glm/gtx/quaternion.hpp>
-
 namespace Yuki::Comp
 {
 

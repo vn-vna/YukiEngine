@@ -1,34 +1,37 @@
+#include "YukiComp/YukiScene.hpp"
 #include "YukiCore/YukiPCH.hpp"
 
 #include "PYukiApplication.hpp"
 #include "PYukiTimer.hpp"
 #include "PYukiThreadPool.hpp"
+#include "YukiDebug/YukiError.hpp"
+#include "YukiUtil/YukiSystem.hpp"
 
 namespace Yuki::Core
 {
 
 using Chrono::YukiTimer;
 using Debug::YukiError;
+using Utils::IYukiSystem;
 using Debug::CreateYukiLogger;
+using Utils::CreateYukiSystemControl;
 
 SharedPtr<IYukiApp> g_pGlobalApplication(nullptr);
 
 YukiApp::YukiApp()
     : m_bAlive(false),
-      m_pGfxController(nullptr),
-      m_pInputController(nullptr),
-      m_pWindow(nullptr),
-      m_pLogger(nullptr),
       m_bWillCreate(true),
       m_bWillUpdate(false),
       m_bWillDestroy(false),
-      m_bWillTerminate(false)
+      m_bWillTerminate(false),
+      m_pCurrentScene(nullptr)
 {
   m_pLogger          = CreateYukiLogger();
   m_pWindow          = CreateNewWindow();
   m_pInputController = CreateNewInputControl();
   m_pGfxController   = CreateGraphicsController();
   m_pWorkerPool      = CreateThreadPool();
+  m_pSysCtrl         = CreateYukiSystemControl();
 }
 
 YukiApp::~YukiApp() = default;
@@ -61,6 +64,11 @@ SharedPtr<IYukiThreadPool> YukiApp::GetWorkerPool()
 SharedPtr<IYukiWindow> YukiApp::GetWindow()
 {
   return m_pWindow;
+}
+
+SharedPtr<IYukiSystem> YukiApp::GetSystemController()
+{
+  return m_pSysCtrl;
 }
 
 void YukiApp::RunApp()
@@ -96,43 +104,44 @@ void YukiApp::RunApp()
 
 void YukiApp::Create()
 {
-  this->GetLogger()->Create();
+  m_pLogger->Create();
 
-  this->GetWindow()->Create();
-  this->GetGraphicsController()->Create();
+  m_pWindow->Create();
+  m_pGfxController->Create();
 
-  this->GetWorkerPool()->Start();
-  this->GetWorkerPool()->WaitForPoolReady();
+  m_pWorkerPool->Start();
+  m_pWorkerPool->WaitForPoolReady();
+  m_pSysCtrl->Create();
 
-  this->GetInputController()->Create();
+  m_pInputController->Create();
 
   m_bWillCreate = false;
 }
 
 void YukiApp::Awake()
 {
-  this->GetWindow()->Awake();
-  this->GetGraphicsController()->Awake();
-  this->GetCurrentScene()->Awake();
+  m_pWindow->Awake();
+  m_pGfxController->Awake();
+  m_pCurrentScene->Awake();
   m_bWillUpdate = true;
 }
 
 void YukiApp::Update()
 {
-  if (!GetCurrentScene()->IsReady())
+  if (!m_pCurrentScene->IsReady())
   {
-    this->GetCurrentScene()->Create();
+    m_pCurrentScene->Create();
   }
 
   InvokeAllThreads();
   YukiTimer::UpdateTimers();
-  this->GetWorkerPool()->NotifyWorkers();
-  this->GetGraphicsController()->Render();
-  this->GetWindow()->Update();
+  m_pWorkerPool->NotifyWorkers();
+  m_pGfxController->Render();
+  m_pWindow->Update();
 
-  this->GetCurrentScene()->Update();
+  m_pCurrentScene->Update();
 
-  if (this->GetWindow()->ShouldClose())
+  if (m_pWindow->ShouldClose())
   {
     this->Terminate();
   }
@@ -140,15 +149,15 @@ void YukiApp::Update()
 
 void YukiApp::Destroy()
 {
-  this->GetCurrentScene()->Destroy();
-  this->GetInputController()->Destroy();
-  this->GetGraphicsController()->Destroy();
-  this->GetWindow()->Destroy();
+  m_pCurrentScene->Destroy();
+  m_pInputController->Destroy();
+  m_pGfxController->Destroy();
+  m_pWindow->Destroy();
 
-  this->GetWorkerPool()->Terminate();
-  this->GetWorkerPool()->Join();
+  m_pWorkerPool->Terminate();
+  m_pWorkerPool->Join();
 
-  this->GetLogger()->Destroy();
+  m_pLogger->Destroy();
 
   if (m_bWillTerminate)
   {
@@ -179,6 +188,10 @@ void YukiApp::Terminate()
 
 SharedPtr<IYukiApp> CreateYukiApp()
 {
+  if (g_pGlobalApplication.get())
+  {
+    THROW_YUKI_ERROR(AppCreated);
+  }
   g_pGlobalApplication = CreateInterfaceInstance<IYukiApp, YukiApp>();
   return g_pGlobalApplication;
 }

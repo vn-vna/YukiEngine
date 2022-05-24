@@ -12,14 +12,20 @@
 // #pragma warning(disable : 4275)
 // #pragma warning(disable : 26812)
 
+#if defined(_WIN32) || defined(WIN32)
+#  define IS_WINDOWS
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+#  define IS_LINUX
+#endif
+
 // Windows headers
 #include <deque>
-#if defined(_WIN32) || defined(WIN32)
+#ifdef IS_WINDOWS
 #  define WIN32_LEAN_AND_MEAN
 #  include <Windows.h>
 #  include <Pdh.h>
 #  include <Psapi.h>
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#elifdef IS_LINUX
 #  include <sys/types.h>
 #  include <sys/sysinfo.h>
 #  include <linux/sysinfo.h>
@@ -69,16 +75,15 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-#if defined(_WIN32) || defined(WIN32)
-#  ifdef YUKICORE_EXPORTS
-#    define YUKIAPI __declspec(dllexport)
-#  else
-#    define YUKIAPI __declspec(dllimport)
-#  endif // YUKICORE_EXPORTS
-#elif defined(__linux) || defined(_linux_)
-#  define YUKIAPI
-#endif
-
+// #ifdef IS_WINDOWS
+// #  ifdef YUKICORE_EXPORTS
+// #    define YUKIAPI __declspec(dllexport)
+// #  else
+// #    define YUKIAPI __declspec(dllimport)
+// #  endif // YUKICORE_EXPORTS
+// #elifdef IS_LINUX
+// #  define YUKIAPI
+// #endif
 
 #define AutoType       auto
 #define YUKI_NODISCARD [[nodiscard]]

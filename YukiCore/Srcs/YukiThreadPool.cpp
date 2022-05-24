@@ -194,7 +194,7 @@ SharedPtr<ThreadPoolManager> GetThreadPoolManager()
   return pTPManager;
 }
 
-SharedPtr<IYukiThreadPool> YUKIAPI CreateThreadPool(int poolSize, bool oglContext)
+SharedPtr<IYukiThreadPool> CreateThreadPool(int poolSize, bool oglContext)
 {
   AutoType manager = GetThreadPoolManager();
 

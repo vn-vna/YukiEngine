@@ -25,6 +25,7 @@ namespace Yuki::Debug
 
 enum class YukiErrCode
 {
+  YUKI_APP_CREATED,
   YUKI_LOGGER_CREATE_LOGFILE_ERROR,
   YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
   YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
@@ -65,6 +66,7 @@ public:
   void               PushErrorMessage() const;
 };
 
+DECLARE_YUKI_ERROR(AppCreated);
 DECLARE_YUKI_ERROR(CreateLogFileError);
 DECLARE_YUKI_ERROR(InpCtrlInsertCallbackExistsError);
 DECLARE_YUKI_ERROR(InpCtrlRemoveCallbackNExistsError);

@@ -23,11 +23,6 @@ using Entity::YukiEntity;
 class YukiScene final : virtual public IYukiScene,
                         virtual public YukiObject
 {
-protected:
-  SharedPtr<IYukiCamera>                      m_pCamera;
-  UnorderedMap<String, SharedPtr<YukiEntity>> m_mEntities;
-  bool                                        m_bIsReady;
-
 public:
   YukiScene();
   ~YukiScene() override;
@@ -45,6 +40,12 @@ public:
   void Render() override;
   void Update() override;
   void Destroy() override;
+
+
+private:
+  SharedPtr<IYukiCamera>                      m_pCamera;
+  UnorderedMap<String, SharedPtr<YukiEntity>> m_mEntities;
+  bool                                        m_bIsReady;
 };
 
 } // namespace Yuki::Comp

@@ -1,8 +1,11 @@
+#include "YukiCore/YukiInputCtrl.hpp"
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiWindow.hpp"
 
 #include "PYukiInputControl.hpp"
+#include <GLFW/glfw3.h>
+#include <cstddef>
 
 namespace Yuki::Core
 {
@@ -13,7 +16,9 @@ YukiInpControl::YukiInpControl()
       m_tCrrMouseStatus(),
       m_tPrevMouseStatus(),
       m_tKeyStatuses(),
-      m_tLockMouse()
+      m_tLockMouse(),
+      m_bMouseHide(false),
+      m_pCursor(nullptr)
 {}
 
 YukiInpControl::~YukiInpControl() = default;
@@ -104,6 +109,28 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
   }
 }
 
+void YukiInpControl::SetCursorStandardStyle(const StandardCursorType& type)
+{
+  AutoType pPrevCursor = m_pCursor;
+  AutoType pGLFWWindow = GetYukiApp()->GetWindow()->GetGLFWWindow();
+
+  if (type == StandardCursorType::DEFAULT)
+  {
+    m_pCursor = nullptr;
+  }
+  else
+  {
+    m_pCursor = glfwCreateStandardCursor((int) type);
+  }
+
+  glfwSetCursor(pGLFWWindow, m_pCursor);
+  
+  if (pPrevCursor)
+  {
+    glfwDestroyCursor(pPrevCursor);
+  }
+}
+
 void YukiInpControl::LockMouse(int x, int y)
 {
   m_tLockMouse = {x, y, true};
@@ -112,6 +139,17 @@ void YukiInpControl::LockMouse(int x, int y)
 void YukiInpControl::UnlockMouse()
 {
   m_tLockMouse.lock = false;
+}
+
+void YukiInpControl::HideMouse()
+{
+  if (!m_bMouseHide)
+  {
+  }
+}
+
+void YukiInpControl::UnhideMouse()
+{
 }
 
 StKeyStatus& YukiInpControl::GetKeyStatus(const KeyCode& keyCode)

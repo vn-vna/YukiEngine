@@ -8,10 +8,6 @@ namespace Yuki::Utils
 
 class YukiRandomMachine : virtual public IYukiRandomMachine
 {
-protected:
-  RandomDevice m_RandomDevice;
-  MT19937      m_MT19937;
-
 public:
   YukiRandomMachine();
   virtual ~YukiRandomMachine();
@@ -20,6 +16,10 @@ public:
 
   RandomDevice& GetRandomDevice() override;
   MT19937&      GetRandomType() override;
+
+private:
+  RandomDevice m_RandomDevice;
+  MT19937      m_MT19937;
 };
 
 } // namespace Yuki::Utils

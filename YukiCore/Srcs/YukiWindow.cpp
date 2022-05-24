@@ -7,6 +7,7 @@
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiWindow.hpp"
+#include <GLFW/glfw3.h>
 
 void initAndCheckGLFW()
 {
@@ -49,6 +50,11 @@ void YukiWindow::ShowWindow()
 void YukiWindow::HideWindow()
 {
   glfwHideWindow(m_pGLFWWindow);
+}
+
+void YukiWindow::IconfyWindow()
+{
+  glfwIconifyWindow(m_pGLFWWindow);
 }
 
 void YukiWindow::SetSize(int width, int height)

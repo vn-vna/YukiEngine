@@ -6,19 +6,22 @@
  * ===========================================
  */
 
+#include "YukiCore/Srcs/PYukiOGLTexture.hpp"
 #include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiUtil/YukiSystem.hpp"
 #include "YukiUtil/YukiChrono.hpp"
 
-#include <cstddef>
+#include "PYukiObject.hpp"
 
 namespace Yuki::Utils
 {
 
+using Core::YukiObject;
 using Chrono::IYukiTimer;
 
-class YukiSystem : virtual public IYukiSystem
+class YukiSystem : virtual public IYukiSystem,
+                   virtual public YukiObject
 {
 private:
 #if defined(WIN32) || defined(_WIN32)
@@ -39,15 +42,18 @@ public:
   const MemoryInformation&    GetMemoryInformation() override;
   const ResourceActivityInfo& GetResourceActivityInfo() override;
 
+  void Create() override;
+  void Destroy() override;
+
 private:
   void _GetMemoryActivity(ResourceActivityInfo* info);
   void _GetCpuActivity(ResourceActivityInfo* info);
 
-#if defined(WIN32) || defined(_WIN32)
+#ifdef IS_WINDOWS
   void _InitInformationsWin32();
   void _InitPDH();
   void _DestroyPDH();
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#elifdef IS_LINUX
   void _InitInformationLinux();
   void _ProcessCpuInfoFile();
   void _ProcessMemInfoFile();
