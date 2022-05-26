@@ -10,7 +10,7 @@ YukiOGLVertexArray::YukiOGLVertexArray()
 
 YukiOGLVertexArray::~YukiOGLVertexArray() = default;
 
-const unsigned& YukiOGLVertexArray::GetID()
+unsigned YukiOGLVertexArray::GetID()
 {
   return m_nVaoID;
 }

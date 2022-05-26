@@ -130,7 +130,7 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
     Vector<unsigned> idata;
     idata.reserve(fcount * 3);
     std::for_each(farr, farr + fcount, [&](const aiFace& face) {
-      std::for_each(face.mIndices, face.mIndices + face.mNumIndices, [&](const unsigned& index) {
+      std::for_each(face.mIndices, face.mIndices + face.mNumIndices, [&](unsigned index) {
         idata.emplace_back(index);
       });
     });

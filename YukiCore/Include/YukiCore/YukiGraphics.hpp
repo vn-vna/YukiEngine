@@ -338,14 +338,16 @@ class IYukiGfxControl : virtual public IYukiObject
 public:
 };
 
+// OpenGL Object:
 // OpenGL Object abstraction.
 class IYukiOGLObject : virtual public IYukiObject
 {
 public:
-  virtual const unsigned& GetID()      = 0;
-  virtual void            BindObject() = 0;
+  virtual unsigned GetID()      = 0;
+  virtual void     BindObject() = 0;
 };
 
+// OpenGL Object:
 // Vertex Buffer Object abstraction.
 class IYukiOGLVertexBuffer : virtual public IYukiOGLObject
 {
@@ -354,6 +356,7 @@ public:
   virtual void SetBufferData(float* pData, size_t size) = 0;
 };
 
+// OpenGL Object:
 // Element Buffer Object abstraction.
 class IYukiOGLElementBuffer : virtual public IYukiOGLObject
 {
@@ -364,17 +367,7 @@ public:
   virtual void DrawAllElements(PrimitiveTopology topology)                              = 0;
 };
 
-// Vertex Array Object abstraction.
-class IYukiOGLVertexArray : virtual public IYukiOGLObject
-{
-public:
-  virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
-  virtual void AttributeBinding(unsigned attrib, unsigned binding)                                                  = 0;
-  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized = false)           = 0;
-  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) = 0;
-  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                                            = 0;
-};
-
+// OpenGL Object:
 // Shader Program abstraction.
 class IYukiOGLShaderProgram : virtual public IYukiOGLObject
 {
@@ -392,6 +385,7 @@ public:
   virtual void UniformValue(const String& prop, float value) = 0;
 };
 
+// OpenGL Object:
 // OpenGL Texture abstraction.
 class IYukiOGLTexture : virtual public IYukiOGLObject
 {
@@ -429,11 +423,52 @@ public:
   virtual void BindTexture(unsigned slot) = 0;
 };
 
+// OpenGL Object:
+// Render Buffer abstraction
+class IYukiOGLRenderBuffer : virtual public IYukiOGLObject
+{
+public:
+  virtual void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)                          = 0;
+  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat, const Vec2I& size, int samples) = 0;
+};
+
+// OpenGL Container:
+// Vertex Array Object abstraction.
+class IYukiOGLVertexArray : virtual public IYukiOGLObject
+{
+public:
+  virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
+  virtual void AttributeBinding(unsigned attrib, unsigned binding)                                                  = 0;
+  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized = false)           = 0;
+  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) = 0;
+  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                                            = 0;
+};
+
+// OpenGL Container
+// Frame Buffer Object abstraction
+class IYukiOGLFrameBuffer : virtual public IYukiOGLObject
+{
+public:
+  virtual bool BufferOK() = 0;
+
+  virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex, unsigned position = 0, unsigned level = 0) = 0;
+  virtual void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                        = 0;
+  virtual void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                      = 0;
+  virtual void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                 = 0;
+
+  virtual void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo, unsigned position = 0) = 0;
+  virtual void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo)                        = 0;
+  virtual void AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                      = 0;
+  virtual void AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                 = 0;
+};
+
 SharedPtr<IYukiGfxControl>       CreateGraphicsController();
 SharedPtr<IYukiOGLVertexBuffer>  CreateGLVertexBuffer();
 SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
 SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
 SharedPtr<IYukiOGLVertexArray>   CreateGLVertexArray();
 SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
+SharedPtr<IYukiOGLRenderBuffer>  CreateRegnderBuffer();
+SharedPtr<IYukiOGLFrameBuffer>   CreateFrameBuffer();
 
 } // namespace Yuki::Core

@@ -23,11 +23,11 @@ public:
   YukiOGLVertexArray();
   ~YukiOGLVertexArray() override;
 
-  bool            OnUse();
-  const unsigned& GetID() override;
-  void            BindObject() override;
-  void            Create() override;
-  void            Destroy() override;
+  bool     OnUse();
+  unsigned GetID() override;
+  void     BindObject() override;
+  void     Create() override;
+  void     Destroy() override;
 
   void EnableAttribute(unsigned attrib) override;
   void AttributeBinding(unsigned attrib, unsigned binding) override;

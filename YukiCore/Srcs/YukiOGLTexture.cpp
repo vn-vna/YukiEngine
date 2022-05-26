@@ -194,7 +194,7 @@ void YukiOGLTexture::SetTextureData3D(
       (int) imageFormat, GL_UNSIGNED_BYTE, pixels);
 }
 
-const unsigned& YukiOGLTexture::GetID()
+unsigned YukiOGLTexture::GetID()
 {
   return m_nTexID;
 }

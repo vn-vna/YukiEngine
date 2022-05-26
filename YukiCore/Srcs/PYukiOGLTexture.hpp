@@ -51,8 +51,8 @@ public:
   void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) override;
   void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) override;
 
-  const unsigned& GetID() override;
-  void            BindObject() override;
+  unsigned GetID() override;
+  void     BindObject() override;
 
   void GenerateMipMap() override;
   void BindTexture(unsigned slot) override;

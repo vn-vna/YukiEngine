@@ -11,7 +11,7 @@ YukiOGLVertexBuffer::YukiOGLVertexBuffer()
 
 YukiOGLVertexBuffer::~YukiOGLVertexBuffer() = default;
 
-const unsigned& YukiOGLVertexBuffer::GetID()
+unsigned YukiOGLVertexBuffer::GetID()
 {
   return m_nVboID;
 }

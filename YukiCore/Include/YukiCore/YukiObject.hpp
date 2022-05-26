@@ -45,6 +45,7 @@ enum class JoystickBtnCode;
 enum class GamepadBtnCode;
 enum class GamepadAxes;
 enum class KeyModifier;
+enum class StandardCursorType;
 
 struct StKeyStatus;
 struct StVertexFormat;

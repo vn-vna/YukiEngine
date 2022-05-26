@@ -12,7 +12,7 @@ YukiOGLElementBuffer::YukiOGLElementBuffer()
 
 YukiOGLElementBuffer::~YukiOGLElementBuffer() = default;
 
-const unsigned& YukiOGLElementBuffer::GetID()
+unsigned YukiOGLElementBuffer::GetID()
 {
   return m_nEboID;
 }

@@ -10,7 +10,6 @@
 
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiObject.hpp"
-#include <GLFW/glfw3.h>
 
 namespace Yuki::Core
 {
@@ -288,7 +287,7 @@ enum class StandardCursorType
   CURSOR_HRESIZE   = GLFW_HRESIZE_CURSOR,
   CURSOR_CROSSHAIR = GLFW_CROSSHAIR_CURSOR,
   CURSOR_IBEAM     = GLFW_IBEAM_CURSOR,
-  DEFAULT          = 0x00
+  DEFAULT          = GLFW_ARROW_CURSOR
 };
 
 class IYukiInpControl : virtual public IYukiObject

@@ -53,7 +53,7 @@ YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
 
 YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
 
-const unsigned& YukiOGLShaderProgram::GetID()
+unsigned YukiOGLShaderProgram::GetID()
 {
   return m_nSPId;
 }

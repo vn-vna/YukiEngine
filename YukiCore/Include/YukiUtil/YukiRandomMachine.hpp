@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <YukiCore/YukiObject.hpp>
+#include "YukiCore/YukiObject.hpp"
 
 #include <random>
 

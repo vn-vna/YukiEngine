@@ -4,8 +4,6 @@
 #include "YukiCore/YukiWindow.hpp"
 
 #include "PYukiInputControl.hpp"
-#include <GLFW/glfw3.h>
-#include <cstddef>
 
 namespace Yuki::Core
 {
@@ -114,17 +112,10 @@ void YukiInpControl::SetCursorStandardStyle(const StandardCursorType& type)
   AutoType pPrevCursor = m_pCursor;
   AutoType pGLFWWindow = GetYukiApp()->GetWindow()->GetGLFWWindow();
 
-  if (type == StandardCursorType::DEFAULT)
-  {
-    m_pCursor = nullptr;
-  }
-  else
-  {
-    m_pCursor = glfwCreateStandardCursor((int) type);
-  }
+  m_pCursor = glfwCreateStandardCursor((int) type);
 
   glfwSetCursor(pGLFWWindow, m_pCursor);
-  
+
   if (pPrevCursor)
   {
     glfwDestroyCursor(pPrevCursor);

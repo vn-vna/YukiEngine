@@ -46,8 +46,6 @@ using MiliSeconds   = std::chrono::milliseconds;
 using NanoSeconds   = std::chrono::nanoseconds;
 using Seconds       = std::chrono::seconds;
 
-using Core::GetYukiApp;
-
 typedef std::function<void(IYukiTimer*)> TimerAction;
 typedef UnorderedSet<IYukiTimer*>        TimerManager;
 
