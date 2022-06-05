@@ -21,8 +21,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram,
-                                   virtual public YukiObject
+class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram, virtual public YukiObject
 {
 public:
   explicit YukiOGLShaderProgram(const String& shaderName);

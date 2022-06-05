@@ -12,9 +12,7 @@ namespace Yuki::Debug
 
 using Chrono::Clock;
 
-YukiLogger::YukiLogger()
-    : m_pOutFileStream(nullptr)
-{}
+YukiLogger::YukiLogger() : m_pOutFileStream(nullptr) {}
 
 YukiLogger::~YukiLogger() = default;
 
@@ -31,25 +29,13 @@ void YukiLogger::PushMessage(const String& message, const String& prioty)
   GetOutFileStream() << outMessage;
 }
 
-void YukiLogger::PushDebugMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL);
-}
+void YukiLogger::PushDebugMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL); }
 
-void YukiLogger::PushWarningMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_WARNING);
-}
+void YukiLogger::PushWarningMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_WARNING); }
 
-void YukiLogger::PushErrorMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR);
-}
+void YukiLogger::PushErrorMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR); }
 
-OutputLogFile& YukiLogger::GetOutFileStream()
-{
-  return *m_pOutFileStream;
-}
+OutputLogFile& YukiLogger::GetOutFileStream() { return *m_pOutFileStream; }
 
 void YukiLogger::Create()
 {
@@ -63,14 +49,8 @@ void YukiLogger::Create()
 #endif // NDEBUG
 }
 
-void YukiLogger::Destroy()
-{
-  m_pOutFileStream->close();
-}
+void YukiLogger::Destroy() { m_pOutFileStream->close(); }
 
-SharedPtr<IYukiLogger> CreateYukiLogger()
-{
-  return Core::CreateInterfaceInstance<IYukiLogger, YukiLogger>();
-}
+SharedPtr<IYukiLogger> CreateYukiLogger() { return Core::CreateInterfaceInstance<IYukiLogger, YukiLogger>(); }
 
 } // namespace Yuki::Debug

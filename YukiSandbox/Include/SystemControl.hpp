@@ -21,7 +21,7 @@
 using Yuki::Core::KeyCode;
 using Yuki::Utils::IsKeyReleased;
 
-class SystemControl : virtual public Yuki::Entity::YukiEntity
+class SystemControl : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
@@ -42,12 +42,10 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> GetInstance();
 };
 
-inline SystemControl::SystemControl(const Yuki::String& name)
-    : Yuki::Entity::YukiEntity(name),
-      bDefaultCursor(true)
+inline SystemControl::SystemControl(const Yuki::String& name) : Yuki::Entity::TemplateEntity(name), bDefaultCursor(true)
 {}
 
 inline SystemControl::~SystemControl() = default;
@@ -59,18 +57,18 @@ inline void SystemControl::OnCreate()
   pSysControl = pApp->GetSystemController();
   pLogger     = pApp->GetLogger();
 
-  pTimer = Yuki::Chrono::CreateTimer([&](Yuki::Chrono::IYukiTimer* pTimer) {
-    AutoType resActivity = pSysControl->GetResourceActivityInfo();
-    pLogger->PushDebugMessage(fmt::format("CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad, resActivity.memoryUsed));
-  },
+  pTimer = Yuki::Chrono::CreateTimer(
+      [&](Yuki::Chrono::IYukiTimer* pTimer) {
+        AutoType resActivity = pSysControl->GetResourceActivityInfo();
+        pLogger->PushDebugMessage(
+            fmt::format("CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad, resActivity.memoryUsed));
+      },
       1'000'000'000);
 
   pTimer->Start();
 }
 
-inline void SystemControl::OnAwake()
-{
-}
+inline void SystemControl::OnAwake() {}
 
 inline void SystemControl::OnUpdate()
 {
@@ -114,9 +112,7 @@ inline void SystemControl::OnUpdate()
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V))
   {
-    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {
-      std::cout << "Pressed V\n";
-    });
+    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() { std::cout << "Pressed V\n"; });
   }
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V) && bDefaultCursor)
@@ -132,20 +128,16 @@ inline void SystemControl::OnUpdate()
   }
 }
 
-inline void SystemControl::OnRender()
-{
-}
+inline void SystemControl::OnRender() {}
 
-inline void SystemControl::OnDestroy()
-{
-}
+inline void SystemControl::OnDestroy() {}
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> SystemControl::GetInstance()
+inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity> SystemControl::GetInstance()
 {
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> instance;
   if (!instance.get())
   {
-    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::YukiEntity, SystemControl>("sys_ctrl");
+    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::TemplateEntity, SystemControl>("sys_ctrl");
   }
   return instance;
 }

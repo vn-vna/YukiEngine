@@ -5,16 +5,11 @@
 namespace Yuki::Core
 {
 
-YukiOGLVertexBuffer::YukiOGLVertexBuffer()
-    : m_nVboID()
-{}
+YukiOGLVertexBuffer::YukiOGLVertexBuffer() : m_nVboID() {}
 
 YukiOGLVertexBuffer::~YukiOGLVertexBuffer() = default;
 
-unsigned YukiOGLVertexBuffer::GetID()
-{
-  return m_nVboID;
-}
+unsigned YukiOGLVertexBuffer::GetID() { return m_nVboID; }
 
 bool YukiOGLVertexBuffer::OnUse()
 {
@@ -23,10 +18,7 @@ bool YukiOGLVertexBuffer::OnUse()
   return crrVB == m_nVboID;
 }
 
-void YukiOGLVertexBuffer::BindObject()
-{
-  glBindBuffer(GL_ARRAY_BUFFER, m_nVboID);
-}
+void YukiOGLVertexBuffer::BindObject() { glBindBuffer(GL_ARRAY_BUFFER, m_nVboID); }
 
 void YukiOGLVertexBuffer::SetBufferData(Vector<float>& data)
 {
@@ -38,15 +30,9 @@ void YukiOGLVertexBuffer::SetBufferData(float* pData, size_t size)
   glNamedBufferData(m_nVboID, size, pData, GL_STATIC_DRAW);
 }
 
-void YukiOGLVertexBuffer::Create()
-{
-  glCreateBuffers(1, &m_nVboID);
-}
+void YukiOGLVertexBuffer::Create() { glCreateBuffers(1, &m_nVboID); }
 
-void YukiOGLVertexBuffer::Destroy()
-{
-  glDeleteBuffers(1, &m_nVboID);
-}
+void YukiOGLVertexBuffer::Destroy() { glDeleteBuffers(1, &m_nVboID); }
 
 SharedPtr<IYukiOGLVertexBuffer> CreateGLVertexBuffer()
 {

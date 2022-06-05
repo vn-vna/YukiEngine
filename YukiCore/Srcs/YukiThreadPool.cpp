@@ -9,17 +9,9 @@ namespace Yuki::Core
 {
 
 YukiThreadPool::YukiThreadPool(int poolSize, bool oglContext)
-    : m_pManager(GetThreadPoolManager()),
-      m_aWorkers(),
-      m_ActionQueue(),
-      m_ActionQueueMutex(),
-      m_ActionQueueWaiter(),
-      m_PoolWaiter(),
-      m_bPoolActive(false),
-      m_bPoolStarted(false),
-      m_nNumThreadReady(0),
-      m_bCreateOGLContext(oglContext),
-      m_WorkerFunc([&]() {
+    : m_pManager(GetThreadPoolManager()), m_aWorkers(), m_ActionQueue(), m_ActionQueueMutex(), m_ActionQueueWaiter(),
+      m_PoolWaiter(), m_bPoolActive(false), m_bPoolStarted(false), m_nNumThreadReady(0),
+      m_bCreateOGLContext(oglContext), m_WorkerFunc([&]() {
         bool threadReady = false;
         ++m_nNumThreadReady;
         if (m_nNumThreadReady == m_aWorkers.capacity())
@@ -75,10 +67,7 @@ void YukiThreadPool::Start()
     THROW_YUKI_ERROR(ThreadPoolAlreadyStarted);
   }
 
-  if (m_bCreateOGLContext)
-  {
-
-  }
+  if (m_bCreateOGLContext) {}
 
   m_bPoolActive = true;
   for (int i = 0; i < m_aWorkers.capacity(); ++i)
@@ -102,10 +91,7 @@ void YukiThreadPool::Join()
   // m_ManagerThread.join();
 }
 
-void YukiThreadPool::PushAction(const CallbackFunc& callback)
-{
-  m_ActionQueue.push(callback);
-}
+void YukiThreadPool::PushAction(const CallbackFunc& callback) { m_ActionQueue.push(callback); }
 
 void YukiThreadPool::Terminate()
 {
@@ -123,45 +109,21 @@ void YukiThreadPool::WaitForPoolReady()
   m_PoolWaiter.wait(locker);
 }
 
-void YukiThreadPool::NotifyWorkers()
-{
-  m_ActionQueueWaiter.notify_all();
-}
+void YukiThreadPool::NotifyWorkers() { m_ActionQueueWaiter.notify_all(); }
 
-Vector<Thread>& YukiThreadPool::GetWorkers()
-{
-  return m_aWorkers;
-}
+Vector<Thread>& YukiThreadPool::GetWorkers() { return m_aWorkers; }
 
-ConditionVariable& YukiThreadPool::GetWorkerWaiter()
-{
-  return m_ActionQueueWaiter;
-}
+ConditionVariable& YukiThreadPool::GetWorkerWaiter() { return m_ActionQueueWaiter; }
 
-Mutex& YukiThreadPool::GetActionQueueMutex()
-{
-  return m_ActionQueueMutex;
-}
+Mutex& YukiThreadPool::GetActionQueueMutex() { return m_ActionQueueMutex; }
 
-Queue<CallbackFunc>& YukiThreadPool::GetActionQueue()
-{
-  return m_ActionQueue;
-}
+Queue<CallbackFunc>& YukiThreadPool::GetActionQueue() { return m_ActionQueue; }
 
-CallbackFunc& YukiThreadPool::GetWorkerFuncCallback()
-{
-  return m_WorkerFunc;
-}
+CallbackFunc& YukiThreadPool::GetWorkerFuncCallback() { return m_WorkerFunc; }
 
-bool YukiThreadPool::IsPoolActive()
-{
-  return m_bPoolActive;
-}
+bool YukiThreadPool::IsPoolActive() { return m_bPoolActive; }
 
-bool YukiThreadPool::IsPoolStarted()
-{
-  return m_bPoolStarted;
-}
+bool YukiThreadPool::IsPoolStarted() { return m_bPoolStarted; }
 
 void InvokeAllThreads()
 {
@@ -179,10 +141,7 @@ void InvokeAllThreads()
   }
 }
 
-unsigned GetHardwareConcurrency()
-{
-  return std::thread::hardware_concurrency();
-}
+unsigned GetHardwareConcurrency() { return std::thread::hardware_concurrency(); }
 
 SharedPtr<ThreadPoolManager> GetThreadPoolManager()
 {
@@ -204,8 +163,7 @@ SharedPtr<IYukiThreadPool> CreateThreadPool(int poolSize, bool oglContext)
   };
 
   SharedPtr<IYukiThreadPool> pThreadPool{
-      dynamic_cast<IYukiThreadPool*>(new YukiThreadPool{poolSize, oglContext}),
-      deleter};
+      dynamic_cast<IYukiThreadPool*>(new YukiThreadPool{poolSize, oglContext}), deleter};
   if (manager->find(pThreadPool.get()) != manager->end())
   {
     THROW_YUKI_ERROR(ThreadPoolManagerDuplicateKey);

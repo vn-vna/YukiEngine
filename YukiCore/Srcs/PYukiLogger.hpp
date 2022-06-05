@@ -18,8 +18,7 @@ namespace Yuki::Debug
 
 using Core::YukiObject;
 
-class YukiLogger final : virtual public IYukiLogger,
-                         virtual public YukiObject
+class YukiLogger final : virtual public IYukiLogger, virtual public YukiObject
 {
 public:
   YukiLogger();

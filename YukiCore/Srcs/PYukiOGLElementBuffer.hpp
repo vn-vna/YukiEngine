@@ -16,8 +16,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLElementBuffer final : virtual public IYukiOGLElementBuffer,
-                                   virtual public YukiObject
+class YukiOGLElementBuffer final : virtual public IYukiOGLElementBuffer, virtual public YukiObject
 {
 public:
   YukiOGLElementBuffer();

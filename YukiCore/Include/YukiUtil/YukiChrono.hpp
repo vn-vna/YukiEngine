@@ -76,7 +76,8 @@ public:
 class IYukiStopwatch
 {
 public:
-  virtual void Start() = 0;
+  virtual void      Start()          = 0;
+  virtual long long GetElapsedTime() = 0;
 };
 
 class IYukiTimer

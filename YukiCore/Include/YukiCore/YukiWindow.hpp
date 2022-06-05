@@ -37,8 +37,7 @@ public:
 };
 
 class IYukiOffScreenContext : virtual public IYukiObject
-{
-};
+{};
 
 SharedPtr<IYukiWindow> CreateNewWindow();
 

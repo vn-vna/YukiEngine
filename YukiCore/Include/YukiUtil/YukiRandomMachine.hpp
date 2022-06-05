@@ -18,8 +18,7 @@ namespace Yuki::Utils
 using RandomDevice = std::random_device;
 using MT19937      = std::mt19937;
 
-template <typename T>
-using UniformRealDistribution = std::uniform_real_distribution<T>;
+template <typename T> using UniformRealDistribution = std::uniform_real_distribution<T>;
 
 typedef UniformRealDistribution<float> UniformRealDistributionF;
 

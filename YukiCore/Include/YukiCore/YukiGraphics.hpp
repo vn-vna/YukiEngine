@@ -12,8 +12,6 @@
 #include "YukiCore/YukiObject.hpp"
 #include "YukiDebug/YukiLogger.hpp"
 
-#include <glm/glm.hpp>
-
 namespace Yuki::Core
 {
 
@@ -213,20 +211,20 @@ enum class TextureCompareMode
 
 enum class PixelCompressedInternalFormat
 {
-  COMPRESSED_RED                     = GL_COMPRESSED_RED,
-  COMPRESSED_RG                      = GL_COMPRESSED_RG,
-  COMPRESSED_RGB                     = GL_COMPRESSED_RGB,
-  COMPRESSED_RGBA                    = GL_COMPRESSED_RGBA,
-  COMPRESSED_SRGB                    = GL_COMPRESSED_SRGB,
-  COMPRESSED_SRGB_ALPHA              = GL_COMPRESSED_SRGB_ALPHA,
-  COMPRESSED_RED_RGTC1               = GL_COMPRESSED_RED_RGTC1,
-  COMPRESSED_SIGNED_RED_RGTC1        = GL_COMPRESSED_SIGNED_RED_RGTC1,
-  COMPRESSED_RG_RGTC2                = GL_COMPRESSED_RG_RGTC2,
-  COMPRESSED_SIGNED_RG_RGTC2         = GL_COMPRESSED_SIGNED_RG_RGTC2,
-  COMPRESSED_RGBA_BPTC_UNORM         = GL_COMPRESSED_RGBA_BPTC_UNORM,
-  COMPRESSED_SRGB_ALPHA_BPTC_UNORM   = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM,
-  COMPRESSED_RGB_BPTC_SIGNED_FLOAT   = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT,
-  COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT,
+  C_RED                     = GL_COMPRESSED_RED,
+  C_RG                      = GL_COMPRESSED_RG,
+  C_RGB                     = GL_COMPRESSED_RGB,
+  C_RGBA                    = GL_COMPRESSED_RGBA,
+  C_SRGB                    = GL_COMPRESSED_SRGB,
+  C_SRGB_ALPHA              = GL_COMPRESSED_SRGB_ALPHA,
+  C_RED_RGTC1               = GL_COMPRESSED_RED_RGTC1,
+  C_SIGNED_RED_RGTC1        = GL_COMPRESSED_SIGNED_RED_RGTC1,
+  C_RG_RGTC2                = GL_COMPRESSED_RG_RGTC2,
+  C_SIGNED_RG_RGTC2         = GL_COMPRESSED_SIGNED_RG_RGTC2,
+  C_RGBA_BPTC_UNORM         = GL_COMPRESSED_RGBA_BPTC_UNORM,
+  C_SRGB_ALPHA_BPTC_UNORM   = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM,
+  C_RGB_BPTC_SIGNED_FLOAT   = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT,
+  C_RGB_BPTC_UNSIGNED_FLOAT = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT,
 };
 
 // Sized Internal Formats
@@ -306,36 +304,25 @@ enum class PixelBasedInternalFormat
   STENCIL_INDEX   = GL_STENCIL_INDEX
 };
 
-// Format of a vertex to passed into VBO
-typedef struct StVertexFormat
+enum class OpenGLAttribute
 {
-  Vec3F position;
-  Vec3F normal;
-  Vec2F texcoord;
-
-  StVertexFormat(
-      const Vec3F& _position,
-      const Vec3F& _normal,
-      const Vec2F& _texcoord)
-      : position(_position), normal(_normal), texcoord(_texcoord) {}
-
-  StVertexFormat()
-      : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
-
-} VertexData, VertexFormat;
-
-// Index data format
-typedef struct StIndexData
-{
-  PrimitiveTopology topology;
-  Vector<unsigned>  data;
-} IndexData, IndexFormat;
+  STENCIL_TEST = GL_STENCIL_TEST,
+  ALPHA_TEST   = GL_ALPHA_TEST,
+  BLEND_MODE   = GL_BLEND,
+  DEPTH_TEST   = GL_DEPTH_TEST,
+  DITHER       = GL_DITHER,
+  HISTOGRAM    = GL_HISTOGRAM,
+  LINE_SMOOTH  = GL_LINE_SMOOTH,
+};
 
 // This object is only used once in Application. This is the class
 // controls every graphics actions.
 class IYukiGfxControl : virtual public IYukiObject
 {
 public:
+  virtual void EnableAttribute(OpenGLAttribute attrib, bool cond = true)  = 0;
+  virtual void DisableAttribute(OpenGLAttribute attrib, bool cond = true) = 0;
+  virtual void SetAttributeStatus(OpenGLAttribute attrib, bool status)    = 0;
 };
 
 // OpenGL Object:
@@ -406,9 +393,12 @@ public:
   virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat, int level, const Vec2F& size) = 0;
   virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level, const Vec3F& size) = 0;
 
-  virtual void SetTextureData1D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& len)  = 0;
-  virtual void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) = 0;
-  virtual void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) = 0;
+  virtual void SetTextureData1D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& len) = 0;
+  virtual void SetTextureData2D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) = 0;
+  virtual void SetTextureData3D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
@@ -449,6 +439,30 @@ public:
 class IYukiOGLFrameBuffer : virtual public IYukiOGLObject
 {
 public:
+  virtual bool IsEnabledStencilTesting() = 0;
+  virtual bool IsEnabledBlendMode()      = 0;
+  virtual bool IsEnabledAlphaTest()      = 0;
+  virtual bool IsEnabledDepthTest()      = 0;
+  virtual bool IsEnabledDither()         = 0;
+  virtual bool IsEnabledHistogram()      = 0;
+  virtual bool IsEnabledLineSmooth()     = 0;
+
+  virtual void EnableStencilTesting() = 0;
+  virtual void EnableBlendMode()      = 0;
+  virtual void EnableAlphaTest()      = 0;
+  virtual void EnableDepthTest()      = 0;
+  virtual void EnableDither()         = 0;
+  virtual void EnableHistogram()      = 0;
+  virtual void EnableLineSmooth()     = 0;
+
+  virtual void DisableStencilTesting() = 0;
+  virtual void DisableBlendMode()      = 0;
+  virtual void DisableAlphaTest()      = 0;
+  virtual void DisableDepthTest()      = 0;
+  virtual void DisableDither()         = 0;
+  virtual void DisableHistogram()      = 0;
+  virtual void DisableLineSmooth()     = 0;
+
   virtual bool BufferOK() = 0;
 
   virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex, unsigned position = 0, unsigned level = 0) = 0;
@@ -468,7 +482,7 @@ SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
 SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
 SharedPtr<IYukiOGLVertexArray>   CreateGLVertexArray();
 SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
-SharedPtr<IYukiOGLRenderBuffer>  CreateRegnderBuffer();
-SharedPtr<IYukiOGLFrameBuffer>   CreateFrameBuffer();
+SharedPtr<IYukiOGLRenderBuffer>  CreateGLRegnderBuffer();
+SharedPtr<IYukiOGLFrameBuffer>   CreateGLFrameBuffer();
 
 } // namespace Yuki::Core

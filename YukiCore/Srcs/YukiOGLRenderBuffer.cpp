@@ -1,31 +1,36 @@
 #include "PYukiOGLRenderBuffer.hpp"
+#include "YukiCore/YukiGraphics.hpp"
+#include "YukiCore/YukiObject.hpp"
 
 namespace Yuki::Core
 {
 
-YukiOGLRenderBuffer::YukiOGLRenderBuffer()
-{}
+YukiOGLRenderBuffer::YukiOGLRenderBuffer() {}
 
 YukiOGLRenderBuffer::~YukiOGLRenderBuffer() = default;
 
-unsigned YukiOGLRenderBuffer::GetID()
+unsigned YukiOGLRenderBuffer::GetID() { return m_nRboId; }
+
+void YukiOGLRenderBuffer::BindObject() { glBindRenderbuffer(GL_RENDERBUFFER, m_nRboId); }
+
+void YukiOGLRenderBuffer::SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)
 {
-  return m_nRboId;
+  glNamedRenderbufferStorage(m_nRboId, (GLenum) internalFormat, size.x, size.y);
 }
 
-void YukiOGLRenderBuffer::BindObject()
+void YukiOGLRenderBuffer::SetBufferStorageMultiSamples(
+    PixelInternalFormat internalFormat, const Vec2I& size, int samples)
 {
-  glBindRenderbuffer(GL_RENDERBUFFER, m_nRboId);
+  glNamedRenderbufferStorageMultisample(m_nRboId, samples, (GLenum) internalFormat, size.x, size.y);
 }
 
-void YukiOGLRenderBuffer::Create()
-{
-  glCreateRenderbuffers(1, &m_nRboId);
-}
+void YukiOGLRenderBuffer::Create() { glCreateRenderbuffers(1, &m_nRboId); }
 
-void YukiOGLRenderBuffer::Destroy()
+void YukiOGLRenderBuffer::Destroy() { glDeleteRenderbuffers(1, &m_nRboId); }
+
+SharedPtr<IYukiOGLRenderBuffer> CreateGLRegnderBuffer()
 {
-  glDeleteRenderbuffers(1, &m_nRboId);
+  return CreateInterfaceInstance<IYukiOGLRenderBuffer, YukiOGLRenderBuffer>();
 }
 
 } // namespace Yuki::Core

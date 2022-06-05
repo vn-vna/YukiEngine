@@ -20,8 +20,27 @@ using Core::IYukiOGLVertexBuffer;
 using Core::IYukiOGLShaderProgram;
 using Core::IYukiOGLVertexArray;
 using Core::PrimitiveTopology;
-using Core::IndexData;
-using Core::VertexFormat;
+
+typedef struct StVertexFormat
+{
+  Vec3F position;
+  Vec3F normal;
+  Vec2F texcoord;
+
+  StVertexFormat(const Vec3F& _position, const Vec3F& _normal, const Vec2F& _texcoord)
+      : position(_position), normal(_normal), texcoord(_texcoord)
+  {}
+
+  StVertexFormat() : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
+
+} MeshVertexFormat;
+
+// Index data format
+typedef struct StIndexData
+{
+  PrimitiveTopology topology;
+  Vector<unsigned>  data;
+} MeshIndexData;
 
 extern SharedPtr<IYukiOGLTexture> NO_TEXTURE;
 
@@ -70,8 +89,8 @@ public:
   virtual const PrimitiveTopology&         GetTopology() const           = 0;
   virtual const String&                    GetName() const               = 0;
   virtual const Mat4F&                     GetMeshMatrix() const         = 0;
-  virtual const Vector<VertexFormat>&      GetVertexData() const         = 0;
-  virtual const IndexData&                 GetIndexData() const          = 0;
+  virtual const Vector<MeshVertexFormat>&  GetVertexData() const         = 0;
+  virtual const MeshIndexData&             GetIndexData() const          = 0;
   virtual TransformationInfo               GetTransformationInfo() const = 0;
 
   virtual void SetMaterial(SharedPtr<IYukiMeshMaterial> material)  = 0;
@@ -95,12 +114,8 @@ public:
  * @param meshName provide a name for it
  * @return an interface instance for the mesh
  */
-SharedPtr<IYukiMesh> CreateYukiMesh(
-    Vector<VertexFormat>&            vertexData,
-    IndexData&                       indexData,
-    SharedPtr<Core::IYukiOGLTexture> texture,
-    SharedPtr<IYukiMeshMaterial>     material,
-    const String&                    meshName);
+SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
+    SharedPtr<Core::IYukiOGLTexture> texture, SharedPtr<IYukiMeshMaterial> material, const String& meshName);
 
 /**
  * Thif function is used to create a new material and return it's interface instance
@@ -113,8 +128,10 @@ SharedPtr<IYukiMeshMaterial> CreateMaterial(float specular, float ambient);
 
 // Initialize the default shader for mesh rendering
 void InitializeMeshShader();
+void InitializeMeshDefaultTextures();
 
 // Destroy the default shader for mesh rendering
 void ReleaseMeshShader();
+void ReleaseMeshDefaultTextures();
 
 } // namespace Yuki::Comp

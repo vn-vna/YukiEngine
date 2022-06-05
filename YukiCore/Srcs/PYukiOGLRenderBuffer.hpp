@@ -1,3 +1,13 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
+#pragma once
+
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiObject.hpp"
 
@@ -6,8 +16,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLRenderBuffer final : virtual public IYukiOGLRenderBuffer,
-                                  virtual public YukiObject
+class YukiOGLRenderBuffer final : virtual public IYukiOGLRenderBuffer, virtual public YukiObject
 {
 public:
   YukiOGLRenderBuffer();

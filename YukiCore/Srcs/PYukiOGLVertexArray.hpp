@@ -16,8 +16,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexArray final : virtual public IYukiOGLVertexArray,
-                                 virtual public YukiObject
+class YukiOGLVertexArray final : virtual public IYukiOGLVertexArray, virtual public YukiObject
 {
 public:
   YukiOGLVertexArray();

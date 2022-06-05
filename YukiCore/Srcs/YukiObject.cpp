@@ -5,19 +5,14 @@
 namespace Yuki::Core
 {
 
-void YukiObject::Create()
-{}
+void YukiObject::Create() {}
 
-void YukiObject::Awake()
-{}
+void YukiObject::Awake() {}
 
-void YukiObject::Update()
-{}
+void YukiObject::Update() {}
 
-void YukiObject::Render()
-{}
+void YukiObject::Render() {}
 
-void YukiObject::Destroy()
-{}
+void YukiObject::Destroy() {}
 
 } // namespace Yuki::Core

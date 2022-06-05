@@ -27,8 +27,7 @@ using Debug::IYukiLogger;
 using Comp::IYukiScene;
 using Utils::IYukiSystem;
 
-class YukiApp final : virtual public IYukiApp,
-                      virtual public YukiObject
+class YukiApp final : virtual public IYukiApp, virtual public YukiObject
 {
 public:
   YukiApp();

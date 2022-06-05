@@ -2,10 +2,9 @@
 #include "YukiDebug/YukiError.hpp"
 #include "YukiCore/YukiApplication.hpp"
 
-#define MAKE_ERROR_DEFINITION(__err_name, __err_code)                     \
-  Yuki##__err_name::Yuki##__err_name(const String& file, const int& line) \
-      : std::runtime_error("yuki-rte"),                                   \
-        YukiError(YukiErrCode::__err_code, file, line)                    \
+#define MAKE_ERROR_DEFINITION(__err_name, __err_code)                                  \
+  Yuki##__err_name::Yuki##__err_name(const String& file, const int& line)              \
+      : std::runtime_error("yuki-rte"), YukiError(YukiErrCode::__err_code, file, line) \
   {}
 
 #define YUKI_CORE_ERROR   "[YUKI CORE]"
@@ -24,10 +23,7 @@ namespace Yuki::Debug
 using Core::GetYukiApp;
 
 YukiError::YukiError(const YukiErrCode& code, const String& file, const int& line)
-    : std::runtime_error("yuki-rte"),
-      m_File(file),
-      m_nLine(line),
-      m_ErrCode(code)
+    : std::runtime_error("yuki-rte"), m_File(file), m_nLine(line), m_ErrCode(code)
 {}
 
 String YukiError::getErrorMessage() const
@@ -65,17 +61,9 @@ String YukiError::getErrorMessage() const
   return sstr.str();
 }
 
-const YukiErrCode& YukiError::getErrorCode() const
-{
-  return m_ErrCode;
-}
+const YukiErrCode& YukiError::getErrorCode() const { return m_ErrCode; }
 
-void YukiError::PushErrorMessage() const
-{
-  GetYukiApp()
-      ->GetLogger()
-      ->PushErrorMessage(this->getErrorMessage());
-}
+void YukiError::PushErrorMessage() const { GetYukiApp()->GetLogger()->PushErrorMessage(this->getErrorMessage()); }
 
 // clang-format off
 MAKE_ERROR_DEFINITION(AppCreated,                                 YUKI_APP_CREATED)

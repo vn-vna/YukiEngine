@@ -5,22 +5,13 @@
 namespace Yuki::Core
 {
 
-YukiOGLElementBuffer::YukiOGLElementBuffer()
-    : m_nEboID(),
-      m_nElementCount()
-{}
+YukiOGLElementBuffer::YukiOGLElementBuffer() : m_nEboID(), m_nElementCount() {}
 
 YukiOGLElementBuffer::~YukiOGLElementBuffer() = default;
 
-unsigned YukiOGLElementBuffer::GetID()
-{
-  return m_nEboID;
-}
+unsigned YukiOGLElementBuffer::GetID() { return m_nEboID; }
 
-void YukiOGLElementBuffer::BindObject()
-{
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEboID);
-}
+void YukiOGLElementBuffer::BindObject() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_nEboID); }
 
 bool YukiOGLElementBuffer::OnUse()
 {
@@ -51,15 +42,9 @@ void YukiOGLElementBuffer::DrawAllElements(Core::PrimitiveTopology topology)
   DrawElements(topology, 0, m_nElementCount);
 }
 
-void YukiOGLElementBuffer::Create()
-{
-  glCreateBuffers(1, &m_nEboID);
-}
+void YukiOGLElementBuffer::Create() { glCreateBuffers(1, &m_nEboID); }
 
-void YukiOGLElementBuffer::Destroy()
-{
-  glDeleteBuffers(1, &m_nEboID);
-}
+void YukiOGLElementBuffer::Destroy() { glDeleteBuffers(1, &m_nEboID); }
 
 SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer()
 {

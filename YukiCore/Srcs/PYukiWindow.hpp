@@ -16,8 +16,7 @@
 namespace Yuki::Core
 {
 
-class YukiWindow final : virtual public IYukiWindow,
-                         virtual public YukiObject
+class YukiWindow final : virtual public IYukiWindow, virtual public YukiObject
 {
 public:
   YukiWindow();

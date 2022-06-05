@@ -12,7 +12,7 @@
 // #pragma warning(disable : 4275)
 // #pragma warning(disable : 26812)
 
-#if defined(_WIN32) || defined(WIN32)
+#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
 #  define IS_WINDOWS
 #elif defined(linux) || defined(__linux) || defined(__linux__)
 #  define IS_LINUX
@@ -75,60 +75,37 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-// #ifdef IS_WINDOWS
-// #  ifdef YUKICORE_EXPORTS
-// #    define YUKIAPI __declspec(dllexport)
-// #  else
-// #    define YUKIAPI __declspec(dllimport)
-// #  endif // YUKICORE_EXPORTS
-// #elifdef IS_LINUX
-// #  define YUKIAPI
-// #endif
-
 #define AutoType       auto
 #define YUKI_NODISCARD [[nodiscard]]
 
 namespace Yuki
 {
 
-template <typename T>
-using SharedPtr = std::shared_ptr<T>;
+template <typename T> using SharedPtr = std::shared_ptr<T>;
 
-template <typename T>
-using UniquePtr = std::unique_ptr<T>;
+template <typename T> using UniquePtr = std::unique_ptr<T>;
 
-template <typename T>
-using WeakPtr = std::weak_ptr<T>;
+template <typename T> using WeakPtr = std::weak_ptr<T>;
 
-template <typename T>
-using Vector = std::vector<T, std::allocator<T>>;
+template <typename T> using Vector = std::vector<T, std::allocator<T>>;
 
-template <typename T>
-using Queue = std::queue<T, std::deque<T>>;
+template <typename T> using Queue = std::queue<T, std::deque<T>>;
 
-template <typename T>
-using Stack = std::stack<T, std::deque<T>>;
+template <typename T> using Stack = std::stack<T, std::deque<T>>;
 
-template <typename K, typename V>
-using UnorderedMap = std::unordered_map<K, V>;
+template <typename K, typename V> using UnorderedMap = std::unordered_map<K, V>;
 
-template <typename K, typename V>
-using Map = std::map<K, V>;
+template <typename K, typename V> using Map = std::map<K, V>;
 
-template <typename T>
-using UnorderedSet = std::unordered_set<T>;
+template <typename T> using UnorderedSet = std::unordered_set<T>;
 
-template <typename T>
-using Set = std::set<T>;
+template <typename T> using Set = std::set<T>;
 
-template <typename T, int SIZE>
-using Array = std::array<T, SIZE>;
+template <typename T, int SIZE> using Array = std::array<T, SIZE>;
 
-template <typename T>
-using Atomic = std::atomic<T>;
+template <typename T> using Atomic = std::atomic<T>;
 
-template <typename T>
-using Function = std::function<T>;
+template <typename T> using Function = std::function<T>;
 
 using String       = std::string;
 using StringStream = std::stringstream;

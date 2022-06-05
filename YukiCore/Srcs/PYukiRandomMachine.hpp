@@ -1,7 +1,15 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
 
-#include <YukiCore/YukiObject.hpp>
-#include <YukiUtil/YukiRandomMachine.hpp>
+#include "YukiCore/YukiObject.hpp"
+#include "YukiUtil/YukiRandomMachine.hpp"
 
 namespace Yuki::Utils
 {

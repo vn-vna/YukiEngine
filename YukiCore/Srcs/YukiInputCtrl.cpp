@@ -9,14 +9,8 @@ namespace Yuki::Core
 {
 
 YukiInpControl::YukiInpControl()
-    : m_mpKeyCallbacksPool(),
-      m_mpCursorCallbacksPool(),
-      m_tCrrMouseStatus(),
-      m_tPrevMouseStatus(),
-      m_tKeyStatuses(),
-      m_tLockMouse(),
-      m_bMouseHide(false),
-      m_pCursor(nullptr)
+    : m_mpKeyCallbacksPool(), m_mpCursorCallbacksPool(), m_tCrrMouseStatus(), m_tPrevMouseStatus(), m_tKeyStatuses(),
+      m_tLockMouse(), m_bMouseHide(false), m_pCursor(nullptr)
 {}
 
 YukiInpControl::~YukiInpControl() = default;
@@ -122,54 +116,34 @@ void YukiInpControl::SetCursorStandardStyle(const StandardCursorType& type)
   }
 }
 
-void YukiInpControl::LockMouse(int x, int y)
-{
-  m_tLockMouse = {x, y, true};
-}
+void YukiInpControl::LockMouse(int x, int y) { m_tLockMouse = {x, y, true}; }
 
-void YukiInpControl::UnlockMouse()
-{
-  m_tLockMouse.lock = false;
-}
+void YukiInpControl::UnlockMouse() { m_tLockMouse.lock = false; }
 
 void YukiInpControl::HideMouse()
 {
-  if (!m_bMouseHide)
-  {
-  }
+  if (!m_bMouseHide) {}
 }
 
-void YukiInpControl::UnhideMouse()
-{
-}
+void YukiInpControl::UnhideMouse() {}
 
-StKeyStatus& YukiInpControl::GetKeyStatus(const KeyCode& keyCode)
-{
-  return m_tKeyStatuses[(int) keyCode];
-}
+StKeyStatus& YukiInpControl::GetKeyStatus(const KeyCode& keyCode) { return m_tKeyStatuses[(int) keyCode]; }
 
-MouseStatus& YukiInpControl::GetMouseStatus()
-{
-  return m_tCrrMouseStatus;
-}
+MouseStatus& YukiInpControl::GetMouseStatus() { return m_tCrrMouseStatus; }
 
-Vec2F YukiInpControl::GetMousePosition()
-{
-  return {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y};
-}
+Vec2F YukiInpControl::GetMousePosition() { return {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y}; }
 
-Vec2F YukiInpControl::GetMouseVelocity()
-{
-  return {m_tCrrMouseStatus.vx, m_tCrrMouseStatus.vy};
-}
+Vec2F YukiInpControl::GetMouseVelocity() { return {m_tCrrMouseStatus.vx, m_tCrrMouseStatus.vy}; }
 
 int YukiInpControl::GetKeyHorizontalAxis()
 {
-  if (GetKeyStatus(KeyCode::KEY_A).state != KeyState::RELEASE || GetKeyStatus(KeyCode::KEY_LEFT).state != KeyState::RELEASE)
+  if (GetKeyStatus(KeyCode::KEY_A).state != KeyState::RELEASE ||
+      GetKeyStatus(KeyCode::KEY_LEFT).state != KeyState::RELEASE)
   {
     return -1;
   }
-  if (GetKeyStatus(KeyCode::KEY_D).state != KeyState::RELEASE || GetKeyStatus(KeyCode::KEY_RIGHT).state != KeyState::RELEASE)
+  if (GetKeyStatus(KeyCode::KEY_D).state != KeyState::RELEASE ||
+      GetKeyStatus(KeyCode::KEY_RIGHT).state != KeyState::RELEASE)
   {
     return 1;
   }
@@ -178,21 +152,20 @@ int YukiInpControl::GetKeyHorizontalAxis()
 
 int YukiInpControl::GetKeyVerticalAxis()
 {
-  if (GetKeyStatus(KeyCode::KEY_S).state != KeyState::RELEASE || GetKeyStatus(KeyCode::KEY_DOWN).state != KeyState::RELEASE)
+  if (GetKeyStatus(KeyCode::KEY_S).state != KeyState::RELEASE ||
+      GetKeyStatus(KeyCode::KEY_DOWN).state != KeyState::RELEASE)
   {
     return -1;
   }
-  if (GetKeyStatus(KeyCode::KEY_W).state != KeyState::RELEASE || GetKeyStatus(KeyCode::KEY_UP).state != KeyState::RELEASE)
+  if (GetKeyStatus(KeyCode::KEY_W).state != KeyState::RELEASE ||
+      GetKeyStatus(KeyCode::KEY_UP).state != KeyState::RELEASE)
   {
     return 1;
   }
   return 0;
 }
 
-bool YukiInpControl::IsMouseLocked()
-{
-  return m_tLockMouse.lock;
-}
+bool YukiInpControl::IsMouseLocked() { return m_tLockMouse.lock; }
 
 void YukiInpControl::Create()
 {
@@ -205,9 +178,7 @@ void YukiInpControl::Create()
   }
 }
 
-void YukiInpControl::Destroy()
-{
-}
+void YukiInpControl::Destroy() {}
 
 SharedPtr<IYukiInpControl> CreateNewInputControl()
 {

@@ -26,6 +26,8 @@ protected:
 
 public:
   explicit YukiImage(const String& path, bool flip = false);
+  YukiImage(YukiImage& image);
+  YukiImage(YukiImage&& image);
   virtual ~YukiImage();
 
   const uint8_t* GetData();
@@ -36,5 +38,7 @@ public:
   SharedPtr<IYukiOGLTexture> Create2DTexture(const Vec2I& offset, const Vec2I& size);
   SharedPtr<IYukiOGLTexture> Create2DTexture();
 };
+
+YukiImage CreateSolidColorImage(const Vec3F& color);
 
 } // namespace Yuki::Utils

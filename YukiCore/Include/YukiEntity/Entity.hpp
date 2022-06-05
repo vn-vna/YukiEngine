@@ -21,7 +21,7 @@ typedef SharedPtr<IYukiModel> ModelType;
 
 extern SharedPtr<IYukiModel> NO_MODEL;
 
-class YukiEntity : virtual public Core::IYukiObject
+class TemplateEntity : virtual public Core::IYukiObject
 {
 
 protected:
@@ -30,8 +30,8 @@ protected:
   String    m_sName;
 
 public:
-  explicit YukiEntity(const String& name);
-  virtual ~YukiEntity();
+  explicit TemplateEntity(const String& name);
+  virtual ~TemplateEntity();
 
   virtual void SetModel(ModelType model) final;
 

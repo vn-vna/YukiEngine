@@ -43,8 +43,7 @@ const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& sha
 namespace Yuki::Core
 {
 
-YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
-    : m_nSPId()
+YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName) : m_nSPId()
 {
   m_VSShaderFile = shaderName + ".vert";
   m_FSShaderFile = shaderName + ".frag";
@@ -53,15 +52,9 @@ YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
 
 YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
 
-unsigned YukiOGLShaderProgram::GetID()
-{
-  return m_nSPId;
-}
+unsigned YukiOGLShaderProgram::GetID() { return m_nSPId; }
 
-void YukiOGLShaderProgram::BindObject()
-{
-  glUseProgram(m_nSPId);
-}
+void YukiOGLShaderProgram::BindObject() { glUseProgram(m_nSPId); }
 
 void YukiOGLShaderProgram::Create()
 {
@@ -93,10 +86,7 @@ void YukiOGLShaderProgram::Create()
   m_nSPId = pid;
 }
 
-void YukiOGLShaderProgram::Destroy()
-{
-  glDeleteProgram(m_nSPId);
-}
+void YukiOGLShaderProgram::Destroy() { glDeleteProgram(m_nSPId); }
 
 bool YukiOGLShaderProgram::OnUse()
 {

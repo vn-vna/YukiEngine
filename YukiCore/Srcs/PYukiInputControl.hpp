@@ -20,8 +20,7 @@
 namespace Yuki::Core
 {
 
-class YukiInpControl final : virtual public IYukiInpControl,
-                             virtual public YukiObject
+class YukiInpControl final : virtual public IYukiInpControl, virtual public YukiObject
 {
 public:
   YukiInpControl();
