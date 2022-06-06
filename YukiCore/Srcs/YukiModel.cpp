@@ -16,6 +16,7 @@ constexpr const int ASSIMP_LOAD_FLAGS = aiProcessPreset_TargetRealtime_MaxQualit
 namespace Yuki::Comp
 {
 
+using Core::CreateSolid2DTexture;
 using Debug::YukiAssimpModelCantBeLoaded;
 using Core::GetYukiApp;
 
@@ -113,7 +114,8 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
     });
     MeshIndexData iform = {PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
 
-    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, defaultMaterial, aMesh->mName.C_Str());
+    AutoType defaultTex = CreateSolid2DTexture({1.0f, 0.0f, 0.0f, 1.0f});
+    AutoType mesh       = CreateYukiMesh(vform, iform, defaultTex, defaultMaterial, aMesh->mName.C_Str());
 
 #ifndef _NDEBUG
     StringStream sstr = {};

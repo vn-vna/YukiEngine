@@ -42,8 +42,6 @@ typedef struct StIndexData
   Vector<unsigned>  data;
 } MeshIndexData;
 
-extern SharedPtr<IYukiOGLTexture> NO_TEXTURE;
-
 /**
  * Struct that use to destruct the model matrix to separate properties.
  */

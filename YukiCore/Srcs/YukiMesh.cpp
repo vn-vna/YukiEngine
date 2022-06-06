@@ -15,7 +15,6 @@ namespace Yuki::Comp
 {
 
 AutoType g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram("MeshShader");
-AutoType NO_TEXTURE           = SharedPtr<IYukiOGLTexture>(nullptr);
 AutoType g_pDefaultTexture    = Yuki::Core::CreateGLTexture(Core::TextureType::TEXTURE_2D);
 
 YukiMeshMaterial::YukiMeshMaterial(float specular, float ambient)

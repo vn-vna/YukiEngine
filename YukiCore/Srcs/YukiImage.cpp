@@ -1,9 +1,12 @@
+#include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiUtil/YukiImage.hpp"
 
 // stb image
+#include <cstdlib>
 #include <cstring>
+#include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
 namespace Yuki::Utils
@@ -45,6 +48,14 @@ YukiImage::YukiImage(YukiImage&& image)
   image.m_pData = nullptr;
 }
 
+YukiImage::YukiImage(uint8_t* pData, int w, int h, int channel)
+{
+  m_pData    = pData;
+  m_nWidth   = w;
+  m_nHeight  = h;
+  m_nChannel = channel;
+}
+
 YukiImage::~YukiImage()
 {
   if (m_pData)
@@ -78,6 +89,34 @@ SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture(const Vec2I& offset, const
 SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture()
 {
   return Create2DTexture(Vec2I{0, 0}, Vec2I{m_nWidth, m_nHeight});
+}
+
+uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
+{
+  AutoType logger = Core::GetYukiApp()->GetLogger();
+  uint8_t* pData  = (uint8_t*) std::malloc(w * h * channel);
+  for (int px = 0; px <= w * h; ++px)
+  {
+    for (int c = 0; c < channel; ++c)
+    {
+      AutoType fp             = color[c] * 255.0f;
+      pData[px * channel + c] = fp;
+    }
+    std::cout << "\n";
+  }
+  return pData;
+}
+
+YukiImage CreateSolidColorImage(const Vec3F& color, const Vec2I& size)
+{
+  uint8_t* pData = createSolidColorArray(size.x, size.y, 3, glm::value_ptr(color));
+  return {pData, size.x, size.y, 3};
+}
+
+YukiImage CreateSolidColorImage(const Vec4F& color, const Vec2I& size)
+{
+  uint8_t* pData = createSolidColorArray(size.x, size.y, 4, glm::value_ptr(color));
+  return {pData, size.x, size.y, 4};
 }
 
 } // namespace Yuki::Utils

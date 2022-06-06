@@ -1,7 +1,9 @@
+#include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiOGLTexture.hpp"
+#include "YukiUtil/YukiImage.hpp"
 
 #define CHECK_VALID_TEXTURE_TYPE(type, valid)           \
   if (type != valid)                                    \
@@ -177,6 +179,12 @@ void YukiOGLTexture::Destroy() { glDeleteTextures(1, &m_nTexID); }
 SharedPtr<IYukiOGLTexture> CreateGLTexture(TextureType type)
 {
   return CreateInterfaceInstance<IYukiOGLTexture, YukiOGLTexture>(type);
+}
+
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec4F& color)
+{
+  Utils::YukiImage solidImage = Utils::CreateSolidColorImage(color);
+  return solidImage.Create2DTexture();
 }
 
 } // namespace Yuki::Core
