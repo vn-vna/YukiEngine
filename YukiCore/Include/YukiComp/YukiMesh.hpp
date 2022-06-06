@@ -62,11 +62,11 @@ typedef struct StTransformationInfo
 class IYukiMeshMaterial
 {
 public:
-  virtual float GetSpecularStrength() = 0;
-  virtual float GetAmbientStrength()  = 0;
+  virtual SharedPtr<IYukiOGLTexture> GetSpecularStrength() = 0;
+  virtual SharedPtr<IYukiOGLTexture> GetAmbientStrength()  = 0;
 
-  virtual void SetSpecularStrength(float strength) = 0;
-  virtual void SetAmbientStrength(float strength)  = 0;
+  virtual void SetSpecularStrength(SharedPtr<IYukiOGLTexture> strength) = 0;
+  virtual void SetAmbientStrength(SharedPtr<IYukiOGLTexture> strength)  = 0;
 };
 
 /**
@@ -122,14 +122,9 @@ SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIn
  * @return an interface instance of the material
  * @TODO Provide a method to create material from ambient map or specular map in the future.
  */
-SharedPtr<IYukiMeshMaterial> CreateMaterial(float specular, float ambient);
+SharedPtr<IYukiMeshMaterial> CreateSolidMaterial(const Vec4F& specular, const Vec4F& ambient);
 
-// Initialize the default shader for mesh rendering
 void InitializeMeshShader();
-void InitializeMeshDefaultTextures();
-
-// Destroy the default shader for mesh rendering
 void ReleaseMeshShader();
-void ReleaseMeshDefaultTextures();
 
 } // namespace Yuki::Comp

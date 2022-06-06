@@ -3,10 +3,9 @@
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiUtil/YukiImage.hpp"
 
-// stb image
-#include <cstdlib>
-#include <cstring>
 #include <glm/gtc/type_ptr.hpp>
+
+// stb image
 #include <stb_image.h>
 
 namespace Yuki::Utils
@@ -74,12 +73,46 @@ const int& YukiImage::GetHeight() { return m_nHeight; }
 
 const int& YukiImage::GetDataChannel() { return m_nChannel; }
 
+PixelBasedInternalFormat getPixelBasedInternalFormat(int channel)
+{
+  switch (channel)
+  {
+  case 1:
+    return PixelBasedInternalFormat::RED;
+  case 2:
+    return PixelBasedInternalFormat::RG;
+  case 3:
+    return PixelBasedInternalFormat::RGB;
+  case 4:
+    return PixelBasedInternalFormat::RGBA;
+  default:
+    return PixelBasedInternalFormat::RGBA;
+  }
+}
+
+PixelInternalFormat getInternalFormat(int channel)
+{
+  switch (channel)
+  {
+  case 1:
+    return PixelInternalFormat::R8;
+  case 2:
+    return PixelInternalFormat::RG8;
+  case 3:
+    return PixelInternalFormat::RGB8;
+  case 4:
+    return PixelInternalFormat::RGBA8;
+  default:
+    return PixelInternalFormat::RGBA8;
+  }
+}
+
 SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture(const Vec2I& offset, const Vec2I& size)
 {
   SharedPtr<IYukiOGLTexture> texture = CreateGLTexture(TextureType::TEXTURE_2D);
   texture->Create();
-  texture->SetStorageData2D(PixelInternalFormat::RGBA8, 4, Vec2F{m_nWidth, m_nHeight});
-  texture->SetTextureData2D(m_pData, 0, PixelBasedInternalFormat::RGBA, offset, size);
+  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4, Vec2F{m_nWidth, m_nHeight});
+  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel), offset, size);
   texture->SetTextureMagFilter(TextureMagFilter::LINEAR);
   texture->SetTextureMinFilter(TextureMinFilter::LINEAR);
   texture->GenerateMipMap();
@@ -93,8 +126,7 @@ SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture()
 
 uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
 {
-  AutoType logger = Core::GetYukiApp()->GetLogger();
-  uint8_t* pData  = (uint8_t*) std::malloc(w * h * channel);
+  uint8_t* pData = (uint8_t*) std::malloc(w * h * channel);
   for (int px = 0; px <= w * h; ++px)
   {
     for (int c = 0; c < channel; ++c)
@@ -105,6 +137,18 @@ uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
     std::cout << "\n";
   }
   return pData;
+}
+
+YukiImage CreateSolidColorImage(const Vec1F& color, const Vec2I& size)
+{
+  uint8_t* pData = createSolidColorArray(size.x, size.y, 1, &color.r);
+  return {pData, size.x, size.y, 1};
+}
+
+YukiImage CreateSolidColorImage(const Vec2F& color, const Vec2I& size)
+{
+  uint8_t* pData = createSolidColorArray(size.x, size.y, 2, glm::value_ptr(color));
+  return {pData, size.x, size.y, 2};
 }
 
 YukiImage CreateSolidColorImage(const Vec3F& color, const Vec2I& size)

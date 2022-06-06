@@ -40,6 +40,8 @@ public:
   SharedPtr<IYukiOGLTexture> Create2DTexture();
 };
 
+YukiImage CreateSolidColorImage(const Vec1F& color, const Vec2I& size = {10, 10});
+YukiImage CreateSolidColorImage(const Vec2F& color, const Vec2I& size = {10, 10});
 YukiImage CreateSolidColorImage(const Vec3F& color, const Vec2I& size = {10, 10});
 YukiImage CreateSolidColorImage(const Vec4F& color, const Vec2I& size = {10, 10});
 

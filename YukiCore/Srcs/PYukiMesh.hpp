@@ -31,18 +31,18 @@ using Core::PrimitiveTopology;
 class YukiMeshMaterial final : virtual public IYukiMeshMaterial, virtual public YukiObject
 {
 public:
-  YukiMeshMaterial(float specular, float ambient);
+  YukiMeshMaterial(SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient);
   ~YukiMeshMaterial() override;
 
-  float GetSpecularStrength() override;
-  float GetAmbientStrength() override;
+  SharedPtr<IYukiOGLTexture> GetSpecularStrength() override;
+  SharedPtr<IYukiOGLTexture> GetAmbientStrength() override;
 
-  void SetSpecularStrength(float strength) override;
-  void SetAmbientStrength(float strength) override;
+  void SetSpecularStrength(SharedPtr<IYukiOGLTexture> strength) override;
+  void SetAmbientStrength(SharedPtr<IYukiOGLTexture> strength) override;
 
 private:
-  float m_nSpecularStrength;
-  float m_nAmbientStrength;
+  SharedPtr<IYukiOGLTexture> m_nSpecularStrength;
+  SharedPtr<IYukiOGLTexture> m_nAmbientStrength;
 };
 
 class YukiMesh : virtual public IYukiMesh, virtual public Core::YukiObject

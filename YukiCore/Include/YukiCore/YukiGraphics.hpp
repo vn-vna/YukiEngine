@@ -485,6 +485,9 @@ SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
 SharedPtr<IYukiOGLRenderBuffer>  CreateGLRegnderBuffer();
 SharedPtr<IYukiOGLFrameBuffer>   CreateGLFrameBuffer();
 
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec1F& color);
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec2F& color);
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec3F& color);
 SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec4F& color);
 
 } // namespace Yuki::Core

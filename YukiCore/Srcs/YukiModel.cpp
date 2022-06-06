@@ -17,7 +17,7 @@ namespace Yuki::Comp
 {
 
 using Core::CreateSolid2DTexture;
-using Debug::YukiAssimpModelCantBeLoaded;
+// using Debug::YukiAssimpModelCantBeLoaded;
 using Core::GetYukiApp;
 
 YukiModel::YukiModel(String name, const MeshArrType& meshArr) : m_sName{name}, m_apMeshes{meshArr} { Create(); }
@@ -75,7 +75,7 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
 
-  AutoType defaultMaterial = CreateMaterial(0.6f, 0.02f);
+  AutoType defaultMaterial = CreateSolidMaterial({0.6f, 0.6f, 0.6f, 1.0f}, {0.1f, 0.1f, 0.1f, 1.0f});
 
   if (!pScene)
   {

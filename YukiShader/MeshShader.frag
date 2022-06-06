@@ -9,14 +9,16 @@ in vec2 VS_TexCoord;
 out vec4 FS_FragColor;
 
 uniform mat4  U_ReNormalMatrix;
-uniform float U_SpecularStrength;
-uniform float U_AmbientStrength;
+/* uniform float U_SpecularStrength; */
+/* uniform float U_AmbientStrength; */
 uniform vec3  U_LightPos;
 uniform vec4  U_LightColor;
 uniform vec3  U_ViewPosition;
 uniform float U_LightIntensity;
 
 uniform sampler2D U_MeshTextures;
+uniform sampler2D U_MeshAmbient;
+uniform sampler2D U_MeshSpecular;
 
 void main()
 {
@@ -26,7 +28,7 @@ void main()
   vec3 fragNormal    = mat3(U_ReNormalMatrix) * VS_Normal;
 
   {
-    vec4 ambient = U_AmbientStrength * U_LightColor;
+    vec4 ambient = texture(U_MeshAmbient, VS_TexCoord) * U_LightColor;
 
     float lightDistance    = length(U_LightPos - VS_FragPos);
     vec3  lightDirection   = normalize(U_LightPos - VS_FragPos);
@@ -48,7 +50,7 @@ void main()
       // float rdDot             = dot(reflectDirection, viewDirection);
       float hnDot = dot(halfwayDirection, fragNormal);
       float spec  = pow(max(hnDot, 0.0), 128);
-      specular    = U_SpecularStrength * spec * U_LightColor;
+      specular    = texture(U_MeshSpecular, VS_TexCoord) * spec * U_LightColor;
     }
 
     fragmentColor *= ambient + diffuse + specular;

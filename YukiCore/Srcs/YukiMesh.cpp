@@ -14,22 +14,26 @@
 namespace Yuki::Comp
 {
 
-AutoType g_pDefaultMeshShader = Yuki::Core::CreateGLShaderProgram("MeshShader");
-AutoType g_pDefaultTexture    = Yuki::Core::CreateGLTexture(Core::TextureType::TEXTURE_2D);
+using Core::CreateGLShaderProgram;
+using Core::CreateGLTexture;
+using Core::CreateSolid2DTexture;
 
-YukiMeshMaterial::YukiMeshMaterial(float specular, float ambient)
+AutoType g_pDefaultMeshShader = CreateGLShaderProgram("MeshShader");
+AutoType g_pDefaultTexture    = CreateGLTexture(Core::TextureType::TEXTURE_2D);
+
+YukiMeshMaterial::YukiMeshMaterial(SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient)
     : m_nSpecularStrength(specular), m_nAmbientStrength(ambient)
 {}
 
 YukiMeshMaterial::~YukiMeshMaterial() = default;
 
-float YukiMeshMaterial::GetSpecularStrength() { return m_nSpecularStrength; }
+SharedPtr<IYukiOGLTexture> YukiMeshMaterial::GetSpecularStrength() { return m_nSpecularStrength; }
 
-float YukiMeshMaterial::GetAmbientStrength() { return m_nAmbientStrength; }
+SharedPtr<IYukiOGLTexture> YukiMeshMaterial::GetAmbientStrength() { return m_nAmbientStrength; }
 
-void YukiMeshMaterial::SetSpecularStrength(float strength) { m_nSpecularStrength = strength; }
+void YukiMeshMaterial::SetSpecularStrength(SharedPtr<IYukiOGLTexture> strength) { m_nSpecularStrength = strength; }
 
-void YukiMeshMaterial::SetAmbientStrength(float strength) { m_nAmbientStrength = strength; }
+void YukiMeshMaterial::SetAmbientStrength(SharedPtr<IYukiOGLTexture> strength) { m_nAmbientStrength = strength; }
 
 YukiMesh::YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
     SharedPtr<Core::IYukiOGLTexture>& texture, SharedPtr<IYukiMeshMaterial> material, const String& name)
@@ -192,20 +196,27 @@ void YukiMesh::RenderMesh(SharedPtr<IYukiCamera> camera) const
   {
     m_pTexture->BindTexture(0);
   }
+  if (m_pMaterial.get())
+  {
+    m_pMaterial->GetAmbientStrength()->BindTexture(1);
+    m_pMaterial->GetSpecularStrength()->BindTexture(2);
+  }
 
   m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
   m_pShaderProgram->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
   m_pShaderProgram->UniformMatrix("U_ProjectionMatrix", camera->GetCameraProjectionMatrix());
   m_pShaderProgram->UniformVector("U_ViewPosition", camera->GetCameraPosition());
-  m_pShaderProgram->UniformValue("U_AmbientStrength", m_pMaterial->GetAmbientStrength());
-  m_pShaderProgram->UniformValue("U_SpecularStrength", m_pMaterial->GetSpecularStrength());
+  // m_pShaderProgram->UniformValue("U_AmbientStrength", m_pMaterial->GetAmbientStrength());
+  // m_pShaderProgram->UniformValue("U_SpecularStrength", m_pMaterial->GetSpecularStrength());
 
   // Some hard coding
   m_pShaderProgram->UniformValue("U_LightIntensity", 1.00f);
   m_pShaderProgram->UniformVector("U_LightPos", Vec3F{-1.30f, 1.30f, 2.00f});
   m_pShaderProgram->UniformVector("U_LightColor", Vec4F{1.00f, 1.00f, 1.00f, 1.00f});
   m_pShaderProgram->UniformValue("U_MeshTextures", 0);
+  m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
+  m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
 
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }
@@ -216,16 +227,15 @@ SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIn
   return Core::CreateInterfaceInstance<IYukiMesh, YukiMesh>(vertexData, indexData, texture, material, meshName);
 }
 
-SharedPtr<IYukiMeshMaterial> CreateMaterial(float specular, float ambient)
+SharedPtr<IYukiMeshMaterial> CreateSolidMaterial(const Vec4F& specular, const Vec4F& ambient)
 {
-  return Core::CreateInterfaceInstance<IYukiMeshMaterial, YukiMeshMaterial>(specular, ambient);
+  AutoType specularMap = CreateSolid2DTexture(specular);
+  AutoType ambientMap  = CreateSolid2DTexture(ambient);
+
+  return Core::CreateInterfaceInstance<IYukiMeshMaterial, YukiMeshMaterial>(specularMap, ambientMap);
 }
 
 void InitializeMeshShader() { g_pDefaultMeshShader->Create(); }
-
-void init_default_2d_texture() {}
-
-void InitializeMeshDefaultTextures() {}
 
 void ReleaseMeshShader() { g_pDefaultMeshShader->Destroy(); }
 

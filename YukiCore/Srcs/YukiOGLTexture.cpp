@@ -181,6 +181,24 @@ SharedPtr<IYukiOGLTexture> CreateGLTexture(TextureType type)
   return CreateInterfaceInstance<IYukiOGLTexture, YukiOGLTexture>(type);
 }
 
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec1F& color)
+{
+  Utils::YukiImage solidImage = Utils::CreateSolidColorImage(color);
+  return solidImage.Create2DTexture();
+}
+
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec2F& color)
+{
+  Utils::YukiImage solidImage = Utils::CreateSolidColorImage(color);
+  return solidImage.Create2DTexture();
+}
+
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec3F& color)
+{
+  Utils::YukiImage solidImage = Utils::CreateSolidColorImage(color);
+  return solidImage.Create2DTexture();
+}
+
 SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec4F& color)
 {
   Utils::YukiImage solidImage = Utils::CreateSolidColorImage(color);
