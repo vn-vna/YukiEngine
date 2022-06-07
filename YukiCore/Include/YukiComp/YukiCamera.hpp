@@ -19,7 +19,8 @@ namespace Yuki::Comp
 /**
  * @details
  * This class provide a camera to handle view in your scene.
- * You need to create a camera first then your scene can bee rendered perfectly
+ * You need to create a camera first then your scene can bee
+ * rendered perfectly
  * @code
  * AutoType camera  = Yuki::Comp::CreateYukiCamera();
  * AutoType scene   = Yuki::Comp::CreateYukiScene();
@@ -54,7 +55,8 @@ public:
 };
 
 /**
- * Create a camera and return it's interface instance in shared pointer form
+ * Create a camera and return it's interface instance in
+ * shared pointer form
  * @return A camera interface instance
  */
 SharedPtr<IYukiCamera> CreateYukiCamera();

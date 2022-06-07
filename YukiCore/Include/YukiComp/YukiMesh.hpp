@@ -10,6 +10,7 @@
 
 #include "YukiCore/YukiObject.hpp"
 #include "YukiCore/YukiGraphics.hpp"
+#include "YukiCore/YukiPCH.hpp"
 
 namespace Yuki::Comp
 {
@@ -43,7 +44,8 @@ typedef struct StIndexData
 } MeshIndexData;
 
 /**
- * Struct that use to destruct the model matrix to separate properties.
+ * Struct that use to destruct the model matrix to separate
+ * properties.
  */
 typedef struct StTransformationInfo
 {
@@ -62,18 +64,21 @@ typedef struct StTransformationInfo
 class IYukiMeshMaterial
 {
 public:
-  virtual SharedPtr<IYukiOGLTexture> GetSpecularStrength() = 0;
-  virtual SharedPtr<IYukiOGLTexture> GetAmbientStrength()  = 0;
+  virtual SharedPtr<IYukiOGLTexture> GetSpecularMap() = 0;
+  virtual SharedPtr<IYukiOGLTexture> GetAmbientMap()  = 0;
+  virtual SharedPtr<IYukiOGLTexture> GetDiffuseMap()  = 0;
 
-  virtual void SetSpecularStrength(SharedPtr<IYukiOGLTexture> strength) = 0;
-  virtual void SetAmbientStrength(SharedPtr<IYukiOGLTexture> strength)  = 0;
+  virtual void SetSpecularMap(SharedPtr<IYukiOGLTexture> specmap) = 0;
+  virtual void SetAmbientMap(SharedPtr<IYukiOGLTexture> ambmap)   = 0;
+  virtual void SetDiffuseMap(SharedPtr<IYukiOGLTexture> diffmap)  = 0;
 };
 
 /**
- * A 3D game often load the models from external 3D modeling programs.
- * Class IYukiMesh is here to store them in a "pretty" structure that will be used by
- * IYukiModel
- * @TODO Mesh class is very simple now, it must be improved much more.
+ * A 3D game often load the models from external 3D modeling
+ * programs. Class IYukiMesh is here to store them in a
+ * "pretty" structure that will be used by IYukiModel
+ * @TODO Mesh class is very simple now, it must be improved
+ * much more.
  */
 class IYukiMesh : virtual public Core::IYukiObject
 {
@@ -104,8 +109,10 @@ public:
 };
 
 /**
- * This function is used to created a new interface instance of a Mesh
- * @param vertexData an array of VertexFormat that stores vertices info of the mesh
+ * This function is used to created a new interface instance
+ * of a Mesh
+ * @param vertexData an array of VertexFormat that stores
+ * vertices info of the mesh
  * @param indexData indices data of the mesh
  * @param texture can be NO_TEXTURE
  * @param material a material
@@ -116,13 +123,15 @@ SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIn
     SharedPtr<Core::IYukiOGLTexture> texture, SharedPtr<IYukiMeshMaterial> material, const String& meshName);
 
 /**
- * Thif function is used to create a new material and return it's interface instance
+ * Thif function is used to create a new material and return
+ * it's interface instance
  * @param specular Specular strength
  * @param ambient Ambient strength
  * @return an interface instance of the material
- * @TODO Provide a method to create material from ambient map or specular map in the future.
+ * @TODO Provide a method to create material from ambient
+ * map or specular map in the future.
  */
-SharedPtr<IYukiMeshMaterial> CreateSolidMaterial(const Vec4F& specular, const Vec4F& ambient);
+SharedPtr<IYukiMeshMaterial> CreateSolidMaterial(const Vec4F& specular, const Vec4F& ambient, float diffuse);
 
 void InitializeMeshShader();
 void ReleaseMeshShader();

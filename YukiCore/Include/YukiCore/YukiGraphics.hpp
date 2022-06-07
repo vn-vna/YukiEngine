@@ -18,156 +18,178 @@ namespace Yuki::Core
 // Describe how does the mesh will be rendered.
 enum class PrimitiveTopology
 {
-  // Vertices 0 and 1 are considered a line. Vertices 2 and 3 are
-  // considered a line. And so on. If the user specifies a non-even
-  // number of vertices, then the extra vertex is ignored.
+  // Vertices 0 and 1 are considered a line. Vertices 2 and
+  // 3 are considered a line. And so on. If the user
+  // specifies a non-even number of vertices, then the extra
+  // vertex is ignored.
   LINES          = GL_LINES,
-  // The adjacent vertices are considered lines. Thus, if you pass
-  // n vertices, you will get n-1 lines. If the user only specifies
-  // 1 vertex, the drawing command is ignored.
+  // The adjacent vertices are considered lines. Thus, if
+  // you pass n vertices, you will get n-1 lines. If the
+  // user only specifies 1 vertex, the drawing command is
+  // ignored.
   LINE_STRIP     = GL_LINE_STRIP,
-  // As line strips, except that the first and last vertices are
-  // also used as a line. Thus, you get n lines for n input vertices.
-  // If the user only specifies 1 vertex, the drawing command is ignored.
-  // The line between the first and last vertices happens after all
-  // of the previous lines in the sequence.
+  // As line strips, except that the first and last vertices
+  // are also used as a line. Thus, you get n lines for n
+  // input vertices. If the user only specifies 1 vertex,
+  // the drawing command is ignored. The line between the
+  // first and last vertices happens after all of the
+  // previous lines in the sequence.
   LINE_LOOP      = GL_LINE_LOOP,
-  // Vertices 0, 1, and 2 form a triangle. Vertices 3, 4, and 5 form
-  // a triangle. And so on.
+  // Vertices 0, 1, and 2 form a triangle. Vertices 3, 4,
+  // and 5 form a triangle. And so on.
   TRIANGLE_LIST  = GL_TRIANGLES,
-  // Every group of 3 adjacent vertices forms a triangle. The face
-  // direction of the strip is determined by the winding of the
-  // first triangle. Each successive triangle will have its effective
-  // face order reversed, so the system compensates for that by testing
-  // it in the opposite way. A vertex stream of n length will generate
+  // Every group of 3 adjacent vertices forms a triangle.
+  // The face direction of the strip is determined by the
+  // winding of the first triangle. Each successive triangle
+  // will have its effective face order reversed, so the
+  // system compensates for that by testing it in the
+  // opposite way. A vertex stream of n length will generate
   // n-2 triangles.
   TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-  // The first vertex is always held fixed. From there on, every group
-  // of 2 adjacent vertices form a triangle with the first. So with a
-  // vertex stream, you get a list of triangles like so:
-  // (0, 1, 2) (0, 2, 3), (0, 3, 4), etc. A vertex stream of n length
-  // will generate n-2 triangles.
+  // The first vertex is always held fixed. From there on,
+  // every group of 2 adjacent vertices form a triangle with
+  // the first. So with a vertex stream, you get a list of
+  // triangles like so: (0, 1, 2) (0, 2, 3), (0, 3, 4), etc.
+  // A vertex stream of n length will generate n-2
+  // triangles.
   TRIANGLE_FAN   = GL_TRIANGLE_FAN,
-  // This will cause OpenGL to interpret each individual vertex in the
-  // stream as a point.
+  // This will cause OpenGL to interpret each individual
+  // vertex in the stream as a point.
   POINT_LIST     = GL_POINTS,
-  // Vertices 0-3 form a quad, vertices 4-7 form another, and so on.
-  // The vertex stream must be a number of vertices divisible by 4 to work.
+  // Vertices 0-3 form a quad, vertices 4-7 form another,
+  // and so on. The vertex stream must be a number of
+  // vertices divisible by 4 to work.
   //
-  // Have been removed from core OpenGL 3.1 and above (they are only
-  // deprecated in OpenGL 3.0). It is recommended that you not use this
-  // functionality in your programs.
+  // Have been removed from core OpenGL 3.1 and above (they
+  // are only deprecated in OpenGL 3.0). It is recommended
+  // that you not use this functionality in your programs.
   QUAD_LIST      = GL_QUADS,
-  // Similar to triangle strips, a quad strip uses adjacent edges to
-  // form the next quad. In the case of quads, the third and fourth
-  // vertices of one quad are used as the edge of the next quad. So
-  // vertices 0-3 are a quad, 2-5 are a quad, and so on. A vertex
-  // stream of n length will generate (n - 2) / 2 quads. As with triangle
-  // strips, the winding order of quads is changed for every other quad.
-  // Have been removed from core OpenGL 3.1 and above (they are only
-  // deprecated in OpenGL 3.0). It is recommended that you not use this
-  // functionality in your programs.
+  // Similar to triangle strips, a quad strip uses adjacent
+  // edges to form the next quad. In the case of quads, the
+  // third and fourth vertices of one quad are used as the
+  // edge of the next quad. So vertices 0-3 are a quad, 2-5
+  // are a quad, and so on. A vertex stream of n length will
+  // generate (n - 2) / 2 quads. As with triangle strips,
+  // the winding order of quads is changed for every other
+  // quad. Have been removed from core OpenGL 3.1 and above
+  // (they are only deprecated in OpenGL 3.0). It is
+  // recommended that you not use this functionality in your
+  // programs.
   QUAD_STRIP     = GL_QUAD_STRIP
 };
 
 // Type of texture
 enum class TextureType
 {
-  // mages in this texture all are 1-dimensional. They have width,
-  // but no height or depth.
+  // mages in this texture all are 1-dimensional. They have
+  // width, but no height or depth.
   TEXTURE_1D                   = GL_TEXTURE_1D,
-  // Images in this texture all are 2-dimensional. They have width
-  // and height, but no depth.
+  // Images in this texture all are 2-dimensional. They have
+  // width and height, but no depth.
   TEXTURE_2D                   = GL_TEXTURE_2D,
-  // Images in this texture all are 3-dimensional. They have width,
-  // height, and depth.
+  // Images in this texture all are 3-dimensional. They have
+  // width, height, and depth.
   TEXTURE_3D                   = GL_TEXTURE_3D,
-  // The image in this texture (only one image. No mipmapping) is
-  // 2-dimensional. Texture coordinates used for these textures are
-  // not normalized.
+  // The image in this texture (only one image. No
+  // mipmapping) is 2-dimensional. Texture coordinates used
+  // for these textures are not normalized.
   TEXTURE_RECTANGLE            = GL_TEXTURE_RECTANGLE,
-  // The image in this texture (only one image. No mipmapping) is
-  // 1-dimensional. The storage for this data comes from a Buffer
-  // Object.
+  // The image in this texture (only one image. No
+  // mipmapping) is 1-dimensional. The storage for this data
+  // comes from a Buffer Object.
   TEXTURE_BUFFER               = GL_TEXTURE_BUFFER,
-  // Images in this texture all are 1-dimensional. However, it contains
-  // multiple sets of 1-dimensional images, all within one texture.
-  // The array length is part of the texture's size.
+  // Images in this texture all are 1-dimensional. However,
+  // it contains multiple sets of 1-dimensional images, all
+  // within one texture. The array length is part of the
+  // texture's size.
   TEXTURE_1D_ARRAY             = GL_TEXTURE_1D_ARRAY,
-  // Images in this texture all are 2-dimensional. However, it contains
-  // multiple sets of 2-dimensional images, all within one texture. The
-  // array length is part of the texture's size.
+  // Images in this texture all are 2-dimensional. However,
+  // it contains multiple sets of 2-dimensional images, all
+  // within one texture. The array length is part of the
+  // texture's size.
   TEXTURE_2D_ARRAY             = GL_TEXTURE_2D_ARRAY,
-  // There are exactly 6 distinct sets of 2D images, each image being
-  // of the same size and must be of a square size. These images act
-  // as 6 faces of a cube.
+  // There are exactly 6 distinct sets of 2D images, each
+  // image being of the same size and must be of a square
+  // size. These images act as 6 faces of a cube.
   TEXTURE_CUBE_MAP             = GL_TEXTURE_CUBE_MAP,
-  // Images in this texture are all cube maps. It contains multiple sets
-  // of cube maps, all within one texture. The array length * 6 (number
-  // of cube faces) is part of the texture size.
+  // Images in this texture are all cube maps. It contains
+  // multiple sets of cube maps, all within one texture. The
+  // array length * 6 (number of cube faces) is part of the
+  // texture size.
   TEXTURE_CUBE_MAP_ARRAY       = GL_TEXTURE_CUBE_MAP_ARRAY,
-  // The image in this texture (only one image. No mipmapping) is
-  // 2-dimensional. Each pixel in these images contains multiple samples
-  // instead of just one value.
+  // The image in this texture (only one image. No
+  // mipmapping) is 2-dimensional. Each pixel in these
+  // images contains multiple samples instead of just one
+  // value.
   TEXTURE_2D_MULTISAMPLE       = GL_TEXTURE_2D_MULTISAMPLE,
-  // Combines 2D array and 2D multisample types. No mipmapping.
+  // Combines 2D array and 2D multisample types. No
+  // mipmapping.
   TEXTURE_2D_MULTISAMPLE_ARRAY = GL_TEXTURE_2D_MULTISAMPLE_ARRAY
 };
 
-// The texture minifying function is used whenever the level-of-detail
-// function used when sampling from the texture determines that the
-// texture should be minified. There are six defined minifying functions.
-// Two of them use either the nearest texture elements or a weighted
-// average of multiple texture elements to compute the texture value.
-// The other four use mipmaps.
+// The texture minifying function is used whenever the
+// level-of-detail function used when sampling from the
+// texture determines that the texture should be minified.
+// There are six defined minifying functions. Two of them
+// use either the nearest texture elements or a weighted
+// average of multiple texture elements to compute the
+// texture value. The other four use mipmaps.
 enum class TextureMinFilter
 {
-  // Returns the value of the texture element that is nearest (in
-  // Manhattan distance) to the specified texture coordinates.
+  // Returns the value of the texture element that is
+  // nearest (in Manhattan distance) to the specified
+  // texture coordinates.
   NEAREST                = GL_NEAREST,
-  // Returns the weighted average of the texture elements that are
-  // closest to the specified texture coordinates. These can include
-  // items wrapped or repeated from other parts of a texture, depending
-  // on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on
-  // the exact mapping.
+  // Returns the weighted average of the texture elements
+  // that are closest to the specified texture coordinates.
+  // These can include items wrapped or repeated from other
+  // parts of a texture, depending on the values of
+  // GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on the
+  // exact mapping.
   LINEAR                 = GL_LINEAR,
-  // Chooses the mipmap that most closely matches the size of the pixel
-  // being textured and uses the GL_NEAREST criterion (the texture
-  // element closest to the specified texture coordinates) to produce a
-  // texture value.
-  NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST,
-  // Chooses the mipmap that most closely matches the size of the pixel
-  // being textured and uses the GL_LINEAR criterion (a weighted average
-  // of the four texture elements that are closest to the specified
+  // Chooses the mipmap that most closely matches the size
+  // of the pixel being textured and uses the GL_NEAREST
+  // criterion (the texture element closest to the specified
   // texture coordinates) to produce a texture value.
+  NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST,
+  // Chooses the mipmap that most closely matches the size
+  // of the pixel being textured and uses the GL_LINEAR
+  // criterion (a weighted average of the four texture
+  // elements that are closest to the specified texture
+  // coordinates) to produce a texture value.
   LINEAR_MIPMAP_NEAREST  = GL_LINEAR_MIPMAP_NEAREST,
-  // Chooses the two mipmaps that most closely match the size of the
-  // pixel being textured and uses the GL_NEAREST criterion (the
-  // texture element closest to the specified texture coordinates ) to
-  // produce a texture value from each mipmap. The final texture value
+  // Chooses the two mipmaps that most closely match the
+  // size of the pixel being textured and uses the
+  // GL_NEAREST criterion (the texture element closest to
+  // the specified texture coordinates ) to produce a
+  // texture value from each mipmap. The final texture value
   // is a weighted average of those two values.
   NEAREST_MIPMAP_LINEAR  = GL_NEAREST_MIPMAP_LINEAR,
-  // Chooses the two mipmaps that most closely match the size of the
-  // pixel being textured and uses the GL_LINEAR criterion (a weighted
-  // average of the texture elements that are closest to the specified
-  // texture coordinates) to produce a texture value from each mipmap.
-  // The final texture value is a weighted average of those two values.
+  // Chooses the two mipmaps that most closely match the
+  // size of the pixel being textured and uses the GL_LINEAR
+  // criterion (a weighted average of the texture elements
+  // that are closest to the specified texture coordinates)
+  // to produce a texture value from each mipmap. The final
+  // texture value is a weighted average of those two
+  // values.
   LINEAR_MIPMAP_LINEAR   = GL_LINEAR_MIPMAP_LINEAR,
 };
 
 // The texture magnification function is used whenever the
-// level-of-detail function used when sampling from the texture
-// determines that the texture should be magified.
+// level-of-detail function used when sampling from the
+// texture determines that the texture should be magified.
 enum class TextureMagFilter
 {
-  // Returns the value of the texture element that is nearest (in
-  // Manhattan distance) to the specified texture coordinates.
+  // Returns the value of the texture element that is
+  // nearest (in Manhattan distance) to the specified
+  // texture coordinates.
   NEAREST = GL_NEAREST,
-  // Returns the weighted average of the texture elements that are
-  // closest to the specified texture coordinates. These can include
-  // items wrapped or repeated from other parts of a texture, depending
-  // on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on
-  // the exact mapping.
+  // Returns the weighted average of the texture elements
+  // that are closest to the specified texture coordinates.
+  // These can include items wrapped or repeated from other
+  // parts of a texture, depending on the values of
+  // GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on the
+  // exact mapping.
   LINEAR  = GL_LINEAR
 };
 
@@ -175,14 +197,15 @@ enum class TextureMagFilter
 // depth-stencil format textures.
 enum class TextureDepthStencilMode
 {
-  // If the depth stencil mode is DEPTH_COMPONENT, then reads
-  // from depth-stencil format textures will return the depth
-  // component of the texel in Rt and the stencil component will
-  // be discarded.
+  // If the depth stencil mode is DEPTH_COMPONENT, then
+  // reads from depth-stencil format textures will return
+  // the depth component of the texel in Rt and the stencil
+  // component will be discarded.
   DEPTH_COMPONENT = GL_DEPTH_COMPONENT,
   // If the depth stencil mode is GL_STENCIL_INDEX then the
-  // stencil component is returned in Rt and the depth component
-  // is discarded. The initial value is GL_DEPTH_COMPONENT.
+  // stencil component is returned in Rt and the depth
+  // component is discarded. The initial value is
+  // GL_DEPTH_COMPONENT.
   STENCIL_INDEX   = GL_STENCIL_INDEX
 };
 
@@ -315,8 +338,8 @@ enum class OpenGLAttribute
   LINE_SMOOTH  = GL_LINE_SMOOTH,
 };
 
-// This object is only used once in Application. This is the class
-// controls every graphics actions.
+// This object is only used once in Application. This is the
+// class controls every graphics actions.
 class IYukiGfxControl : virtual public IYukiObject
 {
 public:

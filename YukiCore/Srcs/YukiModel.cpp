@@ -10,6 +10,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+#include <fmt/format.h>
 
 constexpr const int ASSIMP_LOAD_FLAGS = aiProcessPreset_TargetRealtime_MaxQuality;
 
@@ -75,7 +76,8 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
 
-  AutoType defaultMaterial = CreateSolidMaterial({0.6f, 0.6f, 0.6f, 1.0f}, {0.1f, 0.1f, 0.1f, 1.0f});
+  AutoType defaultMaterial = CreateSolidMaterial({0.6f, 0.0f, 0.0f, 1.0f}, {0.1f, 0.0f, 0.0f, 1.0f}, 1.0f);
+  AutoType defaultTex      = CreateSolid2DTexture({1.0f, 0.4f, 0.0f, 1.0f});
 
   if (!pScene)
   {
@@ -114,13 +116,12 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
     });
     MeshIndexData iform = {PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
 
-    AutoType defaultTex = CreateSolid2DTexture({1.0f, 0.0f, 0.0f, 1.0f});
-    AutoType mesh       = CreateYukiMesh(vform, iform, defaultTex, defaultMaterial, aMesh->mName.C_Str());
+    AutoType mesh = CreateYukiMesh(vform, iform, defaultTex, defaultMaterial, aMesh->mName.C_Str());
 
 #ifndef _NDEBUG
     StringStream sstr = {};
-    sstr << "Loaded a mesh [" << mesh->GetName() << "] from file [" << fileName << "]\n";
-    Core::GetYukiApp()->GetLogger()->PushDebugMessage(sstr.str());
+    Core::GetYukiApp()->GetLogger()->PushDebugMessage(
+        fmt::format("Loaded a mesh [{}] from file: {}", mesh->GetName(), fileName));
 #endif
     meshes[mesh->GetName()] = mesh;
   });

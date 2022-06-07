@@ -60,12 +60,14 @@ void YukiOGLShaderProgram::Create()
 {
   String vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   String fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
-  // String gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
+  // String gsSrc =
+  // loadShaderSourceFromFile(m_GSShaderFile);
   int    status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
-  // unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
+  // unsigned gs =
+  // createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);

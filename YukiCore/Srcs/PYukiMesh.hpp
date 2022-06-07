@@ -31,18 +31,22 @@ using Core::PrimitiveTopology;
 class YukiMeshMaterial final : virtual public IYukiMeshMaterial, virtual public YukiObject
 {
 public:
-  YukiMeshMaterial(SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient);
+  YukiMeshMaterial(
+      SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient, SharedPtr<IYukiOGLTexture> diffmap);
   ~YukiMeshMaterial() override;
 
-  SharedPtr<IYukiOGLTexture> GetSpecularStrength() override;
-  SharedPtr<IYukiOGLTexture> GetAmbientStrength() override;
+  SharedPtr<IYukiOGLTexture> GetSpecularMap() override;
+  SharedPtr<IYukiOGLTexture> GetAmbientMap() override;
+  SharedPtr<IYukiOGLTexture> GetDiffuseMap() override;
 
-  void SetSpecularStrength(SharedPtr<IYukiOGLTexture> strength) override;
-  void SetAmbientStrength(SharedPtr<IYukiOGLTexture> strength) override;
+  void SetSpecularMap(SharedPtr<IYukiOGLTexture> specmap) override;
+  void SetAmbientMap(SharedPtr<IYukiOGLTexture> ambmap) override;
+  void SetDiffuseMap(SharedPtr<IYukiOGLTexture> diffmap) override;
 
 private:
-  SharedPtr<IYukiOGLTexture> m_nSpecularStrength;
-  SharedPtr<IYukiOGLTexture> m_nAmbientStrength;
+  SharedPtr<IYukiOGLTexture> m_pSpecMap;
+  SharedPtr<IYukiOGLTexture> m_pAmbientMap;
+  SharedPtr<IYukiOGLTexture> m_pDiffMap;
 };
 
 class YukiMesh : virtual public IYukiMesh, virtual public Core::YukiObject

@@ -19,11 +19,12 @@ uniform float U_LightIntensity;
 uniform sampler2D U_MeshTextures;
 uniform sampler2D U_MeshAmbient;
 uniform sampler2D U_MeshSpecular;
+uniform sampler2D U_MeshDiffMap;
 
 void main()
 {
 
-  vec4 fragmentColor        = texture(U_MeshTextures, VS_TexCoord);
+  vec4 fragmentColor = texture(U_MeshTextures, VS_TexCoord) * texture(U_MeshDiffMap, VS_TexCoord);
   /* vec4 fragmentColor = vec4(1.0, 1.0, 1.0, 1.0); */
   vec3 fragNormal    = mat3(U_ReNormalMatrix) * VS_Normal;
 

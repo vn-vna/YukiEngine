@@ -475,8 +475,8 @@ void parse_cpuinfo_toarray(Vector<ParsedCpuInfo>& infos, unsigned& physCoreCount
 
   if (!istream.is_open() || !istream.good())
   {
-    Core::GetYukiApp()->GetLogger()->PushErrorMessage(
-        "File \"/proc/cpuinfo\" Can't be opened, skipping read information");
+    Core::GetYukiApp()->GetLogger()->PushErrorMessage("File \"/proc/cpuinfo\" Can't be opened, skipping "
+                                                      "read information");
     return;
   }
 

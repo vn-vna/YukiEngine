@@ -42,7 +42,8 @@ void YukiLogger::Create()
   Chrono::DateTimeFormat format{};
   m_pOutFileStream = std::make_shared<OutputLogFile>(Clock::DateTimeString(format) + ".ylg");
 #ifndef NDEBUG
-  // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
+  // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT]
+  // Application is running in DEBUG MODE\n");
   PushDebugMessage("Application is running in DEBUG MODE");
 #else
   PushDebugMessage("Application is running in RELEASE MODE");
