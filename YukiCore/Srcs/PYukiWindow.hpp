@@ -16,18 +16,15 @@
 namespace Yuki::Core
 {
 
-class YukiWindow final : virtual public IYukiWindow,
-                         virtual public YukiObject
+class YukiWindow final : virtual public IYukiWindow, virtual public YukiObject
 {
-protected:
-  GLFWwindow* m_pGLFWWindow;
-
 public:
   YukiWindow();
   ~YukiWindow() override;
 
   void ShowWindow() override;
   void HideWindow() override;
+  void IconfyWindow() override;
   void SetSize(int width, int height) override;
   void SetPosition(int wx, int wy) override;
   void SetCursorPos(int cx, int cy) override;
@@ -41,6 +38,9 @@ public:
   void Awake() override;
   void Update() override;
   void Destroy() override;
+
+private:
+  GLFWwindow* m_pGLFWWindow;
 };
 
 } // namespace Yuki::Core

@@ -27,7 +27,7 @@ using Mutex             = std::mutex;
 typedef UnorderedSet<IYukiThreadPool*> ThreadPoolManager;
 typedef VoidNParamCallback             CallbackFunc;
 
-class YUKIAPI IYukiThreadPool
+class IYukiThreadPool
 {
 public:
   virtual void Start()                                = 0;
@@ -46,9 +46,9 @@ public:
   virtual bool                 IsPoolStarted()         = 0;
 };
 
-unsigned YUKIAPI                     GetHardwareConcurrency();
-void YUKIAPI                         InvokeAllThreads();
-SharedPtr<ThreadPoolManager> YUKIAPI GetThreadPoolManager();
-SharedPtr<IYukiThreadPool> YUKIAPI   CreateThreadPool(int poolSize = -1, bool oglContext = true);
+unsigned                     GetHardwareConcurrency();
+void                         InvokeAllThreads();
+SharedPtr<ThreadPoolManager> GetThreadPoolManager();
+SharedPtr<IYukiThreadPool>   CreateThreadPool(int poolSize = -1, bool oglContext = true);
 
 } // namespace Yuki::Core

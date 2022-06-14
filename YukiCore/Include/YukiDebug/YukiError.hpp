@@ -10,12 +10,12 @@
 
 #include "YukiCore/YukiPCH.hpp"
 
-#define DECLARE_YUKI_ERROR(__err_name)                      \
-  class YUKIAPI Yuki##__err_name : virtual public YukiError \
-  {                                                         \
-  public:                                                   \
-    Yuki##__err_name(const String& file, const int& line);  \
-    virtual ~Yuki##__err_name() = default;                  \
+#define DECLARE_YUKI_ERROR(__err_name)                     \
+  class Yuki##__err_name : virtual public YukiError        \
+  {                                                        \
+  public:                                                  \
+    Yuki##__err_name(const String& file, const int& line); \
+    virtual ~Yuki##__err_name() = default;                 \
   }
 
 #define THROW_YUKI_ERROR(__err_name) throw Yuki::Debug::Yuki##__err_name(__FILE__, __LINE__)
@@ -25,6 +25,7 @@ namespace Yuki::Debug
 
 enum class YukiErrCode
 {
+  YUKI_APP_CREATED,
   YUKI_LOGGER_CREATE_LOGFILE_ERROR,
   YUKI_INPCTRL_INSERT_CALLBACK_EXISTS,
   YUKI_INPCTRL_REMOVE_CALLBACK_NEXIST,
@@ -49,7 +50,7 @@ enum class YukiErrCode
   SCENE_DUPLICATE_ENTITY_NAME
 };
 
-class YUKIAPI YukiError : virtual public std::runtime_error
+class YukiError : virtual public std::runtime_error
 {
 protected:
   YukiErrCode m_ErrCode;
@@ -65,6 +66,7 @@ public:
   void               PushErrorMessage() const;
 };
 
+DECLARE_YUKI_ERROR(AppCreated);
 DECLARE_YUKI_ERROR(CreateLogFileError);
 DECLARE_YUKI_ERROR(InpCtrlInsertCallbackExistsError);
 DECLARE_YUKI_ERROR(InpCtrlRemoveCallbackNExistsError);

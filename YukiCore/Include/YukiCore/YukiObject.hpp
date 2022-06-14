@@ -45,6 +45,7 @@ enum class JoystickBtnCode;
 enum class GamepadBtnCode;
 enum class GamepadAxes;
 enum class KeyModifier;
+enum class StandardCursorType;
 
 struct StKeyStatus;
 struct StVertexFormat;
@@ -81,6 +82,7 @@ class IYukiMesh;
 class IYukiScene;
 class IYukiCamera;
 class IYukiModel;
+class IYukiLayer;
 
 struct StTransformationInfo;
 
@@ -89,7 +91,7 @@ struct StTransformationInfo;
 namespace Entity
 {
 
-class YukiEntity;
+class TemplateEntity;
 
 }
 
@@ -108,16 +110,19 @@ public:
   virtual void Destroy() = 0;
 };
 
-template <class Des, class Res>
-inline SharedPtr<Des> DynamicPtrCast(SharedPtr<Res> ptr)
+template <class T, typename... Args> inline SharedPtr<T> MakeShared(Args&&... args)
+{
+  return std::make_shared<T>(args...);
+}
+
+template <class Des, class Res> inline SharedPtr<Des> DynamicPtrCast(SharedPtr<Res> ptr)
 {
   return std::dynamic_pointer_cast<Des>(ptr);
 }
 
-template <typename I, typename D, typename... Args>
-inline SharedPtr<I> CreateInterfaceInstance(Args&&... args)
+template <class I, class D, typename... Args> inline SharedPtr<I> CreateInterfaceInstance(Args&&... args)
 {
-  return DynamicPtrCast<I>(std::make_shared<D>(args...));
+  return DynamicPtrCast<I>(MakeShared<D>(args...));
 }
 
 } // namespace Yuki::Core

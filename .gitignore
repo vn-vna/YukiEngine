@@ -373,3 +373,8 @@ cmake-build-release/
 cmake-build-relwithdebinfo/
 .idea/
 .idea/workspace.xml
+compile_commands.json
+neovim.json
+a.out
+
+vcpkg_installed

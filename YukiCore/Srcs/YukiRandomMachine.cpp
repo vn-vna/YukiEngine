@@ -3,10 +3,7 @@
 namespace Yuki::Utils
 {
 
-YukiRandomMachine::YukiRandomMachine()
-    : m_RandomDevice(),
-      m_MT19937(m_RandomDevice())
-{}
+YukiRandomMachine::YukiRandomMachine() : m_RandomDevice(), m_MT19937(m_RandomDevice()) {}
 
 YukiRandomMachine::~YukiRandomMachine() = default;
 
@@ -16,15 +13,9 @@ float YukiRandomMachine::GetRandomNumber(float rangeFrom, float rangeTo)
   return dist(m_MT19937);
 }
 
-RandomDevice& YukiRandomMachine::GetRandomDevice()
-{
-  return m_RandomDevice;
-}
+RandomDevice& YukiRandomMachine::GetRandomDevice() { return m_RandomDevice; }
 
-MT19937& YukiRandomMachine::GetRandomType()
-{
-  return m_MT19937;
-}
+MT19937& YukiRandomMachine::GetRandomType() { return m_MT19937; }
 
 SharedPtr<IYukiRandomMachine> GetRandomMachine()
 {

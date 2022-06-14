@@ -1,3 +1,5 @@
+#include "YukiComp/YukiLayer.hpp"
+#include "YukiCore/YukiGraphics.hpp"
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiApplication.hpp"
 #include "YukiCore/YukiInputCtrl.hpp"
@@ -13,6 +15,15 @@
 
 namespace Yuki::Core
 {
+
+using Comp::ReleaseMeshShader;
+using Comp::InitializeMeshShader;
+
+/// === TEST CODE
+
+SharedPtr<Comp::IYukiLayer> layer;
+
+/// === TEST CODE
 
 String GetGraphicsCardVendorName()
 {
@@ -34,20 +45,44 @@ String GetShadingLanguageVersion()
 
 void PrintGraphicProperties()
 {
-  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format(
-      "Graphic device information: \n\tVendor: {} \n\tRenderer: {} \n\tShading language version: {}",
-      GetGraphicsCardVendorName(),
-      GetGraphicsCardRendererName(),
-      GetShadingLanguageVersion()));
+  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format("-- Graphic device information: "
+                                                          "\n\tVendor: {} \n\tRenderer: "
+                                                          "{} \n\tShading language version: {}",
+      GetGraphicsCardVendorName(), GetGraphicsCardRendererName(), GetShadingLanguageVersion()));
 }
-
-using Comp::ReleaseMeshShader;
-using Comp::InitializeMeshShader;
-using Debug::YukiGladLoadGLLoaderError;
 
 YukiGfxControl::YukiGfxControl() = default;
 
 YukiGfxControl::~YukiGfxControl() = default;
+
+void YukiGfxControl::EnableAttribute(OpenGLAttribute attrib, bool cond)
+{
+  if (cond)
+  {
+    glEnable((GLenum) attrib);
+  }
+}
+
+void YukiGfxControl::DisableAttribute(OpenGLAttribute attrib, bool cond)
+{
+  if (cond)
+  {
+    glDisable((GLenum) attrib);
+  }
+}
+
+void YukiGfxControl::SetAttributeStatus(OpenGLAttribute attrib, bool status)
+{
+  if (status)
+  {
+    glEnable((GLenum) attrib);
+  }
+  else
+  {
+    glDisable((GLenum) attrib);
+  }
+}
+
 
 void YukiGfxControl::Create()
 {
@@ -57,12 +92,12 @@ void YukiGfxControl::Create()
   }
   // Default shader for mesh rendering
   InitializeMeshShader();
+
+  layer = Comp::CreateYukiLayer();
+  layer->Create();
 }
 
-void YukiGfxControl::Awake()
-{
-  PrintGraphicProperties();
-}
+void YukiGfxControl::Awake() { PrintGraphicProperties(); }
 
 void YukiGfxControl::Render()
 {
@@ -78,6 +113,7 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
+  layer->Destroy();
   // Release the default shader for mesh rendering
   ReleaseMeshShader();
 }

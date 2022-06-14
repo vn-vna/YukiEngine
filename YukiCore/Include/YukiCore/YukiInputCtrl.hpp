@@ -279,7 +279,18 @@ typedef struct StMouseLock
   bool lock;
 } MouseLock;
 
-class YUKIAPI IYukiInpControl : virtual public IYukiObject
+enum class StandardCursorType
+{
+  CURSOR_ARROW     = GLFW_ARROW_CURSOR,
+  CURSOR_HAND      = GLFW_HAND_CURSOR,
+  CURSOR_VRESIZE   = GLFW_VRESIZE_CURSOR,
+  CURSOR_HRESIZE   = GLFW_HRESIZE_CURSOR,
+  CURSOR_CROSSHAIR = GLFW_CROSSHAIR_CURSOR,
+  CURSOR_IBEAM     = GLFW_IBEAM_CURSOR,
+  DEFAULT          = GLFW_ARROW_CURSOR
+};
+
+class IYukiInpControl : virtual public IYukiObject
 {
 public:
   virtual void AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback)     = 0;
@@ -288,8 +299,13 @@ public:
   virtual void RemoveKeyboardInputCallback(const String& name)                                        = 0;
   virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                  = 0;
   virtual void ExecuteCursorPosCallback(int x, int y)                                                 = 0;
-  virtual void LockMouse(int x, int y)                                                                = 0;
-  virtual void UnlockMouse()                                                                          = 0;
+
+  virtual void SetCursorStandardStyle(const StandardCursorType& type) = 0;
+
+  virtual void LockMouse(int x, int y) = 0;
+  virtual void UnlockMouse()           = 0;
+  virtual void HideMouse()             = 0;
+  virtual void UnhideMouse()           = 0;
 
   virtual KeyStatus&   GetKeyStatus(const KeyCode& keyCode) = 0;
   virtual MouseStatus& GetMouseStatus()                     = 0;

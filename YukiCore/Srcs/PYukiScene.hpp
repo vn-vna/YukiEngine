@@ -18,33 +18,33 @@ namespace Yuki::Comp
 {
 
 using Core::YukiObject;
-using Entity::YukiEntity;
+using Entity::TemplateEntity;
 
-class YukiScene final : virtual public IYukiScene,
-                        virtual public YukiObject
+class YukiScene final : virtual public IYukiScene, virtual public YukiObject
 {
-protected:
-  SharedPtr<IYukiCamera>                      m_pCamera;
-  UnorderedMap<String, SharedPtr<YukiEntity>> m_mEntities;
-  bool                                        m_bIsReady;
-
 public:
   YukiScene();
   ~YukiScene() override;
 
-  void AddEntity(SharedPtr<YukiEntity> entity) override;
+  void AddEntity(SharedPtr<TemplateEntity> entity) override;
   void SetCamera(SharedPtr<IYukiCamera> pCamera) override;
 
-  SharedPtr<IYukiCamera>                       GetCamera() override;
-  UnorderedMap<String, SharedPtr<YukiEntity>>& GetEntitiesManager() override;
-  SharedPtr<YukiEntity>                        GetEntity(String name) override;
-  bool                                         IsReady() override;
+  SharedPtr<IYukiCamera>                           GetCamera() override;
+  UnorderedMap<String, SharedPtr<TemplateEntity>>& GetEntitiesManager() override;
+  SharedPtr<TemplateEntity>                        GetEntity(String name) override;
+  bool                                             IsReady() override;
 
   void Create() override;
   void Awake() override;
   void Render() override;
   void Update() override;
   void Destroy() override;
+
+
+private:
+  SharedPtr<IYukiCamera>                          m_pCamera;
+  UnorderedMap<String, SharedPtr<TemplateEntity>> m_mEntities;
+  bool                                            m_bIsReady;
 };
 
 } // namespace Yuki::Comp

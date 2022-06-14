@@ -10,29 +10,20 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+#include <fmt/format.h>
 
 constexpr const int ASSIMP_LOAD_FLAGS = aiProcessPreset_TargetRealtime_MaxQuality;
 
 namespace Yuki::Comp
 {
 
-using Debug::YukiAssimpModelCantBeLoaded;
-
-using Core::IndexData;
-using Core::VertexFormat;
+using Core::CreateSolid2DTexture;
+// using Debug::YukiAssimpModelCantBeLoaded;
 using Core::GetYukiApp;
 
-YukiModel::YukiModel(String name, const MeshArrType& meshArr)
-    : m_sName{name},
-      m_apMeshes{meshArr}
-{
-  Create();
-}
+YukiModel::YukiModel(String name, const MeshArrType& meshArr) : m_sName{name}, m_apMeshes{meshArr} { Create(); }
 
-YukiModel::~YukiModel()
-{
-  Destroy();
-}
+YukiModel::~YukiModel() { Destroy(); }
 
 void YukiModel::Create()
 {
@@ -41,9 +32,7 @@ void YukiModel::Create()
     pMesh.second->Create();
   }
 }
-void YukiModel::Render()
-{
-}
+void YukiModel::Render() {}
 void YukiModel::Destroy()
 {
   for (const AutoType& pMesh : this->GetMeshes())
@@ -55,20 +44,11 @@ void YukiModel::Destroy()
   }
 }
 
-String& YukiModel::GetName()
-{
-  return m_sName;
-}
+String& YukiModel::GetName() { return m_sName; }
 
-MeshArrType& YukiModel::GetMeshes()
-{
-  return m_apMeshes;
-}
+MeshArrType& YukiModel::GetMeshes() { return m_apMeshes; }
 
-Mat4F& YukiModel::GetModelMatrix()
-{
-  return m_tModelMatrix;
-}
+Mat4F& YukiModel::GetModelMatrix() { return m_tModelMatrix; }
 
 MeshType YukiModel::GetMesh(const String& name)
 {
@@ -96,7 +76,8 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
 
-  AutoType defaultMaterial = CreateMaterial(0.6f, 0.02f);
+  AutoType defaultMaterial = CreateSolidMaterial({0.6f, 0.0f, 0.0f, 1.0f}, {0.1f, 0.0f, 0.0f, 1.0f}, 1.0f);
+  AutoType defaultTex      = CreateSolid2DTexture({1.0f, 0.4f, 0.0f, 1.0f});
 
   if (!pScene)
   {
@@ -114,7 +95,7 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
     AutoType fcount = aMesh->mNumFaces;
     AutoType farr   = aMesh->mFaces;
 
-    Vector<VertexFormat> vform;
+    Vector<MeshVertexFormat> vform;
     vform.reserve(vcount);
     for (unsigned vID = 0; vID < vcount; ++vID)
     {
@@ -130,20 +111,17 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName)
     Vector<unsigned> idata;
     idata.reserve(fcount * 3);
     std::for_each(farr, farr + fcount, [&](const aiFace& face) {
-      std::for_each(face.mIndices, face.mIndices + face.mNumIndices, [&](const unsigned& index) {
-        idata.emplace_back(index);
-      });
+      std::for_each(
+          face.mIndices, face.mIndices + face.mNumIndices, [&](unsigned index) { idata.emplace_back(index); });
     });
-    IndexData iform = {PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
+    MeshIndexData iform = {PrimitiveTopology::TRIANGLE_LIST, std::move(idata)};
 
-    AutoType mesh = CreateYukiMesh(vform, iform, NO_TEXTURE, defaultMaterial, aMesh->mName.C_Str());
+    AutoType mesh = CreateYukiMesh(vform, iform, defaultTex, defaultMaterial, aMesh->mName.C_Str());
 
 #ifndef _NDEBUG
     StringStream sstr = {};
-    sstr << "Loaded a mesh [" << mesh->GetName() << "] from file [" << fileName << "]\n";
-    Core::GetYukiApp()
-        ->GetLogger()
-        ->PushDebugMessage(sstr.str());
+    Core::GetYukiApp()->GetLogger()->PushDebugMessage(
+        fmt::format("Loaded a mesh [{}] from file: {}", mesh->GetName(), fileName));
 #endif
     meshes[mesh->GetName()] = mesh;
   });

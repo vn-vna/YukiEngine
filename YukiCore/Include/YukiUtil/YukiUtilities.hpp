@@ -21,36 +21,29 @@ namespace Yuki::Utils
 using namespace Yuki::Core;
 using namespace Yuki::Comp;
 
-template <typename T>
-using NumericLimits = std::numeric_limits<T>;
+template <typename T> using NumericLimits = std::numeric_limits<T>;
 
-bool YUKIAPI IsKeyPressed(KeyCode key);
-bool YUKIAPI IsKeyRepeated(KeyCode key);
-bool YUKIAPI IsKeyReleased(KeyCode key);
+String& TrimString(String& str);
+String  GetTrimmed(const String& str);
 
-void YUKIAPI MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI MoveCameraLeft(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI MoveCameraFront(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
-void YUKIAPI MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
+bool IsKeyPressed(KeyCode key);
+bool IsKeyRepeated(KeyCode key);
+bool IsKeyReleased(KeyCode key);
 
-template <class EntityClass, typename... Args>
-inline SharedPtr<Entity::YukiEntity> createEntity(Args&&... args)
+void MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraLeft(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraFront(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
+
+template <class EntityClass, typename... Args> inline SharedPtr<Entity::TemplateEntity> createEntity(Args&&... args)
 {
-  return CreateInterfaceInstance<Entity::YukiEntity, EntityClass>(std::forward<Args...>(args...));
+  return CreateInterfaceInstance<Entity::TemplateEntity, EntityClass>(std::forward<Args...>(args...));
 }
 
-template <typename T>
-inline T MaximumValue()
-{
-  return NumericLimits<T>().max();
-}
+template <typename T> inline T MaximumValue() { return NumericLimits<T>().max(); }
 
-template <typename T>
-inline T MinimumValue()
-{
-  return NumericLimits<T>().min();
-}
+template <typename T> inline T MinimumValue() { return NumericLimits<T>().min(); }
 
 } // namespace Yuki::Utils

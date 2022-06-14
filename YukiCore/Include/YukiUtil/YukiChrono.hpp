@@ -46,12 +46,10 @@ using MiliSeconds   = std::chrono::milliseconds;
 using NanoSeconds   = std::chrono::nanoseconds;
 using Seconds       = std::chrono::seconds;
 
-using Core::GetYukiApp;
-
 typedef std::function<void(IYukiTimer*)> TimerAction;
 typedef UnorderedSet<IYukiTimer*>        TimerManager;
 
-typedef struct YUKIAPI StDateTimeFormat
+typedef struct StDateTimeFormat
 {
   String year              = YUKI_TIMESTR_YEAR_LONG_FORMAT;
   String month             = YUKI_TIMESTR_MONTH_NUMBER_FORMAT;
@@ -64,7 +62,7 @@ typedef struct YUKIAPI StDateTimeFormat
   String timeDateSeparator = YUKI_TIMESTR_SPACE_SEPERATOR;
 } DateTimeFormat;
 
-class YUKIAPI Clock
+class Clock
 {
 public:
   static long long    CurrentTimeNanos();
@@ -75,13 +73,14 @@ public:
   static const String DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
 };
 
-class YUKIAPI IYukiStopwatch
+class IYukiStopwatch
 {
 public:
-  virtual void Start() = 0;
+  virtual void      Start()          = 0;
+  virtual long long GetElapsedTime() = 0;
 };
 
-class YUKIAPI IYukiTimer
+class IYukiTimer
 {
 public:
   virtual void Start()           = 0;
@@ -96,11 +95,13 @@ public:
   virtual void SeekCycle(long long cycles)                  = 0;
 
   virtual void SetInterval(long long milis, long long nanos) = 0;
-  virtual void SetEstimateCycle(long long cycles)            = 0; // Set the estimate cycle, -1 for infinite
+  virtual void SetEstimateCycle(long long cycles)            = 0; // Set the estimate
+                                                                  // cycle, -1 for infinite
   virtual void SetParallelExecution(bool sep)                = 0; // Execute callback from thread pool
   virtual void SetCallback(const TimerAction& callback)      = 0;
 
-  virtual long long          GetCycle()            = 0; // Return the defined Cycle or -1 for infinite
+  virtual long long          GetCycle()            = 0; // Return the defined Cycle or -1 for
+                                                        // infinite
   virtual long long          GetInterval()         = 0;
   virtual long long          GetRawElapsedTime()   = 0;
   virtual long long          GetElapsedTime()      = 0;
@@ -112,7 +113,7 @@ public:
   virtual const TimerAction& GetCallback()         = 0;
 };
 
-SharedPtr<TimerManager> YUKIAPI GetTimerManager();
-SharedPtr<IYukiTimer> YUKIAPI   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
+SharedPtr<TimerManager> GetTimerManager();
+SharedPtr<IYukiTimer>   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
 
 } // namespace Yuki::Chrono

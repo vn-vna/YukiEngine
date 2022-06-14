@@ -7,19 +7,30 @@
 
 #pragma once
 
+#include "YukiCore/YukiInputCtrl.hpp"
+#include <YukiCore/YukiPCH.hpp>
+#include <YukiCore/YukiApplication.hpp>
+#include <YukiDebug/YukiLogger.hpp>
 #include <YukiEntity/Entity.hpp>
+#include <YukiUtil/YukiChrono.hpp>
 #include <YukiUtil/YukiUtilities.hpp>
 #include <YukiUtil/YukiSystem.hpp>
 
-using Yuki::Core::KeyCode;
+#include <fmt/format.h>
 
-class SystemControl : virtual public Yuki::Entity::YukiEntity
+using Yuki::Core::KeyCode;
+using Yuki::Utils::IsKeyReleased;
+
+class SystemControl : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
+  Yuki::SharedPtr<Yuki::Core::IYukiApp>        pApp;
+  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
+  Yuki::SharedPtr<Yuki::Debug::IYukiLogger>    pLogger;
   Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
+  bool                                         bDefaultCursor;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -31,33 +42,33 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> GetInstance();
 };
 
-inline SystemControl::SystemControl(const Yuki::String& name)
-    : Yuki::Entity::YukiEntity(name)
+inline SystemControl::SystemControl(const Yuki::String& name) : Yuki::Entity::TemplateEntity(name), bDefaultCursor(true)
 {}
 
 inline SystemControl::~SystemControl() = default;
 
 inline void SystemControl::OnCreate()
 {
-  pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
-  pSysControl = Yuki::Utils::GetYukiSystemController();
+  pApp        = Yuki::Core::GetYukiApp();
+  pInpControl = pApp->GetInputController();
+  pSysControl = pApp->GetSystemController();
+  pLogger     = pApp->GetLogger();
 
-  pTimer = Yuki::Chrono::CreateTimer([&](Yuki::Chrono::IYukiTimer* pTimer) {
-    AutoType info = pSysControl->GetResourceActivityInfo();
-    std::cout << "Cpu AVG = " << info.avgCpuLoad << "%\n"
-              << "Ram Usage = " << (float) info.memoryUsed / std::pow(1024, 3) << "GB\n";
-  },
+  pTimer = Yuki::Chrono::CreateTimer(
+      [&](Yuki::Chrono::IYukiTimer* pTimer) {
+        AutoType resActivity = pSysControl->GetResourceActivityInfo();
+        pLogger->PushDebugMessage(
+            fmt::format("CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad, resActivity.memoryUsed));
+      },
       1'000'000'000);
 
   pTimer->Start();
 }
 
-inline void SystemControl::OnAwake()
-{
-}
+inline void SystemControl::OnAwake() {}
 
 inline void SystemControl::OnUpdate()
 {
@@ -101,26 +112,32 @@ inline void SystemControl::OnUpdate()
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V))
   {
-    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {
-      std::cout << "Pressed V\n";
-    });
+    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() { std::cout << "Pressed V\n"; });
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V) && bDefaultCursor)
+  {
+    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::CURSOR_HAND);
+    bDefaultCursor = false;
+  }
+
+  if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_X) && !bDefaultCursor)
+  {
+    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::DEFAULT);
+    bDefaultCursor = true;
   }
 }
 
-inline void SystemControl::OnRender()
-{
-}
+inline void SystemControl::OnRender() {}
 
-inline void SystemControl::OnDestroy()
-{
-}
+inline void SystemControl::OnDestroy() {}
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> SystemControl::GetInstance()
+inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity> SystemControl::GetInstance()
 {
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> instance;
   if (!instance.get())
   {
-    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::YukiEntity, SystemControl>("sys_ctrl");
+    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::TemplateEntity, SystemControl>("sys_ctrl");
   }
   return instance;
 }

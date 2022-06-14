@@ -13,7 +13,7 @@
 using Yuki::Utils::IsKeyReleased;
 using Yuki::Core::KeyCode;
 
-class CameraController : virtual public Yuki::Entity::YukiEntity
+class CameraController : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
   Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
@@ -29,7 +29,7 @@ public:
   void OnRender() override;
   void OnDestroy() override;
 
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> GetInstance();
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> GetInstance();
 };
 
 
@@ -39,8 +39,7 @@ inline void CameraController::OnCreate()
   pInpControl = Yuki::Core::GetYukiApp()->GetInputController();
 }
 
-inline void CameraController::OnAwake()
-{}
+inline void CameraController::OnAwake() {}
 
 inline void CameraController::OnUpdate()
 {
@@ -70,27 +69,20 @@ inline void CameraController::OnUpdate()
   }
 }
 
-inline void CameraController::OnRender()
-{
-}
+inline void CameraController::OnRender() {}
 
-inline void CameraController::OnDestroy()
-{
-}
+inline void CameraController::OnDestroy() {}
 
-inline CameraController::CameraController(const Yuki::String& name)
-    : Yuki::Entity::YukiEntity(name)
-{
-}
+inline CameraController::CameraController(const Yuki::String& name) : Yuki::Entity::TemplateEntity(name) {}
 
 inline CameraController::~CameraController() = default;
 
-inline Yuki::SharedPtr<Yuki::Entity::YukiEntity> CameraController::GetInstance()
+inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity> CameraController::GetInstance()
 {
-  static Yuki::SharedPtr<Yuki::Entity::YukiEntity> instance;
+  static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> instance;
   if (!instance.get())
   {
-    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::YukiEntity, CameraController>("camera_controller");
+    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::TemplateEntity, CameraController>("camera_controller");
   }
   return instance;
 }

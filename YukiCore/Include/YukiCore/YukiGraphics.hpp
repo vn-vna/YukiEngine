@@ -12,164 +12,184 @@
 #include "YukiCore/YukiObject.hpp"
 #include "YukiDebug/YukiLogger.hpp"
 
-#include <glm/glm.hpp>
-
 namespace Yuki::Core
 {
 
 // Describe how does the mesh will be rendered.
 enum class PrimitiveTopology
 {
-  // Vertices 0 and 1 are considered a line. Vertices 2 and 3 are
-  // considered a line. And so on. If the user specifies a non-even
-  // number of vertices, then the extra vertex is ignored.
+  // Vertices 0 and 1 are considered a line. Vertices 2 and
+  // 3 are considered a line. And so on. If the user
+  // specifies a non-even number of vertices, then the extra
+  // vertex is ignored.
   LINES          = GL_LINES,
-  // The adjacent vertices are considered lines. Thus, if you pass
-  // n vertices, you will get n-1 lines. If the user only specifies
-  // 1 vertex, the drawing command is ignored.
+  // The adjacent vertices are considered lines. Thus, if
+  // you pass n vertices, you will get n-1 lines. If the
+  // user only specifies 1 vertex, the drawing command is
+  // ignored.
   LINE_STRIP     = GL_LINE_STRIP,
-  // As line strips, except that the first and last vertices are
-  // also used as a line. Thus, you get n lines for n input vertices.
-  // If the user only specifies 1 vertex, the drawing command is ignored.
-  // The line between the first and last vertices happens after all
-  // of the previous lines in the sequence.
+  // As line strips, except that the first and last vertices
+  // are also used as a line. Thus, you get n lines for n
+  // input vertices. If the user only specifies 1 vertex,
+  // the drawing command is ignored. The line between the
+  // first and last vertices happens after all of the
+  // previous lines in the sequence.
   LINE_LOOP      = GL_LINE_LOOP,
-  // Vertices 0, 1, and 2 form a triangle. Vertices 3, 4, and 5 form
-  // a triangle. And so on.
+  // Vertices 0, 1, and 2 form a triangle. Vertices 3, 4,
+  // and 5 form a triangle. And so on.
   TRIANGLE_LIST  = GL_TRIANGLES,
-  // Every group of 3 adjacent vertices forms a triangle. The face
-  // direction of the strip is determined by the winding of the
-  // first triangle. Each successive triangle will have its effective
-  // face order reversed, so the system compensates for that by testing
-  // it in the opposite way. A vertex stream of n length will generate
+  // Every group of 3 adjacent vertices forms a triangle.
+  // The face direction of the strip is determined by the
+  // winding of the first triangle. Each successive triangle
+  // will have its effective face order reversed, so the
+  // system compensates for that by testing it in the
+  // opposite way. A vertex stream of n length will generate
   // n-2 triangles.
   TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-  // The first vertex is always held fixed. From there on, every group
-  // of 2 adjacent vertices form a triangle with the first. So with a
-  // vertex stream, you get a list of triangles like so:
-  // (0, 1, 2) (0, 2, 3), (0, 3, 4), etc. A vertex stream of n length
-  // will generate n-2 triangles.
+  // The first vertex is always held fixed. From there on,
+  // every group of 2 adjacent vertices form a triangle with
+  // the first. So with a vertex stream, you get a list of
+  // triangles like so: (0, 1, 2) (0, 2, 3), (0, 3, 4), etc.
+  // A vertex stream of n length will generate n-2
+  // triangles.
   TRIANGLE_FAN   = GL_TRIANGLE_FAN,
-  // This will cause OpenGL to interpret each individual vertex in the
-  // stream as a point.
+  // This will cause OpenGL to interpret each individual
+  // vertex in the stream as a point.
   POINT_LIST     = GL_POINTS,
-  // Vertices 0-3 form a quad, vertices 4-7 form another, and so on.
-  // The vertex stream must be a number of vertices divisible by 4 to work.
+  // Vertices 0-3 form a quad, vertices 4-7 form another,
+  // and so on. The vertex stream must be a number of
+  // vertices divisible by 4 to work.
   //
-  // Have been removed from core OpenGL 3.1 and above (they are only
-  // deprecated in OpenGL 3.0). It is recommended that you not use this
-  // functionality in your programs.
+  // Have been removed from core OpenGL 3.1 and above (they
+  // are only deprecated in OpenGL 3.0). It is recommended
+  // that you not use this functionality in your programs.
   QUAD_LIST      = GL_QUADS,
-  // Similar to triangle strips, a quad strip uses adjacent edges to
-  // form the next quad. In the case of quads, the third and fourth
-  // vertices of one quad are used as the edge of the next quad. So
-  // vertices 0-3 are a quad, 2-5 are a quad, and so on. A vertex
-  // stream of n length will generate (n - 2) / 2 quads. As with triangle
-  // strips, the winding order of quads is changed for every other quad.
-  // Have been removed from core OpenGL 3.1 and above (they are only
-  // deprecated in OpenGL 3.0). It is recommended that you not use this
-  // functionality in your programs.
+  // Similar to triangle strips, a quad strip uses adjacent
+  // edges to form the next quad. In the case of quads, the
+  // third and fourth vertices of one quad are used as the
+  // edge of the next quad. So vertices 0-3 are a quad, 2-5
+  // are a quad, and so on. A vertex stream of n length will
+  // generate (n - 2) / 2 quads. As with triangle strips,
+  // the winding order of quads is changed for every other
+  // quad. Have been removed from core OpenGL 3.1 and above
+  // (they are only deprecated in OpenGL 3.0). It is
+  // recommended that you not use this functionality in your
+  // programs.
   QUAD_STRIP     = GL_QUAD_STRIP
 };
 
 // Type of texture
 enum class TextureType
 {
-  // mages in this texture all are 1-dimensional. They have width,
-  // but no height or depth.
+  // mages in this texture all are 1-dimensional. They have
+  // width, but no height or depth.
   TEXTURE_1D                   = GL_TEXTURE_1D,
-  // Images in this texture all are 2-dimensional. They have width
-  // and height, but no depth.
+  // Images in this texture all are 2-dimensional. They have
+  // width and height, but no depth.
   TEXTURE_2D                   = GL_TEXTURE_2D,
-  // Images in this texture all are 3-dimensional. They have width,
-  // height, and depth.
+  // Images in this texture all are 3-dimensional. They have
+  // width, height, and depth.
   TEXTURE_3D                   = GL_TEXTURE_3D,
-  // The image in this texture (only one image. No mipmapping) is
-  // 2-dimensional. Texture coordinates used for these textures are
-  // not normalized.
+  // The image in this texture (only one image. No
+  // mipmapping) is 2-dimensional. Texture coordinates used
+  // for these textures are not normalized.
   TEXTURE_RECTANGLE            = GL_TEXTURE_RECTANGLE,
-  // The image in this texture (only one image. No mipmapping) is
-  // 1-dimensional. The storage for this data comes from a Buffer
-  // Object.
+  // The image in this texture (only one image. No
+  // mipmapping) is 1-dimensional. The storage for this data
+  // comes from a Buffer Object.
   TEXTURE_BUFFER               = GL_TEXTURE_BUFFER,
-  // Images in this texture all are 1-dimensional. However, it contains
-  // multiple sets of 1-dimensional images, all within one texture.
-  // The array length is part of the texture's size.
+  // Images in this texture all are 1-dimensional. However,
+  // it contains multiple sets of 1-dimensional images, all
+  // within one texture. The array length is part of the
+  // texture's size.
   TEXTURE_1D_ARRAY             = GL_TEXTURE_1D_ARRAY,
-  // Images in this texture all are 2-dimensional. However, it contains
-  // multiple sets of 2-dimensional images, all within one texture. The
-  // array length is part of the texture's size.
+  // Images in this texture all are 2-dimensional. However,
+  // it contains multiple sets of 2-dimensional images, all
+  // within one texture. The array length is part of the
+  // texture's size.
   TEXTURE_2D_ARRAY             = GL_TEXTURE_2D_ARRAY,
-  // There are exactly 6 distinct sets of 2D images, each image being
-  // of the same size and must be of a square size. These images act
-  // as 6 faces of a cube.
+  // There are exactly 6 distinct sets of 2D images, each
+  // image being of the same size and must be of a square
+  // size. These images act as 6 faces of a cube.
   TEXTURE_CUBE_MAP             = GL_TEXTURE_CUBE_MAP,
-  // Images in this texture are all cube maps. It contains multiple sets
-  // of cube maps, all within one texture. The array length * 6 (number
-  // of cube faces) is part of the texture size.
+  // Images in this texture are all cube maps. It contains
+  // multiple sets of cube maps, all within one texture. The
+  // array length * 6 (number of cube faces) is part of the
+  // texture size.
   TEXTURE_CUBE_MAP_ARRAY       = GL_TEXTURE_CUBE_MAP_ARRAY,
-  // The image in this texture (only one image. No mipmapping) is
-  // 2-dimensional. Each pixel in these images contains multiple samples
-  // instead of just one value.
+  // The image in this texture (only one image. No
+  // mipmapping) is 2-dimensional. Each pixel in these
+  // images contains multiple samples instead of just one
+  // value.
   TEXTURE_2D_MULTISAMPLE       = GL_TEXTURE_2D_MULTISAMPLE,
-  // Combines 2D array and 2D multisample types. No mipmapping.
+  // Combines 2D array and 2D multisample types. No
+  // mipmapping.
   TEXTURE_2D_MULTISAMPLE_ARRAY = GL_TEXTURE_2D_MULTISAMPLE_ARRAY
 };
 
-// The texture minifying function is used whenever the level-of-detail
-// function used when sampling from the texture determines that the
-// texture should be minified. There are six defined minifying functions.
-// Two of them use either the nearest texture elements or a weighted
-// average of multiple texture elements to compute the texture value.
-// The other four use mipmaps.
+// The texture minifying function is used whenever the
+// level-of-detail function used when sampling from the
+// texture determines that the texture should be minified.
+// There are six defined minifying functions. Two of them
+// use either the nearest texture elements or a weighted
+// average of multiple texture elements to compute the
+// texture value. The other four use mipmaps.
 enum class TextureMinFilter
 {
-  // Returns the value of the texture element that is nearest (in
-  // Manhattan distance) to the specified texture coordinates.
+  // Returns the value of the texture element that is
+  // nearest (in Manhattan distance) to the specified
+  // texture coordinates.
   NEAREST                = GL_NEAREST,
-  // Returns the weighted average of the texture elements that are
-  // closest to the specified texture coordinates. These can include
-  // items wrapped or repeated from other parts of a texture, depending
-  // on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on
-  // the exact mapping.
+  // Returns the weighted average of the texture elements
+  // that are closest to the specified texture coordinates.
+  // These can include items wrapped or repeated from other
+  // parts of a texture, depending on the values of
+  // GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on the
+  // exact mapping.
   LINEAR                 = GL_LINEAR,
-  // Chooses the mipmap that most closely matches the size of the pixel
-  // being textured and uses the GL_NEAREST criterion (the texture
-  // element closest to the specified texture coordinates) to produce a
-  // texture value.
-  NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST,
-  // Chooses the mipmap that most closely matches the size of the pixel
-  // being textured and uses the GL_LINEAR criterion (a weighted average
-  // of the four texture elements that are closest to the specified
+  // Chooses the mipmap that most closely matches the size
+  // of the pixel being textured and uses the GL_NEAREST
+  // criterion (the texture element closest to the specified
   // texture coordinates) to produce a texture value.
+  NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST,
+  // Chooses the mipmap that most closely matches the size
+  // of the pixel being textured and uses the GL_LINEAR
+  // criterion (a weighted average of the four texture
+  // elements that are closest to the specified texture
+  // coordinates) to produce a texture value.
   LINEAR_MIPMAP_NEAREST  = GL_LINEAR_MIPMAP_NEAREST,
-  // Chooses the two mipmaps that most closely match the size of the
-  // pixel being textured and uses the GL_NEAREST criterion (the
-  // texture element closest to the specified texture coordinates ) to
-  // produce a texture value from each mipmap. The final texture value
+  // Chooses the two mipmaps that most closely match the
+  // size of the pixel being textured and uses the
+  // GL_NEAREST criterion (the texture element closest to
+  // the specified texture coordinates ) to produce a
+  // texture value from each mipmap. The final texture value
   // is a weighted average of those two values.
   NEAREST_MIPMAP_LINEAR  = GL_NEAREST_MIPMAP_LINEAR,
-  // Chooses the two mipmaps that most closely match the size of the
-  // pixel being textured and uses the GL_LINEAR criterion (a weighted
-  // average of the texture elements that are closest to the specified
-  // texture coordinates) to produce a texture value from each mipmap.
-  // The final texture value is a weighted average of those two values.
+  // Chooses the two mipmaps that most closely match the
+  // size of the pixel being textured and uses the GL_LINEAR
+  // criterion (a weighted average of the texture elements
+  // that are closest to the specified texture coordinates)
+  // to produce a texture value from each mipmap. The final
+  // texture value is a weighted average of those two
+  // values.
   LINEAR_MIPMAP_LINEAR   = GL_LINEAR_MIPMAP_LINEAR,
 };
 
 // The texture magnification function is used whenever the
-// level-of-detail function used when sampling from the texture
-// determines that the texture should be magified.
+// level-of-detail function used when sampling from the
+// texture determines that the texture should be magified.
 enum class TextureMagFilter
 {
-  // Returns the value of the texture element that is nearest (in
-  // Manhattan distance) to the specified texture coordinates.
+  // Returns the value of the texture element that is
+  // nearest (in Manhattan distance) to the specified
+  // texture coordinates.
   NEAREST = GL_NEAREST,
-  // Returns the weighted average of the texture elements that are
-  // closest to the specified texture coordinates. These can include
-  // items wrapped or repeated from other parts of a texture, depending
-  // on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on
-  // the exact mapping.
+  // Returns the weighted average of the texture elements
+  // that are closest to the specified texture coordinates.
+  // These can include items wrapped or repeated from other
+  // parts of a texture, depending on the values of
+  // GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on the
+  // exact mapping.
   LINEAR  = GL_LINEAR
 };
 
@@ -177,14 +197,15 @@ enum class TextureMagFilter
 // depth-stencil format textures.
 enum class TextureDepthStencilMode
 {
-  // If the depth stencil mode is DEPTH_COMPONENT, then reads
-  // from depth-stencil format textures will return the depth
-  // component of the texel in Rt and the stencil component will
-  // be discarded.
+  // If the depth stencil mode is DEPTH_COMPONENT, then
+  // reads from depth-stencil format textures will return
+  // the depth component of the texel in Rt and the stencil
+  // component will be discarded.
   DEPTH_COMPONENT = GL_DEPTH_COMPONENT,
   // If the depth stencil mode is GL_STENCIL_INDEX then the
-  // stencil component is returned in Rt and the depth component
-  // is discarded. The initial value is GL_DEPTH_COMPONENT.
+  // stencil component is returned in Rt and the depth
+  // component is discarded. The initial value is
+  // GL_DEPTH_COMPONENT.
   STENCIL_INDEX   = GL_STENCIL_INDEX
 };
 
@@ -213,20 +234,20 @@ enum class TextureCompareMode
 
 enum class PixelCompressedInternalFormat
 {
-  COMPRESSED_RED                     = GL_COMPRESSED_RED,
-  COMPRESSED_RG                      = GL_COMPRESSED_RG,
-  COMPRESSED_RGB                     = GL_COMPRESSED_RGB,
-  COMPRESSED_RGBA                    = GL_COMPRESSED_RGBA,
-  COMPRESSED_SRGB                    = GL_COMPRESSED_SRGB,
-  COMPRESSED_SRGB_ALPHA              = GL_COMPRESSED_SRGB_ALPHA,
-  COMPRESSED_RED_RGTC1               = GL_COMPRESSED_RED_RGTC1,
-  COMPRESSED_SIGNED_RED_RGTC1        = GL_COMPRESSED_SIGNED_RED_RGTC1,
-  COMPRESSED_RG_RGTC2                = GL_COMPRESSED_RG_RGTC2,
-  COMPRESSED_SIGNED_RG_RGTC2         = GL_COMPRESSED_SIGNED_RG_RGTC2,
-  COMPRESSED_RGBA_BPTC_UNORM         = GL_COMPRESSED_RGBA_BPTC_UNORM,
-  COMPRESSED_SRGB_ALPHA_BPTC_UNORM   = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM,
-  COMPRESSED_RGB_BPTC_SIGNED_FLOAT   = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT,
-  COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT,
+  C_RED                     = GL_COMPRESSED_RED,
+  C_RG                      = GL_COMPRESSED_RG,
+  C_RGB                     = GL_COMPRESSED_RGB,
+  C_RGBA                    = GL_COMPRESSED_RGBA,
+  C_SRGB                    = GL_COMPRESSED_SRGB,
+  C_SRGB_ALPHA              = GL_COMPRESSED_SRGB_ALPHA,
+  C_RED_RGTC1               = GL_COMPRESSED_RED_RGTC1,
+  C_SIGNED_RED_RGTC1        = GL_COMPRESSED_SIGNED_RED_RGTC1,
+  C_RG_RGTC2                = GL_COMPRESSED_RG_RGTC2,
+  C_SIGNED_RG_RGTC2         = GL_COMPRESSED_SIGNED_RG_RGTC2,
+  C_RGBA_BPTC_UNORM         = GL_COMPRESSED_RGBA_BPTC_UNORM,
+  C_SRGB_ALPHA_BPTC_UNORM   = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM,
+  C_RGB_BPTC_SIGNED_FLOAT   = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT,
+  C_RGB_BPTC_UNSIGNED_FLOAT = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT,
 };
 
 // Sized Internal Formats
@@ -306,56 +327,48 @@ enum class PixelBasedInternalFormat
   STENCIL_INDEX   = GL_STENCIL_INDEX
 };
 
-// Format of a vertex to passed into VBO
-typedef struct StVertexFormat
+enum class OpenGLAttribute
 {
-  Vec3F position;
-  Vec3F normal;
-  Vec2F texcoord;
-
-  StVertexFormat(
-      const Vec3F& _position,
-      const Vec3F& _normal,
-      const Vec2F& _texcoord)
-      : position(_position), normal(_normal), texcoord(_texcoord) {}
-
-  StVertexFormat()
-      : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
-
-} VertexData, VertexFormat;
-
-// Index data format
-typedef struct StIndexData
-{
-  PrimitiveTopology topology;
-  Vector<unsigned>  data;
-} IndexData, IndexFormat;
-
-// This object is only used once in Application. This is the class
-// controls every graphics actions.
-class YUKIAPI IYukiGfxControl : virtual public IYukiObject
-{
-public:
+  STENCIL_TEST = GL_STENCIL_TEST,
+  ALPHA_TEST   = GL_ALPHA_TEST,
+  BLEND_MODE   = GL_BLEND,
+  DEPTH_TEST   = GL_DEPTH_TEST,
+  DITHER       = GL_DITHER,
+  HISTOGRAM    = GL_HISTOGRAM,
+  LINE_SMOOTH  = GL_LINE_SMOOTH,
 };
 
+// This object is only used once in Application. This is the
+// class controls every graphics actions.
+class IYukiGfxControl : virtual public IYukiObject
+{
+public:
+  virtual void EnableAttribute(OpenGLAttribute attrib, bool cond = true)  = 0;
+  virtual void DisableAttribute(OpenGLAttribute attrib, bool cond = true) = 0;
+  virtual void SetAttributeStatus(OpenGLAttribute attrib, bool status)    = 0;
+};
+
+// OpenGL Object:
 // OpenGL Object abstraction.
-class YUKIAPI IYukiOGLObject : virtual public IYukiObject
+class IYukiOGLObject : virtual public IYukiObject
 {
 public:
-  virtual const unsigned& GetID()      = 0;
-  virtual void            BindObject() = 0;
+  virtual unsigned GetID()      = 0;
+  virtual void     BindObject() = 0;
 };
 
+// OpenGL Object:
 // Vertex Buffer Object abstraction.
-class YUKIAPI IYukiOGLVertexBuffer : virtual public IYukiOGLObject
+class IYukiOGLVertexBuffer : virtual public IYukiOGLObject
 {
 public:
   virtual void SetBufferData(Vector<float>& data)       = 0;
   virtual void SetBufferData(float* pData, size_t size) = 0;
 };
 
+// OpenGL Object:
 // Element Buffer Object abstraction.
-class YUKIAPI IYukiOGLElementBuffer : virtual public IYukiOGLObject
+class IYukiOGLElementBuffer : virtual public IYukiOGLObject
 {
 public:
   virtual void SetBufferData(Vector<unsigned>& data)                                    = 0;
@@ -364,19 +377,9 @@ public:
   virtual void DrawAllElements(PrimitiveTopology topology)                              = 0;
 };
 
-// Vertex Array Object abstraction.
-class YUKIAPI IYukiOGLVertexArray : virtual public IYukiOGLObject
-{
-public:
-  virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
-  virtual void AttributeBinding(unsigned attrib, unsigned binding)                                                  = 0;
-  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized = false)           = 0;
-  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) = 0;
-  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                                            = 0;
-};
-
+// OpenGL Object:
 // Shader Program abstraction.
-class YUKIAPI IYukiOGLShaderProgram : virtual public IYukiOGLObject
+class IYukiOGLShaderProgram : virtual public IYukiOGLObject
 {
 public:
   virtual void UniformMatrix(const String& prop, const Mat2F& mat, bool transopse = false) = 0;
@@ -392,8 +395,9 @@ public:
   virtual void UniformValue(const String& prop, float value) = 0;
 };
 
+// OpenGL Object:
 // OpenGL Texture abstraction.
-class YUKIAPI IYukiOGLTexture : virtual public IYukiOGLObject
+class IYukiOGLTexture : virtual public IYukiOGLObject
 {
 public:
   virtual void SetTextureMinFilter(TextureMinFilter minFilter)          = 0;
@@ -412,9 +416,12 @@ public:
   virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat, int level, const Vec2F& size) = 0;
   virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level, const Vec3F& size) = 0;
 
-  virtual void SetTextureData1D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& len)  = 0;
-  virtual void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) = 0;
-  virtual void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) = 0;
+  virtual void SetTextureData1D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& len) = 0;
+  virtual void SetTextureData2D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) = 0;
+  virtual void SetTextureData3D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
@@ -429,11 +436,81 @@ public:
   virtual void BindTexture(unsigned slot) = 0;
 };
 
-SharedPtr<IYukiGfxControl> YUKIAPI       CreateGraphicsController();
-SharedPtr<IYukiOGLVertexBuffer> YUKIAPI  CreateGLVertexBuffer();
-SharedPtr<IYukiOGLElementBuffer> YUKIAPI CreateGLElementBuffer();
-SharedPtr<IYukiOGLShaderProgram> YUKIAPI CreateGLShaderProgram(const String& shaderName);
-SharedPtr<IYukiOGLVertexArray> YUKIAPI   CreateGLVertexArray();
-SharedPtr<IYukiOGLTexture> YUKIAPI       CreateGLTexture(TextureType type);
+// OpenGL Object:
+// Render Buffer abstraction
+class IYukiOGLRenderBuffer : virtual public IYukiOGLObject
+{
+public:
+  virtual void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)                          = 0;
+  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat, const Vec2I& size, int samples) = 0;
+};
+
+// OpenGL Container:
+// Vertex Array Object abstraction.
+class IYukiOGLVertexArray : virtual public IYukiOGLObject
+{
+public:
+  virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
+  virtual void AttributeBinding(unsigned attrib, unsigned binding)                                                  = 0;
+  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized = false)           = 0;
+  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) = 0;
+  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                                            = 0;
+};
+
+// OpenGL Container
+// Frame Buffer Object abstraction
+class IYukiOGLFrameBuffer : virtual public IYukiOGLObject
+{
+public:
+  virtual bool IsEnabledStencilTesting() = 0;
+  virtual bool IsEnabledBlendMode()      = 0;
+  virtual bool IsEnabledAlphaTest()      = 0;
+  virtual bool IsEnabledDepthTest()      = 0;
+  virtual bool IsEnabledDither()         = 0;
+  virtual bool IsEnabledHistogram()      = 0;
+  virtual bool IsEnabledLineSmooth()     = 0;
+
+  virtual void EnableStencilTesting() = 0;
+  virtual void EnableBlendMode()      = 0;
+  virtual void EnableAlphaTest()      = 0;
+  virtual void EnableDepthTest()      = 0;
+  virtual void EnableDither()         = 0;
+  virtual void EnableHistogram()      = 0;
+  virtual void EnableLineSmooth()     = 0;
+
+  virtual void DisableStencilTesting() = 0;
+  virtual void DisableBlendMode()      = 0;
+  virtual void DisableAlphaTest()      = 0;
+  virtual void DisableDepthTest()      = 0;
+  virtual void DisableDither()         = 0;
+  virtual void DisableHistogram()      = 0;
+  virtual void DisableLineSmooth()     = 0;
+
+  virtual bool BufferOK() = 0;
+
+  virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex, unsigned position = 0, unsigned level = 0) = 0;
+  virtual void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                        = 0;
+  virtual void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                      = 0;
+  virtual void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                 = 0;
+
+  virtual void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo, unsigned position = 0) = 0;
+  virtual void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo)                        = 0;
+  virtual void AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                      = 0;
+  virtual void AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                 = 0;
+};
+
+SharedPtr<IYukiGfxControl>       CreateGraphicsController();
+SharedPtr<IYukiOGLVertexBuffer>  CreateGLVertexBuffer();
+SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
+SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
+SharedPtr<IYukiOGLVertexArray>   CreateGLVertexArray();
+SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
+SharedPtr<IYukiOGLRenderBuffer>  CreateGLRegnderBuffer();
+SharedPtr<IYukiOGLFrameBuffer>   CreateGLFrameBuffer();
+
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec1F& color);
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec2F& color);
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec3F& color);
+SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec4F& color);
 
 } // namespace Yuki::Core

@@ -15,12 +15,15 @@
 namespace Yuki::Core
 {
 
-class YukiGfxControl final : virtual public IYukiGfxControl,
-                             virtual public YukiObject
+class YukiGfxControl final : virtual public IYukiGfxControl, virtual public YukiObject
 {
 public:
   YukiGfxControl();
   ~YukiGfxControl() override;
+
+  void EnableAttribute(OpenGLAttribute attrib, bool cond = true) override;
+  void DisableAttribute(OpenGLAttribute attrib, bool cond = true) override;
+  void SetAttributeStatus(OpenGLAttribute attrib, bool status) override;
 
   void Create() override;
   void Awake() override;

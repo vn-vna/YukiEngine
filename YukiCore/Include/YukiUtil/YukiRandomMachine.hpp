@@ -1,12 +1,14 @@
 /**
-* ===========================================
-* Author:          vn-vna (Anh Vu)
-* Country:         Vietnam
-* License:         MIT
-* ===========================================
-*/
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
 
 #pragma once
+
+#include "YukiCore/YukiObject.hpp"
 
 #include <random>
 
@@ -16,8 +18,7 @@ namespace Yuki::Utils
 using RandomDevice = std::random_device;
 using MT19937      = std::mt19937;
 
-template <typename T>
-using UniformRealDistribution = std::uniform_real_distribution<T>;
+template <typename T> using UniformRealDistribution = std::uniform_real_distribution<T>;
 
 typedef UniformRealDistribution<float> UniformRealDistributionF;
 
@@ -30,6 +31,6 @@ public:
   virtual MT19937&      GetRandomType()   = 0;
 };
 
-SharedPtr<IYukiRandomMachine> YUKIAPI GetRandomMachine();
+SharedPtr<IYukiRandomMachine> GetRandomMachine();
 
 } // namespace Yuki::Utils

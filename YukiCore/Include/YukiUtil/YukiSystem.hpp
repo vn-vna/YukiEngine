@@ -9,23 +9,31 @@
 #pragma once
 
 #include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/YukiObject.hpp"
 
 namespace Yuki::Utils
 {
 
+using Core::IYukiObject;
+
 enum class ProcessorArchitecture
 {
-  /// x64 archivetecture for intel or amd cpus
+#ifdef IS_WINDOWS
+  /// x64 architecture for intel or amd cpus
   AMD64   = PROCESSOR_ARCHITECTURE_AMD64,
-  /// arm archivetecture
+  /// arm architecture
   ARM     = PROCESSOR_ARCHITECTURE_ARM,
-  /// arm64 archivetecture
+  /// arm64 architecture
   ARM64   = PROCESSOR_ARCHITECTURE_ARM64,
   /// Intel itanium-based
   IA64    = PROCESSOR_ARCHITECTURE_IA64,
   /// x86
   X86     = PROCESSOR_ARCHITECTURE_INTEL,
   UNKNOWN = PROCESSOR_ARCHITECTURE_UNKNOWN
+#elifdef IS_LINUX
+  AMD64,
+  X86
+#endif
 };
 
 /// Current system resource info
@@ -35,40 +43,35 @@ typedef struct StResourceActivityInfo
   Vector<float> cpuLoads;
   size_t        memoryUsed;
   size_t        memoryUsedByProc;
-  size_t        virtmemUsed;
-  size_t        virtmemUsedByProc;
 } ResourceActivityInfo;
 
 typedef struct StCpuInfo
 {
   String                brand;
-  ProcessorArchitecture archivetecture;
+  ProcessorArchitecture architecture;
   unsigned              numberOfCores;
-  size_t                activeProcessorMask;
 } CpuInformation, ProcessorInformation;
 
 typedef struct StMemoryInfo
 {
-  size_t virtmemSize;
   size_t memSize;
   size_t pageSize;
 } MemoryInformation;
 
-typedef struct StSysinfo
+typedef struct StSysInfo
 {
   String computerName;
   String brandName;
-};
+} SysInfo;
 
-class YUKIAPI IYukiSystem
+class IYukiSystem : virtual public IYukiObject
 {
 public:
-  virtual const CpuInformation&      GetCpuInformation()       = 0;
-  virtual const MemoryInformation&   GetMemoryInformation()    = 0;
-  /// Don't call this function too quickly, if you do that, you can get unexpected result
+  virtual const CpuInformation&       GetCpuInformation()       = 0;
+  virtual const MemoryInformation&    GetMemoryInformation()    = 0;
   virtual const ResourceActivityInfo& GetResourceActivityInfo() = 0;
 };
 
-SharedPtr<IYukiSystem> YUKIAPI GetYukiSystemController();
+SharedPtr<IYukiSystem> CreateYukiSystemControl();
 
 } // namespace Yuki::Utils

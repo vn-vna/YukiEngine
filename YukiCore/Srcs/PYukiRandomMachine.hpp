@@ -1,17 +1,21 @@
+/**
+ * ===========================================
+ * Author:          vn-vna (Anh Vu)
+ * Country:         Vietnam
+ * License:         MIT
+ * ===========================================
+ */
+
 #pragma once
 
-#include <YukiCore/YukiObject.hpp>
-#include <YukiUtil/YukiRandomMachine.hpp>
+#include "YukiCore/YukiObject.hpp"
+#include "YukiUtil/YukiRandomMachine.hpp"
 
 namespace Yuki::Utils
 {
 
 class YukiRandomMachine : virtual public IYukiRandomMachine
 {
-protected:
-  RandomDevice m_RandomDevice;
-  MT19937      m_MT19937;
-
 public:
   YukiRandomMachine();
   virtual ~YukiRandomMachine();
@@ -20,6 +24,10 @@ public:
 
   RandomDevice& GetRandomDevice() override;
   MT19937&      GetRandomType() override;
+
+private:
+  RandomDevice m_RandomDevice;
+  MT19937      m_MT19937;
 };
 
 } // namespace Yuki::Utils

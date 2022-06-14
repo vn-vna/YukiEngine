@@ -11,9 +11,6 @@
 
 int main(int, char**)
 {
-
-  AutoType sysctrl = Yuki::Utils::GetYukiSystemController();
-
   AutoType yukiApp       = Yuki::Core::CreateYukiApp();
   AutoType camera        = Yuki::Comp::CreateYukiCamera();
   AutoType scene         = Yuki::Comp::CreateYukiScene();

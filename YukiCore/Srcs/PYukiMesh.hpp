@@ -26,51 +26,34 @@ using Core::IYukiOGLVertexBuffer;
 using Core::IYukiOGLVertexBuffer;
 using Core::IYukiOGLShaderProgram;
 using Core::IYukiOGLTexture;
-using Core::VertexFormat;
-using Core::IndexData;
 using Core::PrimitiveTopology;
 
-class YukiMeshMaterial final : virtual public IYukiMeshMaterial,
-                               virtual public YukiObject
+class YukiMeshMaterial final : virtual public IYukiMeshMaterial, virtual public YukiObject
 {
-protected:
-  float m_nSpecularStrength;
-  float m_nAmbientStrength;
-
 public:
-  YukiMeshMaterial(float specular, float ambient);
+  YukiMeshMaterial(
+      SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient, SharedPtr<IYukiOGLTexture> diffmap);
   ~YukiMeshMaterial() override;
 
-  float GetSpecularStrength() override;
-  float GetAmbientStrength() override;
+  SharedPtr<IYukiOGLTexture> GetSpecularMap() override;
+  SharedPtr<IYukiOGLTexture> GetAmbientMap() override;
+  SharedPtr<IYukiOGLTexture> GetDiffuseMap() override;
 
-  void SetSpecularStrength(float strength) override;
-  void SetAmbientStrength(float strength) override;
+  void SetSpecularMap(SharedPtr<IYukiOGLTexture> specmap) override;
+  void SetAmbientMap(SharedPtr<IYukiOGLTexture> ambmap) override;
+  void SetDiffuseMap(SharedPtr<IYukiOGLTexture> diffmap) override;
+
+private:
+  SharedPtr<IYukiOGLTexture> m_pSpecMap;
+  SharedPtr<IYukiOGLTexture> m_pAmbientMap;
+  SharedPtr<IYukiOGLTexture> m_pDiffMap;
 };
 
-class YukiMesh : virtual public IYukiMesh,
-                 virtual public Core::YukiObject
+class YukiMesh : virtual public IYukiMesh, virtual public Core::YukiObject
 {
-protected:
-  SharedPtr<IYukiOGLElementBuffer> m_pElementBuffer;
-  SharedPtr<IYukiOGLVertexBuffer>  m_pVertexBuffer;
-  SharedPtr<IYukiOGLVertexArray>   m_pVertexArray;
-  SharedPtr<IYukiOGLShaderProgram> m_pShaderProgram;
-  SharedPtr<IYukiOGLTexture>       m_pTexture;
-  SharedPtr<IYukiMeshMaterial>     m_pMaterial;
-  Vector<VertexFormat>             m_aVertexFormat;
-  IndexData                        m_tIndexFormat;
-  Mat4F                            m_tMeshMatrix;
-  Mat4F                            m_tReNormalMatrix;
-  String                           m_Name;
-
 public:
-  YukiMesh(
-      Vector<VertexFormat>&        vertices,
-      IndexData&                   indices,
-      SharedPtr<IYukiOGLTexture>&  texture,
-      SharedPtr<IYukiMeshMaterial> material,
-      const String&                name);
+  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices, SharedPtr<IYukiOGLTexture>& texture,
+      SharedPtr<IYukiMeshMaterial> material, const String& name);
   virtual ~YukiMesh();
 
   SharedPtr<IYukiOGLTexture>       GetMeshTexture() const override;
@@ -82,8 +65,8 @@ public:
   const PrimitiveTopology&         GetTopology() const override;
   const String&                    GetName() const override;
   const Mat4F&                     GetMeshMatrix() const override;
-  const Vector<VertexFormat>&      GetVertexData() const override;
-  const IndexData&                 GetIndexData() const override;
+  const Vector<MeshVertexFormat>&  GetVertexData() const override;
+  const MeshIndexData&             GetIndexData() const override;
   TransformationInfo               GetTransformationInfo() const override;
 
   void Create() override;
@@ -99,6 +82,19 @@ public:
   void ScaleMesh(const Vec3F& scaleVector) override;
 
   void RenderMesh(SharedPtr<IYukiCamera> camera) const override;
+
+private:
+  SharedPtr<IYukiOGLElementBuffer> m_pElementBuffer;
+  SharedPtr<IYukiOGLVertexBuffer>  m_pVertexBuffer;
+  SharedPtr<IYukiOGLVertexArray>   m_pVertexArray;
+  SharedPtr<IYukiOGLShaderProgram> m_pShaderProgram;
+  SharedPtr<IYukiOGLTexture>       m_pTexture;
+  SharedPtr<IYukiMeshMaterial>     m_pMaterial;
+  Vector<MeshVertexFormat>         m_aVertexFormat;
+  MeshIndexData                    m_tIndexFormat;
+  Mat4F                            m_tMeshMatrix;
+  Mat4F                            m_tReNormalMatrix;
+  String                           m_Name;
 };
 
 } // namespace Yuki::Comp

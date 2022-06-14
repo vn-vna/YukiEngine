@@ -4,21 +4,13 @@
 namespace Yuki::Core
 {
 
-YukiOGLVertexArray::YukiOGLVertexArray()
-    : m_nVaoID()
-{}
+YukiOGLVertexArray::YukiOGLVertexArray() : m_nVaoID() {}
 
 YukiOGLVertexArray::~YukiOGLVertexArray() = default;
 
-const unsigned& YukiOGLVertexArray::GetID()
-{
-  return m_nVaoID;
-}
+unsigned YukiOGLVertexArray::GetID() { return m_nVaoID; }
 
-void YukiOGLVertexArray::BindObject()
-{
-  glBindVertexArray(m_nVaoID);
-}
+void YukiOGLVertexArray::BindObject() { glBindVertexArray(m_nVaoID); }
 
 bool YukiOGLVertexArray::OnUse()
 {
@@ -33,10 +25,7 @@ void YukiOGLVertexArray::SetVertexBuffer(
   glVertexArrayVertexBuffer(m_nVaoID, 0, buffer->GetID(), offset, (GLsizei) stride);
 }
 
-void YukiOGLVertexArray::EnableAttribute(unsigned attrib)
-{
-  glEnableVertexArrayAttrib(m_nVaoID, attrib);
-}
+void YukiOGLVertexArray::EnableAttribute(unsigned attrib) { glEnableVertexArrayAttrib(m_nVaoID, attrib); }
 
 void YukiOGLVertexArray::SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized)
 {
@@ -53,15 +42,9 @@ void YukiOGLVertexArray::SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffe
   glVertexArrayElementBuffer(m_nVaoID, buffer->GetID());
 }
 
-void YukiOGLVertexArray::Create()
-{
-  glCreateVertexArrays(1, &m_nVaoID);
-}
+void YukiOGLVertexArray::Create() { glCreateVertexArrays(1, &m_nVaoID); }
 
-void YukiOGLVertexArray::Destroy()
-{
-  glDeleteVertexArrays(1, &m_nVaoID);
-}
+void YukiOGLVertexArray::Destroy() { glDeleteVertexArrays(1, &m_nVaoID); }
 
 SharedPtr<IYukiOGLVertexArray> CreateGLVertexArray()
 {

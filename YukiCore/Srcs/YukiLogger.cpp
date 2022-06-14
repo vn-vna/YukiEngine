@@ -10,9 +10,9 @@
 namespace Yuki::Debug
 {
 
-YukiLogger::YukiLogger()
-    : m_pOutFileStream(nullptr)
-{}
+using Chrono::Clock;
+
+YukiLogger::YukiLogger() : m_pOutFileStream(nullptr) {}
 
 YukiLogger::~YukiLogger() = default;
 
@@ -29,46 +29,29 @@ void YukiLogger::PushMessage(const String& message, const String& prioty)
   GetOutFileStream() << outMessage;
 }
 
-void YukiLogger::PushDebugMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL);
-}
+void YukiLogger::PushDebugMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_NORMAL); }
 
-void YukiLogger::PushWarningMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_WARNING);
-}
+void YukiLogger::PushWarningMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_WARNING); }
 
-void YukiLogger::PushErrorMessage(const String& message)
-{
-  PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR);
-}
+void YukiLogger::PushErrorMessage(const String& message) { PushMessage(message, YUKI_DEBUG_MESSAGE_PRIOTY_ERROR); }
 
-OutputLogFile& YukiLogger::GetOutFileStream()
-{
-  return *m_pOutFileStream;
-}
+OutputLogFile& YukiLogger::GetOutFileStream() { return *m_pOutFileStream; }
 
 void YukiLogger::Create()
 {
   Chrono::DateTimeFormat format{};
   m_pOutFileStream = std::make_shared<OutputLogFile>(Clock::DateTimeString(format) + ".ylg");
 #ifndef NDEBUG
-  // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT] Application is running in DEBUG MODE\n");
+  // OutputDebugStringW(L"[YUKI CONFIGURATION REPORT]
+  // Application is running in DEBUG MODE\n");
   PushDebugMessage("Application is running in DEBUG MODE");
 #else
   PushDebugMessage("Application is running in RELEASE MODE");
 #endif // NDEBUG
 }
 
-void YukiLogger::Destroy()
-{
-  m_pOutFileStream->close();
-}
+void YukiLogger::Destroy() { m_pOutFileStream->close(); }
 
-SharedPtr<IYukiLogger> CreateYukiLogger()
-{
-  return Core::CreateInterfaceInstance<IYukiLogger, YukiLogger>();
-}
+SharedPtr<IYukiLogger> CreateYukiLogger() { return Core::CreateInterfaceInstance<IYukiLogger, YukiLogger>(); }
 
 } // namespace Yuki::Debug

@@ -30,7 +30,7 @@ const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& sha
   if (!status)
   {
     char errStr[512];
-    ZeroMemory(errStr, sizeof(errStr));
+    std::memset(errStr, 0x00, sizeof(errStr));
     glGetShaderInfoLog(shader, 512, nullptr, errStr);
     Yuki::StringStream sstr;
     sstr << errStr;
@@ -43,8 +43,7 @@ const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& sha
 namespace Yuki::Core
 {
 
-YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
-    : m_nSPId()
+YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName) : m_nSPId()
 {
   m_VSShaderFile = shaderName + ".vert";
   m_FSShaderFile = shaderName + ".frag";
@@ -53,26 +52,22 @@ YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
 
 YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
 
-const unsigned& YukiOGLShaderProgram::GetID()
-{
-  return m_nSPId;
-}
+unsigned YukiOGLShaderProgram::GetID() { return m_nSPId; }
 
-void YukiOGLShaderProgram::BindObject()
-{
-  glUseProgram(m_nSPId);
-}
+void YukiOGLShaderProgram::BindObject() { glUseProgram(m_nSPId); }
 
 void YukiOGLShaderProgram::Create()
 {
   String vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   String fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
-  // String gsSrc = loadShaderSourceFromFile(m_GSShaderFile);
+  // String gsSrc =
+  // loadShaderSourceFromFile(m_GSShaderFile);
   int    status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
-  // unsigned gs = createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
+  // unsigned gs =
+  // createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);
@@ -83,7 +78,7 @@ void YukiOGLShaderProgram::Create()
   if (!status)
   {
     char errStr[512];
-    ZeroMemory(errStr, sizeof(errStr));
+    std::memset(errStr, 0x00, sizeof(errStr));
     glGetProgramInfoLog(pid, 512, nullptr, errStr);
     Yuki::StringStream sstr;
     sstr << errStr;
@@ -93,10 +88,7 @@ void YukiOGLShaderProgram::Create()
   m_nSPId = pid;
 }
 
-void YukiOGLShaderProgram::Destroy()
-{
-  glDeleteProgram(m_nSPId);
-}
+void YukiOGLShaderProgram::Destroy() { glDeleteProgram(m_nSPId); }
 
 bool YukiOGLShaderProgram::OnUse()
 {
