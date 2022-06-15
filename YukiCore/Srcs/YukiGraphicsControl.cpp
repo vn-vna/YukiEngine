@@ -89,7 +89,7 @@ void YukiGfxControl::Create()
     THROW_YUKI_ERROR(GladLoadGLLoaderError);
   }
   layer = Comp::CreateYukiLayer();
-  layer->Create();
+  layer->Require();
 }
 
 void YukiGfxControl::Awake()
@@ -111,7 +111,7 @@ void YukiGfxControl::Render()
 
 void YukiGfxControl::Destroy()
 {
-  layer->Destroy();
+  layer->Release();
 }
 
 SharedPtr<IYukiGfxControl> CreateGraphicsController()

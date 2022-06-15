@@ -16,6 +16,8 @@
 namespace Yuki::Comp
 {
 
+using Core::IYukiSharedObject;
+
 typedef SharedPtr<IYukiMesh>           MeshType;
 typedef UnorderedMap<String, MeshType> MeshArrType;
 
@@ -33,7 +35,7 @@ SharedPtr<IYukiModel> LoadModel(String fileName, String modelName);
  * A collection of meshes that will be rendered by the
  * Entities
  */
-class IYukiModel : virtual public Core::IYukiObject
+class IYukiModel : virtual public IYukiSharedObject
 {
 public:
   virtual String&      GetName()                   = 0;

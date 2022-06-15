@@ -17,11 +17,11 @@
 namespace Yuki::Comp
 {
 
-using Core::YukiObject;
+using Core::YukiSharedObject;
 using Entity::TemplateEntity;
 
 class YukiScene final : virtual public IYukiScene,
-                        virtual public YukiObject
+                        virtual public YukiSharedObject
 {
 public:
   YukiScene();

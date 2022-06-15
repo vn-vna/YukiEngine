@@ -18,10 +18,10 @@
 namespace Yuki::Comp
 {
 
-using Core::YukiObject;
+using Core::YukiSharedObject;
 
 class YukiModel final : virtual public IYukiModel,
-                        virtual public YukiObject
+                        virtual public YukiSharedObject
 {
 public:
   YukiModel(String name, const MeshArrType& meshArr);

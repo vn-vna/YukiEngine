@@ -15,12 +15,12 @@
 namespace Yuki::Comp
 {
 
-using Core::IYukiObject;
 using Core::IYukiOGLFrameBuffer;
 using Core::IYukiOGLRenderBuffer;
 using Core::IYukiOGLTexture;
+using Core::IYukiSharedObject;
 
-class IYukiLayer : virtual public IYukiObject
+class IYukiLayer : virtual public IYukiSharedObject
 {
 public:
   virtual SharedPtr<IYukiOGLFrameBuffer>  GetFrameBuffer()    = 0;

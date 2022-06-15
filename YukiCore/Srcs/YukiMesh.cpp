@@ -326,22 +326,22 @@ void YukiMesh::RenderMesh(SharedPtr<IYukiCamera> camera) const
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }
 
-SharedPtr<IYukiMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData,
-                                      MeshIndexData&            indexData,
-                                      SharedPtr<Core::IYukiOGLTexture> texture,
-                                      SharedPtr<IYukiMeshMaterial>     material,
-                                      const String&                    meshName)
+SharedPtr<IYukiMesh> GenerateYukiMesh(Vector<MeshVertexFormat>&    vertexData,
+                                      MeshIndexData&               indexData,
+                                      SharedPtr<IYukiOGLTexture>   texture,
+                                      SharedPtr<IYukiMeshMaterial> material,
+                                      const String&                meshName)
 {
   return CreateInterfaceInstance<IYukiMesh, YukiMesh>(
       vertexData, indexData, texture, material, meshName);
 }
 
 SharedPtr<IYukiMeshMaterial> GenerateSolidMaterial(const Vec4F& ambient,
-                                                   const Vec4F& specular,
-                                                   float        diffuse)
+                                                   const float  specular,
+                                                   const float  diffuse)
 {
   AutoType ambientMap  = Utils::CreateSolidColorImage(ambient);
-  AutoType specularMap = Utils::CreateSolidColorImage(specular);
+  AutoType specularMap = Utils::CreateSolidColorImage(Vec1F {specular});
   AutoType diffuseMap  = Utils::CreateSolidColorImage(Vec1F {diffuse});
 
   AutoType mat = CreateInterfaceInstance<IYukiMeshMaterial, YukiMeshMaterial>(

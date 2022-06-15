@@ -14,9 +14,10 @@
 namespace Yuki::Comp
 {
 
+using Core::IYukiSharedObject;
 using Entity::TemplateEntity;
 
-class IYukiScene : virtual public Core::IYukiObject
+class IYukiScene : virtual public IYukiSharedObject
 {
 public:
   virtual void AddEntity(SharedPtr<TemplateEntity> entity) = 0;

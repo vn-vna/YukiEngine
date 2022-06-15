@@ -15,10 +15,10 @@
 namespace Yuki::Comp
 {
 
-using Core::YukiObject;
+using Core::YukiSharedObject;
 
 class YukiLayer final : virtual public IYukiLayer,
-                        virtual public YukiObject
+                        virtual public YukiSharedObject
 {
 public:
   YukiLayer(unsigned width, unsigned height);

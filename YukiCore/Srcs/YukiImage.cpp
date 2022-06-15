@@ -150,7 +150,6 @@ uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
       AutoType fp             = color[c] * 255.0f;
       pData[px * channel + c] = fp;
     }
-    std::cout << "\n";
   }
   return pData;
 }

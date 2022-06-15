@@ -31,10 +31,15 @@ typedef struct StVertexFormat
 
   StVertexFormat(const Vec3F& _position, const Vec3F& _normal,
                  const Vec2F& _texcoord)
-      : position(_position), normal(_normal), texcoord(_texcoord)
+      : position(_position),
+        normal(_normal),
+        texcoord(_texcoord)
   {}
 
-  StVertexFormat() : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0)
+  StVertexFormat()
+      : position(0, 0, 0),
+        normal(0, 0, 0),
+        texcoord(0, 0)
   {}
 
 } MeshVertexFormat;
@@ -57,7 +62,6 @@ typedef struct StTransformationInfo
   Vec3F       translation;
   Vec3F       skew;
 } TransformationInfo;
-
 
 /**
  * Every mesh need a specific material to be rendered.
@@ -138,7 +142,7 @@ SharedPtr<IYukiMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData,
  * map or specular map in the future.
  */
 SharedPtr<IYukiMeshMaterial> GenerateSolidMaterial(const Vec4F& ambient,
-                                                   const Vec4F& specular,
-                                                   float        diffuse);
+                                                   const float  specular,
+                                                   const float  diffuse);
 
 } // namespace Yuki::Comp
