@@ -1,0 +1,23 @@
+name: Yuki Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Install build tools"
+        run: apt-get install cmake ninja clang 
+
+      - name: "Install vcpkg"
+        run: |
+          apt-get install wget zip 7-zip git curl 
+          git clone https://github.com/Microsoft/vcpkg.git
+          ./vcpkg/bootstrap-vcpkg.sh
+
