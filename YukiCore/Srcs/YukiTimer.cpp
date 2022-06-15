@@ -15,9 +15,18 @@ using Core::CreateInterfaceInstance;
 
 static SharedPtr<TimerManager> pManager;
 
-YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool parallel)
-    : m_nCycleSkipped(0), m_nEstimateCycle(0), m_bExecuteParallel(parallel), m_nTimeSkipped(0), m_nTimeStartNanos(0),
-      m_nPrevExecuteCycle(0), m_nInterval(interval), m_bPaused(false), m_bStarted(false), m_bWillExecute(false),
+YukiTimer::YukiTimer(const TimerAction& callback, long long interval,
+                     bool parallel)
+    : m_nCycleSkipped(0),
+      m_nEstimateCycle(0),
+      m_bExecuteParallel(parallel),
+      m_nTimeSkipped(0),
+      m_nTimeStartNanos(0),
+      m_nPrevExecuteCycle(0),
+      m_nInterval(interval),
+      m_bPaused(false),
+      m_bStarted(false),
+      m_bWillExecute(false),
       m_fnCallback(callback)
 {}
 
@@ -29,11 +38,20 @@ void YukiTimer::Start()
   m_bStarted        = true;
 }
 
-void YukiTimer::Pause() { m_bPaused = true; }
+void YukiTimer::Pause()
+{
+  m_bPaused = true;
+}
 
-void YukiTimer::Resume() { m_bPaused = false; }
+void YukiTimer::Resume()
+{
+  m_bPaused = false;
+}
 
-void YukiTimer::Terminate() { m_bStarted = false; }
+void YukiTimer::Terminate()
+{
+  m_bStarted = false;
+}
 
 void YukiTimer::Restart()
 {
@@ -41,39 +59,90 @@ void YukiTimer::Restart()
   m_nTimeStartNanos = Clock::CurrentTimeNanos();
 }
 
-void YukiTimer::SeekTimer(long long millis, long long nanos) { m_nTimeSkipped += 1000 * millis + nanos; }
+void YukiTimer::SeekTimer(long long millis, long long nanos)
+{
+  m_nTimeSkipped += 1000 * millis + nanos;
+}
 
-void YukiTimer::SeekTimer(float seconds) { m_nTimeSkipped += (long long) (seconds * 1'000'000'000.0f); }
+void YukiTimer::SeekTimer(float seconds)
+{
+  m_nTimeSkipped += (long long) (seconds * 1'000'000'000.0f);
+}
 
-void YukiTimer::SeekCycle(long long cycles) { m_nCycleSkipped += cycles; }
+void YukiTimer::SeekCycle(long long cycles)
+{
+  m_nCycleSkipped += cycles;
+}
 
-void YukiTimer::SetInterval(long long milis, long long nanos) { m_nInterval += milis * 1'000'000 + nanos; }
+void YukiTimer::SetInterval(long long milis, long long nanos)
+{
+  m_nInterval += milis * 1'000'000 + nanos;
+}
 
-void YukiTimer::SetEstimateCycle(long long cycles) { m_nEstimateCycle = cycles; }
+void YukiTimer::SetEstimateCycle(long long cycles)
+{
+  m_nEstimateCycle = cycles;
+}
 
-void YukiTimer::SetParallelExecution(bool sep) { m_bExecuteParallel = sep; }
+void YukiTimer::SetParallelExecution(bool sep)
+{
+  m_bExecuteParallel = sep;
+}
 
-void YukiTimer::SetCallback(const TimerAction& callback) { m_fnCallback = callback; }
+void YukiTimer::SetCallback(const TimerAction& callback)
+{
+  m_fnCallback = callback;
+}
 
-long long YukiTimer::GetCycle() { return m_nEstimateCycle; }
+long long YukiTimer::GetCycle()
+{
+  return m_nEstimateCycle;
+}
 
-long long YukiTimer::GetInterval() { return m_nInterval; }
+long long YukiTimer::GetInterval()
+{
+  return m_nInterval;
+}
 
-long long YukiTimer::GetRawElapsedTime() { return Clock::CurrentTimeNanos() - m_nTimeStartNanos; }
+long long YukiTimer::GetRawElapsedTime()
+{
+  return Clock::CurrentTimeNanos() - m_nTimeStartNanos;
+}
 
-long long YukiTimer::GetElapsedTime() { return m_nTimeSkipped + this->GetRawElapsedTime(); }
+long long YukiTimer::GetElapsedTime()
+{
+  return m_nTimeSkipped + this->GetRawElapsedTime();
+}
 
-long long YukiTimer::GetElapsedCycle() { return this->GetElapsedTime() / m_nInterval; }
+long long YukiTimer::GetElapsedCycle()
+{
+  return this->GetElapsedTime() / m_nInterval;
+}
 
-long long YukiTimer::GetRawElapsedCycle() { return this->GetRawElapsedTime() / m_nInterval; }
+long long YukiTimer::GetRawElapsedCycle()
+{
+  return this->GetRawElapsedTime() / m_nInterval;
+}
 
-bool YukiTimer::IsParallelExecution() { return m_bExecuteParallel; }
+bool YukiTimer::IsParallelExecution()
+{
+  return m_bExecuteParallel;
+}
 
-bool YukiTimer::IsPaused() { return m_bPaused; }
+bool YukiTimer::IsPaused()
+{
+  return m_bPaused;
+}
 
-bool YukiTimer::IsStarted() { return m_bStarted; }
+bool YukiTimer::IsStarted()
+{
+  return m_bStarted;
+}
 
-const TimerAction& YukiTimer::GetCallback() { return m_fnCallback; }
+const TimerAction& YukiTimer::GetCallback()
+{
+  return m_fnCallback;
+}
 
 void YukiTimer::ExecuteCallback()
 {
@@ -102,7 +171,8 @@ void YukiTimer::UpdateTimers()
 
     if (pTimer->IsParallelExecution())
     {
-      Core::GetYukiApp()->GetWorkerPool()->PushAction([pTimer]() { pTimer->ExecuteCallback(); });
+      Core::GetYukiApp()->GetWorkerPool()->PushAction(
+          [pTimer]() { pTimer->ExecuteCallback(); });
     }
     else
     {
@@ -120,7 +190,8 @@ SharedPtr<TimerManager> GetTimerManager()
   return pManager;
 }
 
-SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback, long long interval, bool parallexEx)
+SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback,
+                                  long long interval, bool parallexEx)
 {
   AutoType manager = GetTimerManager();
 
@@ -129,7 +200,9 @@ SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback, long long interva
     delete dynamic_cast<YukiTimer*>(p);
   };
 
-  SharedPtr<IYukiTimer> pTimer{dynamic_cast<IYukiTimer*>(new YukiTimer{callback, interval, parallexEx}), deleter};
+  SharedPtr<IYukiTimer> pTimer {
+      dynamic_cast<IYukiTimer*>(new YukiTimer {callback, interval, parallexEx}),
+      deleter};
   manager->emplace(pTimer.get());
   return pTimer;
 }

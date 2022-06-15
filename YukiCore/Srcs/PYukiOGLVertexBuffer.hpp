@@ -17,7 +17,8 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexBuffer final : virtual public IYukiOGLVertexBuffer, virtual public YukiObject
+class YukiOGLVertexBuffer final : virtual public IYukiOGLVertexBuffer,
+                                  virtual public YukiSharedObject
 {
 public:
   YukiOGLVertexBuffer();

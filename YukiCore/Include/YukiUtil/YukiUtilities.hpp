@@ -21,7 +21,8 @@ namespace Yuki::Utils
 using namespace Yuki::Core;
 using namespace Yuki::Comp;
 
-template <typename T> using NumericLimits = std::numeric_limits<T>;
+template <typename T>
+using NumericLimits = std::numeric_limits<T>;
 
 String& TrimString(String& str);
 String  GetTrimmed(const String& str);
@@ -37,13 +38,23 @@ void MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
 void MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
 void MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
 
-template <class EntityClass, typename... Args> inline SharedPtr<Entity::TemplateEntity> createEntity(Args&&... args)
+template <class EntityClass, typename... Args>
+inline SharedPtr<Entity::TemplateEntity> createEntity(Args&&... args)
 {
-  return CreateInterfaceInstance<Entity::TemplateEntity, EntityClass>(std::forward<Args...>(args...));
+  return CreateInterfaceInstance<Entity::TemplateEntity, EntityClass>(
+      std::forward<Args...>(args...));
 }
 
-template <typename T> inline T MaximumValue() { return NumericLimits<T>().max(); }
+template <typename T>
+inline T MaximumValue()
+{
+  return NumericLimits<T>().max();
+}
 
-template <typename T> inline T MinimumValue() { return NumericLimits<T>().min(); }
+template <typename T>
+inline T MinimumValue()
+{
+  return NumericLimits<T>().min();
+}
 
 } // namespace Yuki::Utils

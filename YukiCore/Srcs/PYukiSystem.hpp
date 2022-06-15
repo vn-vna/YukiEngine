@@ -17,10 +17,11 @@
 namespace Yuki::Utils
 {
 
-using Core::YukiObject;
 using Chrono::IYukiTimer;
+using Core::YukiObject;
 
-class YukiSystem : virtual public IYukiSystem, virtual public YukiObject
+class YukiSystem : virtual public IYukiSystem,
+                   virtual public YukiObject
 {
 private:
 #if defined(WIN32) || defined(_WIN32)

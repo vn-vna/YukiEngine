@@ -24,9 +24,10 @@ uniform sampler2D U_MeshDiffMap;
 void main()
 {
 
-  vec4 fragmentColor = texture(U_MeshTextures, VS_TexCoord) * texture(U_MeshDiffMap, VS_TexCoord);
+  vec4 fragmentColor = texture(U_MeshTextures, VS_TexCoord) *
+                       texture(U_MeshDiffMap, VS_TexCoord);
   /* vec4 fragmentColor = vec4(1.0, 1.0, 1.0, 1.0); */
-  vec3 fragNormal    = mat3(U_ReNormalMatrix) * VS_Normal;
+  vec3 fragNormal = mat3(U_ReNormalMatrix) * VS_Normal;
 
   {
     vec4 ambient = texture(U_MeshAmbient, VS_TexCoord) * U_LightColor;
@@ -37,7 +38,9 @@ void main()
     vec3  halfwayDirection = normalize(viewDirection + lightDirection);
 
     // calculate diffuse
-    float diff = max(dot(fragNormal, lightDirection / pow(lightDistance, U_LightIntensity)), 0.0);
+    float diff = max(
+        dot(fragNormal, lightDirection / pow(lightDistance, U_LightIntensity)),
+        0.0);
 
     vec4 specular = vec4(0.0, 0.0, 0.0, 0.0);
     vec4 diffuse  = vec4(0.0, 0.0, 0.0, 0.0);

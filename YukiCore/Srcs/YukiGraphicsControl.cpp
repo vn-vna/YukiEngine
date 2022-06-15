@@ -16,9 +16,6 @@
 namespace Yuki::Core
 {
 
-using Comp::ReleaseMeshShader;
-using Comp::InitializeMeshShader;
-
 /// === TEST CODE
 
 SharedPtr<Comp::IYukiLayer> layer;
@@ -45,10 +42,12 @@ String GetShadingLanguageVersion()
 
 void PrintGraphicProperties()
 {
-  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format("-- Graphic device information: "
-                                                          "\n\tVendor: {} \n\tRenderer: "
-                                                          "{} \n\tShading language version: {}",
-      GetGraphicsCardVendorName(), GetGraphicsCardRendererName(), GetShadingLanguageVersion()));
+  GetYukiApp()->GetLogger()->PushDebugMessage(
+      fmt::format("-- Graphic device information: "
+                  "\n\tVendor: {} \n\tRenderer: "
+                  "{} \n\tShading language version: {}",
+                  GetGraphicsCardVendorName(), GetGraphicsCardRendererName(),
+                  GetShadingLanguageVersion()));
 }
 
 YukiGfxControl::YukiGfxControl() = default;
@@ -83,21 +82,20 @@ void YukiGfxControl::SetAttributeStatus(OpenGLAttribute attrib, bool status)
   }
 }
 
-
 void YukiGfxControl::Create()
 {
   if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
   {
     THROW_YUKI_ERROR(GladLoadGLLoaderError);
   }
-  // Default shader for mesh rendering
-  InitializeMeshShader();
-
   layer = Comp::CreateYukiLayer();
   layer->Create();
 }
 
-void YukiGfxControl::Awake() { PrintGraphicProperties(); }
+void YukiGfxControl::Awake()
+{
+  PrintGraphicProperties();
+}
 
 void YukiGfxControl::Render()
 {
@@ -114,8 +112,6 @@ void YukiGfxControl::Render()
 void YukiGfxControl::Destroy()
 {
   layer->Destroy();
-  // Release the default shader for mesh rendering
-  ReleaseMeshShader();
 }
 
 SharedPtr<IYukiGfxControl> CreateGraphicsController()

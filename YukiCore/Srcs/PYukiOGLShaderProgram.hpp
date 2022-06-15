@@ -21,7 +21,8 @@
 namespace Yuki::Core
 {
 
-class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram, virtual public YukiObject
+class YukiOGLShaderProgram final : virtual public IYukiOGLShaderProgram,
+                                   virtual public YukiSharedObject
 {
 public:
   explicit YukiOGLShaderProgram(const String& shaderName);
@@ -32,9 +33,12 @@ public:
   void     BindObject() override;
   void     Create() override;
   void     Destroy() override;
-  void     UniformMatrix(const String& prop, const Mat2F& mat, bool transpose) override;
-  void     UniformMatrix(const String& prop, const Mat3F& mat, bool transpose) override;
-  void     UniformMatrix(const String& prop, const Mat4F& mat, bool transpose) override;
+  void     UniformMatrix(const String& prop, const Mat2F& mat,
+                         bool transpose) override;
+  void     UniformMatrix(const String& prop, const Mat3F& mat,
+                         bool transpose) override;
+  void     UniformMatrix(const String& prop, const Mat4F& mat,
+                         bool transpose) override;
   void     UniformVector(const String& prop, const Vec2F& vec) override;
   void     UniformVector(const String& prop, const Vec3F& vec) override;
   void     UniformVector(const String& prop, const Vec4F& vec) override;

@@ -11,13 +11,14 @@
 namespace Yuki::Utils
 {
 
+using Core::CreateGLTexture;
 using Core::IYukiOGLTexture;
-using Core::TextureType;
+using Core::MakeShared;
+using Core::PixelBasedInternalFormat;
+using Core::PixelInternalFormat;
 using Core::TextureMagFilter;
 using Core::TextureMinFilter;
-using Core::PixelInternalFormat;
-using Core::PixelBasedInternalFormat;
-using Core::CreateGLTexture;
+using Core::TextureType;
 
 YukiImage::YukiImage(const String& path, bool flip)
 {
@@ -65,13 +66,25 @@ YukiImage::~YukiImage()
   }
 }
 
-const uint8_t* YukiImage::GetData() { return m_pData; }
+const uint8_t* YukiImage::GetData()
+{
+  return m_pData;
+}
 
-const int& YukiImage::GetWidth() { return m_nWidth; }
+const int& YukiImage::GetWidth()
+{
+  return m_nWidth;
+}
 
-const int& YukiImage::GetHeight() { return m_nHeight; }
+const int& YukiImage::GetHeight()
+{
+  return m_nHeight;
+}
 
-const int& YukiImage::GetDataChannel() { return m_nChannel; }
+const int& YukiImage::GetDataChannel()
+{
+  return m_nChannel;
+}
 
 PixelBasedInternalFormat getPixelBasedInternalFormat(int channel)
 {
@@ -107,21 +120,24 @@ PixelInternalFormat getInternalFormat(int channel)
   }
 }
 
-SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture(const Vec2I& offset, const Vec2I& size)
+SharedPtr<IYukiOGLTexture> YukiImage::Generate2DTexture(const Vec2I& offset,
+                                                        const Vec2I& size)
 {
   SharedPtr<IYukiOGLTexture> texture = CreateGLTexture(TextureType::TEXTURE_2D);
-  texture->Create();
-  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4, Vec2F{m_nWidth, m_nHeight});
-  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel), offset, size);
+  texture->Require();
+  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4,
+                            Vec2F {m_nWidth, m_nHeight});
+  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel),
+                            offset, size);
   texture->SetTextureMagFilter(TextureMagFilter::LINEAR);
   texture->SetTextureMinFilter(TextureMinFilter::LINEAR);
   texture->GenerateMipMap();
   return texture;
 }
 
-SharedPtr<IYukiOGLTexture> YukiImage::Create2DTexture()
+SharedPtr<IYukiOGLTexture> YukiImage::Generate2DTexture()
 {
-  return Create2DTexture(Vec2I{0, 0}, Vec2I{m_nWidth, m_nHeight});
+  return Generate2DTexture(Vec2I {0, 0}, Vec2I {m_nWidth, m_nHeight});
 }
 
 uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
@@ -139,28 +155,35 @@ uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
   return pData;
 }
 
-YukiImage CreateSolidColorImage(const Vec1F& color, const Vec2I& size)
+SharedPtr<YukiImage> CreateSolidColorImage(const Vec1F& color,
+                                           const Vec2I& size)
 {
   uint8_t* pData = createSolidColorArray(size.x, size.y, 1, &color.r);
-  return {pData, size.x, size.y, 1};
+  return MakeShared<YukiImage>(pData, size.x, size.y, 1);
 }
 
-YukiImage CreateSolidColorImage(const Vec2F& color, const Vec2I& size)
+SharedPtr<YukiImage> CreateSolidColorImage(const Vec2F& color,
+                                           const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 2, glm::value_ptr(color));
-  return {pData, size.x, size.y, 2};
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 2, glm::value_ptr(color));
+  return MakeShared<YukiImage>(pData, size.x, size.y, 2);
 }
 
-YukiImage CreateSolidColorImage(const Vec3F& color, const Vec2I& size)
+SharedPtr<YukiImage> CreateSolidColorImage(const Vec3F& color,
+                                           const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 3, glm::value_ptr(color));
-  return {pData, size.x, size.y, 3};
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 3, glm::value_ptr(color));
+  return MakeShared<YukiImage>(pData, size.x, size.y, 3);
 }
 
-YukiImage CreateSolidColorImage(const Vec4F& color, const Vec2I& size)
+SharedPtr<YukiImage> CreateSolidColorImage(const Vec4F& color,
+                                           const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 4, glm::value_ptr(color));
-  return {pData, size.x, size.y, 4};
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 4, glm::value_ptr(color));
+  return MakeShared<YukiImage>(pData, size.x, size.y, 4);
 }
 
 } // namespace Yuki::Utils

@@ -15,11 +15,12 @@
 namespace Yuki::Comp
 {
 
-using Core::IYukiOGLTexture;
 using Core::IYukiOGLElementBuffer;
-using Core::IYukiOGLVertexBuffer;
 using Core::IYukiOGLShaderProgram;
+using Core::IYukiOGLTexture;
 using Core::IYukiOGLVertexArray;
+using Core::IYukiOGLVertexBuffer;
+using Core::IYukiSharedObject;
 using Core::PrimitiveTopology;
 
 typedef struct StVertexFormat
@@ -28,11 +29,13 @@ typedef struct StVertexFormat
   Vec3F normal;
   Vec2F texcoord;
 
-  StVertexFormat(const Vec3F& _position, const Vec3F& _normal, const Vec2F& _texcoord)
+  StVertexFormat(const Vec3F& _position, const Vec3F& _normal,
+                 const Vec2F& _texcoord)
       : position(_position), normal(_normal), texcoord(_texcoord)
   {}
 
-  StVertexFormat() : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0) {}
+  StVertexFormat() : position(0, 0, 0), normal(0, 0, 0), texcoord(0, 0)
+  {}
 
 } MeshVertexFormat;
 
@@ -61,7 +64,7 @@ typedef struct StTransformationInfo
  * Maybe plastic, metal, or something else
  * @TODO Material class need to be improved in the future.
  */
-class IYukiMeshMaterial
+class IYukiMeshMaterial : virtual public IYukiSharedObject
 {
 public:
   virtual SharedPtr<IYukiOGLTexture> GetSpecularMap() = 0;
@@ -80,7 +83,7 @@ public:
  * @TODO Mesh class is very simple now, it must be improved
  * much more.
  */
-class IYukiMesh : virtual public Core::IYukiObject
+class IYukiMesh : virtual public IYukiSharedObject
 {
 public:
   virtual SharedPtr<IYukiOGLTexture>       GetMeshTexture() const        = 0;
@@ -119,8 +122,11 @@ public:
  * @param meshName provide a name for it
  * @return an interface instance for the mesh
  */
-SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
-    SharedPtr<Core::IYukiOGLTexture> texture, SharedPtr<IYukiMeshMaterial> material, const String& meshName);
+SharedPtr<IYukiMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData,
+                                      MeshIndexData&            indexData,
+                                      SharedPtr<Core::IYukiOGLTexture> texture,
+                                      SharedPtr<IYukiMeshMaterial>     material,
+                                      const String& meshName);
 
 /**
  * Thif function is used to create a new material and return
@@ -131,9 +137,8 @@ SharedPtr<IYukiMesh> CreateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIn
  * @TODO Provide a method to create material from ambient
  * map or specular map in the future.
  */
-SharedPtr<IYukiMeshMaterial> CreateSolidMaterial(const Vec4F& specular, const Vec4F& ambient, float diffuse);
-
-void InitializeMeshShader();
-void ReleaseMeshShader();
+SharedPtr<IYukiMeshMaterial> GenerateSolidMaterial(const Vec4F& ambient,
+                                                   const Vec4F& specular,
+                                                   float        diffuse);
 
 } // namespace Yuki::Comp

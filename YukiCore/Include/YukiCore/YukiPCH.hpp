@@ -81,31 +81,44 @@
 namespace Yuki
 {
 
-template <typename T> using SharedPtr = std::shared_ptr<T>;
+template <typename T>
+using SharedPtr = std::shared_ptr<T>;
 
-template <typename T> using UniquePtr = std::unique_ptr<T>;
+template <typename T>
+using UniquePtr = std::unique_ptr<T>;
 
-template <typename T> using WeakPtr = std::weak_ptr<T>;
+template <typename T>
+using WeakPtr = std::weak_ptr<T>;
 
-template <typename T> using Vector = std::vector<T, std::allocator<T>>;
+template <typename T>
+using Vector = std::vector<T, std::allocator<T>>;
 
-template <typename T> using Queue = std::queue<T, std::deque<T>>;
+template <typename T>
+using Queue = std::queue<T, std::deque<T>>;
 
-template <typename T> using Stack = std::stack<T, std::deque<T>>;
+template <typename T>
+using Stack = std::stack<T, std::deque<T>>;
 
-template <typename K, typename V> using UnorderedMap = std::unordered_map<K, V>;
+template <typename K, typename V>
+using UnorderedMap = std::unordered_map<K, V>;
 
-template <typename K, typename V> using Map = std::map<K, V>;
+template <typename K, typename V>
+using Map = std::map<K, V>;
 
-template <typename T> using UnorderedSet = std::unordered_set<T>;
+template <typename T>
+using UnorderedSet = std::unordered_set<T>;
 
-template <typename T> using Set = std::set<T>;
+template <typename T>
+using Set = std::set<T>;
 
-template <typename T, int SIZE> using Array = std::array<T, SIZE>;
+template <typename T, int SIZE>
+using Array = std::array<T, SIZE>;
 
-template <typename T> using Atomic = std::atomic<T>;
+template <typename T>
+using Atomic = std::atomic<T>;
 
-template <typename T> using Function = std::function<T>;
+template <typename T>
+using Function = std::function<T>;
 
 using String       = std::string;
 using StringStream = std::stringstream;

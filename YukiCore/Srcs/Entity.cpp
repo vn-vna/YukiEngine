@@ -9,18 +9,32 @@ using Core::GetYukiApp;
 SharedPtr<IYukiModel> NO_MODEL = SharedPtr<IYukiModel>(nullptr);
 
 TemplateEntity::TemplateEntity(const String& name)
-    : m_sName(name), m_tPosition(Vec3F{0.00f, 0.00f, 0.00f}), m_pModel(NO_MODEL)
+    : m_sName(name),
+      m_tPosition(Vec3F {0.00f, 0.00f, 0.00f}),
+      m_pModel(NO_MODEL)
 {}
 
 TemplateEntity::~TemplateEntity() = default;
 
-void TemplateEntity::SetModel(ModelType model) { m_pModel = model; }
+void TemplateEntity::SetModel(ModelType model)
+{
+  m_pModel = model;
+}
 
-String TemplateEntity::GetName() { return m_sName; }
+String TemplateEntity::GetName()
+{
+  return m_sName;
+}
 
-ModelType TemplateEntity::GetModel() { return m_pModel; }
+ModelType TemplateEntity::GetModel()
+{
+  return m_pModel;
+}
 
-Vec3F& TemplateEntity::GetPosition() { return m_tPosition; }
+Vec3F& TemplateEntity::GetPosition()
+{
+  return m_tPosition;
+}
 
 void TemplateEntity::Create()
 {
@@ -31,7 +45,10 @@ void TemplateEntity::Create()
   }
 }
 
-void TemplateEntity::Awake() { this->OnAwake(); }
+void TemplateEntity::Awake()
+{
+  this->OnAwake();
+}
 
 void TemplateEntity::Render()
 {
@@ -44,9 +61,15 @@ void TemplateEntity::Render()
   }
 }
 
-void TemplateEntity::Update() { this->OnUpdate(); }
+void TemplateEntity::Update()
+{
+  this->OnUpdate();
+}
 
-void TemplateEntity::Destroy() { this->OnDestroy(); }
+void TemplateEntity::Destroy()
+{
+  this->OnDestroy();
+}
 
 void TemplateEntity::OnCreate()
 {

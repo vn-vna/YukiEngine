@@ -17,7 +17,8 @@ namespace Yuki::Comp
 
 using Core::YukiObject;
 
-class YukiLayer final : virtual public IYukiLayer, virtual public YukiObject
+class YukiLayer final : virtual public IYukiLayer,
+                        virtual public YukiObject
 {
 public:
   YukiLayer(unsigned width, unsigned height);

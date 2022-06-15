@@ -65,12 +65,13 @@ typedef struct StDateTimeFormat
 class Clock
 {
 public:
-  static long long    CurrentTimeNanos();
-  static long long    CurrentTimeMilis();
-  static TimePoint    CurrentTimePoint();
-  static TimeType     CurrentTimePointTT();
-  static TMType       CurrentTimePointTM();
-  static const String DateTimeString(const DateTimeFormat& format = DateTimeFormat{});
+  static long long CurrentTimeNanos();
+  static long long CurrentTimeMilis();
+  static TimePoint CurrentTimePoint();
+  static TimeType  CurrentTimePointTT();
+  static TMType    CurrentTimePointTM();
+  static const String
+  DateTimeString(const DateTimeFormat& format = DateTimeFormat {});
 };
 
 class IYukiStopwatch
@@ -95,25 +96,27 @@ public:
   virtual void SeekCycle(long long cycles)                  = 0;
 
   virtual void SetInterval(long long milis, long long nanos) = 0;
-  virtual void SetEstimateCycle(long long cycles)            = 0; // Set the estimate
-                                                                  // cycle, -1 for infinite
-  virtual void SetParallelExecution(bool sep)                = 0; // Execute callback from thread pool
-  virtual void SetCallback(const TimerAction& callback)      = 0;
+  virtual void SetEstimateCycle(long long cycles) = 0; // Set the estimate
+                                                       // cycle, -1 for infinite
+  virtual void
+  SetParallelExecution(bool sep) = 0; // Execute callback from thread pool
+  virtual void SetCallback(const TimerAction& callback) = 0;
 
-  virtual long long          GetCycle()            = 0; // Return the defined Cycle or -1 for
-                                                        // infinite
-  virtual long long          GetInterval()         = 0;
-  virtual long long          GetRawElapsedTime()   = 0;
-  virtual long long          GetElapsedTime()      = 0;
-  virtual long long          GetElapsedCycle()     = 0;
-  virtual long long          GetRawElapsedCycle()  = 0;
-  virtual bool               IsParallelExecution() = 0;
-  virtual bool               IsPaused()            = 0;
-  virtual bool               IsStarted()           = 0;
-  virtual const TimerAction& GetCallback()         = 0;
+  virtual long long GetCycle()    = 0; // Return the defined Cycle or -1 for
+                                       // infinite
+  virtual long long GetInterval() = 0;
+  virtual long long GetRawElapsedTime()    = 0;
+  virtual long long GetElapsedTime()       = 0;
+  virtual long long GetElapsedCycle()      = 0;
+  virtual long long GetRawElapsedCycle()   = 0;
+  virtual bool      IsParallelExecution()  = 0;
+  virtual bool      IsPaused()             = 0;
+  virtual bool      IsStarted()            = 0;
+  virtual const TimerAction& GetCallback() = 0;
 };
 
 SharedPtr<TimerManager> GetTimerManager();
-SharedPtr<IYukiTimer>   CreateTimer(const TimerAction& callback, long long interval, bool parallexEx = false);
+SharedPtr<IYukiTimer>   CreateTimer(const TimerAction& callback,
+                                    long long interval, bool parallexEx = false);
 
 } // namespace Yuki::Chrono

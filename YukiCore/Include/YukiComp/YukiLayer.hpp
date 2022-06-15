@@ -16,9 +16,9 @@ namespace Yuki::Comp
 {
 
 using Core::IYukiObject;
-using Core::IYukiOGLTexture;
-using Core::IYukiOGLRenderBuffer;
 using Core::IYukiOGLFrameBuffer;
+using Core::IYukiOGLRenderBuffer;
+using Core::IYukiOGLTexture;
 
 class IYukiLayer : virtual public IYukiObject
 {
@@ -30,6 +30,7 @@ public:
   virtual SharedPtr<IYukiOGLTexture>      GetColorTexture()   = 0;
 };
 
-SharedPtr<IYukiLayer> CreateYukiLayer(unsigned width = 0, unsigned height = 0, unsigned multiSamples = 1);
+SharedPtr<IYukiLayer> CreateYukiLayer(unsigned width = 0, unsigned height = 0,
+                                      unsigned multiSamples = 1);
 
 } // namespace Yuki::Comp

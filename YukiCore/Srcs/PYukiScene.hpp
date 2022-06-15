@@ -20,7 +20,8 @@ namespace Yuki::Comp
 using Core::YukiObject;
 using Entity::TemplateEntity;
 
-class YukiScene final : virtual public IYukiScene, virtual public YukiObject
+class YukiScene final : virtual public IYukiScene,
+                        virtual public YukiObject
 {
 public:
   YukiScene();
@@ -29,10 +30,11 @@ public:
   void AddEntity(SharedPtr<TemplateEntity> entity) override;
   void SetCamera(SharedPtr<IYukiCamera> pCamera) override;
 
-  SharedPtr<IYukiCamera>                           GetCamera() override;
-  UnorderedMap<String, SharedPtr<TemplateEntity>>& GetEntitiesManager() override;
-  SharedPtr<TemplateEntity>                        GetEntity(String name) override;
-  bool                                             IsReady() override;
+  SharedPtr<IYukiCamera> GetCamera() override;
+  UnorderedMap<String, SharedPtr<TemplateEntity>>&
+                            GetEntitiesManager() override;
+  SharedPtr<TemplateEntity> GetEntity(String name) override;
+  bool                      IsReady() override;
 
   void Create() override;
   void Awake() override;

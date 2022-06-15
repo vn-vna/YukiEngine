@@ -14,8 +14,9 @@
 namespace Yuki::Core
 {
 
-typedef std::function<void(int, int)>                                       YukiInpCursorCallback;
-typedef std::function<void(const int&, const int&, const int&, const int&)> YukiInpKeyboardCallback;
+typedef std::function<void(int, int)> YukiInpCursorCallback;
+typedef std::function<void(const int&, const int&, const int&, const int&)>
+    YukiInpKeyboardCallback;
 
 // Store state of the key
 enum class KeyState
@@ -293,12 +294,17 @@ enum class StandardCursorType
 class IYukiInpControl : virtual public IYukiObject
 {
 public:
-  virtual void AddCursorInputCallback(const String& name, const YukiInpCursorCallback& pcallback)     = 0;
-  virtual void AddKeyboardInputCallback(const String& name, const YukiInpKeyboardCallback& pcallback) = 0;
-  virtual void RemoveCursorInputCallback(const String& name)                                          = 0;
-  virtual void RemoveKeyboardInputCallback(const String& name)                                        = 0;
-  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)                  = 0;
-  virtual void ExecuteCursorPosCallback(int x, int y)                                                 = 0;
+  virtual void
+  AddCursorInputCallback(const String&                name,
+                         const YukiInpCursorCallback& pcallback) = 0;
+  virtual void
+               AddKeyboardInputCallback(const String&                  name,
+                                        const YukiInpKeyboardCallback& pcallback) = 0;
+  virtual void RemoveCursorInputCallback(const String& name)   = 0;
+  virtual void RemoveKeyboardInputCallback(const String& name) = 0;
+  virtual void ExecuteKeyCallbacks(int key, int scancode, int action,
+                                   int modifiers)              = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)          = 0;
 
   virtual void SetCursorStandardStyle(const StandardCursorType& type) = 0;
 

@@ -16,12 +16,15 @@ namespace Yuki
 namespace Core
 {
 
+class IYukiObject;
+class IYukiSharedObject;
 class IYukiApp;
 class IYukiGfxControl;
 class IYukiShaderProgram;
 class IYukiWindow;
 class IYukiInpControl;
 class IYukiThreadPool;
+class IYukiGarbageCollector;
 class IYukiOGLObject;
 class IYukiOGLVertexBuffer;
 class IYukiOGLShaderProgram;
@@ -51,6 +54,7 @@ struct StKeyStatus;
 struct StVertexFormat;
 struct StIndexData;
 struct StKeyStatus;
+struct StResourceBucket;
 
 } // namespace Core
 
@@ -93,7 +97,7 @@ namespace Entity
 
 class TemplateEntity;
 
-}
+} // namespace Entity
 
 } // namespace Yuki
 
@@ -110,17 +114,27 @@ public:
   virtual void Destroy() = 0;
 };
 
-template <class T, typename... Args> inline SharedPtr<T> MakeShared(Args&&... args)
+class IYukiSharedObject : virtual public IYukiObject
+{
+public:
+  virtual void Require() = 0;
+  virtual void Release() = 0;
+};
+
+template <class T, typename... Args>
+inline SharedPtr<T> MakeShared(Args&&... args)
 {
   return std::make_shared<T>(args...);
 }
 
-template <class Des, class Res> inline SharedPtr<Des> DynamicPtrCast(SharedPtr<Res> ptr)
+template <class Des, class Res>
+inline SharedPtr<Des> DynamicPtrCast(SharedPtr<Res> ptr)
 {
   return std::dynamic_pointer_cast<Des>(ptr);
 }
 
-template <class I, class D, typename... Args> inline SharedPtr<I> CreateInterfaceInstance(Args&&... args)
+template <class I, class D, typename... Args>
+inline SharedPtr<I> CreateInterfaceInstance(Args&&... args)
 {
   return DynamicPtrCast<I>(MakeShared<D>(args...));
 }

@@ -16,12 +16,18 @@ inline std::string& ltrim(std::string& s, const char* t = ws)
   return s;
 }
 
-inline std::string& trim(std::string& s, const char* t = ws) { return ltrim(rtrim(s, t), t); }
+inline std::string& trim(std::string& s, const char* t = ws)
+{
+  return ltrim(rtrim(s, t), t);
+}
 
 namespace Yuki::Utils
 {
 
-String& TrimString(String& str) { return trim(str); }
+String& TrimString(String& str)
+{
+  return trim(str);
+}
 
 String GetTrimmed(const String& str)
 {
@@ -32,17 +38,20 @@ String GetTrimmed(const String& str)
 
 bool IsKeyPressed(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::PRESS;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::PRESS;
 }
 
 bool IsKeyRepeated(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::REPEAT;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::REPEAT;
 }
 
 bool IsKeyReleased(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::RELEASE;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::RELEASE;
 }
 
 void MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed)

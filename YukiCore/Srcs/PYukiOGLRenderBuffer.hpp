@@ -16,7 +16,8 @@
 namespace Yuki::Core
 {
 
-class YukiOGLRenderBuffer final : virtual public IYukiOGLRenderBuffer, virtual public YukiObject
+class YukiOGLRenderBuffer final : virtual public IYukiOGLRenderBuffer,
+                                  virtual public YukiSharedObject
 {
 public:
   YukiOGLRenderBuffer();
@@ -25,8 +26,10 @@ public:
   unsigned GetID() override;
   void     BindObject() override;
 
-  void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size) override;
-  void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat, const Vec2I& size, int samples) override;
+  void SetBufferStorage(PixelInternalFormat internalFormat,
+                        const Vec2I&        size) override;
+  void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
+                                    const Vec2I& size, int samples) override;
 
   void Create() override;
   void Destroy() override;

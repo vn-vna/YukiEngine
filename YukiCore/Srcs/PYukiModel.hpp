@@ -20,7 +20,8 @@ namespace Yuki::Comp
 
 using Core::YukiObject;
 
-class YukiModel final : virtual public IYukiModel, virtual public YukiObject
+class YukiModel final : virtual public IYukiModel,
+                        virtual public YukiObject
 {
 public:
   YukiModel(String name, const MeshArrType& meshArr);

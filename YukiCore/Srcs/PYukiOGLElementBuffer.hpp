@@ -16,7 +16,8 @@
 namespace Yuki::Core
 {
 
-class YukiOGLElementBuffer final : virtual public IYukiOGLElementBuffer, virtual public YukiObject
+class YukiOGLElementBuffer final : virtual public IYukiOGLElementBuffer,
+                                   virtual public YukiSharedObject
 {
 public:
   YukiOGLElementBuffer();
@@ -27,10 +28,12 @@ public:
   void     BindObject() override;
   void     SetBufferData(Vector<unsigned>& data) override;
   void     SetBufferData(unsigned* pData, size_t size) override;
-  void     DrawElements(PrimitiveTopology topology, unsigned start, unsigned count) override;
+  void     DrawElements(PrimitiveTopology topology, unsigned start,
+                        unsigned count) override;
   void     DrawAllElements(PrimitiveTopology topology) override;
-  void     Create() override;
-  void     Destroy() override;
+
+  void Create() override;
+  void Destroy() override;
 
 private:
   unsigned m_nEboID;

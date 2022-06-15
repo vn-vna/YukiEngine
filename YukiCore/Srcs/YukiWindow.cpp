@@ -17,14 +17,17 @@ void initAndCheckGLFW()
   }
 }
 
-void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int modifiers)
+void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action,
+                         int modifiers)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(key, scancode, action, modifiers);
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(
+      key, scancode, action, modifiers);
 }
 
 void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback((int) x, (int) y);
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback(
+      (int) x, (int) y);
 }
 
 namespace Yuki::Core
@@ -32,19 +35,36 @@ namespace Yuki::Core
 
 bool g_bGLFWInited = false;
 
-YukiWindow::YukiWindow() : m_pGLFWWindow(nullptr) {}
+YukiWindow::YukiWindow()
+    : m_pGLFWWindow(nullptr)
+{}
 
 YukiWindow::~YukiWindow() = default;
 
-void YukiWindow::ShowWindow() { glfwShowWindow(m_pGLFWWindow); }
+void YukiWindow::ShowWindow()
+{
+  glfwShowWindow(m_pGLFWWindow);
+}
 
-void YukiWindow::HideWindow() { glfwHideWindow(m_pGLFWWindow); }
+void YukiWindow::HideWindow()
+{
+  glfwHideWindow(m_pGLFWWindow);
+}
 
-void YukiWindow::IconfyWindow() { glfwIconifyWindow(m_pGLFWWindow); }
+void YukiWindow::IconfyWindow()
+{
+  glfwIconifyWindow(m_pGLFWWindow);
+}
 
-void YukiWindow::SetSize(int width, int height) { glfwSetWindowSize(m_pGLFWWindow, width, height); }
+void YukiWindow::SetSize(int width, int height)
+{
+  glfwSetWindowSize(m_pGLFWWindow, width, height);
+}
 
-void YukiWindow::SetPosition(int wx, int wy) { glfwSetWindowPos(m_pGLFWWindow, wx, wy); }
+void YukiWindow::SetPosition(int wx, int wy)
+{
+  glfwSetWindowPos(m_pGLFWWindow, wx, wy);
+}
 
 void YukiWindow::SetCursorPos(int cx, int cy)
 {
@@ -53,9 +73,15 @@ void YukiWindow::SetCursorPos(int cx, int cy)
   glfwSetCursorPos(m_pGLFWWindow, wx + cx, wy + cy);
 }
 
-void YukiWindow::SetTitle(const String& title) { glfwSetWindowTitle(m_pGLFWWindow, title.c_str()); }
+void YukiWindow::SetTitle(const String& title)
+{
+  glfwSetWindowTitle(m_pGLFWWindow, title.c_str());
+}
 
-bool YukiWindow::ShouldClose() { return glfwWindowShouldClose(m_pGLFWWindow); }
+bool YukiWindow::ShouldClose()
+{
+  return glfwWindowShouldClose(m_pGLFWWindow);
+}
 
 Vec2F YukiWindow::GetWindowSize()
 {
@@ -64,7 +90,10 @@ Vec2F YukiWindow::GetWindowSize()
   return {w, h};
 }
 
-GLFWwindow* YukiWindow::GetGLFWWindow() { return m_pGLFWWindow; }
+GLFWwindow* YukiWindow::GetGLFWWindow()
+{
+  return m_pGLFWWindow;
+}
 
 void YukiWindow::Create()
 {
@@ -83,7 +112,8 @@ void YukiWindow::Create()
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   m_pGLFWWindow =
-      glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT, YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
+      glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT,
+                       YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
   if (!m_pGLFWWindow)
   {
     THROW_YUKI_ERROR(WindowCreationError);
@@ -97,7 +127,10 @@ void YukiWindow::Create()
   glfwSwapInterval(1);
 }
 
-void YukiWindow::Awake() { ShowWindow(); }
+void YukiWindow::Awake()
+{
+  ShowWindow();
+}
 
 void YukiWindow::Update()
 {

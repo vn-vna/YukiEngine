@@ -23,11 +23,12 @@
 namespace Yuki::Core
 {
 
-using Debug::IYukiLogger;
 using Comp::IYukiScene;
+using Debug::IYukiLogger;
 using Utils::IYukiSystem;
 
-class YukiApp final : virtual public IYukiApp, virtual public YukiObject
+class YukiApp final : virtual public IYukiApp,
+                      virtual public YukiObject
 {
 public:
   YukiApp();

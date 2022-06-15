@@ -26,4 +26,19 @@ public:
   void Destroy() override;
 };
 
+class YukiSharedObject : virtual public IYukiSharedObject,
+                         virtual public YukiObject
+{
+public:
+  YukiSharedObject();
+  ~YukiSharedObject() override;
+
+  void Require() override;
+  void Release() override;
+
+protected:
+  int  m_nRequired;
+  bool m_bCreated;
+};
+
 } // namespace Yuki::Core

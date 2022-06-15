@@ -16,7 +16,8 @@
 namespace Yuki::Core
 {
 
-class YukiWindow final : virtual public IYukiWindow, virtual public YukiObject
+class YukiWindow final : virtual public IYukiWindow,
+                         virtual public YukiObject
 {
 public:
   YukiWindow();
@@ -46,5 +47,6 @@ private:
 } // namespace Yuki::Core
 
 void initAndCheckGLFW();
-void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int modifiers);
+void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action,
+                         int modifiers);
 void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y);

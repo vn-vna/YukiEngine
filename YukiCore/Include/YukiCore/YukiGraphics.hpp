@@ -350,7 +350,7 @@ public:
 
 // OpenGL Object:
 // OpenGL Object abstraction.
-class IYukiOGLObject : virtual public IYukiObject
+class IYukiOGLObject : virtual public IYukiSharedObject
 {
 public:
   virtual unsigned GetID()      = 0;
@@ -371,10 +371,11 @@ public:
 class IYukiOGLElementBuffer : virtual public IYukiOGLObject
 {
 public:
-  virtual void SetBufferData(Vector<unsigned>& data)                                    = 0;
-  virtual void SetBufferData(unsigned* pData, size_t size)                              = 0;
-  virtual void DrawElements(PrimitiveTopology topology, unsigned start, unsigned count) = 0;
-  virtual void DrawAllElements(PrimitiveTopology topology)                              = 0;
+  virtual void SetBufferData(Vector<unsigned>& data)       = 0;
+  virtual void SetBufferData(unsigned* pData, size_t size) = 0;
+  virtual void DrawElements(PrimitiveTopology topology, unsigned start,
+                            unsigned count)                = 0;
+  virtual void DrawAllElements(PrimitiveTopology topology) = 0;
 };
 
 // OpenGL Object:
@@ -382,9 +383,12 @@ public:
 class IYukiOGLShaderProgram : virtual public IYukiOGLObject
 {
 public:
-  virtual void UniformMatrix(const String& prop, const Mat2F& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat3F& mat, bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat4F& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat2F& mat,
+                             bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat3F& mat,
+                             bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat4F& mat,
+                             bool transopse = false) = 0;
 
   virtual void UniformVector(const String& prop, const Vec2F& vec) = 0;
   virtual void UniformVector(const String& prop, const Vec3F& vec) = 0;
@@ -408,20 +412,29 @@ public:
   virtual void SetTextureCompareMode(TextureCompareMode compareMode)    = 0;
   virtual void SetTextureLodBias(float bias)                            = 0;
 
-  virtual void SetStorageData1D(PixelInternalFormat internalFormat, int level, const Vec1I& size) = 0;
-  virtual void SetStorageData2D(PixelInternalFormat internalFormat, int level, const Vec2F& size) = 0;
-  virtual void SetStorageData3D(PixelInternalFormat internalFormat, int level, const Vec3F& size) = 0;
+  virtual void SetStorageData1D(PixelInternalFormat internalFormat, int level,
+                                const Vec1I& size) = 0;
+  virtual void SetStorageData2D(PixelInternalFormat internalFormat, int level,
+                                const Vec2F& size) = 0;
+  virtual void SetStorageData3D(PixelInternalFormat internalFormat, int level,
+                                const Vec3F& size) = 0;
 
-  virtual void SetStorageData1D(PixelBasedInternalFormat internalFormat, int level, const Vec1I& size) = 0;
-  virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat, int level, const Vec2F& size) = 0;
-  virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level, const Vec3F& size) = 0;
+  virtual void SetStorageData1D(PixelBasedInternalFormat internalFormat,
+                                int level, const Vec1I& size) = 0;
+  virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat,
+                                int level, const Vec2F& size) = 0;
+  virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat,
+                                int level, const Vec3F& size) = 0;
 
-  virtual void SetTextureData1D(
-      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec1I& offset, const Vec1I& len) = 0;
-  virtual void SetTextureData2D(
-      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec2I& offset, const Vec2I& size) = 0;
-  virtual void SetTextureData3D(
-      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat, const Vec3I& offset, const Vec3I& size) = 0;
+  virtual void SetTextureData1D(uint8_t* pixels, int level,
+                                PixelBasedInternalFormat imageFormat,
+                                const Vec1I& offset, const Vec1I& len)  = 0;
+  virtual void SetTextureData2D(uint8_t* pixels, int level,
+                                PixelBasedInternalFormat imageFormat,
+                                const Vec2I& offset, const Vec2I& size) = 0;
+  virtual void SetTextureData3D(uint8_t* pixels, int level,
+                                PixelBasedInternalFormat imageFormat,
+                                const Vec3I& offset, const Vec3I& size) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
@@ -441,8 +454,10 @@ public:
 class IYukiOGLRenderBuffer : virtual public IYukiOGLObject
 {
 public:
-  virtual void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)                          = 0;
-  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat, const Vec2I& size, int samples) = 0;
+  virtual void SetBufferStorage(PixelInternalFormat internalFormat,
+                                const Vec2I&        size)                          = 0;
+  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
+                                            const Vec2I& size, int samples) = 0;
 };
 
 // OpenGL Container:
@@ -450,11 +465,13 @@ public:
 class IYukiOGLVertexArray : virtual public IYukiOGLObject
 {
 public:
-  virtual void EnableAttribute(unsigned attrib)                                                                     = 0;
-  virtual void AttributeBinding(unsigned attrib, unsigned binding)                                                  = 0;
-  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized = false)           = 0;
-  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex, size_t offset, size_t stride) = 0;
-  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)                                            = 0;
+  virtual void EnableAttribute(unsigned attrib)                             = 0;
+  virtual void AttributeBinding(unsigned attrib, unsigned binding)          = 0;
+  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
+                                  bool normalized = false)                  = 0;
+  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer,
+                               int bindIndex, size_t offset, size_t stride) = 0;
+  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)    = 0;
 };
 
 // OpenGL Container
@@ -488,29 +505,38 @@ public:
 
   virtual bool BufferOK() = 0;
 
-  virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex, unsigned position = 0, unsigned level = 0) = 0;
-  virtual void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                        = 0;
-  virtual void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                      = 0;
-  virtual void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex, unsigned level = 0)                 = 0;
+  virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex,
+                                  unsigned                   position = 0,
+                                  unsigned                   level    = 0)        = 0;
+  virtual void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex,
+                                  unsigned                   level = 0)        = 0;
+  virtual void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex,
+                                    unsigned                   level = 0)      = 0;
+  virtual void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex,
+                                         unsigned level = 0) = 0;
 
-  virtual void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo, unsigned position = 0) = 0;
-  virtual void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo)                        = 0;
-  virtual void AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                      = 0;
-  virtual void AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo)                 = 0;
+  virtual void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo,
+                                       unsigned position = 0)               = 0;
+  virtual void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
+  virtual void
+  AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
+  virtual void
+  AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
 };
 
 SharedPtr<IYukiGfxControl>       CreateGraphicsController();
 SharedPtr<IYukiOGLVertexBuffer>  CreateGLVertexBuffer();
 SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
-SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
-SharedPtr<IYukiOGLVertexArray>   CreateGLVertexArray();
-SharedPtr<IYukiOGLTexture>       CreateGLTexture(TextureType type);
-SharedPtr<IYukiOGLRenderBuffer>  CreateGLRegnderBuffer();
-SharedPtr<IYukiOGLFrameBuffer>   CreateGLFrameBuffer();
+SharedPtr<IYukiOGLShaderProgram>
+                                CreateGLShaderProgram(const String& shaderName);
+SharedPtr<IYukiOGLVertexArray>  CreateGLVertexArray();
+SharedPtr<IYukiOGLTexture>      CreateGLTexture(TextureType type);
+SharedPtr<IYukiOGLRenderBuffer> CreateGLRegnderBuffer();
+SharedPtr<IYukiOGLFrameBuffer>  CreateGLFrameBuffer();
 
-SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec1F& color);
-SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec2F& color);
-SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec3F& color);
-SharedPtr<IYukiOGLTexture> CreateSolid2DTexture(const Vec4F& color);
+SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec1F& color);
+SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec2F& color);
+SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec3F& color);
+SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec4F& color);
 
 } // namespace Yuki::Core

@@ -11,6 +11,7 @@
 #include "YukiCore/YukiPCH.hpp"
 #include "YukiCore/YukiGraphics.hpp"
 #include "YukiComp/YukiMesh.hpp"
+#include "YukiUtil/YukiImage.hpp"
 
 #include "PYukiObject.hpp"
 
@@ -19,20 +20,22 @@
 namespace Yuki::Comp
 {
 
-using Core::YukiObject;
 using Core::IYukiOGLElementBuffer;
-using Core::IYukiOGLVertexArray;
-using Core::IYukiOGLVertexBuffer;
-using Core::IYukiOGLVertexBuffer;
 using Core::IYukiOGLShaderProgram;
 using Core::IYukiOGLTexture;
+using Core::IYukiOGLVertexArray;
+using Core::IYukiOGLVertexBuffer;
 using Core::PrimitiveTopology;
+using Core::YukiSharedObject;
+using Utils::YukiImage;
 
-class YukiMeshMaterial final : virtual public IYukiMeshMaterial, virtual public YukiObject
+class YukiMeshMaterial final : virtual public IYukiMeshMaterial,
+                               virtual public YukiSharedObject
 {
 public:
-  YukiMeshMaterial(
-      SharedPtr<IYukiOGLTexture> specular, SharedPtr<IYukiOGLTexture> ambient, SharedPtr<IYukiOGLTexture> diffmap);
+  YukiMeshMaterial(SharedPtr<YukiImage> ambientMap,
+                   SharedPtr<YukiImage> specularMap,
+                   SharedPtr<YukiImage> diffuseMap);
   ~YukiMeshMaterial() override;
 
   SharedPtr<IYukiOGLTexture> GetSpecularMap() override;
@@ -43,17 +46,26 @@ public:
   void SetAmbientMap(SharedPtr<IYukiOGLTexture> ambmap) override;
   void SetDiffuseMap(SharedPtr<IYukiOGLTexture> diffmap) override;
 
+  void Create() override;
+  void Destroy() override;
+
 private:
   SharedPtr<IYukiOGLTexture> m_pSpecMap;
   SharedPtr<IYukiOGLTexture> m_pAmbientMap;
   SharedPtr<IYukiOGLTexture> m_pDiffMap;
+
+  SharedPtr<YukiImage> m_pSpecMapImg;
+  SharedPtr<YukiImage> m_pAmbientMapImg;
+  SharedPtr<YukiImage> m_pDiffMapImg;
 };
 
-class YukiMesh : virtual public IYukiMesh, virtual public Core::YukiObject
+class YukiMesh : virtual public IYukiMesh,
+                 virtual public YukiSharedObject
 {
 public:
-  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices, SharedPtr<IYukiOGLTexture>& texture,
-      SharedPtr<IYukiMeshMaterial> material, const String& name);
+  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
+           SharedPtr<IYukiOGLTexture>&  texture,
+           SharedPtr<IYukiMeshMaterial> material, const String& name);
   virtual ~YukiMesh();
 
   SharedPtr<IYukiOGLTexture>       GetMeshTexture() const override;
