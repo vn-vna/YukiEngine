@@ -25,13 +25,13 @@ jobs:
 
       - name: "Check workspace folder"
         run: |
-          ls ${{ github.repository }}
+          ls $GITHUB_WORKSPACE
 
       - name: "CMake configure"
         run: |
-          cmake -B ${{ github.repository }}/build -S ${{ github.repository }} -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja
+          cmake -B $GITHUB_WORKSPACE/build -S $GITHUB_WORKSPACE -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja
 
       - name: "CMake build"
         run: |
-          cmake --build ${{ github.repository }}/build
+          cmake --build $GITHUB_WORKSPACE/build
 
