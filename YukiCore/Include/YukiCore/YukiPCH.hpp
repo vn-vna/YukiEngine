@@ -20,12 +20,12 @@
 
 // Windows headers
 #include <deque>
-#ifdef IS_WINDOWS
+#if defined (IS_WINDOWS)
 #  define WIN32_LEAN_AND_MEAN
 #  include <Windows.h>
 #  include <Pdh.h>
 #  include <Psapi.h>
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
 #  include <sys/types.h>
 #  include <sys/sysinfo.h>
 #  include <linux/sysinfo.h>

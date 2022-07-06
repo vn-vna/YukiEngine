@@ -142,8 +142,8 @@ SharedPtr<IYukiOGLTexture> YukiImage::Generate2DTexture()
 
 uint8_t* createSolidColorArray(int w, int h, int channel, const float* color)
 {
-  uint8_t* pData = (uint8_t*) std::malloc(w * h * channel);
-  for (int px = 0; px <= w * h; ++px)
+  AutoType* pData = (uint8_t*) std::malloc(w * h * channel);
+  for (int px = 0; px < w * h; ++px)
   {
     for (int c = 0; c < channel; ++c)
     {

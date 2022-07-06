@@ -18,7 +18,7 @@ using Core::IYukiObject;
 
 enum class ProcessorArchitecture
 {
-#ifdef IS_WINDOWS
+#if defined(IS_WINDOWS)
   /// x64 architecture for intel or amd cpus
   AMD64   = PROCESSOR_ARCHITECTURE_AMD64,
   /// arm architecture
@@ -30,7 +30,7 @@ enum class ProcessorArchitecture
   /// x86
   X86     = PROCESSOR_ARCHITECTURE_INTEL,
   UNKNOWN = PROCESSOR_ARCHITECTURE_UNKNOWN
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
   AMD64,
   X86
 #endif

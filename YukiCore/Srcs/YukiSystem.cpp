@@ -78,10 +78,10 @@ YukiSystem::YukiSystem()
       m_tActivityInfo()
 {
   // Initialize information of system, cpus, memories
-#if IS_WINDOWS
+#if defined(IS_WINDOWS)
   this->_InitInformationsWin32();
   this->_InitPDH();
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
   this->_InitInformationLinux();
 #endif
 
@@ -90,7 +90,7 @@ YukiSystem::YukiSystem()
 
 YukiSystem::~YukiSystem()
 {
-#if IS_WINDOWS
+#ifdef IS_WINDOWS
   this->_DestroyPDH();
 #endif
 }
@@ -128,7 +128,7 @@ const ResourceActivityInfo& YukiSystem::GetResourceActivityInfo()
 
 void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 {
-#ifdef IS_WINDOWS
+#if defined(IS_WINDOWS)
   // Get memory usaged
   MEMORYSTATUSEX memstat;
   ZeroMemory(&memstat, sizeof(memstat));
@@ -142,7 +142,7 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
   GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc,
                        sizeof(pmc));
   info->memoryUsedByProc = pmc.WorkingSetSize;
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
   struct sysinfo si;
   sysinfo(&si);
 
@@ -172,7 +172,7 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 
 void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 {
-#ifdef IS_WINDOWS
+#if defined(IS_WINDOWS)
   PDH_FMT_COUNTERVALUE_ITEM_A stat[100];
   DWORD                       bufferSz = 0;
   DWORD                       itemCount;
@@ -195,7 +195,7 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
   {
     info->cpuLoads.emplace_back((float) stat[i].FmtValue.doubleValue);
   }
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
 
   // Zero index is average cpu load value
   static bool     isInited   = false;

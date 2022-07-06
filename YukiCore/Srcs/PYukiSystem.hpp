@@ -49,11 +49,11 @@ private:
   void _GetMemoryActivity(ResourceActivityInfo* info);
   void _GetCpuActivity(ResourceActivityInfo* info);
 
-#ifdef IS_WINDOWS
+#if defined(IS_WINDOWS)
   void _InitInformationsWin32();
   void _InitPDH();
   void _DestroyPDH();
-#elifdef IS_LINUX
+#elif defined(IS_LINUX)
   void _InitInformationLinux();
   void _ProcessCpuInfoFile();
   void _ProcessMemInfoFile();

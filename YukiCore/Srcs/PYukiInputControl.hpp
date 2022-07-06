@@ -13,7 +13,6 @@
 #include "YukiDebug/YukiError.hpp"
 
 #include "PYukiObject.hpp"
-#include <GLFW/glfw3.h>
 
 #define YUKI_MAX_KEYARRLEN (int) KeyCode::KEY_LAST + 1
 
