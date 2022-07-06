@@ -17,7 +17,7 @@ namespace Yuki::Comp
 
 using Core::YukiObject;
 
-class YukiCamera final : virtual public IYukiCamera,
+class YukiCamera final : virtual public ICamera,
                          virtual public YukiObject
 {
 public:

@@ -20,7 +20,7 @@
 
 // Windows headers
 #include <deque>
-#if defined (IS_WINDOWS)
+#if defined(IS_WINDOWS)
 #  define WIN32_LEAN_AND_MEAN
 #  include <Windows.h>
 #  include <Pdh.h>

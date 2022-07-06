@@ -16,9 +16,9 @@
 namespace Yuki::Comp
 {
 
-using Core::IYukiSharedObject;
+using Core::ISharedObject;
 
-typedef SharedPtr<IYukiMesh>           MeshType;
+typedef SharedPtr<IMesh>               MeshType;
 typedef UnorderedMap<String, MeshType> MeshArrType;
 
 /**
@@ -29,13 +29,13 @@ typedef UnorderedMap<String, MeshType> MeshArrType;
  * @return An interface instance of the model
  * @bug Blender ^2.8 files can't be loaded
  */
-SharedPtr<IYukiModel> LoadModel(String fileName, String modelName);
+SharedPtr<IModel> LoadModel(String fileName, String modelName);
 
 /**
  * A collection of meshes that will be rendered by the
  * Entities
  */
-class IYukiModel : virtual public IYukiSharedObject
+class IModel : virtual public ISharedObject
 {
 public:
   virtual String&      GetName()                   = 0;
@@ -43,7 +43,7 @@ public:
   virtual Mat4F&       GetModelMatrix()            = 0;
   virtual MeshType     GetMesh(const String& name) = 0;
 
-  virtual void Render(SharedPtr<IYukiCamera> camera) = 0;
+  virtual void Render(SharedPtr<ICamera> camera) = 0;
 };
 
 } // namespace Yuki::Comp

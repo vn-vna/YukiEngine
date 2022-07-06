@@ -14,7 +14,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLFrameBuffer final : virtual public IYukiOGLFrameBuffer,
+class YukiOGLFrameBuffer final : virtual public IOGLFrameBuffer,
                                  virtual public YukiSharedObject
 {
 public:
@@ -49,21 +49,15 @@ public:
   void     BindObject() override;
   bool     BufferOK() override;
 
-  void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex, unsigned position,
-                          unsigned level) override;
-  void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex,
-                          unsigned                   level) override;
-  void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex,
-                            unsigned                   level) override;
-  void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex,
-                                 unsigned                   level) override;
+  void AttachTextureColor(SharedPtr<IOGLTexture> tex, unsigned position, unsigned level) override;
+  void AttachTextureDepth(SharedPtr<IOGLTexture> tex, unsigned level) override;
+  void AttachTextureStencil(SharedPtr<IOGLTexture> tex, unsigned level) override;
+  void AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex, unsigned level) override;
 
-  void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo,
-                               unsigned position = 0) override;
-  void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo) override;
-  void AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) override;
-  void
-  AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) override;
+  void AttachRenderBufferColor(SharedPtr<IOGLRenderBuffer> rbo, unsigned position = 0) override;
+  void AttachRenderBufferDepth(SharedPtr<IOGLRenderBuffer> rbo) override;
+  void AttachRenderBufferStencil(SharedPtr<IOGLRenderBuffer> rbo) override;
+  void AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo) override;
 
   void Create() override;
   void Awake() override;

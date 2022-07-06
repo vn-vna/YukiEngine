@@ -15,22 +15,19 @@
 namespace Yuki::Comp
 {
 
-using Core::IYukiOGLFrameBuffer;
-using Core::IYukiOGLRenderBuffer;
-using Core::IYukiOGLTexture;
-using Core::IYukiSharedObject;
+using Core::ISharedObject;
 
-class IYukiLayer : virtual public IYukiSharedObject
+class ILayer : virtual public ISharedObject
 {
 public:
-  virtual SharedPtr<IYukiOGLFrameBuffer>  GetFrameBuffer()    = 0;
-  virtual SharedPtr<IYukiOGLRenderBuffer> GetRenderBuffer()   = 0;
-  virtual SharedPtr<IYukiOGLTexture>      GetDepthTexture()   = 0;
-  virtual SharedPtr<IYukiOGLTexture>      GetStencilTexture() = 0;
-  virtual SharedPtr<IYukiOGLTexture>      GetColorTexture()   = 0;
+  virtual SPIOGLFrameBuffer  GetFrameBuffer()    = 0;
+  virtual SPIOGLRenderBuffer GetRenderBuffer()   = 0;
+  virtual SPIOGLTexture      GetDepthTexture()   = 0;
+  virtual SPIOGLTexture      GetStencilTexture() = 0;
+  virtual SPIOGLTexture      GetColorTexture()   = 0;
 };
 
-SharedPtr<IYukiLayer> CreateYukiLayer(unsigned width = 0, unsigned height = 0,
-                                      unsigned multiSamples = 1);
+SharedPtr<ILayer> CreateYukiLayer(unsigned width = 0, unsigned height = 0,
+                                  unsigned multiSamples = 1);
 
 } // namespace Yuki::Comp

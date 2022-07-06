@@ -5,7 +5,7 @@
 #define MAKE_ERROR_DEFINITION(__err_name, __err_code)                     \
   Yuki##__err_name::Yuki##__err_name(const String& file, const int& line) \
       : std::runtime_error("yuki-rte"),                                   \
-        Errors(YukiErrCode::__err_code, file, line)                    \
+        Errors(YukiErrCode::__err_code, file, line)                       \
   {}
 
 #define YUKI_CORE_ERROR   "[YUKI CORE]"
@@ -23,8 +23,7 @@ namespace Yuki::Debug
 
 using Core::GetYukiApp;
 
-Errors::Errors(const YukiErrCode& code, const String& file,
-                     const int& line)
+Errors::Errors(const YukiErrCode& code, const String& file, const int& line)
     : std::runtime_error("yuki-rte"),
       m_File(file),
       m_nLine(line),
@@ -34,8 +33,7 @@ Errors::Errors(const YukiErrCode& code, const String& file,
 String Errors::getErrorMessage() const
 {
   StringStream sstr = {};
-  sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line "
-       << m_nLine << "] -> ";
+  sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line " << m_nLine << "] -> ";
   switch (m_ErrCode)
   {
     // clang-format off

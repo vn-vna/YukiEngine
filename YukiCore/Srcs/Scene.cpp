@@ -24,12 +24,12 @@ void YukiScene::AddEntity(SharedPtr<TemplateEntity> entity)
   this->GetEntitiesManager().emplace(entity->GetName(), entity);
 }
 
-void YukiScene::SetCamera(SharedPtr<IYukiCamera> pCamera)
+void YukiScene::SetCamera(SharedPtr<ICamera> pCamera)
 {
   m_pCamera = pCamera;
 }
 
-SharedPtr<IYukiCamera> YukiScene::GetCamera()
+SharedPtr<ICamera> YukiScene::GetCamera()
 {
   return m_pCamera;
 }
@@ -114,9 +114,9 @@ bool YukiScene::IsReady()
   return m_bIsReady;
 }
 
-SharedPtr<IYukiScene> CreateYukiScene()
+SharedPtr<IScene> CreateYukiScene()
 {
-  return Core::CreateInterfaceInstance<IYukiScene, YukiScene>();
+  return Core::CreateInterfaceInstance<IScene, YukiScene>();
 }
 
 } // namespace Yuki::Comp

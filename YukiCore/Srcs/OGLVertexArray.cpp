@@ -27,12 +27,10 @@ bool YukiOGLVertexArray::OnUse()
   return crrVAO == m_nVaoID;
 }
 
-void YukiOGLVertexArray::SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer,
-                                         int bindIndex, size_t offset,
-                                         size_t stride)
+void YukiOGLVertexArray::SetVertexBuffer(SharedPtr<IOGLVertexBuffer> buffer, int bindIndex,
+                                         size_t offset, size_t stride)
 {
-  glVertexArrayVertexBuffer(m_nVaoID, 0, buffer->GetID(), offset,
-                            (GLsizei) stride);
+  glVertexArrayVertexBuffer(m_nVaoID, 0, buffer->GetID(), offset, (GLsizei) stride);
 }
 
 void YukiOGLVertexArray::EnableAttribute(unsigned attrib)
@@ -40,11 +38,10 @@ void YukiOGLVertexArray::EnableAttribute(unsigned attrib)
   glEnableVertexArrayAttrib(m_nVaoID, attrib);
 }
 
-void YukiOGLVertexArray::SetAttributeFormat(unsigned size, unsigned attrib,
-                                            size_t offset, bool normalized)
+void YukiOGLVertexArray::SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
+                                            bool normalized)
 {
-  glVertexArrayAttribFormat(m_nVaoID, attrib, size, GL_FLOAT, normalized,
-                            (GLsizei) offset);
+  glVertexArrayAttribFormat(m_nVaoID, attrib, size, GL_FLOAT, normalized, (GLsizei) offset);
 }
 
 void YukiOGLVertexArray::AttributeBinding(unsigned attrib, unsigned binding)
@@ -52,8 +49,7 @@ void YukiOGLVertexArray::AttributeBinding(unsigned attrib, unsigned binding)
   glVertexArrayAttribBinding(m_nVaoID, attrib, binding);
 }
 
-void YukiOGLVertexArray::SetElementBuffer(
-    SharedPtr<IYukiOGLElementBuffer> buffer)
+void YukiOGLVertexArray::SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer)
 {
   glVertexArrayElementBuffer(m_nVaoID, buffer->GetID());
 }
@@ -68,9 +64,9 @@ void YukiOGLVertexArray::Destroy()
   glDeleteVertexArrays(1, &m_nVaoID);
 }
 
-SharedPtr<IYukiOGLVertexArray> CreateGLVertexArray()
+SharedPtr<IOGLVertexArray> CreateGLVertexArray()
 {
-  return CreateInterfaceInstance<IYukiOGLVertexArray, YukiOGLVertexArray>();
+  return CreateInterfaceInstance<IOGLVertexArray, YukiOGLVertexArray>();
 }
 
 } // namespace Yuki::Core

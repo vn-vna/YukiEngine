@@ -48,9 +48,9 @@ void YukiOGLVertexBuffer::Destroy()
   glDeleteBuffers(1, &m_nVboID);
 }
 
-SharedPtr<IYukiOGLVertexBuffer> CreateGLVertexBuffer()
+SharedPtr<IOGLVertexBuffer> CreateGLVertexBuffer()
 {
-  return CreateInterfaceInstance<IYukiOGLVertexBuffer, YukiOGLVertexBuffer>();
+  return CreateInterfaceInstance<IOGLVertexBuffer, YukiOGLVertexBuffer>();
 }
 
 } // namespace Yuki::Core

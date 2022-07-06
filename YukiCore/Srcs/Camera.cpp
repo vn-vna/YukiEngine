@@ -26,8 +26,7 @@ YukiCamera::YukiCamera()
       m_CamDirection(0.00f, 0.00f, 1.00f),
       m_CamTop(0.00f, 1.00f, 0.00f),
       m_nFOV(glm::radians(120.00f)),
-      m_nAspectRatio((float) YUKI_DEFAULT_WINDOW_WIDTH /
-                     YUKI_DEFAULT_WINDOW_HEIGHT),
+      m_nAspectRatio((float) YUKI_DEFAULT_WINDOW_WIDTH / YUKI_DEFAULT_WINDOW_HEIGHT),
       m_nNear(0.01f),
       m_nFar(100.00f)
 {}
@@ -56,8 +55,7 @@ const Vec3F& YukiCamera::GetCameraDirection() const
 
 const Vec3F YukiCamera::GetCameraTopAxis() const
 {
-  return glm::normalize(
-      glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis()));
+  return glm::normalize(glm::cross(GetCameraHorizontalAxis(), GetCameraVerticalAxis()));
 }
 
 const Vec3F YukiCamera::GetCameraHorizontalAxis() const
@@ -147,14 +145,13 @@ void YukiCamera::SetFarPerspective(float nFar)
 
 void YukiCamera::Update()
 {
-  m_ViewMatrix = glm::lookAt(m_CamPos, m_CamPos + m_CamDirection, m_CamTop);
-  m_ProjectionMatrix =
-      glm::perspective(m_nFOV, m_nAspectRatio, m_nNear, m_nFar);
+  m_ViewMatrix       = glm::lookAt(m_CamPos, m_CamPos + m_CamDirection, m_CamTop);
+  m_ProjectionMatrix = glm::perspective(m_nFOV, m_nAspectRatio, m_nNear, m_nFar);
 }
 
-SharedPtr<IYukiCamera> CreateYukiCamera()
+SharedPtr<ICamera> CreateYukiCamera()
 {
-  return Core::CreateInterfaceInstance<IYukiCamera, YukiCamera>();
+  return Core::CreateInterfaceInstance<ICamera, YukiCamera>();
 }
 
 } // namespace Yuki::Comp

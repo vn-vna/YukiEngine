@@ -15,7 +15,7 @@
 namespace Yuki::Core
 {
 
-class YukiGfxControl final : virtual public IYukiGfxControl,
+class YukiGfxControl final : virtual public IGraphics,
                              virtual public YukiObject
 {
 public:

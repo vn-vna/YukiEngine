@@ -18,17 +18,17 @@ namespace Yuki::Debug
 
 using Core::YukiObject;
 
-class YukiLogger final : virtual public IYukiLogger,
+class YukiLogger final : virtual public ILogger,
                          virtual public YukiObject
 {
 public:
   YukiLogger();
   ~YukiLogger() override;
 
-  void PushMessage(const String& message, const String& prioty) override;
-  void PushDebugMessage(const String& message) override;
-  void PushWarningMessage(const String& message) override;
-  void PushErrorMessage(const String& message) override;
+  void           PushMessage(const String& message, const String& prioty) override;
+  void           PushDebugMessage(const String& message) override;
+  void           PushWarningMessage(const String& message) override;
+  void           PushErrorMessage(const String& message) override;
   OutputLogFile& GetOutFileStream() override;
   void           Create() override;
   void           Destroy() override;

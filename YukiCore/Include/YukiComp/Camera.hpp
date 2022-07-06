@@ -11,10 +11,10 @@
 #include "YukiCore/Objects.hpp"
 #include "YukiCore/Input.hpp"
 
-#include <glm/mat4x4.hpp>
-
 namespace Yuki::Comp
 {
+
+using Core::IObject;
 
 /**
  * @details
@@ -26,7 +26,7 @@ namespace Yuki::Comp
  * AutoType scene   = Yuki::Comp::CreateYukiScene();
  * scene->SetCamera(camera);
  */
-class IYukiCamera : virtual public Core::IYukiObject
+class ICamera : virtual public IObject
 {
 public:
   virtual const Mat4F& GetCameraViewMatrix() const       = 0;
@@ -59,6 +59,6 @@ public:
  * shared pointer form
  * @return A camera interface instance
  */
-SharedPtr<IYukiCamera> CreateYukiCamera();
+SharedPtr<ICamera> CreateYukiCamera();
 
 } // namespace Yuki::Comp

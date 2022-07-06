@@ -139,8 +139,7 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 
   // Get memory used by this process
   PROCESS_MEMORY_COUNTERS_EX pmc;
-  GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc,
-                       sizeof(pmc));
+  GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
   info->memoryUsedByProc = pmc.WorkingSetSize;
 #elif defined(IS_LINUX)
   struct sysinfo si;
@@ -179,10 +178,8 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 
   PdhCollectQueryData(m_hPdhQuery);
 
-  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz,
-                               &itemCount, NULL);
-  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz,
-                               &itemCount, stat);
+  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, NULL);
+  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, stat);
 
   if (itemCount < 1)
   {
@@ -198,8 +195,8 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 #elif defined(IS_LINUX)
 
   // Zero index is average cpu load value
-  static bool     isInited   = false;
-  static uint32_t statArrLen = this->GetCpuInformation().numberOfCores + 1;
+  static bool                  isInited   = false;
+  static uint32_t              statArrLen = this->GetCpuInformation().numberOfCores + 1;
   static Vector<LastCpuStatus> lastStatus(statArrLen, LastCpuStatus {});
 
   FILE* file;
@@ -215,8 +212,7 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
     while (cpuid < statArrLen && !std::feof(file))
     {
       std::fscanf(file, "%*s %lu %lu %lu %lu", &lastStatus[cpuid].lastTotalUser,
-                  &lastStatus[cpuid].lastTotalUserLow,
-                  &lastStatus[cpuid].lastTotalSys,
+                  &lastStatus[cpuid].lastTotalUserLow, &lastStatus[cpuid].lastTotalSys,
                   &lastStatus[cpuid].lastTotalIdle);
 
       ++cpuid;
@@ -229,11 +225,9 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
   while (cpuid < statArrLen && !std::feof(file))
   {
     float    percent;
-    uint64_t totalUser = 0, totalUserLow = 0, totalSys = 0, totalIdle = 0,
-             total = 0;
+    uint64_t totalUser = 0, totalUserLow = 0, totalSys = 0, totalIdle = 0, total = 0;
 
-    std::fscanf(file, "%*s %lu %lu %lu %lu", &totalUser, &totalUserLow,
-                &totalSys, &totalIdle);
+    std::fscanf(file, "%*s %lu %lu %lu %lu", &totalUser, &totalUserLow, &totalSys, &totalIdle);
 
     // Overflow detection. Just skip this value.
     bool dataFailed = totalUser < lastStatus[cpuid].lastTotalUser ||
@@ -308,7 +302,7 @@ void parse_cpu_info(CpuInformation& info)
   GetSystemInfo(&systemInfo);
 
   info.numberOfCores = systemInfo.dwNumberOfProcessors;
-  info.architecture = (ProcessorArchitecture) systemInfo.wProcessorArchitecture;
+  info.architecture  = (ProcessorArchitecture) systemInfo.wProcessorArchitecture;
 }
 
 void parse_mem_info(MemoryInformation& info)
@@ -329,8 +323,7 @@ void YukiSystem::_InitInformationsWin32()
 void YukiSystem::_InitPDH()
 {
   PdhOpenQueryA(NULL, NULL, &m_hPdhQuery);
-  PdhAddCounterA(m_hPdhQuery, YUKI_ALL_PROCESSOR_QUERY_STRING, NULL,
-                 &m_hCounterCPU);
+  PdhAddCounterA(m_hPdhQuery, YUKI_ALL_PROCESSOR_QUERY_STRING, NULL, &m_hCounterCPU);
   PdhCollectQueryData(m_hPdhQuery);
 }
 
@@ -496,13 +489,12 @@ void parse_cpuinfo_tokens(ParsedCpuInfo& info, Vector<String>& propLine)
 
   if (propLine[0] == "address sizes")
   {
-    std::sscanf(propLine[1].c_str(), "%u %*s %*s %u %*s %*s", &info.addrSz.phys,
-                &info.addrSz.virt);
+    std::sscanf(propLine[1].c_str(), "%u %*s %*s %u %*s %*s", &info.addrSz.phys, &info.addrSz.virt);
   }
 }
 
-void parse_cpuinfo_toarray(Vector<ParsedCpuInfo>& infos,
-                           unsigned& physCoreCount, unsigned& logicalCoreCount)
+void parse_cpuinfo_toarray(Vector<ParsedCpuInfo>& infos, unsigned& physCoreCount,
+                           unsigned& logicalCoreCount)
 {
   bool willCreateInfo = true;
 
@@ -559,9 +551,8 @@ void YukiSystem::_ProcessCpuInfoFile()
   m_tCpuInfo.numberOfCores = logicalCoreCount;
 
   AutoType findAmd64Flags = infos[0].sFlags.find("lm");
-  m_tCpuInfo.architecture =
-      (findAmd64Flags != std::string::npos ? ProcessorArchitecture::AMD64
-                                           : ProcessorArchitecture::X86);
+  m_tCpuInfo.architecture = (findAmd64Flags != std::string::npos ? ProcessorArchitecture::AMD64
+                                                                 : ProcessorArchitecture::X86);
 }
 
 void YukiSystem::_ProcessMemInfoFile()

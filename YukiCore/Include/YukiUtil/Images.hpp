@@ -14,15 +14,8 @@
 namespace Yuki::Utils
 {
 
-using Core::IYukiOGLTexture;
-
 class Images
 {
-protected:
-  uint8_t* m_pData;
-  int      m_nWidth{};
-  int      m_nHeight{};
-  int      m_nChannel;
 
 public:
   explicit Images(const String& path, bool flip = false);
@@ -36,18 +29,19 @@ public:
   const int&     GetHeight();
   const int&     GetDataChannel();
 
-  SharedPtr<IYukiOGLTexture> Generate2DTexture(const Vec2I& offset,
-                                               const Vec2I& size);
-  SharedPtr<IYukiOGLTexture> Generate2DTexture();
+  SPIOGLTexture Generate2DTexture(const Vec2I& offset, const Vec2I& size);
+  SPIOGLTexture Generate2DTexture();
+
+protected:
+  uint8_t* m_pData;
+  int      m_nWidth;
+  int      m_nHeight;
+  int      m_nChannel;
 };
 
-SharedPtr<Images> CreateSolidColorImage(const Vec1F& color,
-                                           const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec2F& color,
-                                           const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec3F& color,
-                                           const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec4F& color,
-                                           const Vec2I& size = {10, 10});
+SharedPtr<Images> CreateSolidColorImage(const Vec1F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images> CreateSolidColorImage(const Vec2F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images> CreateSolidColorImage(const Vec3F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images> CreateSolidColorImage(const Vec4F& color, const Vec2I& size = {10, 10});
 
 } // namespace Yuki::Utils

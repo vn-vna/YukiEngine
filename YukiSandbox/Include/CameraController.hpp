@@ -16,8 +16,8 @@ using Yuki::Core::KeyCode;
 class CameraController : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::ICamera>     pCamera;
+  Yuki::SharedPtr<Yuki::Core::IInput> pInpControl;
 
 public:
   explicit CameraController(const Yuki::String& name);

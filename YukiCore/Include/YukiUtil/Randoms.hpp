@@ -26,8 +26,7 @@ typedef UniformRealDistribution<float> UniformRealDistributionF;
 class IYukiRandomMachine
 {
 public:
-  virtual float GetRandomNumber(float rangeFrom = 0.00f,
-                                float rangeTo   = 1.00f) = 0;
+  virtual float GetRandomNumber(float rangeFrom = 0.00f, float rangeTo = 1.00f) = 0;
 
   virtual RandomDevice& GetRandomDevice() = 0;
   virtual MT19937&      GetRandomType()   = 0;

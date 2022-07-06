@@ -14,9 +14,8 @@
 namespace Yuki::Core
 {
 
-typedef std::function<void(int, int)> YukiInpCursorCallback;
-typedef std::function<void(const int&, const int&, const int&, const int&)>
-    YukiInpKeyboardCallback;
+typedef std::function<void(int, int)>                                       YukiInpCursorCallback;
+typedef std::function<void(const int&, const int&, const int&, const int&)> YukiInpKeyboardCallback;
 
 // Store state of the key
 enum class KeyState
@@ -253,9 +252,11 @@ typedef struct StKeyStatus
   KeyCode  code;
   KeyState state;
   int      scancode;
+
   union
   {
     unsigned modifiers;
+
     struct
     {
       bool shift    : 1;
@@ -291,20 +292,17 @@ enum class StandardCursorType
   DEFAULT          = GLFW_ARROW_CURSOR
 };
 
-class IYukiInpControl : virtual public IYukiObject
+class IInput : virtual public IObject
 {
 public:
-  virtual void
-  AddCursorInputCallback(const String&                name,
-                         const YukiInpCursorCallback& pcallback) = 0;
-  virtual void
-               AddKeyboardInputCallback(const String&                  name,
-                                        const YukiInpKeyboardCallback& pcallback) = 0;
-  virtual void RemoveCursorInputCallback(const String& name)   = 0;
-  virtual void RemoveKeyboardInputCallback(const String& name) = 0;
-  virtual void ExecuteKeyCallbacks(int key, int scancode, int action,
-                                   int modifiers)              = 0;
-  virtual void ExecuteCursorPosCallback(int x, int y)          = 0;
+  virtual void AddCursorInputCallback(const String&                name,
+                                      const YukiInpCursorCallback& pcallback)        = 0;
+  virtual void AddKeyboardInputCallback(const String&                  name,
+                                        const YukiInpKeyboardCallback& pcallback)    = 0;
+  virtual void RemoveCursorInputCallback(const String& name)                         = 0;
+  virtual void RemoveKeyboardInputCallback(const String& name)                       = 0;
+  virtual void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)                                = 0;
 
   virtual void SetCursorStandardStyle(const StandardCursorType& type) = 0;
 
@@ -322,6 +320,6 @@ public:
   virtual bool         IsMouseLocked()                      = 0;
 };
 
-SharedPtr<IYukiInpControl> CreateNewInputControl();
+SharedPtr<IInput> CreateNewInputControl();
 
 } // namespace Yuki::Core

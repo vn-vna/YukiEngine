@@ -19,7 +19,7 @@ namespace Yuki::Core
 
 using Chrono::MiliSeconds;
 
-class YukiThreadPool final : virtual public IYukiThreadPool
+class YukiThreadPool final : virtual public IThreadPool
 {
 public:
   YukiThreadPool(int poolSize, bool oglContext);

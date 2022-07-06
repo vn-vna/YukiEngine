@@ -13,7 +13,7 @@
 namespace Yuki::Core
 {
 
-class YukiObject : virtual public IYukiObject
+class YukiObject : virtual public IObject
 {
 public:
   YukiObject()          = default;
@@ -26,7 +26,7 @@ public:
   void Destroy() override;
 };
 
-class YukiSharedObject : virtual public IYukiSharedObject,
+class YukiSharedObject : virtual public ISharedObject,
                          virtual public YukiObject
 {
 public:

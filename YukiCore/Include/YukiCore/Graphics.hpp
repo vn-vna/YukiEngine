@@ -340,7 +340,7 @@ enum class OpenGLAttribute
 
 // This object is only used once in Application. This is the
 // class controls every graphics actions.
-class IYukiGfxControl : virtual public IYukiObject
+class IGraphics : virtual public IObject
 {
 public:
   virtual void EnableAttribute(OpenGLAttribute attrib, bool cond = true)  = 0;
@@ -350,7 +350,7 @@ public:
 
 // OpenGL Object:
 // OpenGL Object abstraction.
-class IYukiOGLObject : virtual public IYukiSharedObject
+class IOGLObject : virtual public ISharedObject
 {
 public:
   virtual unsigned GetID()      = 0;
@@ -359,7 +359,7 @@ public:
 
 // OpenGL Object:
 // Vertex Buffer Object abstraction.
-class IYukiOGLVertexBuffer : virtual public IYukiOGLObject
+class IOGLVertexBuffer : virtual public IOGLObject
 {
 public:
   virtual void SetBufferData(Vector<float>& data)       = 0;
@@ -368,27 +368,23 @@ public:
 
 // OpenGL Object:
 // Element Buffer Object abstraction.
-class IYukiOGLElementBuffer : virtual public IYukiOGLObject
+class IOGLElementBuffer : virtual public IOGLObject
 {
 public:
-  virtual void SetBufferData(Vector<unsigned>& data)       = 0;
-  virtual void SetBufferData(unsigned* pData, size_t size) = 0;
-  virtual void DrawElements(PrimitiveTopology topology, unsigned start,
-                            unsigned count)                = 0;
-  virtual void DrawAllElements(PrimitiveTopology topology) = 0;
+  virtual void SetBufferData(Vector<unsigned>& data)                                    = 0;
+  virtual void SetBufferData(unsigned* pData, size_t size)                              = 0;
+  virtual void DrawElements(PrimitiveTopology topology, unsigned start, unsigned count) = 0;
+  virtual void DrawAllElements(PrimitiveTopology topology)                              = 0;
 };
 
 // OpenGL Object:
 // Shader Program abstraction.
-class IYukiOGLShaderProgram : virtual public IYukiOGLObject
+class IOGLShaderProgram : virtual public IOGLObject
 {
 public:
-  virtual void UniformMatrix(const String& prop, const Mat2F& mat,
-                             bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat3F& mat,
-                             bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat4F& mat,
-                             bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat2F& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat3F& mat, bool transopse = false) = 0;
+  virtual void UniformMatrix(const String& prop, const Mat4F& mat, bool transopse = false) = 0;
 
   virtual void UniformVector(const String& prop, const Vec2F& vec) = 0;
   virtual void UniformVector(const String& prop, const Vec3F& vec) = 0;
@@ -401,7 +397,7 @@ public:
 
 // OpenGL Object:
 // OpenGL Texture abstraction.
-class IYukiOGLTexture : virtual public IYukiOGLObject
+class IOGLTexture : virtual public IOGLObject
 {
 public:
   virtual void SetTextureMinFilter(TextureMinFilter minFilter)          = 0;
@@ -419,21 +415,18 @@ public:
   virtual void SetStorageData3D(PixelInternalFormat internalFormat, int level,
                                 const Vec3F& size) = 0;
 
-  virtual void SetStorageData1D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec1I& size) = 0;
-  virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec2F& size) = 0;
-  virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec3F& size) = 0;
+  virtual void SetStorageData1D(PixelBasedInternalFormat internalFormat, int level,
+                                const Vec1I& size) = 0;
+  virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat, int level,
+                                const Vec2F& size) = 0;
+  virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level,
+                                const Vec3F& size) = 0;
 
-  virtual void SetTextureData1D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
+  virtual void SetTextureData1D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
                                 const Vec1I& offset, const Vec1I& len)  = 0;
-  virtual void SetTextureData2D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
+  virtual void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
                                 const Vec2I& offset, const Vec2I& size) = 0;
-  virtual void SetTextureData3D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
+  virtual void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
                                 const Vec3I& offset, const Vec3I& size) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
@@ -451,32 +444,31 @@ public:
 
 // OpenGL Object:
 // Render Buffer abstraction
-class IYukiOGLRenderBuffer : virtual public IYukiOGLObject
+class IOGLRenderBuffer : virtual public IOGLObject
 {
 public:
-  virtual void SetBufferStorage(PixelInternalFormat internalFormat,
-                                const Vec2I&        size)                          = 0;
-  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
-                                            const Vec2I& size, int samples) = 0;
+  virtual void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size) = 0;
+  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat, const Vec2I& size,
+                                            int samples)                               = 0;
 };
 
 // OpenGL Container:
 // Vertex Array Object abstraction.
-class IYukiOGLVertexArray : virtual public IYukiOGLObject
+class IOGLVertexArray : virtual public IOGLObject
 {
 public:
-  virtual void EnableAttribute(unsigned attrib)                             = 0;
-  virtual void AttributeBinding(unsigned attrib, unsigned binding)          = 0;
+  virtual void EnableAttribute(unsigned attrib)                      = 0;
+  virtual void AttributeBinding(unsigned attrib, unsigned binding)   = 0;
   virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
-                                  bool normalized = false)                  = 0;
-  virtual void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer,
-                               int bindIndex, size_t offset, size_t stride) = 0;
-  virtual void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer)    = 0;
+                                  bool normalized = false)           = 0;
+  virtual void SetVertexBuffer(SharedPtr<IOGLVertexBuffer> buffer, int bindIndex, size_t offset,
+                               size_t stride)                        = 0;
+  virtual void SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer) = 0;
 };
 
 // OpenGL Container
 // Frame Buffer Object abstraction
-class IYukiOGLFrameBuffer : virtual public IYukiOGLObject
+class IOGLFrameBuffer : virtual public IOGLObject
 {
 public:
   virtual bool IsEnabledStencilTesting() = 0;
@@ -505,38 +497,29 @@ public:
 
   virtual bool BufferOK() = 0;
 
-  virtual void AttachTextureColor(SharedPtr<IYukiOGLTexture> tex,
-                                  unsigned                   position = 0,
-                                  unsigned                   level    = 0)        = 0;
-  virtual void AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex,
-                                  unsigned                   level = 0)        = 0;
-  virtual void AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex,
-                                    unsigned                   level = 0)      = 0;
-  virtual void AttachTextureDepthStencil(SharedPtr<IYukiOGLTexture> tex,
-                                         unsigned level = 0) = 0;
+  virtual void AttachTextureColor(SPIOGLTexture tex, unsigned pos = 0, unsigned lvl = 0) = 0;
+  virtual void AttachTextureDepth(SPIOGLTexture tex, unsigned lvl = 0)                   = 0;
+  virtual void AttachTextureStencil(SPIOGLTexture tex, unsigned lvl = 0)                 = 0;
+  virtual void AttachTextureDepthStencil(SPIOGLTexture tex, unsigned lvl = 0)            = 0;
 
-  virtual void AttachRenderBufferColor(SharedPtr<IYukiOGLRenderBuffer> rbo,
-                                       unsigned position = 0)               = 0;
-  virtual void AttachRenderBufferDepth(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
-  virtual void
-  AttachRenderBufferStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
-  virtual void
-  AttachRenderBufferDepthStencil(SharedPtr<IYukiOGLRenderBuffer> rbo) = 0;
+  virtual void AttachRenderBufferColor(SPIOGLRenderBuffer rbo, unsigned position = 0) = 0;
+  virtual void AttachRenderBufferDepth(SPIOGLRenderBuffer rbo)                        = 0;
+  virtual void AttachRenderBufferStencil(SPIOGLRenderBuffer rbo)                      = 0;
+  virtual void AttachRenderBufferDepthStencil(SPIOGLRenderBuffer rbo)                 = 0;
 };
 
-SharedPtr<IYukiGfxControl>       CreateGraphicsController();
-SharedPtr<IYukiOGLVertexBuffer>  CreateGLVertexBuffer();
-SharedPtr<IYukiOGLElementBuffer> CreateGLElementBuffer();
-SharedPtr<IYukiOGLShaderProgram>
-                                CreateGLShaderProgram(const String& shaderName);
-SharedPtr<IYukiOGLVertexArray>  CreateGLVertexArray();
-SharedPtr<IYukiOGLTexture>      CreateGLTexture(TextureType type);
-SharedPtr<IYukiOGLRenderBuffer> CreateGLRegnderBuffer();
-SharedPtr<IYukiOGLFrameBuffer>  CreateGLFrameBuffer();
+SPIGraphics         CreateGraphicsController();
+SPIOGLVertexBuffer  CreateGLVertexBuffer();
+SPIOGLElementBuffer CreateGLElementBuffer();
+SPIOGLShaderProgram CreateGLShaderProgram(const String& shaderName);
+SPIOGLVertexArray   CreateGLVertexArray();
+SPIOGLTexture       CreateGLTexture(TextureType type);
+SPIOGLRenderBuffer  CreateGLRegnderBuffer();
+SPIOGLFrameBuffer   CreateGLFrameBuffer();
 
-SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec1F& color);
-SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec2F& color);
-SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec3F& color);
-SharedPtr<IYukiOGLTexture> GenerateSolid2DTexture(const Vec4F& color);
+SPIOGLTexture GenerateSolid2DTexture(const Vec1F& color);
+SPIOGLTexture GenerateSolid2DTexture(const Vec2F& color);
+SPIOGLTexture GenerateSolid2DTexture(const Vec3F& color);
+SPIOGLTexture GenerateSolid2DTexture(const Vec4F& color);
 
 } // namespace Yuki::Core

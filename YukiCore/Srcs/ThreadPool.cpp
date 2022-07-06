@@ -29,8 +29,7 @@ YukiThreadPool::YukiThreadPool(int poolSize, bool oglContext)
 
         while (m_bPoolActive)
         {
-          std::unique_lock<std::mutex> locker {m_ActionQueueMutex,
-                                               std::defer_lock};
+          std::unique_lock<std::mutex> locker {m_ActionQueueMutex, std::defer_lock};
 
           locker.lock();
           bool queueEmpty = m_ActionQueue.empty();
@@ -191,18 +190,17 @@ SharedPtr<ThreadPoolManager> GetThreadPoolManager()
   return pTPManager;
 }
 
-SharedPtr<IYukiThreadPool> CreateThreadPool(int poolSize, bool oglContext)
+SharedPtr<IThreadPool> CreateThreadPool(int poolSize, bool oglContext)
 {
   AutoType manager = GetThreadPoolManager();
 
-  AutoType deleter = [manager](IYukiThreadPool* p) {
+  AutoType deleter = [manager](IThreadPool* p) {
     manager->erase(p);
     delete dynamic_cast<YukiThreadPool*>(p);
   };
 
-  SharedPtr<IYukiThreadPool> pThreadPool {
-      dynamic_cast<IYukiThreadPool*>(new YukiThreadPool {poolSize, oglContext}),
-      deleter};
+  SharedPtr<IThreadPool> pThreadPool {
+      dynamic_cast<IThreadPool*>(new YukiThreadPool {poolSize, oglContext}), deleter};
   if (manager->find(pThreadPool.get()) != manager->end())
   {
     THROW_YUKI_ERROR(ThreadPoolManagerDuplicateKey);

@@ -31,12 +31,12 @@ bool IsKeyPressed(KeyCode key);
 bool IsKeyRepeated(KeyCode key);
 bool IsKeyReleased(KeyCode key);
 
-void MoveCameraRight(SharedPtr<IYukiCamera> camera, float speed);
-void MoveCameraLeft(SharedPtr<IYukiCamera> camera, float speed);
-void MoveCameraFront(SharedPtr<IYukiCamera> camera, float speed);
-void MoveCameraBack(SharedPtr<IYukiCamera> camera, float speed);
-void MoveCameraUp(SharedPtr<IYukiCamera> camera, float speed);
-void MoveCameraDown(SharedPtr<IYukiCamera> camera, float speed);
+void MoveCameraRight(SharedPtr<ICamera> camera, float speed);
+void MoveCameraLeft(SharedPtr<ICamera> camera, float speed);
+void MoveCameraFront(SharedPtr<ICamera> camera, float speed);
+void MoveCameraBack(SharedPtr<ICamera> camera, float speed);
+void MoveCameraUp(SharedPtr<ICamera> camera, float speed);
+void MoveCameraDown(SharedPtr<ICamera> camera, float speed);
 
 template <class EntityClass, typename... Args>
 inline SharedPtr<Entity::TemplateEntity> createEntity(Args&&... args)

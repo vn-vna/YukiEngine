@@ -17,29 +17,29 @@
 namespace Yuki::Core
 {
 
-using Comp::IYukiScene;
-using Debug::IYukiLogger;
+using Comp::IScene;
+using Debug::ILogger;
 using Utils::IYukiSystem;
 
-class IYukiApp : virtual public IYukiObject
+class IApplication : virtual public IObject
 {
 public:
   virtual void RunApp()    = 0;
   virtual void Reload()    = 0;
   virtual void Terminate() = 0;
 
-  virtual SharedPtr<IYukiScene>      GetCurrentScene()       = 0;
-  virtual SharedPtr<IYukiGfxControl> GetGraphicsController() = 0;
-  virtual SharedPtr<IYukiInpControl> GetInputController()    = 0;
-  virtual SharedPtr<IYukiWindow>     GetWindow()             = 0;
-  virtual SharedPtr<IYukiLogger>     GetLogger()             = 0;
-  virtual SharedPtr<IYukiThreadPool> GetWorkerPool()         = 0;
-  virtual SharedPtr<IYukiSystem>     GetSystemController()   = 0;
+  virtual SharedPtr<IScene>      GetCurrentScene()       = 0;
+  virtual SharedPtr<IGraphics>   GetGraphicsController() = 0;
+  virtual SharedPtr<IInput>      GetInputController()    = 0;
+  virtual SharedPtr<IWindow>     GetWindow()             = 0;
+  virtual SharedPtr<ILogger>     GetLogger()             = 0;
+  virtual SharedPtr<IThreadPool> GetWorkerPool()         = 0;
+  virtual SharedPtr<IYukiSystem> GetSystemController()   = 0;
 
-  virtual void SetCurrentScene(SharedPtr<IYukiScene> scene) = 0;
+  virtual void SetCurrentScene(SharedPtr<IScene> scene) = 0;
 };
 
-SharedPtr<IYukiApp> CreateYukiApp();
-SharedPtr<IYukiApp> GetYukiApp();
+SharedPtr<IApplication> CreateYukiApp();
+SharedPtr<IApplication> GetYukiApp();
 
 } // namespace Yuki::Core

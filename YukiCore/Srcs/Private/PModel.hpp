@@ -17,7 +17,7 @@ namespace Yuki::Comp
 
 using Core::YukiSharedObject;
 
-class YukiModel final : virtual public IYukiModel,
+class YukiModel final : virtual public IModel,
                         virtual public YukiSharedObject
 {
 public:
@@ -30,7 +30,7 @@ public:
   MeshType     GetMesh(const String& name) override;
 
 
-  void Render(SharedPtr<IYukiCamera> camera) override;
+  void Render(SharedPtr<ICamera> camera) override;
 
   void Create() override;
   void Render() override;

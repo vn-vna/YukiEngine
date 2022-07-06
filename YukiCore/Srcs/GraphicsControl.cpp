@@ -18,7 +18,7 @@ namespace Yuki::Core
 
 /// === TEST CODE
 
-SharedPtr<Comp::IYukiLayer> layer;
+SharedPtr<Comp::ILayer> layer;
 
 /// === TEST CODE
 
@@ -42,12 +42,11 @@ String GetShadingLanguageVersion()
 
 void PrintGraphicProperties()
 {
-  GetYukiApp()->GetLogger()->PushDebugMessage(
-      fmt::format("-- Graphic device information: "
-                  "\n\tVendor: {} \n\tRenderer: "
-                  "{} \n\tShading language version: {}",
-                  GetGraphicsCardVendorName(), GetGraphicsCardRendererName(),
-                  GetShadingLanguageVersion()));
+  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format(
+      "-- Graphic device information: "
+      "\n\tVendor: {} \n\tRenderer: "
+      "{} \n\tShading language version: {}",
+      GetGraphicsCardVendorName(), GetGraphicsCardRendererName(), GetShadingLanguageVersion()));
 }
 
 YukiGfxControl::YukiGfxControl() = default;
@@ -114,9 +113,9 @@ void YukiGfxControl::Destroy()
   layer->Release();
 }
 
-SharedPtr<IYukiGfxControl> CreateGraphicsController()
+SharedPtr<IGraphics> CreateGraphicsController()
 {
-  return CreateInterfaceInstance<IYukiGfxControl, YukiGfxControl>();
+  return CreateInterfaceInstance<IGraphics, YukiGfxControl>();
 }
 
 } // namespace Yuki::Core

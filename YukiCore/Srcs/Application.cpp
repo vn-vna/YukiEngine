@@ -16,7 +16,7 @@ using Debug::Errors;
 using Utils::CreateYukiSystemControl;
 using Utils::IYukiSystem;
 
-SharedPtr<IYukiApp> g_pGlobalApplication(nullptr);
+SharedPtr<IApplication> g_pGlobalApplication(nullptr);
 
 YukiApp::YukiApp()
     : m_bAlive(false),
@@ -36,32 +36,32 @@ YukiApp::YukiApp()
 
 YukiApp::~YukiApp() = default;
 
-SharedPtr<IYukiScene> YukiApp::GetCurrentScene()
+SharedPtr<IScene> YukiApp::GetCurrentScene()
 {
   return m_pCurrentScene;
 }
 
-SharedPtr<IYukiGfxControl> YukiApp::GetGraphicsController()
+SharedPtr<IGraphics> YukiApp::GetGraphicsController()
 {
   return m_pGfxController;
 }
 
-SharedPtr<IYukiInpControl> YukiApp::GetInputController()
+SharedPtr<IInput> YukiApp::GetInputController()
 {
   return m_pInputController;
 }
 
-SharedPtr<IYukiLogger> YukiApp::GetLogger()
+SharedPtr<ILogger> YukiApp::GetLogger()
 {
   return m_pLogger;
 }
 
-SharedPtr<IYukiThreadPool> YukiApp::GetWorkerPool()
+SharedPtr<IThreadPool> YukiApp::GetWorkerPool()
 {
   return m_pWorkerPool;
 }
 
-SharedPtr<IYukiWindow> YukiApp::GetWindow()
+SharedPtr<IWindow> YukiApp::GetWindow()
 {
   return m_pWindow;
 }
@@ -171,7 +171,7 @@ void YukiApp::Destroy()
   }
 }
 
-void YukiApp::SetCurrentScene(SharedPtr<IYukiScene> scene)
+void YukiApp::SetCurrentScene(SharedPtr<IScene> scene)
 {
   m_pCurrentScene = scene;
 }
@@ -186,17 +186,17 @@ void YukiApp::Terminate()
   m_bWillTerminate = true;
 }
 
-SharedPtr<IYukiApp> CreateYukiApp()
+SharedPtr<IApplication> CreateYukiApp()
 {
   if (g_pGlobalApplication.get())
   {
     THROW_YUKI_ERROR(AppCreated);
   }
-  g_pGlobalApplication = CreateInterfaceInstance<IYukiApp, YukiApp>();
+  g_pGlobalApplication = CreateInterfaceInstance<IApplication, YukiApp>();
   return g_pGlobalApplication;
 }
 
-SharedPtr<IYukiApp> GetYukiApp()
+SharedPtr<IApplication> GetYukiApp()
 {
   return g_pGlobalApplication;
 }

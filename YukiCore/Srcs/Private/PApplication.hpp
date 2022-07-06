@@ -23,11 +23,11 @@
 namespace Yuki::Core
 {
 
-using Comp::IYukiScene;
-using Debug::IYukiLogger;
+using Comp::IScene;
+using Debug::ILogger;
 using Utils::IYukiSystem;
 
-class YukiApp final : virtual public IYukiApp,
+class YukiApp final : virtual public IApplication,
                       virtual public YukiObject
 {
 public:
@@ -38,15 +38,15 @@ public:
   void Terminate() override;
   void RunApp() override;
 
-  SharedPtr<IYukiScene>      GetCurrentScene() override;
-  SharedPtr<IYukiGfxControl> GetGraphicsController() override;
-  SharedPtr<IYukiInpControl> GetInputController() override;
-  SharedPtr<IYukiWindow>     GetWindow() override;
-  SharedPtr<IYukiLogger>     GetLogger() override;
-  SharedPtr<IYukiThreadPool> GetWorkerPool() override;
-  SharedPtr<IYukiSystem>     GetSystemController() override;
+  SharedPtr<IScene>      GetCurrentScene() override;
+  SharedPtr<IGraphics>   GetGraphicsController() override;
+  SharedPtr<IInput>      GetInputController() override;
+  SharedPtr<IWindow>     GetWindow() override;
+  SharedPtr<ILogger>     GetLogger() override;
+  SharedPtr<IThreadPool> GetWorkerPool() override;
+  SharedPtr<IYukiSystem> GetSystemController() override;
 
-  void SetCurrentScene(SharedPtr<IYukiScene> scene) override;
+  void SetCurrentScene(SharedPtr<IScene> scene) override;
 
   void Create() override;
   void Awake() override;
@@ -54,18 +54,18 @@ public:
   void Destroy() override;
 
 private:
-  SharedPtr<IYukiWindow>     m_pWindow;
-  SharedPtr<IYukiGfxControl> m_pGfxController;
-  SharedPtr<IYukiInpControl> m_pInputController;
-  SharedPtr<IYukiLogger>     m_pLogger;
-  SharedPtr<IYukiScene>      m_pCurrentScene;
-  SharedPtr<IYukiThreadPool> m_pWorkerPool;
-  SharedPtr<IYukiSystem>     m_pSysCtrl;
-  Atomic<bool>               m_bAlive;
-  Atomic<bool>               m_bWillCreate;
-  Atomic<bool>               m_bWillDestroy;
-  Atomic<bool>               m_bWillUpdate;
-  Atomic<bool>               m_bWillTerminate;
+  SharedPtr<IWindow>     m_pWindow;
+  SharedPtr<IGraphics>   m_pGfxController;
+  SharedPtr<IInput>      m_pInputController;
+  SharedPtr<ILogger>     m_pLogger;
+  SharedPtr<IScene>      m_pCurrentScene;
+  SharedPtr<IThreadPool> m_pWorkerPool;
+  SharedPtr<IYukiSystem> m_pSysCtrl;
+  Atomic<bool>           m_bAlive;
+  Atomic<bool>           m_bWillCreate;
+  Atomic<bool>           m_bWillDestroy;
+  Atomic<bool>           m_bWillUpdate;
+  Atomic<bool>           m_bWillTerminate;
 };
 
 } // namespace Yuki::Core

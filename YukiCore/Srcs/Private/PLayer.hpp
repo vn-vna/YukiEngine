@@ -11,24 +11,25 @@
 #include "YukiComp/Layer.hpp"
 
 #include "PObjects.hpp"
+#include "YukiCore/Objects.hpp"
 
 namespace Yuki::Comp
 {
 
 using Core::YukiSharedObject;
 
-class YukiLayer final : virtual public IYukiLayer,
+class YukiLayer final : virtual public ILayer,
                         virtual public YukiSharedObject
 {
 public:
   YukiLayer(unsigned width, unsigned height);
   ~YukiLayer() override;
 
-  SharedPtr<IYukiOGLFrameBuffer>  GetFrameBuffer() override;
-  SharedPtr<IYukiOGLRenderBuffer> GetRenderBuffer() override;
-  SharedPtr<IYukiOGLTexture>      GetDepthTexture() override;
-  SharedPtr<IYukiOGLTexture>      GetStencilTexture() override;
-  SharedPtr<IYukiOGLTexture>      GetColorTexture() override;
+  SPIOGLFrameBuffer  GetFrameBuffer() override;
+  SPIOGLRenderBuffer GetRenderBuffer() override;
+  SPIOGLTexture      GetDepthTexture() override;
+  SPIOGLTexture      GetStencilTexture() override;
+  SPIOGLTexture      GetColorTexture() override;
 
   void Create() override;
   void Awake() override;
@@ -37,11 +38,11 @@ public:
   void Destroy() override;
 
 private:
-  SharedPtr<IYukiOGLFrameBuffer>  m_pFrameBuffer;
-  SharedPtr<IYukiOGLRenderBuffer> m_pRenderBuffer;
-  SharedPtr<IYukiOGLTexture>      m_pDepthTexture;
-  SharedPtr<IYukiOGLTexture>      m_pStencilTexture;
-  SharedPtr<IYukiOGLTexture>      m_pColorTexture;
+  SPIOGLFrameBuffer  m_pFrameBuffer;
+  SPIOGLRenderBuffer m_pRenderBuffer;
+  SPIOGLTexture      m_pDepthTexture;
+  SPIOGLTexture      m_pStencilTexture;
+  SPIOGLTexture      m_pColorTexture;
 
   unsigned m_nWidth;
   unsigned m_nHeight;

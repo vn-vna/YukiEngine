@@ -24,10 +24,10 @@ using ThreadID          = std::thread::id;
 using ConditionVariable = std::condition_variable;
 using Mutex             = std::mutex;
 
-typedef UnorderedSet<IYukiThreadPool*> ThreadPoolManager;
-typedef VoidNParamCallback             CallbackFunc;
+typedef UnorderedSet<IThreadPool*> ThreadPoolManager;
+typedef VoidNParamCallback         CallbackFunc;
 
-class IYukiThreadPool
+class IThreadPool
 {
 public:
   virtual void Start()                                = 0;
@@ -49,7 +49,6 @@ public:
 unsigned                     GetHardwareConcurrency();
 void                         InvokeAllThreads();
 SharedPtr<ThreadPoolManager> GetThreadPoolManager();
-SharedPtr<IYukiThreadPool>   CreateThreadPool(int  poolSize   = -1,
-                                              bool oglContext = true);
+SharedPtr<IThreadPool>       CreateThreadPool(int poolSize = -1, bool oglContext = true);
 
 } // namespace Yuki::Core

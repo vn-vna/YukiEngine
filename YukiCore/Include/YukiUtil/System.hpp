@@ -14,7 +14,7 @@
 namespace Yuki::Utils
 {
 
-using Core::IYukiObject;
+using Core::IObject;
 
 enum class ProcessorArchitecture
 {
@@ -64,7 +64,7 @@ typedef struct StSysInfo
   String brandName;
 } SysInfo;
 
-class IYukiSystem : virtual public IYukiObject
+class IYukiSystem : virtual public IObject
 {
 public:
   virtual const CpuInformation&       GetCpuInformation()       = 0;

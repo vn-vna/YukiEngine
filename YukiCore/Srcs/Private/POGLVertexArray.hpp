@@ -16,7 +16,7 @@
 namespace Yuki::Core
 {
 
-class YukiOGLVertexArray final : virtual public IYukiOGLVertexArray,
+class YukiOGLVertexArray final : virtual public IOGLVertexArray,
                                  virtual public YukiSharedObject
 {
 public:
@@ -31,11 +31,10 @@ public:
 
   void EnableAttribute(unsigned attrib) override;
   void AttributeBinding(unsigned attrib, unsigned binding) override;
-  void SetVertexBuffer(SharedPtr<IYukiOGLVertexBuffer> buffer, int bindIndex,
-                       size_t offset, size_t stride) override;
-  void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
-                          bool normalized) override;
-  void SetElementBuffer(SharedPtr<IYukiOGLElementBuffer> buffer) override;
+  void SetVertexBuffer(SharedPtr<IOGLVertexBuffer> buffer, int bindIndex, size_t offset,
+                       size_t stride) override;
+  void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset, bool normalized) override;
+  void SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer) override;
 
 private:
   unsigned m_nVaoID;

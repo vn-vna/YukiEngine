@@ -25,10 +25,10 @@ class SystemControl : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
-  Yuki::SharedPtr<Yuki::Core::IYukiApp>        pApp;
-  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Debug::IYukiLogger>    pLogger;
+  Yuki::SharedPtr<Yuki::Core::IApplication>        pApp;
+  Yuki::SharedPtr<Yuki::Core::IInput> pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::ICamera>     pCamera;
+  Yuki::SharedPtr<Yuki::Debug::ILogger>    pLogger;
   Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
   bool                                         bDefaultCursor;
 

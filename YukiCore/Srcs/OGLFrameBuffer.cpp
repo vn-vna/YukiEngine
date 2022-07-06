@@ -132,59 +132,47 @@ bool YukiOGLFrameBuffer::BufferOK()
   return glCheckNamedFramebufferStatus(m_nFboID, GL_FRAMEBUFFER);
 }
 
-void YukiOGLFrameBuffer::AttachTextureColor(SharedPtr<IYukiOGLTexture> tex,
-                                            unsigned position, unsigned level)
+void YukiOGLFrameBuffer::AttachTextureColor(SharedPtr<IOGLTexture> tex, unsigned position,
+                                            unsigned level)
 {
-  glNamedFramebufferTexture(m_nFboID, GL_COLOR_ATTACHMENT0 + position,
-                            tex->GetID(), level);
+  glNamedFramebufferTexture(m_nFboID, GL_COLOR_ATTACHMENT0 + position, tex->GetID(), level);
 }
 
-void YukiOGLFrameBuffer::AttachTextureDepth(SharedPtr<IYukiOGLTexture> tex,
-                                            unsigned                   level)
+void YukiOGLFrameBuffer::AttachTextureDepth(SharedPtr<IOGLTexture> tex, unsigned level)
 {
   glNamedFramebufferTexture(m_nFboID, GL_DEPTH_ATTACHMENT, tex->GetID(), level);
 }
 
-void YukiOGLFrameBuffer::AttachTextureStencil(SharedPtr<IYukiOGLTexture> tex,
-                                              unsigned                   level)
+void YukiOGLFrameBuffer::AttachTextureStencil(SharedPtr<IOGLTexture> tex, unsigned level)
 {
-  glNamedFramebufferTexture(m_nFboID, GL_STENCIL_ATTACHMENT, tex->GetID(),
-                            level);
+  glNamedFramebufferTexture(m_nFboID, GL_STENCIL_ATTACHMENT, tex->GetID(), level);
 }
 
-void YukiOGLFrameBuffer::AttachTextureDepthStencil(
-    SharedPtr<IYukiOGLTexture> tex, unsigned level)
+void YukiOGLFrameBuffer::AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex, unsigned level)
 {
-  glNamedFramebufferTexture(m_nFboID, GL_DEPTH_STENCIL_ATTACHMENT, tex->GetID(),
-                            level);
+  glNamedFramebufferTexture(m_nFboID, GL_DEPTH_STENCIL_ATTACHMENT, tex->GetID(), level);
 }
 
-void YukiOGLFrameBuffer::AttachRenderBufferColor(
-    SharedPtr<IYukiOGLRenderBuffer> rbo, unsigned position)
+void YukiOGLFrameBuffer::AttachRenderBufferColor(SharedPtr<IOGLRenderBuffer> rbo, unsigned position)
 {
-  glNamedFramebufferRenderbuffer(m_nFboID, GL_COLOR_ATTACHMENT0 + position,
-                                 GL_RENDERBUFFER, rbo->GetID());
-}
-
-void YukiOGLFrameBuffer::AttachRenderBufferDepth(
-    SharedPtr<IYukiOGLRenderBuffer> rbo)
-{
-  glNamedFramebufferRenderbuffer(m_nFboID, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+  glNamedFramebufferRenderbuffer(m_nFboID, GL_COLOR_ATTACHMENT0 + position, GL_RENDERBUFFER,
                                  rbo->GetID());
 }
 
-void YukiOGLFrameBuffer::AttachRenderBufferStencil(
-    SharedPtr<IYukiOGLRenderBuffer> rbo)
+void YukiOGLFrameBuffer::AttachRenderBufferDepth(SharedPtr<IOGLRenderBuffer> rbo)
 {
-  glNamedFramebufferRenderbuffer(m_nFboID, GL_STENCIL_ATTACHMENT,
-                                 GL_RENDERBUFFER, rbo->GetID());
+  glNamedFramebufferRenderbuffer(m_nFboID, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rbo->GetID());
 }
 
-void YukiOGLFrameBuffer::AttachRenderBufferDepthStencil(
-    SharedPtr<IYukiOGLRenderBuffer> rbo)
+void YukiOGLFrameBuffer::AttachRenderBufferStencil(SharedPtr<IOGLRenderBuffer> rbo)
 {
-  glNamedFramebufferRenderbuffer(m_nFboID, GL_DEPTH_STENCIL_ATTACHMENT,
-                                 GL_RENDERBUFFER, rbo->GetID());
+  glNamedFramebufferRenderbuffer(m_nFboID, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo->GetID());
+}
+
+void YukiOGLFrameBuffer::AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo)
+{
+  glNamedFramebufferRenderbuffer(m_nFboID, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                 rbo->GetID());
 }
 
 void YukiOGLFrameBuffer::Create()
@@ -202,8 +190,7 @@ void YukiOGLFrameBuffer::Render()
   this->BindObject();
   gfxControl->SetAttributeStatus(OpenGLAttribute::ALPHA_TEST, m_bAlphaTest);
   gfxControl->SetAttributeStatus(OpenGLAttribute::DEPTH_TEST, m_bDepthTest);
-  gfxControl->SetAttributeStatus(OpenGLAttribute::STENCIL_TEST,
-                                 m_bStencilTesting);
+  gfxControl->SetAttributeStatus(OpenGLAttribute::STENCIL_TEST, m_bStencilTesting);
   gfxControl->SetAttributeStatus(OpenGLAttribute::BLEND_MODE, m_bBlendMode);
   gfxControl->SetAttributeStatus(OpenGLAttribute::DITHER, m_bDither);
   gfxControl->SetAttributeStatus(OpenGLAttribute::LINE_SMOOTH, m_bLineSmooth);
@@ -217,9 +204,9 @@ void YukiOGLFrameBuffer::Destroy()
   glDeleteFramebuffers(1, &m_nFboID);
 }
 
-SharedPtr<IYukiOGLFrameBuffer> CreateGLFrameBuffer()
+SharedPtr<IOGLFrameBuffer> CreateGLFrameBuffer()
 {
-  return CreateInterfaceInstance<IYukiOGLFrameBuffer, YukiOGLFrameBuffer>();
+  return CreateInterfaceInstance<IOGLFrameBuffer, YukiOGLFrameBuffer>();
 }
 
 } // namespace Yuki::Core

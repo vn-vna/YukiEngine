@@ -15,13 +15,13 @@
 namespace Yuki::Entity
 {
 
-using Comp::IYukiModel;
+using Comp::IModel;
 
-typedef SharedPtr<IYukiModel> ModelType;
+typedef SharedPtr<IModel> ModelType;
 
-extern SharedPtr<IYukiModel> NO_MODEL;
+extern SharedPtr<IModel> NO_MODEL;
 
-class TemplateEntity : virtual public Core::IYukiObject
+class TemplateEntity : virtual public Core::IObject
 {
 
 protected:

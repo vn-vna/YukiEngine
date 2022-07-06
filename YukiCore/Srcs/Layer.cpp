@@ -25,27 +25,27 @@ YukiLayer::YukiLayer(unsigned width, unsigned height)
 
 YukiLayer::~YukiLayer() = default;
 
-SharedPtr<IYukiOGLFrameBuffer> YukiLayer::GetFrameBuffer()
+SPIOGLFrameBuffer YukiLayer::GetFrameBuffer()
 {
   return m_pFrameBuffer;
 }
 
-SharedPtr<IYukiOGLRenderBuffer> YukiLayer::GetRenderBuffer()
+SPIOGLRenderBuffer YukiLayer::GetRenderBuffer()
 {
   return m_pRenderBuffer;
 }
 
-SharedPtr<IYukiOGLTexture> YukiLayer::GetDepthTexture()
+SPIOGLTexture YukiLayer::GetDepthTexture()
 {
   return m_pDepthTexture;
 }
 
-SharedPtr<IYukiOGLTexture> YukiLayer::GetStencilTexture()
+SPIOGLTexture YukiLayer::GetStencilTexture()
 {
   return m_pStencilTexture;
 }
 
-SharedPtr<IYukiOGLTexture> YukiLayer::GetColorTexture()
+SPIOGLTexture YukiLayer::GetColorTexture()
 {
   return m_pColorTexture;
 }
@@ -59,9 +59,8 @@ void YukiLayer::Create()
   m_pColorTexture->Require();
   m_pColorTexture->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4,
                                     Vec2F {m_nWidth, m_nHeight});
-  m_pColorTexture->SetTextureData2D(nullptr, 0,
-                                    Core::PixelBasedInternalFormat::RGBA,
-                                    {0, 0}, {m_nWidth, m_nHeight});
+  m_pColorTexture->SetTextureData2D(nullptr, 0, Core::PixelBasedInternalFormat::RGBA, {0, 0},
+                                    {m_nWidth, m_nHeight});
   m_pColorTexture->SetTextureMagFilter(Core::TextureMagFilter::LINEAR);
   m_pColorTexture->SetTextureMinFilter(Core::TextureMinFilter::LINEAR);
 
@@ -87,11 +86,9 @@ void YukiLayer::Destroy()
   m_pFrameBuffer->Release();
 }
 
-SharedPtr<IYukiLayer> CreateYukiLayer(unsigned width, unsigned height,
-                                      unsigned multiSample)
+SharedPtr<ILayer> CreateYukiLayer(unsigned width, unsigned height, unsigned multiSample)
 {
-  AutoType layer =
-      Core::CreateInterfaceInstance<IYukiLayer, YukiLayer>(width, height);
+  AutoType layer = Core::CreateInterfaceInstance<ILayer, YukiLayer>(width, height);
   return layer;
 }
 

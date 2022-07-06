@@ -3,8 +3,7 @@
 #include "Private/POGLShaderProgram.hpp"
 
 Yuki::String   loadShaderSourceFromFile(const Yuki::String& path);
-const unsigned createShaderFromSource(GLenum              shaderTypem,
-                                      const Yuki::String& shaderSource);
+const unsigned createShaderFromSource(GLenum shaderTypem, const Yuki::String& shaderSource);
 
 Yuki::String loadShaderSourceFromFile(const Yuki::String& path)
 {
@@ -19,8 +18,7 @@ Yuki::String loadShaderSourceFromFile(const Yuki::String& path)
   return sstr.str();
 }
 
-const unsigned createShaderFromSource(GLenum              shaderType,
-                                      const Yuki::String& shaderSource)
+const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& shaderSource)
 {
   const char* pSource = shaderSource.c_str();
   int         status;
@@ -45,7 +43,7 @@ const unsigned createShaderFromSource(GLenum              shaderType,
 namespace Yuki::Core
 {
 
-YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
+OGLShaderProgram::OGLShaderProgram(const String& shaderName)
     : m_nSPId()
 {
   m_VSShaderFile = shaderName + ".vert";
@@ -53,19 +51,19 @@ YukiOGLShaderProgram::YukiOGLShaderProgram(const String& shaderName)
   m_GSShaderFile = shaderName + ".geom";
 }
 
-YukiOGLShaderProgram::~YukiOGLShaderProgram() = default;
+OGLShaderProgram::~OGLShaderProgram() = default;
 
-unsigned YukiOGLShaderProgram::GetID()
+unsigned OGLShaderProgram::GetID()
 {
   return m_nSPId;
 }
 
-void YukiOGLShaderProgram::BindObject()
+void OGLShaderProgram::BindObject()
 {
   glUseProgram(m_nSPId);
 }
 
-void YukiOGLShaderProgram::Create()
+void OGLShaderProgram::Create()
 {
   String vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   String fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
@@ -97,19 +95,19 @@ void YukiOGLShaderProgram::Create()
   m_nSPId = pid;
 }
 
-void YukiOGLShaderProgram::Destroy()
+void OGLShaderProgram::Destroy()
 {
   glDeleteProgram(m_nSPId);
 }
 
-bool YukiOGLShaderProgram::OnUse()
+bool OGLShaderProgram::OnUse()
 {
   int activeProgram;
   glGetIntegerv(GL_CURRENT_PROGRAM, &activeProgram);
   return activeProgram == m_nSPId;
 }
 
-unsigned YukiOGLShaderProgram::GetUniformLocation(const String& prop)
+unsigned OGLShaderProgram::GetUniformLocation(const String& prop)
 {
   if (OnUse())
   {
@@ -121,13 +119,12 @@ unsigned YukiOGLShaderProgram::GetUniformLocation(const String& prop)
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat,
-                                         bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat, bool transpose)
 {
   try
   {
-    glUniformMatrix2fv(GetUniformLocation(prop), 1,
-                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
+    glUniformMatrix2fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
+                       glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -135,13 +132,12 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat,
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat,
-                                         bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat, bool transpose)
 {
   try
   {
-    glUniformMatrix3fv(GetUniformLocation(prop), 1,
-                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
+    glUniformMatrix3fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
+                       glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -149,13 +145,12 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat,
   }
 }
 
-void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat,
-                                         bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat, bool transpose)
 {
   try
   {
-    glUniformMatrix4fv(GetUniformLocation(prop), 1,
-                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
+    glUniformMatrix4fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
+                       glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -163,7 +158,7 @@ void YukiOGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat,
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec2F& vec)
+void OGLShaderProgram::UniformVector(const String& prop, const Vec2F& vec)
 {
   try
   {
@@ -175,7 +170,7 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec2F& vec)
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec3F& vec)
+void OGLShaderProgram::UniformVector(const String& prop, const Vec3F& vec)
 {
   try
   {
@@ -187,7 +182,7 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec3F& vec)
   }
 }
 
-void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec4F& vec)
+void OGLShaderProgram::UniformVector(const String& prop, const Vec4F& vec)
 {
   try
   {
@@ -199,7 +194,7 @@ void YukiOGLShaderProgram::UniformVector(const String& prop, const Vec4F& vec)
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const String& prop, bool value)
+void OGLShaderProgram::UniformValue(const String& prop, bool value)
 {
   try
   {
@@ -211,7 +206,7 @@ void YukiOGLShaderProgram::UniformValue(const String& prop, bool value)
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const String& prop, int value)
+void OGLShaderProgram::UniformValue(const String& prop, int value)
 {
   try
   {
@@ -223,7 +218,7 @@ void YukiOGLShaderProgram::UniformValue(const String& prop, int value)
   }
 }
 
-void YukiOGLShaderProgram::UniformValue(const String& prop, float value)
+void OGLShaderProgram::UniformValue(const String& prop, float value)
 {
   try
   {
@@ -235,10 +230,9 @@ void YukiOGLShaderProgram::UniformValue(const String& prop, float value)
   }
 }
 
-SharedPtr<IYukiOGLShaderProgram> CreateGLShaderProgram(const String& shaderName)
+SharedPtr<IOGLShaderProgram> CreateGLShaderProgram(const String& shaderName)
 {
-  return CreateInterfaceInstance<IYukiOGLShaderProgram, YukiOGLShaderProgram>(
-      shaderName);
+  return CreateInterfaceInstance<IOGLShaderProgram, OGLShaderProgram>(shaderName);
 }
 
 } // namespace Yuki::Core
