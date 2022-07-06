@@ -1,9 +1,9 @@
-#include <YukiCore/YukiApplication.hpp>
-#include <YukiComp/YukiCamera.hpp>
-#include <YukiComp/YukiScene.hpp>
-#include <YukiUtil/YukiChrono.hpp>
-#include <YukiCore/YukiThreadPool.hpp>
-#include <YukiUtil/YukiSystem.hpp>
+#include <YukiCore/Application.hpp>
+#include <YukiComp/Camera.hpp>
+#include <YukiComp/Scene.hpp>
+#include <YukiUtil/Chrono.hpp>
+#include <YukiCore/ThreadPool.hpp>
+#include <YukiUtil/System.hpp>
 
 #include "TestEntity.hpp"
 #include "CameraController.hpp"

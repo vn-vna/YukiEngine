@@ -1,4 +1,4 @@
-#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/Application.hpp"
 #include "YukiEntity/Entity.hpp"
 
 namespace Yuki::Entity

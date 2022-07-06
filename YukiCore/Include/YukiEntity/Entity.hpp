@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiObject.hpp"
-#include "YukiComp/YukiModel.hpp"
+#include "YukiCore/Headers.hpp"
+#include "YukiCore/Objects.hpp"
+#include "YukiComp/Model.hpp"
 
 namespace Yuki::Entity
 {

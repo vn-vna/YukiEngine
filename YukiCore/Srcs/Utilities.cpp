@@ -1,6 +1,6 @@
-#include "YukiCore/YukiPCH.hpp"
+#include "YukiCore/Headers.hpp"
 
-#include "YukiUtil/YukiUtilities.hpp"
+#include "YukiUtil/Utilities.hpp"
 
 const char* ws = " \t\n\r\f\v";
 

@@ -7,14 +7,14 @@
 
 #pragma once
 
-#include "YukiCore/YukiInputCtrl.hpp"
-#include <YukiCore/YukiPCH.hpp>
-#include <YukiCore/YukiApplication.hpp>
-#include <YukiDebug/YukiLogger.hpp>
+#include "YukiCore/Input.hpp"
+#include <YukiCore/Headers.hpp>
+#include <YukiCore/Application.hpp>
+#include <YukiDebug/Loggers.hpp>
 #include <YukiEntity/Entity.hpp>
-#include <YukiUtil/YukiChrono.hpp>
-#include <YukiUtil/YukiUtilities.hpp>
-#include <YukiUtil/YukiSystem.hpp>
+#include <YukiUtil/Chrono.hpp>
+#include <YukiUtil/Utilities.hpp>
+#include <YukiUtil/System.hpp>
 
 #include <fmt/format.h>
 

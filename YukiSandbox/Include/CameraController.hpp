@@ -8,7 +8,7 @@
 #pragma once
 
 #include <YukiEntity/Entity.hpp>
-#include <YukiUtil/YukiUtilities.hpp>
+#include <YukiUtil/Utilities.hpp>
 
 using Yuki::Utils::IsKeyReleased;
 using Yuki::Core::KeyCode;
