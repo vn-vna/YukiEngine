@@ -16,7 +16,7 @@
 #include "PObjects.hpp"
 
 // glm
-#include "clion-dbg/vcpkg_installed/x64-windows/include/glm/gtc/type_ptr.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace Yuki::Core
 {

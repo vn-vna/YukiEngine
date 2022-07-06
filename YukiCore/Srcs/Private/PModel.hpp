@@ -12,9 +12,6 @@
 
 #include "PObjects.hpp"
 
-// glm
-#include "clion-dbg/vcpkg_installed/x64-windows/include/glm/mat4x4.hpp"
-
 namespace Yuki::Comp
 {
 
