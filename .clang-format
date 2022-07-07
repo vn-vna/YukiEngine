@@ -1,4 +1,5 @@
 BasedOnStyle: LLVM
+
 AlignAfterOpenBracket: DontAlign
 AllowShortBlocksOnASingleLine: true
 AllowShortFunctionsOnASingleLine: None 

@@ -11,8 +11,6 @@
 namespace Yuki::Chrono
 {
 
-using Core::CreateInterfaceInstance;
-
 static SharedPtr<TimerManager> pManager;
 
 YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool parallel)

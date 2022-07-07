@@ -39,6 +39,11 @@ protected:
   int      m_nChannel;
 };
 
+class TextureInstruction
+{
+
+};
+
 SharedPtr<Images> CreateSolidColorImage(const Vec1F& color, const Vec2I& size = {10, 10});
 SharedPtr<Images> CreateSolidColorImage(const Vec2F& color, const Vec2I& size = {10, 10});
 SharedPtr<Images> CreateSolidColorImage(const Vec3F& color, const Vec2I& size = {10, 10});

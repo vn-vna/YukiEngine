@@ -96,6 +96,7 @@ SharedPtr<IModel> LoadModel(String fileName, String modelName)
 
   AutoType defaultTex = GenerateSolid2DTexture({1.0f, 0.4f, 0.0f, 1.0f});
 
+  // TODO: Assimp model loader cause memory leak
   Assimp::Importer importer = {};
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
