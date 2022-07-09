@@ -7,14 +7,14 @@
 
 #pragma once
 
-#include "YukiCore/YukiInputCtrl.hpp"
-#include <YukiCore/YukiPCH.hpp>
-#include <YukiCore/YukiApplication.hpp>
-#include <YukiDebug/YukiLogger.hpp>
+#include "YukiCore/Input.hpp"
+#include <YukiCore/Headers.hpp>
+#include <YukiCore/Application.hpp>
+#include <YukiDebug/Loggers.hpp>
 #include <YukiEntity/Entity.hpp>
-#include <YukiUtil/YukiChrono.hpp>
-#include <YukiUtil/YukiUtilities.hpp>
-#include <YukiUtil/YukiSystem.hpp>
+#include <YukiUtil/Chrono.hpp>
+#include <YukiUtil/Utilities.hpp>
+#include <YukiUtil/System.hpp>
 
 #include <fmt/format.h>
 
@@ -25,10 +25,10 @@ class SystemControl : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
   Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
-  Yuki::SharedPtr<Yuki::Core::IYukiApp>        pApp;
-  Yuki::SharedPtr<Yuki::Core::IYukiInpControl> pInpControl;
-  Yuki::SharedPtr<Yuki::Comp::IYukiCamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Debug::IYukiLogger>    pLogger;
+  Yuki::SharedPtr<Yuki::Core::IApplication>        pApp;
+  Yuki::SharedPtr<Yuki::Core::IInput> pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::ICamera>     pCamera;
+  Yuki::SharedPtr<Yuki::Debug::ILogger>    pLogger;
   Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
   bool                                         bDefaultCursor;
 

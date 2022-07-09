@@ -8,20 +8,20 @@
 
 #pragma once
 
-#include "YukiCore/YukiPCH.hpp"
-#include "YukiCore/YukiObject.hpp"
-#include "YukiComp/YukiModel.hpp"
+#include "YukiCore/Headers.hpp"
+#include "YukiCore/Objects.hpp"
+#include "YukiComp/Model.hpp"
 
 namespace Yuki::Entity
 {
 
-using Comp::IYukiModel;
+using Comp::IModel;
 
-typedef SharedPtr<IYukiModel> ModelType;
+typedef SharedPtr<IModel> ModelType;
 
-extern SharedPtr<IYukiModel> NO_MODEL;
+extern SharedPtr<IModel> NO_MODEL;
 
-class TemplateEntity : virtual public Core::IYukiObject
+class TemplateEntity : virtual public Core::IObject
 {
 
 protected:
