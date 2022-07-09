@@ -97,7 +97,7 @@ target_link_directories(
 )
 target_precompile_headers(
   yuki-core
-  PUBLIC "${YUKICORE_INCLUDE_DIR}/YukiCore/YukiPCH.hpp"
+  PUBLIC "${YUKICORE_INCLUDE_DIR}/YukiCore/Headers.hpp"
 )
 
 find_package(assimp CONFIG REQUIRED)

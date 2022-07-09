@@ -13,7 +13,7 @@
 #include <iostream>
 #include <thread>
 
-#include <YukiUtil/YukiRandomMachine.hpp>
+#include <YukiUtil/Randoms.hpp>
 
 int main()
 {

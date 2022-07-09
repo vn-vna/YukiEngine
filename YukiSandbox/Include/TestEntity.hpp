@@ -1,6 +1,6 @@
 #pragma once
 
-#include <YukiCore/YukiApplication.hpp>
+#include <YukiCore/Application.hpp>
 #include <YukiEntity/Entity.hpp>
 
 class TestEntity : virtual public Yuki::Entity::TemplateEntity
@@ -21,7 +21,7 @@ public:
 
 inline void TestEntity::OnCreate()
 {
-  Yuki::SharedPtr<Yuki::Comp::IYukiModel> testModel = Yuki::Comp::LoadModel("sphere.fbx", "Sphere");
+  Yuki::SharedPtr<Yuki::Comp::IModel> testModel = Yuki::Comp::LoadModel("sphere.fbx", "Sphere");
   this->SetModel(testModel);
 }
 

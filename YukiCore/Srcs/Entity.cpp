@@ -1,4 +1,4 @@
-#include "YukiCore/YukiApplication.hpp"
+#include "YukiCore/Application.hpp"
 #include "YukiEntity/Entity.hpp"
 
 namespace Yuki::Entity
@@ -6,7 +6,7 @@ namespace Yuki::Entity
 
 using Core::GetYukiApp;
 
-SharedPtr<IYukiModel> NO_MODEL = SharedPtr<IYukiModel>(nullptr);
+SharedPtr<IModel> NO_MODEL = SharedPtr<IModel>(nullptr);
 
 TemplateEntity::TemplateEntity(const String& name)
     : m_sName(name),

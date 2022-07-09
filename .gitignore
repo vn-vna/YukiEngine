@@ -378,3 +378,4 @@ neovim.json
 a.out
 
 vcpkg_installed
+CMakeSettings.json
