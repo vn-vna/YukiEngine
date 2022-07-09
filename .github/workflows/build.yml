@@ -42,8 +42,7 @@ jobs:
             -S $GITHUB_WORKSPACE \
             -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake \
             -DCMAKE_C_COMPILER=clang \
-            -DCMAKE_CXX_COMPILER=clang++ \
-            -G Ninja
+            -DCMAKE_CXX_COMPILER=clang++ 
 
       - name: "CMake build"
         run: |
