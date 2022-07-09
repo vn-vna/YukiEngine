@@ -10,7 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Resolve cache 
+        uses: actions/cache@v3
+        with:
+        path: |
+          $GITHUB_WORKSPACE/build/vcpkg_installed
+        key: ${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
 
       - name: "Install build tools"
         run: |
@@ -35,7 +43,7 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake \
             -DCMAKE_C_COMPILER=clang \
             -DCMAKE_CXX_COMPILER=clang++ \
-            -G Ninja 
+            -G Ninja
 
       - name: "CMake build"
         run: |
