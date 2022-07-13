@@ -27,7 +27,7 @@ jobs:
     - name: Install additional packages
       run: |
         sudo apt update &&
-        sudo apt install -y cmake ninja-build mesa-utils zip unzip git
+        sudo apt install -y cmake ninja-build mesa-utils zip unzip git libx11-dev
 
     - name: Install VCPKG
       run: |
