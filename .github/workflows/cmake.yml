@@ -1,0 +1,47 @@
+name: CMake
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache vcpkg
+      uses: actions/cache@v3
+      with:
+        path: | 
+          ${{github.workspace}}/build/vcpkg_installed
+          ./vcpkg
+        key: ${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
+
+    - name: Install additional packages
+      run: |
+        apt update &&
+        apt install -y cmake ninja-build mesa-utils zip unzip git
+
+    - name: Install VCPKG
+      run: |
+        git clone https://github.com/Microsoft/vcpkg.git &&
+        ./vcpkg/bootstrap-vcpkg.sh
+
+    - name: CMake configure
+      run: |
+        cmake \
+          -B ${{github.workspace}}/build \
+          -S ${{github.workspace}} \
+          -G Ninja \
+          -D CMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake
+
+    - name: CMake build
+      run: |
+        cmake --build ${{github.workspace}}/build
