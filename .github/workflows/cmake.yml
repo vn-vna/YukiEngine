@@ -26,21 +26,14 @@ jobs:
 
     - name: Install additional packages
       run: |
-        sudo apt update &&
+        sudo apt update && \
         sudo apt install -y \
-          cmake \
-          ninja-build \
-          mesa-utils \
-          zip \
-          unzip \
-          git \
-          libx11-dev \
-          libxcursor-dev \
-          libxinerama-dev
+          cmake ninja-build mesa-utils zip unzip git clang\
+          libx11-dev libxcursor-dev libxinerama-dev libglu1-mesa xorg-dev
 
     - name: Install VCPKG
       run: |
-        git clone https://github.com/Microsoft/vcpkg.git &&
+        git clone https://github.com/Microsoft/vcpkg.git && \
         ./vcpkg/bootstrap-vcpkg.sh
 
     - name: CMake configure
