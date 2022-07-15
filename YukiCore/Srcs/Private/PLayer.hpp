@@ -25,11 +25,11 @@ public:
   YukiLayer(unsigned width, unsigned height);
   ~YukiLayer() override;
 
-  SPIOGLFrameBuffer  GetFrameBuffer() override;
-  SPIOGLRenderBuffer GetRenderBuffer() override;
-  SPIOGLTexture      GetDepthTexture() override;
-  SPIOGLTexture      GetStencilTexture() override;
-  SPIOGLTexture      GetColorTexture() override;
+  SharedPtr<IOGLFrameBuffer>  GetFrameBuffer() override;
+  SharedPtr<IOGLRenderBuffer> GetRenderBuffer() override;
+  SharedPtr<IOGLTexture>      GetDepthTexture() override;
+  SharedPtr<IOGLTexture>      GetStencilTexture() override;
+  SharedPtr<IOGLTexture>      GetColorTexture() override;
 
   void Create() override;
   void Awake() override;
@@ -38,11 +38,11 @@ public:
   void Destroy() override;
 
 private:
-  SPIOGLFrameBuffer  m_pFrameBuffer;
-  SPIOGLRenderBuffer m_pRenderBuffer;
-  SPIOGLTexture      m_pDepthTexture;
-  SPIOGLTexture      m_pStencilTexture;
-  SPIOGLTexture      m_pColorTexture;
+  SharedPtr<IOGLFrameBuffer>  m_pFrameBuffer;
+  SharedPtr<IOGLRenderBuffer> m_pRenderBuffer;
+  SharedPtr<IOGLTexture>      m_pDepthTexture;
+  SharedPtr<IOGLTexture>      m_pStencilTexture;
+  SharedPtr<IOGLTexture>      m_pColorTexture;
 
   unsigned m_nWidth;
   unsigned m_nHeight;

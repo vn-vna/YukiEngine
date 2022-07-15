@@ -25,27 +25,27 @@ YukiLayer::YukiLayer(unsigned width, unsigned height)
 
 YukiLayer::~YukiLayer() = default;
 
-SPIOGLFrameBuffer YukiLayer::GetFrameBuffer()
+SharedPtr<IOGLFrameBuffer> YukiLayer::GetFrameBuffer()
 {
   return m_pFrameBuffer;
 }
 
-SPIOGLRenderBuffer YukiLayer::GetRenderBuffer()
+SharedPtr<IOGLRenderBuffer> YukiLayer::GetRenderBuffer()
 {
   return m_pRenderBuffer;
 }
 
-SPIOGLTexture YukiLayer::GetDepthTexture()
+SharedPtr<IOGLTexture> YukiLayer::GetDepthTexture()
 {
   return m_pDepthTexture;
 }
 
-SPIOGLTexture YukiLayer::GetStencilTexture()
+SharedPtr<IOGLTexture> YukiLayer::GetStencilTexture()
 {
   return m_pStencilTexture;
 }
 
-SPIOGLTexture YukiLayer::GetColorTexture()
+SharedPtr<IOGLTexture> YukiLayer::GetColorTexture()
 {
   return m_pColorTexture;
 }

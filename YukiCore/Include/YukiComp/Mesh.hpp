@@ -16,6 +16,11 @@
 namespace Yuki::Comp
 {
 
+using Core::IOGLElementBuffer;
+using Core::IOGLShaderProgram;
+using Core::IOGLTexture;
+using Core::IOGLVertexArray;
+using Core::IOGLVertexBuffer;
 using Core::ISharedObject;
 using Core::PrimitiveTopology;
 
@@ -66,13 +71,13 @@ typedef struct StTransformationInfo
 class IMaterial : virtual public ISharedObject
 {
 public:
-  virtual SPIOGLTexture GetSpecularMap() = 0;
-  virtual SPIOGLTexture GetAmbientMap()  = 0;
-  virtual SPIOGLTexture GetDiffuseMap()  = 0;
+  virtual SharedPtr<IOGLTexture> GetSpecularMap() = 0;
+  virtual SharedPtr<IOGLTexture> GetAmbientMap()  = 0;
+  virtual SharedPtr<IOGLTexture> GetDiffuseMap()  = 0;
 
-  virtual void SetSpecularMap(SPIOGLTexture specmap) = 0;
-  virtual void SetAmbientMap(SPIOGLTexture ambmap)   = 0;
-  virtual void SetDiffuseMap(SPIOGLTexture diffmap)  = 0;
+  virtual void SetSpecularMap(SharedPtr<IOGLTexture> specmap) = 0;
+  virtual void SetAmbientMap(SharedPtr<IOGLTexture> ambmap)   = 0;
+  virtual void SetDiffuseMap(SharedPtr<IOGLTexture> diffmap)  = 0;
 };
 
 /**
@@ -85,11 +90,11 @@ public:
 class IMesh : virtual public ISharedObject
 {
 public:
-  virtual SPIOGLTexture                   GetMeshTexture() const        = 0;
-  virtual SPIOGLElementBuffer             GetElementBuffer() const      = 0;
-  virtual SPIOGLVertexBuffer              GetVertexBuffer() const       = 0;
-  virtual SPIOGLShaderProgram             GetShaderProgram() const      = 0;
-  virtual SPIOGLVertexArray               GetVertexArray() const        = 0;
+  virtual SharedPtr<IOGLTexture>          GetMeshTexture() const        = 0;
+  virtual SharedPtr<IOGLElementBuffer>    GetElementBuffer() const      = 0;
+  virtual SharedPtr<IOGLVertexBuffer>     GetVertexBuffer() const       = 0;
+  virtual SharedPtr<IOGLShaderProgram>    GetShaderProgram() const      = 0;
+  virtual SharedPtr<IOGLVertexArray>      GetVertexArray() const        = 0;
   virtual SharedPtr<IMaterial>            GetMaterial() const           = 0;
   virtual const PrimitiveTopology&        GetTopology() const           = 0;
   virtual const String&                   GetName() const               = 0;
@@ -107,7 +112,7 @@ public:
   virtual void RotateMesh(const Vec3F& axis, float rotationAngle)  = 0;
   virtual void ScaleMesh(const Vec3F& scaleVector)                 = 0;
 
-  virtual void RenderMesh(SPICamera camera) const = 0;
+  virtual void RenderMesh(SharedPtr<ICamera> camera) const = 0;
 };
 
 /**
@@ -121,9 +126,9 @@ public:
  * @param meshName provide a name for it
  * @return an interface instance for the mesh
  */
-SPIMesh GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
-                         SharedPtr<Core::IOGLTexture> texture, SharedPtr<IMaterial> material,
-                         const String& meshName);
+SharedPtr<IMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
+                                  SharedPtr<Core::IOGLTexture> texture,
+                                  SharedPtr<IMaterial> material, const String& meshName);
 
 /**
  * Thif function is used to create a new material and return

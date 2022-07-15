@@ -21,7 +21,10 @@
 namespace Yuki::Comp
 {
 
+using Core::IOGLElementBuffer;
+using Core::IOGLShaderProgram;
 using Core::IOGLTexture;
+using Core::IOGLVertexBuffer;
 using Core::PrimitiveTopology;
 using Core::YukiSharedObject;
 using Utils::Images;
@@ -59,16 +62,16 @@ class YukiMesh : virtual public IMesh,
                  virtual public YukiSharedObject
 {
 public:
-  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices, SPIOGLTexture& texture,
-           SPIMaterial material, const String& name);
+  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
+           SharedPtr<IOGLTexture>& texture, SharedPtr<IMaterial> material, const String& name);
   virtual ~YukiMesh();
 
-  SPIOGLTexture                   GetMeshTexture() const override;
-  SPIOGLElementBuffer             GetElementBuffer() const override;
-  SPIOGLVertexBuffer              GetVertexBuffer() const override;
-  SPIOGLShaderProgram             GetShaderProgram() const override;
-  SPIOGLVertexArray               GetVertexArray() const override;
-  SPIMaterial                     GetMaterial() const override;
+  SharedPtr<IOGLTexture>          GetMeshTexture() const override;
+  SharedPtr<IOGLElementBuffer>    GetElementBuffer() const override;
+  SharedPtr<IOGLVertexBuffer>     GetVertexBuffer() const override;
+  SharedPtr<IOGLShaderProgram>    GetShaderProgram() const override;
+  SharedPtr<IOGLVertexArray>      GetVertexArray() const override;
+  SharedPtr<IMaterial>            GetMaterial() const override;
   const PrimitiveTopology&        GetTopology() const override;
   const String&                   GetName() const override;
   const Mat4F&                    GetMeshMatrix() const override;
@@ -91,17 +94,17 @@ public:
   void RenderMesh(SharedPtr<ICamera> camera) const override;
 
 private:
-  SPIOGLElementBuffer      m_pElementBuffer;
-  SPIOGLVertexBuffer       m_pVertexBuffer;
-  SPIOGLVertexArray        m_pVertexArray;
-  SPIOGLShaderProgram      m_pShaderProgram;
-  SPIOGLTexture            m_pTexture;
-  SPIMaterial              m_pMaterial;
-  Vector<MeshVertexFormat> m_aVertexFormat;
-  MeshIndexData            m_tIndexFormat;
-  Mat4F                    m_tMeshMatrix;
-  Mat4F                    m_tReNormalMatrix;
-  String                   m_Name;
+  SharedPtr<IOGLElementBuffer> m_pElementBuffer;
+  SharedPtr<IOGLVertexBuffer>  m_pVertexBuffer;
+  SharedPtr<IOGLVertexArray>   m_pVertexArray;
+  SharedPtr<IOGLShaderProgram> m_pShaderProgram;
+  SharedPtr<IOGLTexture>       m_pTexture;
+  SharedPtr<IMaterial>         m_pMaterial;
+  Vector<MeshVertexFormat>     m_aVertexFormat;
+  MeshIndexData                m_tIndexFormat;
+  Mat4F                        m_tMeshMatrix;
+  Mat4F                        m_tReNormalMatrix;
+  String                       m_Name;
 };
 
 } // namespace Yuki::Comp

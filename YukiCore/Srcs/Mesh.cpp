@@ -103,22 +103,22 @@ SharedPtr<IOGLTexture> YukiMesh::GetMeshTexture() const
   return m_pTexture;
 }
 
-SPIOGLElementBuffer YukiMesh::GetElementBuffer() const
+SharedPtr<IOGLElementBuffer> YukiMesh::GetElementBuffer() const
 {
   return m_pElementBuffer;
 }
 
-SPIOGLVertexBuffer YukiMesh::GetVertexBuffer() const
+SharedPtr<IOGLVertexBuffer> YukiMesh::GetVertexBuffer() const
 {
   return m_pVertexBuffer;
 }
 
-SPIOGLShaderProgram YukiMesh::GetShaderProgram() const
+SharedPtr<IOGLShaderProgram> YukiMesh::GetShaderProgram() const
 {
   return m_pShaderProgram;
 }
 
-SPIOGLVertexArray YukiMesh::GetVertexArray() const
+SharedPtr<IOGLVertexArray> YukiMesh::GetVertexArray() const
 {
   return m_pVertexArray;
 }

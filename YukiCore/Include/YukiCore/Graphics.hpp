@@ -497,29 +497,30 @@ public:
 
   virtual bool BufferOK() = 0;
 
-  virtual void AttachTextureColor(SPIOGLTexture tex, unsigned pos = 0, unsigned lvl = 0) = 0;
-  virtual void AttachTextureDepth(SPIOGLTexture tex, unsigned lvl = 0)                   = 0;
-  virtual void AttachTextureStencil(SPIOGLTexture tex, unsigned lvl = 0)                 = 0;
-  virtual void AttachTextureDepthStencil(SPIOGLTexture tex, unsigned lvl = 0)            = 0;
+  virtual void AttachTextureColor(SharedPtr<IOGLTexture> tex, unsigned pos = 0,
+                                  unsigned lvl = 0)                                    = 0;
+  virtual void AttachTextureDepth(SharedPtr<IOGLTexture> tex, unsigned lvl = 0)        = 0;
+  virtual void AttachTextureStencil(SharedPtr<IOGLTexture> tex, unsigned lvl = 0)      = 0;
+  virtual void AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex, unsigned lvl = 0) = 0;
 
-  virtual void AttachRenderBufferColor(SPIOGLRenderBuffer rbo, unsigned position = 0) = 0;
-  virtual void AttachRenderBufferDepth(SPIOGLRenderBuffer rbo)                        = 0;
-  virtual void AttachRenderBufferStencil(SPIOGLRenderBuffer rbo)                      = 0;
-  virtual void AttachRenderBufferDepthStencil(SPIOGLRenderBuffer rbo)                 = 0;
+  virtual void AttachRenderBufferColor(SharedPtr<IOGLRenderBuffer> rbo, unsigned position = 0) = 0;
+  virtual void AttachRenderBufferDepth(SharedPtr<IOGLRenderBuffer> rbo)                        = 0;
+  virtual void AttachRenderBufferStencil(SharedPtr<IOGLRenderBuffer> rbo)                      = 0;
+  virtual void AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo)                 = 0;
 };
 
-SPIGraphics         CreateGraphicsController();
-SPIOGLVertexBuffer  CreateGLVertexBuffer();
-SPIOGLElementBuffer CreateGLElementBuffer();
-SPIOGLShaderProgram CreateGLShaderProgram(const String& shaderName);
-SPIOGLVertexArray   CreateGLVertexArray();
-SPIOGLTexture       CreateGLTexture(TextureType type);
-SPIOGLRenderBuffer  CreateGLRegnderBuffer();
-SPIOGLFrameBuffer   CreateGLFrameBuffer();
+SharedPtr<IGraphics>         CreateGraphicsController();
+SharedPtr<IOGLVertexBuffer>  CreateGLVertexBuffer();
+SharedPtr<IOGLElementBuffer> CreateGLElementBuffer();
+SharedPtr<IOGLShaderProgram> CreateGLShaderProgram(const String& shaderName);
+SharedPtr<IOGLVertexArray>   CreateGLVertexArray();
+SharedPtr<IOGLTexture>       CreateGLTexture(TextureType type);
+SharedPtr<IOGLRenderBuffer>  CreateGLRegnderBuffer();
+SharedPtr<IOGLFrameBuffer>   CreateGLFrameBuffer();
 
-SPIOGLTexture GenerateSolid2DTexture(const Vec1F& color);
-SPIOGLTexture GenerateSolid2DTexture(const Vec2F& color);
-SPIOGLTexture GenerateSolid2DTexture(const Vec3F& color);
-SPIOGLTexture GenerateSolid2DTexture(const Vec4F& color);
+SharedPtr<IOGLTexture> GenerateSolid2DTexture(const Vec1F& color);
+SharedPtr<IOGLTexture> GenerateSolid2DTexture(const Vec2F& color);
+SharedPtr<IOGLTexture> GenerateSolid2DTexture(const Vec3F& color);
+SharedPtr<IOGLTexture> GenerateSolid2DTexture(const Vec4F& color);
 
 } // namespace Yuki::Core

@@ -14,6 +14,8 @@
 namespace Yuki::Utils
 {
 
+using Core::IOGLTexture;
+
 class Images
 {
 
@@ -29,8 +31,8 @@ public:
   const int&     GetHeight();
   const int&     GetDataChannel();
 
-  SPIOGLTexture Generate2DTexture(const Vec2I& offset, const Vec2I& size);
-  SPIOGLTexture Generate2DTexture();
+  SharedPtr<IOGLTexture> Generate2DTexture(const Vec2I& offset, const Vec2I& size);
+  SharedPtr<IOGLTexture> Generate2DTexture();
 
 protected:
   uint8_t* m_pData;
@@ -40,9 +42,7 @@ protected:
 };
 
 class TextureInstruction
-{
-
-};
+{};
 
 SharedPtr<Images> CreateSolidColorImage(const Vec1F& color, const Vec2I& size = {10, 10});
 SharedPtr<Images> CreateSolidColorImage(const Vec2F& color, const Vec2I& size = {10, 10});

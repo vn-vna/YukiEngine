@@ -102,31 +102,6 @@ class TemplateEntity;
 
 } // namespace Entity
 
-typedef SharedPtr<Entity::TemplateEntity>  SPTemplateEntity;
-typedef SharedPtr<Core::IObject>           SPIObject;
-typedef SharedPtr<Core::ISharedObject>     SPISharedObject;
-typedef SharedPtr<Core::IApplication>      SPIApplication;
-typedef SharedPtr<Core::IGraphics>         SPIGraphics;
-typedef SharedPtr<Core::IWindow>           SPIWindow;
-typedef SharedPtr<Core::IInput>            SPIInput;
-typedef SharedPtr<Core::IThreadPool>       SPIThreadPool;
-typedef SharedPtr<Core::IOGLObject>        SPIOGLObject;
-typedef SharedPtr<Core::IOGLVertexArray>   SPIOGLVertexArray;
-typedef SharedPtr<Core::IOGLVertexBuffer>  SPIOGLVertexBuffer;
-typedef SharedPtr<Core::IOGLShaderProgram> SPIOGLShaderProgram;
-typedef SharedPtr<Core::IOGLElementBuffer> SPIOGLElementBuffer;
-typedef SharedPtr<Core::IOGLTexture>       SPIOGLTexture;
-typedef SharedPtr<Core::IOGLRenderBuffer>  SPIOGLRenderBuffer;
-typedef SharedPtr<Core::IOGLFrameBuffer>   SPIOGLFrameBuffer;
-typedef SharedPtr<Comp::IMesh>             SPIMesh;
-typedef SharedPtr<Comp::IScene>            SPIScene;
-typedef SharedPtr<Comp::ICamera>           SPICamera;
-typedef SharedPtr<Comp::IModel>            SPIModel;
-typedef SharedPtr<Comp::ILayer>            SPILayer;
-typedef SharedPtr<Comp::IMaterial>         SPIMaterial;
-typedef SharedPtr<Chrono::IYukiTimer>      SPITimer;
-typedef SharedPtr<Chrono::IYukiStopwatch>  SPIStopwatch;
-
 } // namespace Yuki
 
 namespace Yuki::Core
