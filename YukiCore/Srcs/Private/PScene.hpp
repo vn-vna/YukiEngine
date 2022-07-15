@@ -30,10 +30,11 @@ public:
   void AddEntity(SharedPtr<TemplateEntity> entity) override;
   void SetCamera(SharedPtr<ICamera> pCamera) override;
 
-  SharedPtr<ICamera>                               GetCamera() override;
-  UnorderedMap<String, SharedPtr<TemplateEntity>>& GetEntitiesManager() override;
-  SharedPtr<TemplateEntity>                        GetEntity(String name) override;
-  bool                                             IsReady() override;
+  SharedPtr<ICamera> GetCamera() override;
+  UnorderedMap<String, SharedPtr<TemplateEntity>>&
+                            GetEntitiesManager() override;
+  SharedPtr<TemplateEntity> GetEntity(String name) override;
+  bool                      IsReady() override;
 
   void Create() override;
   void Awake() override;

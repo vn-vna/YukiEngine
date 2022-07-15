@@ -13,7 +13,8 @@ namespace Yuki::Chrono
 
 static SharedPtr<TimerManager> pManager;
 
-YukiTimer::YukiTimer(const TimerAction& callback, long long interval, bool parallel)
+YukiTimer::YukiTimer(const TimerAction& callback, long long interval,
+                     bool parallel)
     : m_nCycleSkipped(0),
       m_nEstimateCycle(0),
       m_bExecuteParallel(parallel),
@@ -168,7 +169,8 @@ void YukiTimer::UpdateTimers()
 
     if (pTimer->IsParallelExecution())
     {
-      Core::GetYukiApp()->GetWorkerPool()->PushAction([pTimer]() { pTimer->ExecuteCallback(); });
+      Core::GetYukiApp()->GetWorkerPool()->PushAction(
+          [pTimer]() { pTimer->ExecuteCallback(); });
     }
     else
     {
@@ -186,7 +188,8 @@ SharedPtr<TimerManager> GetTimerManager()
   return pManager;
 }
 
-SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback, long long interval, bool parallexEx)
+SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback,
+                                  long long interval, bool parallexEx)
 {
   AutoType manager = GetTimerManager();
 
@@ -196,7 +199,8 @@ SharedPtr<IYukiTimer> CreateTimer(const TimerAction& callback, long long interva
   };
 
   SharedPtr<IYukiTimer> pTimer {
-      dynamic_cast<IYukiTimer*>(new YukiTimer {callback, interval, parallexEx}), deleter};
+      dynamic_cast<IYukiTimer*>(new YukiTimer {callback, interval, parallexEx}),
+      deleter};
   manager->emplace(pTimer.get());
   return pTimer;
 }

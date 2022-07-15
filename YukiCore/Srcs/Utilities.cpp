@@ -38,17 +38,20 @@ String GetTrimmed(const String& str)
 
 bool IsKeyPressed(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::PRESS;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::PRESS;
 }
 
 bool IsKeyRepeated(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::REPEAT;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::REPEAT;
 }
 
 bool IsKeyReleased(KeyCode key)
 {
-  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state == KeyState::RELEASE;
+  return GetYukiApp()->GetInputController()->GetKeyStatus(key).state ==
+         KeyState::RELEASE;
 }
 
 void MoveCameraRight(SharedPtr<ICamera> camera, float speed)

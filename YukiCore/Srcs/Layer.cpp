@@ -59,8 +59,9 @@ void YukiLayer::Create()
   m_pColorTexture->Require();
   m_pColorTexture->SetStorageData2D(Core::PixelInternalFormat::RGBA8, 4,
                                     Vec2F {m_nWidth, m_nHeight});
-  m_pColorTexture->SetTextureData2D(nullptr, 0, Core::PixelBasedInternalFormat::RGBA, {0, 0},
-                                    {m_nWidth, m_nHeight});
+  m_pColorTexture->SetTextureData2D(nullptr, 0,
+                                    Core::PixelBasedInternalFormat::RGBA,
+                                    {0, 0}, {m_nWidth, m_nHeight});
   m_pColorTexture->SetTextureMagFilter(Core::TextureMagFilter::LINEAR);
   m_pColorTexture->SetTextureMinFilter(Core::TextureMinFilter::LINEAR);
 
@@ -86,9 +87,11 @@ void YukiLayer::Destroy()
   m_pFrameBuffer->Release();
 }
 
-SharedPtr<ILayer> CreateYukiLayer(unsigned width, unsigned height, unsigned multiSample)
+SharedPtr<ILayer> CreateYukiLayer(unsigned width, unsigned height,
+                                  unsigned multiSample)
 {
-  AutoType layer = Core::CreateInterfaceInstance<ILayer, YukiLayer>(width, height);
+  AutoType layer =
+      Core::CreateInterfaceInstance<ILayer, YukiLayer>(width, height);
   return layer;
 }
 

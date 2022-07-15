@@ -20,15 +20,17 @@ void YukiOGLRenderBuffer::BindObject()
   glBindRenderbuffer(GL_RENDERBUFFER, m_nRboId);
 }
 
-void YukiOGLRenderBuffer::SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)
+void YukiOGLRenderBuffer::SetBufferStorage(PixelInternalFormat internalFormat,
+                                           const Vec2I&        size)
 {
   glNamedRenderbufferStorage(m_nRboId, (GLenum) internalFormat, size.x, size.y);
 }
 
-void YukiOGLRenderBuffer::SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
-                                                       const Vec2I& size, int samples)
+void YukiOGLRenderBuffer::SetBufferStorageMultiSamples(
+    PixelInternalFormat internalFormat, const Vec2I& size, int samples)
 {
-  glNamedRenderbufferStorageMultisample(m_nRboId, samples, (GLenum) internalFormat, size.x, size.y);
+  glNamedRenderbufferStorageMultisample(
+      m_nRboId, samples, (GLenum) internalFormat, size.x, size.y);
 }
 
 void YukiOGLRenderBuffer::Create()

@@ -26,7 +26,8 @@ using Utils::Images;
 AutoType g_pDefaultMeshShader = CreateGLShaderProgram("MeshShader");
 AutoType g_pDefaultTexture    = CreateGLTexture(Core::TextureType::TEXTURE_2D);
 
-YukiMeshMaterial::YukiMeshMaterial(SharedPtr<Images> ambientMap, SharedPtr<Images> specularMap,
+YukiMeshMaterial::YukiMeshMaterial(SharedPtr<Images> ambientMap,
+                                   SharedPtr<Images> specularMap,
                                    SharedPtr<Images> diffuseMap)
     : m_pSpecMapImg(specularMap),
       m_pAmbientMapImg(ambientMap),
@@ -80,8 +81,8 @@ void YukiMeshMaterial::Destroy()
 }
 
 YukiMesh::YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
-                   SharedPtr<Core::IOGLTexture>& texture, SharedPtr<IMaterial> material,
-                   const String& name)
+                   SharedPtr<Core::IOGLTexture>& texture,
+                   SharedPtr<IMaterial> material, const String& name)
     : m_pShaderProgram(g_pDefaultMeshShader),
       m_pTexture(texture),
       m_Name(name),
@@ -161,7 +162,8 @@ TransformationInfo YukiMesh::GetTransformationInfo() const
   Vec3F       skew;
   Vec4F       perspective;
 
-  glm::decompose(m_tMeshMatrix, scale, rotation, translation, skew, perspective);
+  glm::decompose(m_tMeshMatrix, scale, rotation, translation, skew,
+                 perspective);
 
   return {scale, rotation, translation, skew};
 }
@@ -177,13 +179,15 @@ void YukiMesh::Create()
     m_pVertexArray->Require();
 
     this->GetVertexBuffer()->SetBufferData((float*) m_aVertexFormat.data(),
-                                           m_aVertexFormat.size() * sizeof(MeshVertexFormat));
+                                           m_aVertexFormat.size() *
+                                               sizeof(MeshVertexFormat));
 
     this->GetElementBuffer()->SetBufferData(m_tIndexFormat.data);
 
     AutoType meshVAO = this->GetVertexArray();
 
-    meshVAO->SetVertexBuffer(this->GetVertexBuffer(), 0, 0, sizeof(MeshVertexFormat));
+    meshVAO->SetVertexBuffer(this->GetVertexBuffer(), 0, 0,
+                             sizeof(MeshVertexFormat));
 
     meshVAO->EnableAttribute(0);
     meshVAO->SetAttributeFormat(3, 0, offsetof(MeshVertexFormat, position));
@@ -298,9 +302,12 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
 
   m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
-  m_pShaderProgram->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
-  m_pShaderProgram->UniformMatrix("U_ProjectionMatrix", camera->GetCameraProjectionMatrix());
-  m_pShaderProgram->UniformVector("U_ViewPosition", camera->GetCameraPosition());
+  m_pShaderProgram->UniformMatrix("U_ViewMatrix",
+                                  camera->GetCameraViewMatrix());
+  m_pShaderProgram->UniformMatrix("U_ProjectionMatrix",
+                                  camera->GetCameraProjectionMatrix());
+  m_pShaderProgram->UniformVector("U_ViewPosition",
+                                  camera->GetCameraPosition());
   // m_pShaderProgram->UniformValue("U_AmbientStrength",
   // m_pMaterial->GetAmbientStrength());
   // m_pShaderProgram->UniformValue("U_SpecularStrength",
@@ -309,7 +316,8 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
   // Some hard coding
   m_pShaderProgram->UniformValue("U_LightIntensity", 1.00f);
   m_pShaderProgram->UniformVector("U_LightPos", Vec3F {-1.30f, 1.30f, 2.00f});
-  m_pShaderProgram->UniformVector("U_LightColor", Vec4F {1.00f, 1.00f, 1.00f, 1.00f});
+  m_pShaderProgram->UniformVector("U_LightColor",
+                                  Vec4F {1.00f, 1.00f, 1.00f, 1.00f});
   m_pShaderProgram->UniformValue("U_MeshTextures", 0);
   m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
   m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
@@ -318,23 +326,26 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }
 
-SharedPtr<IMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
-                                  SharedPtr<IOGLTexture> texture, SharedPtr<IMaterial> material,
-                                  const String& meshName)
+SharedPtr<IMesh> GenerateYukiMesh(Vector<MeshVertexFormat>& vertexData,
+                                  MeshIndexData&            indexData,
+                                  SharedPtr<IOGLTexture>    texture,
+                                  SharedPtr<IMaterial>      material,
+                                  const String&             meshName)
 {
-  return CreateInterfaceInstance<IMesh, YukiMesh>(vertexData, indexData, texture, material,
-                                                  meshName);
+  return CreateInterfaceInstance<IMesh, YukiMesh>(vertexData, indexData,
+                                                  texture, material, meshName);
 }
 
-SharedPtr<IMaterial> GenerateSolidMaterial(const Vec4F& ambient, const float specular,
-                                           const float diffuse)
+SharedPtr<IMaterial> GenerateSolidMaterial(const Vec4F& ambient,
+                                           const float  specular,
+                                           const float  diffuse)
 {
   AutoType ambientMap  = Utils::CreateSolidColorImage(ambient);
   AutoType specularMap = Utils::CreateSolidColorImage(Vec1F {specular});
   AutoType diffuseMap  = Utils::CreateSolidColorImage(Vec1F {diffuse});
 
-  AutoType mat =
-      CreateInterfaceInstance<IMaterial, YukiMeshMaterial>(ambientMap, specularMap, diffuseMap);
+  AutoType mat = CreateInterfaceInstance<IMaterial, YukiMeshMaterial>(
+      ambientMap, specularMap, diffuseMap);
 
   return mat;
 }

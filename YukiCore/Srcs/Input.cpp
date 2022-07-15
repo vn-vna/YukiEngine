@@ -21,8 +21,8 @@ YukiInpControl::YukiInpControl()
 
 YukiInpControl::~YukiInpControl() = default;
 
-void YukiInpControl::AddCursorInputCallback(const String&                name,
-                                            const YukiInpCursorCallback& pcallback)
+void YukiInpControl::AddCursorInputCallback(
+    const String& name, const YukiInpCursorCallback& pcallback)
 {
   if (m_mpCursorCallbacksPool.find(name) != m_mpCursorCallbacksPool.end())
   {
@@ -49,8 +49,8 @@ void YukiInpControl::RemoveKeyboardInputCallback(const String& name)
   m_mpKeyCallbacksPool.erase(name);
 }
 
-void YukiInpControl::AddKeyboardInputCallback(const String&                  name,
-                                              const YukiInpKeyboardCallback& pcallback)
+void YukiInpControl::AddKeyboardInputCallback(
+    const String& name, const YukiInpKeyboardCallback& pcallback)
 {
   if (m_mpKeyCallbacksPool.find(name) != m_mpKeyCallbacksPool.end())
   {
@@ -59,7 +59,8 @@ void YukiInpControl::AddKeyboardInputCallback(const String&                  nam
   m_mpKeyCallbacksPool.emplace(name, pcallback);
 }
 
-void YukiInpControl::ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)
+void YukiInpControl::ExecuteKeyCallbacks(int key, int scancode, int action,
+                                         int modifiers)
 {
   // Default callback
   if (key > (int) KeyCode::KEY_LAST)
@@ -88,11 +89,13 @@ void YukiInpControl::ExecuteCursorPosCallback(int x, int y)
 {
   // Default callback
   m_tPrevMouseStatus = {m_tCrrMouseStatus.x, m_tCrrMouseStatus.y};
-  m_tCrrMouseStatus  = {x, y, (float) x - m_tPrevMouseStatus.x, (float) y - m_tPrevMouseStatus.y};
+  m_tCrrMouseStatus  = {x, y, (float) x - m_tPrevMouseStatus.x,
+                        (float) y - m_tPrevMouseStatus.y};
 
   if (m_tLockMouse.lock)
   {
-    Core::GetYukiApp()->GetWindow()->SetCursorPos(m_tLockMouse.lx, m_tLockMouse.ly);
+    Core::GetYukiApp()->GetWindow()->SetCursorPos(m_tLockMouse.lx,
+                                                  m_tLockMouse.ly);
   }
 
   if (m_mpCursorCallbacksPool.empty())

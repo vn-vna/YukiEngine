@@ -39,9 +39,12 @@ public:
   const TextureCompareMode      GetTextureCompareMode() override;
   const float                   GetTextureLodBias() override;
 
-  void SetStorageData1D(PixelInternalFormat internalFormat, int level, const Vec1I& size) override;
-  void SetStorageData2D(PixelInternalFormat internalFormat, int level, const Vec2F& size) override;
-  void SetStorageData3D(PixelInternalFormat internalFormat, int level, const Vec3F& size) override;
+  void SetStorageData1D(PixelInternalFormat internalFormat, int level,
+                        const Vec1I& size) override;
+  void SetStorageData2D(PixelInternalFormat internalFormat, int level,
+                        const Vec2F& size) override;
+  void SetStorageData3D(PixelInternalFormat internalFormat, int level,
+                        const Vec3F& size) override;
 
   void SetStorageData1D(PixelBasedInternalFormat internalFormat, int level,
                         const Vec1I& size) override;
@@ -50,11 +53,14 @@ public:
   void SetStorageData3D(PixelBasedInternalFormat internalFormat, int level,
                         const Vec3F& size) override;
 
-  void SetTextureData1D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+  void SetTextureData1D(uint8_t* pixels, int level,
+                        PixelBasedInternalFormat imageFormat,
                         const Vec1I& offset, const Vec1I& size) override;
-  void SetTextureData2D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+  void SetTextureData2D(uint8_t* pixels, int level,
+                        PixelBasedInternalFormat imageFormat,
                         const Vec2I& offset, const Vec2I& size) override;
-  void SetTextureData3D(uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+  void SetTextureData3D(uint8_t* pixels, int level,
+                        PixelBasedInternalFormat imageFormat,
                         const Vec3I& offset, const Vec3I& size) override;
 
   unsigned GetID() override;

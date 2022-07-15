@@ -49,6 +49,7 @@ public:
 unsigned                     GetHardwareConcurrency();
 void                         InvokeAllThreads();
 SharedPtr<ThreadPoolManager> GetThreadPoolManager();
-SharedPtr<IThreadPool>       CreateThreadPool(int poolSize = -1, bool oglContext = true);
+SharedPtr<IThreadPool>       CreateThreadPool(int  poolSize   = -1,
+                                              bool oglContext = true);
 
 } // namespace Yuki::Core

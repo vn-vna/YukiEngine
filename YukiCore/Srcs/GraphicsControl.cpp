@@ -42,11 +42,12 @@ String GetShadingLanguageVersion()
 
 void PrintGraphicProperties()
 {
-  GetYukiApp()->GetLogger()->PushDebugMessage(fmt::format(
-      "-- Graphic device information: "
-      "\n\tVendor: {} \n\tRenderer: "
-      "{} \n\tShading language version: {}",
-      GetGraphicsCardVendorName(), GetGraphicsCardRendererName(), GetShadingLanguageVersion()));
+  GetYukiApp()->GetLogger()->PushDebugMessage(
+      fmt::format("-- Graphic device information: "
+                  "\n\tVendor: {} \n\tRenderer: "
+                  "{} \n\tShading language version: {}",
+                  GetGraphicsCardVendorName(), GetGraphicsCardRendererName(),
+                  GetShadingLanguageVersion()));
 }
 
 YukiGfxControl::YukiGfxControl() = default;

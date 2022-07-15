@@ -3,7 +3,8 @@
 #include "Private/POGLShaderProgram.hpp"
 
 Yuki::String   loadShaderSourceFromFile(const Yuki::String& path);
-const unsigned createShaderFromSource(GLenum shaderTypem, const Yuki::String& shaderSource);
+const unsigned createShaderFromSource(GLenum              shaderTypem,
+                                      const Yuki::String& shaderSource);
 
 Yuki::String loadShaderSourceFromFile(const Yuki::String& path)
 {
@@ -18,7 +19,8 @@ Yuki::String loadShaderSourceFromFile(const Yuki::String& path)
   return sstr.str();
 }
 
-const unsigned createShaderFromSource(GLenum shaderType, const Yuki::String& shaderSource)
+const unsigned createShaderFromSource(GLenum              shaderType,
+                                      const Yuki::String& shaderSource)
 {
   const char* pSource = shaderSource.c_str();
   int         status;
@@ -119,12 +121,13 @@ unsigned OGLShaderProgram::GetUniformLocation(const String& prop)
   }
 }
 
-void OGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat, bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat,
+                                     bool transpose)
 {
   try
   {
-    glUniformMatrix2fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
-                       glm::value_ptr(mat));
+    glUniformMatrix2fv(GetUniformLocation(prop), 1,
+                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -132,12 +135,13 @@ void OGLShaderProgram::UniformMatrix(const String& prop, const Mat2F& mat, bool 
   }
 }
 
-void OGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat, bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat,
+                                     bool transpose)
 {
   try
   {
-    glUniformMatrix3fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
-                       glm::value_ptr(mat));
+    glUniformMatrix3fv(GetUniformLocation(prop), 1,
+                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -145,12 +149,13 @@ void OGLShaderProgram::UniformMatrix(const String& prop, const Mat3F& mat, bool 
   }
 }
 
-void OGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat, bool transpose)
+void OGLShaderProgram::UniformMatrix(const String& prop, const Mat4F& mat,
+                                     bool transpose)
 {
   try
   {
-    glUniformMatrix4fv(GetUniformLocation(prop), 1, transpose ? GL_TRUE : GL_FALSE,
-                       glm::value_ptr(mat));
+    glUniformMatrix4fv(GetUniformLocation(prop), 1,
+                       transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(mat));
   }
   catch (Debug::Errors& yer)
   {
@@ -232,7 +237,8 @@ void OGLShaderProgram::UniformValue(const String& prop, float value)
 
 SharedPtr<IOGLShaderProgram> CreateGLShaderProgram(const String& shaderName)
 {
-  return CreateInterfaceInstance<IOGLShaderProgram, OGLShaderProgram>(shaderName);
+  return CreateInterfaceInstance<IOGLShaderProgram, OGLShaderProgram>(
+      shaderName);
 }
 
 } // namespace Yuki::Core

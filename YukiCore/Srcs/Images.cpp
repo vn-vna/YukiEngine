@@ -122,12 +122,15 @@ PixelInternalFormat getInternalFormat(int channel)
   }
 }
 
-SharedPtr<IOGLTexture> Images::Generate2DTexture(const Vec2I& offset, const Vec2I& size)
+SharedPtr<IOGLTexture> Images::Generate2DTexture(const Vec2I& offset,
+                                                 const Vec2I& size)
 {
   SharedPtr<IOGLTexture> texture = CreateGLTexture(TextureType::TEXTURE_2D);
   texture->Require();
-  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4, Vec2F {m_nWidth, m_nHeight});
-  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel), offset, size);
+  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4,
+                            Vec2F {m_nWidth, m_nHeight});
+  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel),
+                            offset, size);
   texture->SetTextureMagFilter(TextureMagFilter::LINEAR);
   texture->SetTextureMinFilter(TextureMinFilter::LINEAR);
   texture->GenerateMipMap();
@@ -161,19 +164,22 @@ SharedPtr<Images> CreateSolidColorImage(const Vec1F& color, const Vec2I& size)
 
 SharedPtr<Images> CreateSolidColorImage(const Vec2F& color, const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 2, glm::value_ptr(color));
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 2, glm::value_ptr(color));
   return MakeShared<Images>(pData, size.x, size.y, 2);
 }
 
 SharedPtr<Images> CreateSolidColorImage(const Vec3F& color, const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 3, glm::value_ptr(color));
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 3, glm::value_ptr(color));
   return MakeShared<Images>(pData, size.x, size.y, 3);
 }
 
 SharedPtr<Images> CreateSolidColorImage(const Vec4F& color, const Vec2I& size)
 {
-  uint8_t* pData = createSolidColorArray(size.x, size.y, 4, glm::value_ptr(color));
+  uint8_t* pData =
+      createSolidColorArray(size.x, size.y, 4, glm::value_ptr(color));
   return MakeShared<Images>(pData, size.x, size.y, 4);
 }
 

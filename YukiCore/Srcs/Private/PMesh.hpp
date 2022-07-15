@@ -63,7 +63,8 @@ class YukiMesh : virtual public IMesh,
 {
 public:
   YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
-           SharedPtr<IOGLTexture>& texture, SharedPtr<IMaterial> material, const String& name);
+           SharedPtr<IOGLTexture>& texture, SharedPtr<IMaterial> material,
+           const String& name);
   virtual ~YukiMesh();
 
   SharedPtr<IOGLTexture>          GetMeshTexture() const override;

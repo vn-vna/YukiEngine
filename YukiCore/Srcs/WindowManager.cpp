@@ -16,15 +16,17 @@ void initAndCheckGLFW()
   }
 }
 
-void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int modifiers)
+void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action,
+                         int modifiers)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(key, scancode, action,
-                                                                      modifiers);
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteKeyCallbacks(
+      key, scancode, action, modifiers);
 }
 
 void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y)
 {
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback((int) x, (int) y);
+  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback(
+      (int) x, (int) y);
 }
 
 namespace Yuki::Core
@@ -108,8 +110,9 @@ void YukiWindow::Create()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  m_pGLFWWindow = glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT,
-                                   YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
+  m_pGLFWWindow =
+      glfwCreateWindow(YUKI_DEFAULT_WINDOW_WIDTH, YUKI_DEFAULT_WINDOW_HEIGHT,
+                       YUKI_DEFAULT_WINDOW_TITLE, NULL, NULL);
   if (!m_pGLFWWindow)
   {
     THROW_YUKI_ERROR(WindowCreationError);

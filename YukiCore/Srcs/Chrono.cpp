@@ -9,7 +9,9 @@ namespace Yuki::Chrono
 
 long long Clock::CurrentTimeNanos()
 {
-  return std::chrono::duration_cast<SystemClockNS>(CurrentTimePoint().time_since_epoch()).count();
+  return std::chrono::duration_cast<SystemClockNS>(
+             CurrentTimePoint().time_since_epoch())
+      .count();
 }
 
 long long Clock::CurrentTimeMilis()
@@ -37,8 +39,9 @@ TMType Clock::CurrentTimePointTM()
 const String Clock::DateTimeString(const DateTimeFormat& format)
 {
   StringStream asstr {};
-  asstr << format.year << format.dateSeparator << format.month << format.dateSeparator << format.day
-        << format.timeDateSeparator << format.hour << format.timeSeparator << format.minute
+  asstr << format.year << format.dateSeparator << format.month
+        << format.dateSeparator << format.day << format.timeDateSeparator
+        << format.hour << format.timeSeparator << format.minute
         << format.timeSeparator << format.second;
 
   String tformat = asstr.str();

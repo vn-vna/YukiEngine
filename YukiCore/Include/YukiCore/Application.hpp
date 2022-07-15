@@ -8,9 +8,9 @@
 
 #pragma once
 
+#include "YukiComp/Scene.hpp"
 #include "YukiCore/Headers.hpp"
 #include "YukiCore/Objects.hpp"
-#include "YukiComp/Scene.hpp"
 #include "YukiDebug/Loggers.hpp"
 #include "YukiUtil/System.hpp"
 
