@@ -5,8 +5,6 @@
 namespace Yuki::Comp
 {
 
-using Debug::YukiSceneDuplicateEntityName;
-
 YukiScene::YukiScene()
     : m_pCamera(nullptr),
       m_mEntities(),

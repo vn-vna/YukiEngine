@@ -122,15 +122,17 @@ PixelInternalFormat getInternalFormat(int channel)
   }
 }
 
-SharedPtr<IOGLTexture> Images::Generate2DTexture(const Vec2I& offset,
-                                                 const Vec2I& size)
+SharedPtr<IOGLTexture>
+Images::Generate2DTexture(const Vec2I& offset, const Vec2I& size)
 {
   SharedPtr<IOGLTexture> texture = CreateGLTexture(TextureType::TEXTURE_2D);
   texture->Require();
-  texture->SetStorageData2D(getInternalFormat(m_nChannel), 4,
-                            Vec2F {m_nWidth, m_nHeight});
-  texture->SetTextureData2D(m_pData, 0, getPixelBasedInternalFormat(m_nChannel),
-                            offset, size);
+  texture->SetStorageData2D(
+      getInternalFormat(m_nChannel), 4, Vec2F {m_nWidth, m_nHeight}
+  );
+  texture->SetTextureData2D(
+      m_pData, 0, getPixelBasedInternalFormat(m_nChannel), offset, size
+  );
   texture->SetTextureMagFilter(TextureMagFilter::LINEAR);
   texture->SetTextureMinFilter(TextureMinFilter::LINEAR);
   texture->GenerateMipMap();

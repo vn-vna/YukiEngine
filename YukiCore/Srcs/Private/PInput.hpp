@@ -26,15 +26,16 @@ public:
   YukiInpControl();
   ~YukiInpControl() override;
 
-  void
-       AddKeyboardInputCallback(const String&                  name,
-                                const YukiInpKeyboardCallback& pcallback) override;
-  void AddCursorInputCallback(const String&                name,
-                              const YukiInpCursorCallback& pcallback) override;
+  void AddKeyboardInputCallback(
+      const String& name, const YukiInpKeyboardCallback& pcallback
+  ) override;
+  void AddCursorInputCallback(
+      const String& name, const YukiInpCursorCallback& pcallback
+  ) override;
   void RemoveCursorInputCallback(const String& name) override;
   void RemoveKeyboardInputCallback(const String& name) override;
-  void ExecuteKeyCallbacks(int key, int scancode, int action,
-                           int modifiers) override;
+  void ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers)
+      override;
   void ExecuteCursorPosCallback(int x, int y) override;
 
   void SetCursorStandardStyle(const StandardCursorType& type) override;

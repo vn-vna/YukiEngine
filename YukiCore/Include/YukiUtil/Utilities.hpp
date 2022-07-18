@@ -42,7 +42,8 @@ template <class EntityClass, typename... Args>
 inline SharedPtr<Entity::TemplateEntity> createEntity(Args&&... args)
 {
   return CreateInterfaceInstance<Entity::TemplateEntity, EntityClass>(
-      std::forward<Args...>(args...));
+      std::forward<Args...>(args...)
+  );
 }
 
 template <typename T>

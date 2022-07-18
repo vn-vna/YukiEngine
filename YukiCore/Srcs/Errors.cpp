@@ -33,7 +33,8 @@ Errors::Errors(const YukiErrCode& code, const String& file, const int& line)
 String Errors::getErrorMessage() const
 {
   StringStream sstr = {};
-  sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line " << m_nLine << "] -> ";
+  sstr << "[YUKI ERROR REPORT]\n\t[RTE at file: " << m_File << " - line "
+       << m_nLine << "] -> ";
   switch (m_ErrCode)
   {
     // clang-format off

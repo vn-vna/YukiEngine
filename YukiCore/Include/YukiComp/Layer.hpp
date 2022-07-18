@@ -30,7 +30,8 @@ public:
   virtual SharedPtr<IOGLTexture>      GetColorTexture()   = 0;
 };
 
-SharedPtr<ILayer> CreateYukiLayer(unsigned width = 0, unsigned height = 0,
-                                  unsigned multiSamples = 1);
+SharedPtr<ILayer> CreateYukiLayer(
+    unsigned width = 0, unsigned height = 0, unsigned multiSamples = 1
+);
 
 } // namespace Yuki::Comp

@@ -30,8 +30,9 @@ typedef struct StVertexFormat
   Vec3F normal;
   Vec2F texcoord;
 
-  StVertexFormat(const Vec3F& _position, const Vec3F& _normal,
-                 const Vec2F& _texcoord)
+  StVertexFormat(
+      const Vec3F& _position, const Vec3F& _normal, const Vec2F& _texcoord
+  )
       : position(_position),
         normal(_normal),
         texcoord(_texcoord)
@@ -127,11 +128,11 @@ public:
  * @param meshName provide a name for it
  * @return an interface instance for the mesh
  */
-SharedPtr<IMesh> GenerateYukiMesh(Vector<MeshVertexFormat>&    vertexData,
-                                  MeshIndexData&               indexData,
-                                  SharedPtr<Core::IOGLTexture> texture,
-                                  SharedPtr<IMaterial>         material,
-                                  const String&                meshName);
+SharedPtr<IMesh> GenerateYukiMesh(
+    Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
+    SharedPtr<Core::IOGLTexture> texture, SharedPtr<IMaterial> material,
+    const String& meshName
+);
 
 /**
  * Thif function is used to create a new material and return
@@ -142,8 +143,8 @@ SharedPtr<IMesh> GenerateYukiMesh(Vector<MeshVertexFormat>&    vertexData,
  * @TODO Provide a method to create material from ambient
  * map or specular map in the future.
  */
-SharedPtr<IMaterial> GenerateSolidMaterial(const Vec4F& ambient,
-                                           const float  specular,
-                                           const float  diffuse);
+SharedPtr<IMaterial> GenerateSolidMaterial(
+    const Vec4F& ambient, const float specular, const float diffuse
+);
 
 } // namespace Yuki::Comp

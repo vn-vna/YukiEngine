@@ -33,8 +33,10 @@ class YukiMeshMaterial final : virtual public IMaterial,
                                virtual public YukiSharedObject
 {
 public:
-  YukiMeshMaterial(SharedPtr<Images> ambientMap, SharedPtr<Images> specularMap,
-                   SharedPtr<Images> diffuseMap);
+  YukiMeshMaterial(
+      SharedPtr<Images> ambientMap, SharedPtr<Images> specularMap,
+      SharedPtr<Images> diffuseMap
+  );
   ~YukiMeshMaterial() override;
 
   SharedPtr<IOGLTexture> GetSpecularMap() override;
@@ -62,9 +64,11 @@ class YukiMesh : virtual public IMesh,
                  virtual public YukiSharedObject
 {
 public:
-  YukiMesh(Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
-           SharedPtr<IOGLTexture>& texture, SharedPtr<IMaterial> material,
-           const String& name);
+  YukiMesh(
+      Vector<MeshVertexFormat>& vertices, MeshIndexData& indices,
+      SharedPtr<IOGLTexture>& texture, SharedPtr<IMaterial> material,
+      const String& name
+  );
   virtual ~YukiMesh();
 
   SharedPtr<IOGLTexture>          GetMeshTexture() const override;

@@ -102,7 +102,8 @@ void YukiSystem::Create()
         this->_GetCpuActivity(&m_tActivityInfo);
         this->_GetMemoryActivity(&m_tActivityInfo);
       },
-      YUKI_ACTIVITY_INFO_UPDATE_INTERVAL);
+      YUKI_ACTIVITY_INFO_UPDATE_INTERVAL
+  );
   m_pTimerUpdate->Start();
 }
 
@@ -139,8 +140,9 @@ void YukiSystem::_GetMemoryActivity(ResourceActivityInfo* info)
 
   // Get memory used by this process
   PROCESS_MEMORY_COUNTERS_EX pmc;
-  GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc,
-                       sizeof(pmc));
+  GetProcessMemoryInfo(
+      GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc)
+  );
   info->memoryUsedByProc = pmc.WorkingSetSize;
 #elif defined(IS_LINUX)
   struct sysinfo si;
@@ -179,10 +181,12 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
 
   PdhCollectQueryData(m_hPdhQuery);
 
-  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz,
-                               &itemCount, NULL);
-  PdhGetFormattedCounterArrayA(m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz,
-                               &itemCount, stat);
+  PdhGetFormattedCounterArrayA(
+      m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, NULL
+  );
+  PdhGetFormattedCounterArrayA(
+      m_hCounterCPU, PDH_FMT_DOUBLE, &bufferSz, &itemCount, stat
+  );
 
   if (itemCount < 1)
   {
@@ -214,10 +218,11 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
   {
     while (cpuid < statArrLen && !std::feof(file))
     {
-      std::fscanf(file, "%*s %lu %lu %lu %lu", &lastStatus[cpuid].lastTotalUser,
-                  &lastStatus[cpuid].lastTotalUserLow,
-                  &lastStatus[cpuid].lastTotalSys,
-                  &lastStatus[cpuid].lastTotalIdle);
+      std::fscanf(
+          file, "%*s %lu %lu %lu %lu", &lastStatus[cpuid].lastTotalUser,
+          &lastStatus[cpuid].lastTotalUserLow, &lastStatus[cpuid].lastTotalSys,
+          &lastStatus[cpuid].lastTotalIdle
+      );
 
       ++cpuid;
     }
@@ -232,8 +237,10 @@ void YukiSystem::_GetCpuActivity(ResourceActivityInfo* info)
     uint64_t totalUser = 0, totalUserLow = 0, totalSys = 0, totalIdle = 0,
              total = 0;
 
-    std::fscanf(file, "%*s %lu %lu %lu %lu", &totalUser, &totalUserLow,
-                &totalSys, &totalIdle);
+    std::fscanf(
+        file, "%*s %lu %lu %lu %lu", &totalUser, &totalUserLow, &totalSys,
+        &totalIdle
+    );
 
     // Overflow detection. Just skip this value.
     bool dataFailed = totalUser < lastStatus[cpuid].lastTotalUser ||
@@ -329,8 +336,9 @@ void YukiSystem::_InitInformationsWin32()
 void YukiSystem::_InitPDH()
 {
   PdhOpenQueryA(NULL, NULL, &m_hPdhQuery);
-  PdhAddCounterA(m_hPdhQuery, YUKI_ALL_PROCESSOR_QUERY_STRING, NULL,
-                 &m_hCounterCPU);
+  PdhAddCounterA(
+      m_hPdhQuery, YUKI_ALL_PROCESSOR_QUERY_STRING, NULL, &m_hCounterCPU
+  );
   PdhCollectQueryData(m_hPdhQuery);
 }
 
@@ -496,13 +504,17 @@ void parse_cpuinfo_tokens(ParsedCpuInfo& info, Vector<String>& propLine)
 
   if (propLine[0] == "address sizes")
   {
-    std::sscanf(propLine[1].c_str(), "%u %*s %*s %u %*s %*s", &info.addrSz.phys,
-                &info.addrSz.virt);
+    std::sscanf(
+        propLine[1].c_str(), "%u %*s %*s %u %*s %*s", &info.addrSz.phys,
+        &info.addrSz.virt
+    );
   }
 }
 
-void parse_cpuinfo_toarray(Vector<ParsedCpuInfo>& infos,
-                           unsigned& physCoreCount, unsigned& logicalCoreCount)
+void parse_cpuinfo_toarray(
+    Vector<ParsedCpuInfo>& infos, unsigned& physCoreCount,
+    unsigned& logicalCoreCount
+)
 {
   bool willCreateInfo = true;
 
@@ -513,7 +525,8 @@ void parse_cpuinfo_toarray(Vector<ParsedCpuInfo>& infos,
   {
     Core::GetYukiApp()->GetLogger()->PushErrorMessage(
         "File \"/proc/cpuinfo\" Can't be opened, skipping "
-        "read information");
+        "read information"
+    );
     return;
   }
 

@@ -296,17 +296,17 @@ enum class StandardCursorType
 class IInput : virtual public IObject
 {
 public:
-  virtual void
-  AddCursorInputCallback(const String&                name,
-                         const YukiInpCursorCallback& pcallback) = 0;
-  virtual void
-               AddKeyboardInputCallback(const String&                  name,
-                                        const YukiInpKeyboardCallback& pcallback) = 0;
+  virtual void AddCursorInputCallback(
+      const String& name, const YukiInpCursorCallback& pcallback
+  ) = 0;
+  virtual void AddKeyboardInputCallback(
+      const String& name, const YukiInpKeyboardCallback& pcallback
+  )                                                            = 0;
   virtual void RemoveCursorInputCallback(const String& name)   = 0;
   virtual void RemoveKeyboardInputCallback(const String& name) = 0;
-  virtual void ExecuteKeyCallbacks(int key, int scancode, int action,
-                                   int modifiers)              = 0;
-  virtual void ExecuteCursorPosCallback(int x, int y)          = 0;
+  virtual void
+  ExecuteKeyCallbacks(int key, int scancode, int action, int modifiers) = 0;
+  virtual void ExecuteCursorPosCallback(int x, int y)                   = 0;
 
   virtual void SetCursorStandardStyle(const StandardCursorType& type) = 0;
 

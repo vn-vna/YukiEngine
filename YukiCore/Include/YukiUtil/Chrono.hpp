@@ -98,8 +98,8 @@ public:
   virtual void SetInterval(long long milis, long long nanos) = 0;
   virtual void SetEstimateCycle(long long cycles) = 0; // Set the estimate
                                                        // cycle, -1 for infinite
-  virtual void
-  SetParallelExecution(bool sep) = 0; // Execute callback from thread pool
+  virtual void SetParallelExecution(bool sep
+  ) = 0; // Execute callback from thread pool
   virtual void SetCallback(const TimerAction& callback) = 0;
 
   virtual long long GetCycle()    = 0; // Return the defined Cycle or -1 for
@@ -116,7 +116,8 @@ public:
 };
 
 SharedPtr<TimerManager> GetTimerManager();
-SharedPtr<IYukiTimer>   CreateTimer(const TimerAction& callback,
-                                    long long interval, bool parallexEx = false);
+SharedPtr<IYukiTimer>   CreateTimer(
+      const TimerAction& callback, long long interval, bool parallexEx = false
+  );
 
 } // namespace Yuki::Chrono

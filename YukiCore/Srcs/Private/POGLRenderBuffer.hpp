@@ -26,10 +26,11 @@ public:
   unsigned GetID() override;
   void     BindObject() override;
 
-  void SetBufferStorage(PixelInternalFormat internalFormat,
-                        const Vec2I&        size) override;
-  void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
-                                    const Vec2I& size, int samples) override;
+  void SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size)
+      override;
+  void SetBufferStorageMultiSamples(
+      PixelInternalFormat internalFormat, const Vec2I& size, int samples
+  ) override;
 
   void Create() override;
   void Destroy() override;

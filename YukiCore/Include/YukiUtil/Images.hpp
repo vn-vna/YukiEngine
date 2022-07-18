@@ -31,8 +31,8 @@ public:
   const int&     GetHeight();
   const int&     GetDataChannel();
 
-  SharedPtr<IOGLTexture> Generate2DTexture(const Vec2I& offset,
-                                           const Vec2I& size);
+  SharedPtr<IOGLTexture>
+  Generate2DTexture(const Vec2I& offset, const Vec2I& size);
   SharedPtr<IOGLTexture> Generate2DTexture();
 
 protected:
@@ -45,13 +45,13 @@ protected:
 class TextureInstruction
 {};
 
-SharedPtr<Images> CreateSolidColorImage(const Vec1F& color,
-                                        const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec2F& color,
-                                        const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec3F& color,
-                                        const Vec2I& size = {10, 10});
-SharedPtr<Images> CreateSolidColorImage(const Vec4F& color,
-                                        const Vec2I& size = {10, 10});
+SharedPtr<Images>
+CreateSolidColorImage(const Vec1F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images>
+CreateSolidColorImage(const Vec2F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images>
+CreateSolidColorImage(const Vec3F& color, const Vec2I& size = {10, 10});
+SharedPtr<Images>
+CreateSolidColorImage(const Vec4F& color, const Vec2I& size = {10, 10});
 
 } // namespace Yuki::Utils

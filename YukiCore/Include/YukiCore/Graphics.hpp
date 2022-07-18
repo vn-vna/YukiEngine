@@ -373,9 +373,9 @@ class IOGLElementBuffer : virtual public IOGLObject
 public:
   virtual void SetBufferData(Vector<unsigned>& data)       = 0;
   virtual void SetBufferData(unsigned* pData, size_t size) = 0;
-  virtual void DrawElements(PrimitiveTopology topology, unsigned start,
-                            unsigned count)                = 0;
-  virtual void DrawAllElements(PrimitiveTopology topology) = 0;
+  virtual void
+  DrawElements(PrimitiveTopology topology, unsigned start, unsigned count) = 0;
+  virtual void DrawAllElements(PrimitiveTopology topology)                 = 0;
 };
 
 // OpenGL Object:
@@ -383,12 +383,15 @@ public:
 class IOGLShaderProgram : virtual public IOGLObject
 {
 public:
-  virtual void UniformMatrix(const String& prop, const Mat2F& mat,
-                             bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat3F& mat,
-                             bool transopse = false) = 0;
-  virtual void UniformMatrix(const String& prop, const Mat4F& mat,
-                             bool transopse = false) = 0;
+  virtual void UniformMatrix(
+      const String& prop, const Mat2F& mat, bool transopse = false
+  ) = 0;
+  virtual void UniformMatrix(
+      const String& prop, const Mat3F& mat, bool transopse = false
+  ) = 0;
+  virtual void UniformMatrix(
+      const String& prop, const Mat4F& mat, bool transopse = false
+  ) = 0;
 
   virtual void UniformVector(const String& prop, const Vec2F& vec) = 0;
   virtual void UniformVector(const String& prop, const Vec3F& vec) = 0;
@@ -412,29 +415,38 @@ public:
   virtual void SetTextureCompareMode(TextureCompareMode compareMode)    = 0;
   virtual void SetTextureLodBias(float bias)                            = 0;
 
-  virtual void SetStorageData1D(PixelInternalFormat internalFormat, int level,
-                                const Vec1I& size) = 0;
-  virtual void SetStorageData2D(PixelInternalFormat internalFormat, int level,
-                                const Vec2F& size) = 0;
-  virtual void SetStorageData3D(PixelInternalFormat internalFormat, int level,
-                                const Vec3F& size) = 0;
+  virtual void SetStorageData1D(
+      PixelInternalFormat internalFormat, int level, const Vec1I& size
+  ) = 0;
+  virtual void SetStorageData2D(
+      PixelInternalFormat internalFormat, int level, const Vec2F& size
+  ) = 0;
+  virtual void SetStorageData3D(
+      PixelInternalFormat internalFormat, int level, const Vec3F& size
+  ) = 0;
 
-  virtual void SetStorageData1D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec1I& size) = 0;
-  virtual void SetStorageData2D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec2F& size) = 0;
-  virtual void SetStorageData3D(PixelBasedInternalFormat internalFormat,
-                                int level, const Vec3F& size) = 0;
+  virtual void SetStorageData1D(
+      PixelBasedInternalFormat internalFormat, int level, const Vec1I& size
+  ) = 0;
+  virtual void SetStorageData2D(
+      PixelBasedInternalFormat internalFormat, int level, const Vec2F& size
+  ) = 0;
+  virtual void SetStorageData3D(
+      PixelBasedInternalFormat internalFormat, int level, const Vec3F& size
+  ) = 0;
 
-  virtual void SetTextureData1D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
-                                const Vec1I& offset, const Vec1I& len)  = 0;
-  virtual void SetTextureData2D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
-                                const Vec2I& offset, const Vec2I& size) = 0;
-  virtual void SetTextureData3D(uint8_t* pixels, int level,
-                                PixelBasedInternalFormat imageFormat,
-                                const Vec3I& offset, const Vec3I& size) = 0;
+  virtual void SetTextureData1D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+      const Vec1I& offset, const Vec1I& len
+  ) = 0;
+  virtual void SetTextureData2D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+      const Vec2I& offset, const Vec2I& size
+  ) = 0;
+  virtual void SetTextureData3D(
+      uint8_t* pixels, int level, PixelBasedInternalFormat imageFormat,
+      const Vec3I& offset, const Vec3I& size
+  ) = 0;
 
   virtual const TextureType             GetTextureType()             = 0;
   virtual const TextureMinFilter        GetTextureMinFilter()        = 0;
@@ -454,10 +466,11 @@ public:
 class IOGLRenderBuffer : virtual public IOGLObject
 {
 public:
-  virtual void SetBufferStorage(PixelInternalFormat internalFormat,
-                                const Vec2I&        size)                          = 0;
-  virtual void SetBufferStorageMultiSamples(PixelInternalFormat internalFormat,
-                                            const Vec2I& size, int samples) = 0;
+  virtual void
+  SetBufferStorage(PixelInternalFormat internalFormat, const Vec2I& size) = 0;
+  virtual void SetBufferStorageMultiSamples(
+      PixelInternalFormat internalFormat, const Vec2I& size, int samples
+  ) = 0;
 };
 
 // OpenGL Container:
@@ -465,13 +478,16 @@ public:
 class IOGLVertexArray : virtual public IOGLObject
 {
 public:
-  virtual void EnableAttribute(unsigned attrib)                             = 0;
-  virtual void AttributeBinding(unsigned attrib, unsigned binding)          = 0;
-  virtual void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
-                                  bool normalized = false)                  = 0;
-  virtual void SetVertexBuffer(SharedPtr<IOGLVertexBuffer> buffer,
-                               int bindIndex, size_t offset, size_t stride) = 0;
-  virtual void SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer)        = 0;
+  virtual void EnableAttribute(unsigned attrib)                    = 0;
+  virtual void AttributeBinding(unsigned attrib, unsigned binding) = 0;
+  virtual void SetAttributeFormat(
+      unsigned size, unsigned attrib, size_t offset, bool normalized = false
+  ) = 0;
+  virtual void SetVertexBuffer(
+      SharedPtr<IOGLVertexBuffer> buffer, int bindIndex, size_t offset,
+      size_t stride
+  )                                                                  = 0;
+  virtual void SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer) = 0;
 };
 
 // OpenGL Container
@@ -505,21 +521,23 @@ public:
 
   virtual bool BufferOK() = 0;
 
-  virtual void AttachTextureColor(SharedPtr<IOGLTexture> tex, unsigned pos = 0,
-                                  unsigned lvl = 0)        = 0;
-  virtual void AttachTextureDepth(SharedPtr<IOGLTexture> tex,
-                                  unsigned               lvl = 0)        = 0;
-  virtual void AttachTextureStencil(SharedPtr<IOGLTexture> tex,
-                                    unsigned               lvl = 0)      = 0;
-  virtual void AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex,
-                                         unsigned               lvl = 0) = 0;
+  virtual void AttachTextureColor(
+      SharedPtr<IOGLTexture> tex, unsigned pos = 0, unsigned lvl = 0
+  ) = 0;
+  virtual void
+  AttachTextureDepth(SharedPtr<IOGLTexture> tex, unsigned lvl = 0) = 0;
+  virtual void
+  AttachTextureStencil(SharedPtr<IOGLTexture> tex, unsigned lvl = 0) = 0;
+  virtual void
+  AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex, unsigned lvl = 0) = 0;
 
-  virtual void AttachRenderBufferColor(SharedPtr<IOGLRenderBuffer> rbo,
-                                       unsigned position = 0)             = 0;
+  virtual void AttachRenderBufferColor(
+      SharedPtr<IOGLRenderBuffer> rbo, unsigned position = 0
+  )                                                                       = 0;
   virtual void AttachRenderBufferDepth(SharedPtr<IOGLRenderBuffer> rbo)   = 0;
   virtual void AttachRenderBufferStencil(SharedPtr<IOGLRenderBuffer> rbo) = 0;
-  virtual void
-  AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo) = 0;
+  virtual void AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo
+  )                                                                       = 0;
 };
 
 SharedPtr<IGraphics>         CreateGraphicsController();

@@ -10,7 +10,8 @@ namespace Yuki::Chrono
 long long Clock::CurrentTimeNanos()
 {
   return std::chrono::duration_cast<SystemClockNS>(
-             CurrentTimePoint().time_since_epoch())
+             CurrentTimePoint().time_since_epoch()
+  )
       .count();
 }
 

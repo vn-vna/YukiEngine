@@ -1,6 +1,6 @@
 BasedOnStyle: LLVM
 
-AlignAfterOpenBracket: DontAlign
+AlignAfterOpenBracket: BlockIndent
 AllowShortBlocksOnASingleLine: true
 AllowShortFunctionsOnASingleLine: None 
 AllowShortLambdasOnASingleLine: All
@@ -10,7 +10,6 @@ PackConstructorInitializers: Never
 SpaceBeforeCpp11BracedList: true
 BreakInheritanceList: AfterComma
 AlwaysBreakTemplateDeclarations: Yes
-AlignAfterOpenBracket: Align
 IndentWidth: 2
 AccessModifierOffset: -2
 SeparateDefinitionBlocks: Always

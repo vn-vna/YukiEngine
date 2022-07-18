@@ -49,16 +49,18 @@ public:
   void     BindObject() override;
   bool     BufferOK() override;
 
-  void AttachTextureColor(SharedPtr<IOGLTexture> tex, unsigned position,
-                          unsigned level) override;
+  void AttachTextureColor(
+      SharedPtr<IOGLTexture> tex, unsigned position, unsigned level
+  ) override;
   void AttachTextureDepth(SharedPtr<IOGLTexture> tex, unsigned level) override;
-  void AttachTextureStencil(SharedPtr<IOGLTexture> tex,
-                            unsigned               level) override;
-  void AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex,
-                                 unsigned               level) override;
+  void
+  AttachTextureStencil(SharedPtr<IOGLTexture> tex, unsigned level) override;
+  void AttachTextureDepthStencil(SharedPtr<IOGLTexture> tex, unsigned level)
+      override;
 
-  void AttachRenderBufferColor(SharedPtr<IOGLRenderBuffer> rbo,
-                               unsigned position = 0) override;
+  void AttachRenderBufferColor(
+      SharedPtr<IOGLRenderBuffer> rbo, unsigned position = 0
+  ) override;
   void AttachRenderBufferDepth(SharedPtr<IOGLRenderBuffer> rbo) override;
   void AttachRenderBufferStencil(SharedPtr<IOGLRenderBuffer> rbo) override;
   void AttachRenderBufferDepthStencil(SharedPtr<IOGLRenderBuffer> rbo) override;

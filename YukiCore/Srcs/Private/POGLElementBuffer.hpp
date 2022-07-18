@@ -28,9 +28,9 @@ public:
   void     BindObject() override;
   void     SetBufferData(Vector<unsigned>& data) override;
   void     SetBufferData(unsigned* pData, size_t size) override;
-  void     DrawElements(PrimitiveTopology topology, unsigned start,
-                        unsigned count) override;
-  void     DrawAllElements(PrimitiveTopology topology) override;
+  void DrawElements(PrimitiveTopology topology, unsigned start, unsigned count)
+      override;
+  void DrawAllElements(PrimitiveTopology topology) override;
 
   void Create() override;
   void Destroy() override;

@@ -31,10 +31,13 @@ public:
 
   void EnableAttribute(unsigned attrib) override;
   void AttributeBinding(unsigned attrib, unsigned binding) override;
-  void SetVertexBuffer(SharedPtr<IOGLVertexBuffer> buffer, int bindIndex,
-                       size_t offset, size_t stride) override;
-  void SetAttributeFormat(unsigned size, unsigned attrib, size_t offset,
-                          bool normalized) override;
+  void SetVertexBuffer(
+      SharedPtr<IOGLVertexBuffer> buffer, int bindIndex, size_t offset,
+      size_t stride
+  ) override;
+  void SetAttributeFormat(
+      unsigned size, unsigned attrib, size_t offset, bool normalized
+  ) override;
   void SetElementBuffer(SharedPtr<IOGLElementBuffer> buffer) override;
 
 private:

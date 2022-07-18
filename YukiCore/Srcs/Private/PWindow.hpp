@@ -47,6 +47,7 @@ private:
 } // namespace Yuki::Core
 
 void initAndCheckGLFW();
-void funcGLFWKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action,
-                         int modifiers);
+void funcGLFWKeyCallback(
+    GLFWwindow* pWindow, int key, int scancode, int action, int modifiers
+);
 void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y);

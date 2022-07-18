@@ -29,8 +29,8 @@ YukiThreadPool::YukiThreadPool(int poolSize, bool oglContext)
 
         while (m_bPoolActive)
         {
-          std::unique_lock<std::mutex> locker {m_ActionQueueMutex,
-                                               std::defer_lock};
+          std::unique_lock<std::mutex> locker {
+              m_ActionQueueMutex, std::defer_lock};
 
           locker.lock();
           bool queueEmpty = m_ActionQueue.empty();

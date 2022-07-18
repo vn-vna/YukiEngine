@@ -18,8 +18,9 @@ namespace Yuki::Chrono
 class YukiTimer final : virtual public IYukiTimer
 {
 public:
-  explicit YukiTimer(const TimerAction& callback, long long interval,
-                     bool parallel = false);
+  explicit YukiTimer(
+      const TimerAction& callback, long long interval, bool parallel = false
+  );
   ~YukiTimer();
 
   void Start() override;
