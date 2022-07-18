@@ -314,10 +314,11 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
   // m_pMaterial->GetSpecularStrength());
 
   // Some hard coding
-  m_pShaderProgram->UniformValue("U_LightIntensity", 1.00f);
-  m_pShaderProgram->UniformVector("U_LightPos", Vec3F {-1.30f, 1.30f, 2.00f});
-  m_pShaderProgram->UniformVector("U_LightColor",
-                                  Vec4F {1.00f, 1.00f, 1.00f, 1.00f});
+  m_pShaderProgram->UniformValue("U_LightData.intensity", 1.00f);
+  m_pShaderProgram->UniformVector("U_LightData.position",
+                                  Vec3F {-1.30f, 1.30f, 2.00f});
+  m_pShaderProgram->UniformVector("U_LightData.color",
+                                  Vec3F {1.00f, 1.00f, 1.00f});
   m_pShaderProgram->UniformValue("U_MeshTextures", 0);
   m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
   m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
