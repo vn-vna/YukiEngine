@@ -306,6 +306,13 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
     m_pMaterial->GetDiffuseMap()->BindTexture(3);
   }
 
+  // Uniform sampler
+  m_pShaderProgram->UniformValue("U_MeshTextures", 0);
+  m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
+  m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
+  m_pShaderProgram->UniformValue("U_MeshDiffMap", 3);
+
+  // Uniform mesh stuffs
   m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
   m_pShaderProgram->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
   m_pShaderProgram->UniformMatrix(
@@ -325,7 +332,7 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
   // Some hard coding
   m_pShaderProgram->UniformValue("U_PointLightData[0].intensity", 1.00f);
   m_pShaderProgram->UniformVector(
-      "U_LightData[0].position", Vec3F {4.00f, 1.30f, 2.00f}
+      "U_PointLightData[0].position", Vec3F {4.00f, 1.30f, 2.00f}
   );
   m_pShaderProgram->UniformVector(
       "U_PointLightData[0].color", Vec3F {1.00f, 0.00f, 0.00f}
@@ -333,19 +340,13 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
 
   m_pShaderProgram->UniformValue("U_PointLightData[1].intensity", 1.00f);
   m_pShaderProgram->UniformVector(
-      "U_LightData[1].position", Vec3F {3.00f, 1.30f, 2.00f}
+      "U_PointLightData[1].position", Vec3F {-3.00f, -1.30f, -2.00f}
   );
   m_pShaderProgram->UniformVector(
       "U_PointLightData[1].color", Vec3F {0.00f, 1.00f, 0.00f}
   );
 
   m_pShaderProgram->UniformValue("U_PointLightCount", 2);
-
-  // Uniform sampler
-  m_pShaderProgram->UniformValue("U_MeshTextures", 0);
-  m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
-  m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
-  m_pShaderProgram->UniformValue("U_MeshDiffMap", 3);
 
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }
