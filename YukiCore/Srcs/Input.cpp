@@ -5,6 +5,8 @@
 
 #include "Private/PInput.hpp"
 
+#include <fmt/format.h>
+
 namespace Yuki::Core
 {
 

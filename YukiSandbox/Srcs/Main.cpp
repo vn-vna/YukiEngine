@@ -9,6 +9,8 @@
 #include "CameraController.hpp"
 #include "SystemControl.hpp"
 
+//#define APPLY_MEMCHECK
+
 using Yuki::Comp::CreateYukiCamera;
 using Yuki::Comp::CreateYukiScene;
 using Yuki::Core::CreateYukiApp;
