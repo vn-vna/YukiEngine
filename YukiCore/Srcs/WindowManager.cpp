@@ -25,13 +25,6 @@ void funcGLFWKeyCallback(
   );
 }
 
-void funcGLFWCursorCallback(GLFWwindow* pWindow, double x, double y)
-{
-  Yuki::Core::GetYukiApp()->GetInputController()->ExecuteCursorPosCallback(
-      (int) x, (int) y
-  );
-}
-
 namespace Yuki::Core
 {
 
@@ -123,7 +116,6 @@ void YukiWindow::Create()
   }
 
   glfwSetKeyCallback(m_pGLFWWindow, funcGLFWKeyCallback);
-  glfwSetCursorPosCallback(m_pGLFWWindow, funcGLFWCursorCallback);
 
   glfwMakeContextCurrent(m_pGLFWWindow);
 
@@ -137,6 +129,10 @@ void YukiWindow::Awake()
 
 void YukiWindow::Update()
 {
+  double   cursorX, cursorY;
+  AutoType pInput = GetYukiApp()->GetInputController();
+  glfwGetCursorPos(this->m_pGLFWWindow, &cursorX, &cursorY);
+  pInput->ExecuteCursorPosCallback(cursorX, cursorY);
   glfwSwapBuffers(m_pGLFWWindow);
   glfwPollEvents();
 }
