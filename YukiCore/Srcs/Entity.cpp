@@ -21,9 +21,19 @@ void TemplateEntity::SetModel(ModelType model)
   m_pModel = model;
 }
 
+void TemplateEntity::SetLight(LightType light)
+{
+  m_pLight = light;
+}
+
 String TemplateEntity::GetName()
 {
   return m_sName;
+}
+
+LightType TemplateEntity::GetLight()
+{
+  return m_pLight;
 }
 
 ModelType TemplateEntity::GetModel()
@@ -57,7 +67,7 @@ void TemplateEntity::Render()
   AutoType crrCamera = crrScene->GetCamera();
   if (m_pModel.get())
   {
-    m_pModel->Render(crrCamera);
+    m_pModel->Render(crrCamera, crrScene);
   }
 }
 

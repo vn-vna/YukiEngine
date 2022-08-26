@@ -80,13 +80,13 @@ MeshType YukiModel::GetMesh(const String& name)
   return {nullptr};
 }
 
-void YukiModel::Render(SharedPtr<ICamera> camera)
+void YukiModel::Render(SharedPtr<ICamera> camera, SharedPtr<IScene> scene)
 {
   for (const AutoType& pMesh : this->GetMeshes())
   {
     if (pMesh.second.get())
     {
-      pMesh.second->RenderMesh(camera);
+      pMesh.second->RenderMesh(camera, scene);
     }
   }
 }
@@ -98,7 +98,7 @@ SharedPtr<IModel> LoadModel(String fileName, String modelName)
 
   AutoType defaultTex = GenerateSolid2DTexture({1.00f, 1.00f, 1.00f, 1.00f});
 
-  // TODO: Assimp model loader cause memory leak
+  // TODO: Memory leaks caused by Assimp library
   Assimp::Importer importer = {};
 
   AutoType pScene = importer.ReadFile(fileName, ASSIMP_LOAD_FLAGS);
@@ -115,23 +115,21 @@ SharedPtr<IModel> LoadModel(String fileName, String modelName)
   std::for_each(
       pScene->mMeshes, pScene->mMeshes + pScene->mNumMeshes,
       [&](const aiMesh* aMesh) {
-        AutoType vcount = aMesh->mNumVertices;
-        AutoType varr   = aMesh->mVertices;
-        AutoType narr   = aMesh->mNormals;
-        AutoType fcount = aMesh->mNumFaces;
-        AutoType farr   = aMesh->mFaces;
+        AutoType vcount = aMesh->mNumVertices; // Vertices count
+        AutoType varr   = aMesh->mVertices;    // Vertex array
+        AutoType narr   = aMesh->mNormals;     // Normals array
+        AutoType fcount = aMesh->mNumFaces;    // Faces count
+        AutoType farr   = aMesh->mFaces;       // Faces array
 
         Vector<MeshVertexFormat> vform;
         vform.reserve(vcount);
         for (unsigned vID = 0; vID < vcount; ++vID)
         {
-          // clang-format off
-      vform.push_back({
-          {varr[vID].x, varr[vID].y, varr[vID].z},
-          {narr[vID].x, narr[vID].y, narr[vID].z},
-          {0.0f, 0.0f}
-        });
-      // clang-format on
+          vform.push_back({
+              {varr[vID].x, varr[vID].y, varr[vID].z},
+              {narr[vID].x, narr[vID].y, narr[vID].z},
+              {       0.0f,        0.0f            }
+          });
         }
 
         Vector<unsigned> idata;
@@ -155,6 +153,7 @@ SharedPtr<IModel> LoadModel(String fileName, String modelName)
             "Loaded a mesh [{}] from file: {}", mesh->GetName(), fileName
         ));
 #endif
+
         meshes[mesh->GetName()] = mesh;
       }
   );

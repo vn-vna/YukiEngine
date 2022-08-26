@@ -74,7 +74,6 @@ public:
   SharedPtr<IOGLTexture>          GetMeshTexture() const override;
   SharedPtr<IOGLElementBuffer>    GetElementBuffer() const override;
   SharedPtr<IOGLVertexBuffer>     GetVertexBuffer() const override;
-  SharedPtr<IOGLShaderProgram>    GetShaderProgram() const override;
   SharedPtr<IOGLVertexArray>      GetVertexArray() const override;
   SharedPtr<IMaterial>            GetMaterial() const override;
   const PrimitiveTopology&        GetTopology() const override;
@@ -96,13 +95,13 @@ public:
   void RotateMesh(const Vec3F& axis, float rotationAngle) override;
   void ScaleMesh(const Vec3F& scaleVector) override;
 
-  void RenderMesh(SharedPtr<ICamera> camera) const override;
+  void RenderMesh(SharedPtr<ICamera> pCamera, SharedPtr<IScene> pScene)
+      const override;
 
 private:
   SharedPtr<IOGLElementBuffer> m_pElementBuffer;
   SharedPtr<IOGLVertexBuffer>  m_pVertexBuffer;
   SharedPtr<IOGLVertexArray>   m_pVertexArray;
-  SharedPtr<IOGLShaderProgram> m_pShaderProgram;
   SharedPtr<IOGLTexture>       m_pTexture;
   SharedPtr<IMaterial>         m_pMaterial;
   Vector<MeshVertexFormat>     m_aVertexFormat;

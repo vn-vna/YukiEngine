@@ -1,14 +1,20 @@
 #include "Private/PScene.hpp"
 
+#include "YukiCore/Graphics.hpp"
+#include "YukiCore/Headers.hpp"
 #include "YukiDebug/Errors.hpp"
 
 namespace Yuki::Comp
 {
+using Core::CreateGLShaderProgram;
+
+AutoType g_pDefaultMeshShader = CreateGLShaderProgram("MeshShader");
 
 YukiScene::YukiScene()
     : m_pCamera(nullptr),
       m_mEntities(),
-      m_bIsReady(false)
+      m_bIsReady(false),
+      m_pShaderProgram(g_pDefaultMeshShader)
 {}
 
 YukiScene::~YukiScene() = default;
@@ -25,6 +31,11 @@ void YukiScene::AddEntity(SharedPtr<TemplateEntity> entity)
 void YukiScene::SetCamera(SharedPtr<ICamera> pCamera)
 {
   m_pCamera = pCamera;
+}
+
+void YukiScene::SetMeshRenderShader(SharedPtr<IOGLShaderProgram> pShader)
+{
+  this->m_pShaderProgram = pShader;
 }
 
 SharedPtr<ICamera> YukiScene::GetCamera()
@@ -47,8 +58,14 @@ SharedPtr<TemplateEntity> YukiScene::GetEntity(String name)
   return result->second;
 }
 
+SharedPtr<IOGLShaderProgram> YukiScene::GetMeshRenderShader()
+{
+  return m_pShaderProgram;
+}
+
 void YukiScene::Create()
 {
+  m_pShaderProgram->Require();
   m_pCamera->Create();
   for (const AutoType& entity : m_mEntities)
   {
@@ -74,6 +91,8 @@ void YukiScene::Awake()
 
 void YukiScene::Render()
 {
+  this->_AqquireUniform();
+  // Render entities
   for (const AutoType& entity : m_mEntities)
   {
     if (entity.second.get())
@@ -104,7 +123,31 @@ void YukiScene::Destroy()
       entity.second->Destroy();
     }
   }
+  m_pShaderProgram->Release();
   m_bIsReady = false;
+}
+
+void YukiScene::_AqquireUniform()
+{
+  m_pShaderProgram->BindObject();
+  // Some hard coding
+  m_pShaderProgram->UniformValue("U_PointLightData[0].intensity", 1.00f);
+  m_pShaderProgram->UniformVector(
+      "U_PointLightData[0].position", Vec3F {4.00f, 1.30f, 2.00f}
+  );
+  m_pShaderProgram->UniformVector(
+      "U_PointLightData[0].color", Vec3F {1.00f, 0.00f, 0.00f}
+  );
+
+  m_pShaderProgram->UniformValue("U_PointLightData[1].intensity", 1.00f);
+  m_pShaderProgram->UniformVector(
+      "U_PointLightData[1].position", Vec3F {-3.00f, -1.30f, -2.00f}
+  );
+  m_pShaderProgram->UniformVector(
+      "U_PointLightData[1].color", Vec3F {0.00f, 1.00f, 0.00f}
+  );
+
+  m_pShaderProgram->UniformValue("U_PointLightCount", 2);
 }
 
 bool YukiScene::IsReady()

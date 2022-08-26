@@ -10,6 +10,8 @@
 
 #include "YukiComp/Scene.hpp"
 #include "YukiComp/Camera.hpp"
+#include "YukiCore/Graphics.hpp"
+#include "YukiCore/Headers.hpp"
 #include "YukiEntity/Entity.hpp"
 
 #include "PObjects.hpp"
@@ -29,8 +31,10 @@ public:
 
   void AddEntity(SharedPtr<TemplateEntity> entity) override;
   void SetCamera(SharedPtr<ICamera> pCamera) override;
+  void SetMeshRenderShader(SharedPtr<IOGLShaderProgram> pShader) override;
 
-  SharedPtr<ICamera> GetCamera() override;
+  SharedPtr<ICamera>           GetCamera() override;
+  SharedPtr<IOGLShaderProgram> GetMeshRenderShader() override;
   UnorderedMap<String, SharedPtr<TemplateEntity>>&
                             GetEntitiesManager() override;
   SharedPtr<TemplateEntity> GetEntity(String name) override;
@@ -42,9 +46,11 @@ public:
   void Update() override;
   void Destroy() override;
 
-
 private:
+  void _AqquireUniform();
+
   SharedPtr<ICamera>                              m_pCamera;
+  SharedPtr<IOGLShaderProgram>                    m_pShaderProgram;
   UnorderedMap<String, SharedPtr<TemplateEntity>> m_mEntities;
   bool                                            m_bIsReady;
 };

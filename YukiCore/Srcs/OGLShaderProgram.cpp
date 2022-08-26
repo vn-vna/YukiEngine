@@ -69,14 +69,11 @@ void OGLShaderProgram::Create()
 {
   String vsSrc = loadShaderSourceFromFile(m_VSShaderFile);
   String fsSrc = loadShaderSourceFromFile(m_FSShaderFile);
-  // String gsSrc =
-  // loadShaderSourceFromFile(m_GSShaderFile);
-  int    status;
+
+  int status;
 
   unsigned vs = createShaderFromSource(GL_VERTEX_SHADER, vsSrc);
   unsigned fs = createShaderFromSource(GL_FRAGMENT_SHADER, fsSrc);
-  // unsigned gs =
-  // createShaderFromSource(GL_GEOMETRY_SHADER, gsSrc);
 
   unsigned pid = glCreateProgram();
   glAttachShader(pid, vs);
@@ -111,14 +108,20 @@ bool OGLShaderProgram::OnUse()
 
 unsigned OGLShaderProgram::GetUniformLocation(const String& prop)
 {
-  if (OnUse())
+  if (this->OnUse())
   {
     return glGetUniformLocation(m_nSPId, prop.c_str());
   }
-  else
+  THROW_YUKI_ERROR(OGLShaderProgramIsNotActived);
+}
+
+unsigned OGLShaderProgram::GetUniformBlockIndex(const String& block)
+{
+  if (this->OnUse())
   {
-    THROW_YUKI_ERROR(OGLShaderProgramIsNotActived);
+    return glGetUniformBlockIndex(m_nSPId, block.c_str());
   }
+  THROW_YUKI_ERROR(OGLShaderProgramIsNotActived);
 }
 
 void OGLShaderProgram::UniformMatrix(

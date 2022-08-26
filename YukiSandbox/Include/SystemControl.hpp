@@ -24,13 +24,13 @@ using Yuki::Utils::IsKeyReleased;
 class SystemControl : virtual public Yuki::Entity::TemplateEntity
 {
 protected:
-  Yuki::SharedPtr<Yuki::Chrono::IYukiTimer>    pTimer;
-  Yuki::SharedPtr<Yuki::Core::IApplication>        pApp;
-  Yuki::SharedPtr<Yuki::Core::IInput> pInpControl;
-  Yuki::SharedPtr<Yuki::Comp::ICamera>     pCamera;
-  Yuki::SharedPtr<Yuki::Debug::ILogger>    pLogger;
-  Yuki::SharedPtr<Yuki::Utils::IYukiSystem>    pSysControl;
-  bool                                         bDefaultCursor;
+  Yuki::SharedPtr<Yuki::Chrono::IYukiTimer> pTimer;
+  Yuki::SharedPtr<Yuki::Core::IApplication> pApp;
+  Yuki::SharedPtr<Yuki::Core::IInput>       pInpControl;
+  Yuki::SharedPtr<Yuki::Comp::ICamera>      pCamera;
+  Yuki::SharedPtr<Yuki::Debug::ILogger>     pLogger;
+  Yuki::SharedPtr<Yuki::Utils::IYukiSystem> pSysControl;
+  bool                                      bDefaultCursor;
 
 public:
   explicit SystemControl(const Yuki::String& name);
@@ -45,7 +45,9 @@ public:
   static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> GetInstance();
 };
 
-inline SystemControl::SystemControl(const Yuki::String& name) : Yuki::Entity::TemplateEntity(name), bDefaultCursor(true)
+inline SystemControl::SystemControl(const Yuki::String& name)
+    : Yuki::Entity::TemplateEntity(name),
+      bDefaultCursor(true)
 {}
 
 inline SystemControl::~SystemControl() = default;
@@ -60,15 +62,19 @@ inline void SystemControl::OnCreate()
   pTimer = Yuki::Chrono::CreateTimer(
       [&](Yuki::Chrono::IYukiTimer* pTimer) {
         AutoType resActivity = pSysControl->GetResourceActivityInfo();
-        pLogger->PushDebugMessage(
-            fmt::format("CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad, resActivity.memoryUsed));
+        pLogger->PushDebugMessage(fmt::format(
+            "CPU Usage: {}%\n\tMem Usages: {}Bs", resActivity.avgCpuLoad,
+            resActivity.memoryUsed
+        ));
       },
-      1'000'000'000);
+      1'000'000'000
+  );
 
   pTimer->Start();
 }
 
-inline void SystemControl::OnAwake() {}
+inline void SystemControl::OnAwake()
+{}
 
 inline void SystemControl::OnUpdate()
 {
@@ -112,32 +118,41 @@ inline void SystemControl::OnUpdate()
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V))
   {
-    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() { std::cout << "Pressed V\n"; });
+    Yuki::Core::GetYukiApp()->GetWorkerPool()->PushAction([]() {
+      std::cout << "Pressed V\n";
+    });
   }
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_V) && bDefaultCursor)
   {
-    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::CURSOR_HAND);
+    pInpControl->SetCursorStandardStyle(
+        Yuki::Core::StandardCursorType::CURSOR_HAND
+    );
     bDefaultCursor = false;
   }
 
   if (!IsKeyReleased(Yuki::Core::KeyCode::KEY_X) && !bDefaultCursor)
   {
-    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::DEFAULT);
+    pInpControl->SetCursorStandardStyle(Yuki::Core::StandardCursorType::DEFAULT
+    );
     bDefaultCursor = true;
   }
 }
 
-inline void SystemControl::OnRender() {}
+inline void SystemControl::OnRender()
+{}
 
-inline void SystemControl::OnDestroy() {}
+inline void SystemControl::OnDestroy()
+{}
 
-inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity> SystemControl::GetInstance()
+inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity>
+SystemControl::GetInstance()
 {
   static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> instance;
   if (!instance.get())
   {
-    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::TemplateEntity, SystemControl>("sys_ctrl");
+    instance = Yuki::Core::CreateInterfaceInstance<
+        Yuki::Entity::TemplateEntity, SystemControl>("sys_ctrl");
   }
   return instance;
 }

@@ -21,7 +21,7 @@ YukiLogger::~YukiLogger() = default;
 void YukiLogger::PushMessage(const String& message, const String& prioty)
 {
   String outMessage = fmt::format(
-      "[YUKI {} REPORT] - {}\n\t{}\n", prioty, Clock::DateTimeString(), message
+      "[YUKI {} REPORT] - {} >> {}\n", prioty, Clock::DateTimeString(), message
   );
 #ifndef NDEBUG
   std::cout << outMessage;

@@ -21,7 +21,8 @@ public:
 
 inline void TestEntity::OnCreate()
 {
-  Yuki::SharedPtr<Yuki::Comp::IModel> testModel = Yuki::Comp::LoadModel("aaa.gltf", "Sphere");
+  Yuki::SharedPtr<Yuki::Comp::IModel> testModel =
+      Yuki::Comp::LoadModel("diamond.fbx", "Diamond");
   this->SetModel(testModel);
 }
 
@@ -31,13 +32,18 @@ inline void TestEntity::OnAwake()
   logger->PushDebugMessage("On awake is called");
 }
 
-inline void TestEntity::OnUpdate() {}
+inline void TestEntity::OnUpdate()
+{}
 
-inline void TestEntity::OnRender() {}
+inline void TestEntity::OnRender()
+{}
 
-inline void TestEntity::OnDestroy() {}
+inline void TestEntity::OnDestroy()
+{}
 
-inline TestEntity::TestEntity(const Yuki::String& name) : TemplateEntity(name) {}
+inline TestEntity::TestEntity(const Yuki::String& name)
+    : TemplateEntity(name)
+{}
 
 inline TestEntity::~TestEntity() = default;
 
@@ -46,7 +52,8 @@ inline Yuki::SharedPtr<Yuki::Entity::TemplateEntity> TestEntity::GetInstance()
   static Yuki::SharedPtr<Yuki::Entity::TemplateEntity> instance;
   if (!instance.get())
   {
-    instance = Yuki::Core::CreateInterfaceInstance<Yuki::Entity::TemplateEntity, TestEntity>("test_entt");
+    instance = Yuki::Core::CreateInterfaceInstance<
+        Yuki::Entity::TemplateEntity, TestEntity>("test_entt");
   }
   return instance;
 }

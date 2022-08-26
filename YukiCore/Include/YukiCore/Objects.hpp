@@ -23,6 +23,7 @@ class IGraphics;
 class IWindow;
 class IInput;
 class IThreadPool;
+class IReferenceCounter;
 class IOGLObject;
 class IOGLVertexArray;
 class IOGLVertexBuffer;

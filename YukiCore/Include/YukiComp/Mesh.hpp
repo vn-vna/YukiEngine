@@ -31,11 +31,13 @@ typedef struct StVertexFormat
   Vec2F texcoord;
 
   StVertexFormat(
-      const Vec3F& _position, const Vec3F& _normal, const Vec2F& _texcoord
+      const Vec3F& position, // position
+      const Vec3F& normal,   //
+      const Vec2F& texcoord  //
   )
-      : position(_position),
-        normal(_normal),
-        texcoord(_texcoord)
+      : position(position),
+        normal(normal),
+        texcoord(texcoord)
   {}
 
   StVertexFormat()
@@ -87,6 +89,7 @@ public:
  * programs. Class IMesh is here to store them in a
  * "pretty" structure that will be used by IModel
  * @TODO Mesh class is very simple now, it must be improved
+ * @TODO Some memory leak detected, it's caused by Assimp loader
  * much more.
  */
 class IMesh : virtual public ISharedObject
@@ -95,7 +98,6 @@ public:
   virtual SharedPtr<IOGLTexture>          GetMeshTexture() const        = 0;
   virtual SharedPtr<IOGLElementBuffer>    GetElementBuffer() const      = 0;
   virtual SharedPtr<IOGLVertexBuffer>     GetVertexBuffer() const       = 0;
-  virtual SharedPtr<IOGLShaderProgram>    GetShaderProgram() const      = 0;
   virtual SharedPtr<IOGLVertexArray>      GetVertexArray() const        = 0;
   virtual SharedPtr<IMaterial>            GetMaterial() const           = 0;
   virtual const PrimitiveTopology&        GetTopology() const           = 0;
@@ -114,7 +116,8 @@ public:
   virtual void RotateMesh(const Vec3F& axis, float rotationAngle)  = 0;
   virtual void ScaleMesh(const Vec3F& scaleVector)                 = 0;
 
-  virtual void RenderMesh(SharedPtr<ICamera> camera) const = 0;
+  virtual void
+  RenderMesh(SharedPtr<ICamera> pCamera, SharedPtr<IScene> pScene) const = 0;
 };
 
 /**
@@ -129,13 +132,15 @@ public:
  * @return an interface instance for the mesh
  */
 SharedPtr<IMesh> GenerateYukiMesh(
-    Vector<MeshVertexFormat>& vertexData, MeshIndexData& indexData,
-    SharedPtr<Core::IOGLTexture> texture, SharedPtr<IMaterial> material,
-    const String& meshName
+    Vector<MeshVertexFormat>&    vertexData, // An array of vertices array
+    MeshIndexData&               indexData,  // Indices format of the mesh
+    SharedPtr<Core::IOGLTexture> texture,    // The mesh texture
+    SharedPtr<IMaterial>         material,   // Material
+    const String&                meshName    // Name
 );
 
 /**
- * Thif function is used to create a new material and return
+ * This function is used to create a new material and return
  * it's interface instance
  * @param specular Specular strength
  * @param ambient Ambient strength

@@ -30,7 +30,7 @@ void YukiOGLVertexBuffer::BindObject()
 
 void YukiOGLVertexBuffer::SetBufferData(Vector<float>& data)
 {
-  SetBufferData(data.data(), data.size() * sizeof(float));
+  this->SetBufferData(data.data(), data.size() * sizeof(float));
 }
 
 void YukiOGLVertexBuffer::SetBufferData(float* pData, size_t size)

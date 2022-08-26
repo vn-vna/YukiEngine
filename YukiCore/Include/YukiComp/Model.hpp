@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "YukiCore/Headers.hpp"
 #include "YukiCore/Objects.hpp"
 #include "YukiComp/Camera.hpp"
 
@@ -43,7 +44,7 @@ public:
   virtual Mat4F&       GetModelMatrix()            = 0;
   virtual MeshType     GetMesh(const String& name) = 0;
 
-  virtual void Render(SharedPtr<ICamera> camera) = 0;
+  virtual void Render(SharedPtr<ICamera> camera, SharedPtr<IScene> scene) = 0;
 };
 
 } // namespace Yuki::Comp

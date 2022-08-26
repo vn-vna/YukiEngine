@@ -11,6 +11,7 @@
 #include "YukiComp/Model.hpp"
 
 #include "PObjects.hpp"
+#include "YukiCore/Headers.hpp"
 
 namespace Yuki::Comp
 {
@@ -30,7 +31,7 @@ public:
   MeshType     GetMesh(const String& name) override;
 
 
-  void Render(SharedPtr<ICamera> camera) override;
+  void Render(SharedPtr<ICamera> camera, SharedPtr<IScene> scene) override;
 
   void Create() override;
   void Render() override;

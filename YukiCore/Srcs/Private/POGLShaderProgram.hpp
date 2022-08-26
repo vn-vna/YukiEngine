@@ -33,22 +33,26 @@ public:
   void     BindObject() override;
   void     Create() override;
   void     Destroy() override;
+
+  unsigned GetUniformBlockIndex(const String& block) override;
+  unsigned GetUniformLocation(const String& prop) override;
+
   void
   UniformMatrix(const String& prop, const Mat2F& mat, bool transpose) override;
   void
   UniformMatrix(const String& prop, const Mat3F& mat, bool transpose) override;
   void
   UniformMatrix(const String& prop, const Mat4F& mat, bool transpose) override;
+
   void UniformVector(const String& prop, const Vec2F& vec) override;
   void UniformVector(const String& prop, const Vec3F& vec) override;
   void UniformVector(const String& prop, const Vec4F& vec) override;
+
   void UniformValue(const String& prop, bool value) override;
   void UniformValue(const String& prop, int value) override;
   void UniformValue(const String& prop, float value) override;
 
 private:
-  unsigned GetUniformLocation(const String& prop);
-
 private:
   unsigned m_nSPId;
   String   m_VSShaderFile;

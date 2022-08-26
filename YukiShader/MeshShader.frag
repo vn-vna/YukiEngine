@@ -26,6 +26,12 @@ uniform sampler2D U_MeshAmbient;
 uniform sampler2D U_MeshSpecular;
 uniform sampler2D U_MeshDiffMap;
 
+layout(binding = 1) uniform PointLightBlock
+{
+  int            nPointLightCount;
+  PointLightData nPointLightData[MAX_POINT_LIGHT];
+};
+
 vec3 _calcAmbCol()
 {
   float ambStrength = texture(U_MeshAmbient, VS_TexCoord).r;

@@ -3,6 +3,7 @@
 #include "YukiCore/Graphics.hpp"
 #include "YukiCore/Objects.hpp"
 #include "YukiCore/Headers.hpp"
+#include "YukiComp/Scene.hpp"
 #include "YukiDebug/Errors.hpp"
 #include "YukiUtil/Images.hpp"
 
@@ -11,24 +12,24 @@
 // glm
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
+#include <iostream>
 
 namespace Yuki::Comp
 {
 
 using Core::CreateGLElementBuffer;
-using Core::CreateGLShaderProgram;
 using Core::CreateGLTexture;
 using Core::CreateGLVertexArray;
 using Core::CreateGLVertexBuffer;
 using Core::CreateInterfaceInstance;
 using Utils::Images;
 
-AutoType g_pDefaultMeshShader = CreateGLShaderProgram("MeshShader");
 AutoType g_pDefaultTexture    = CreateGLTexture(Core::TextureType::TEXTURE_2D);
 
 YukiMeshMaterial::YukiMeshMaterial(
-    SharedPtr<Images> ambientMap, SharedPtr<Images> specularMap,
-    SharedPtr<Images> diffuseMap
+    SharedPtr<Images> ambientMap,  // ambient map for material
+    SharedPtr<Images> specularMap, // specular map for material
+    SharedPtr<Images> diffuseMap   // diffuse map for material
 )
     : m_pSpecMapImg(specularMap),
       m_pAmbientMapImg(ambientMap),
@@ -86,8 +87,7 @@ YukiMesh::YukiMesh(
     SharedPtr<Core::IOGLTexture>& texture, SharedPtr<IMaterial> material,
     const String& name
 )
-    : m_pShaderProgram(g_pDefaultMeshShader),
-      m_pTexture(texture),
+    : m_pTexture(texture),
       m_Name(name),
       m_tMeshMatrix(glm::identity<Mat4F>()),
       m_tReNormalMatrix(glm::identity<Mat4F>()),
@@ -115,11 +115,6 @@ SharedPtr<IOGLElementBuffer> YukiMesh::GetElementBuffer() const
 SharedPtr<IOGLVertexBuffer> YukiMesh::GetVertexBuffer() const
 {
   return m_pVertexBuffer;
-}
-
-SharedPtr<IOGLShaderProgram> YukiMesh::GetShaderProgram() const
-{
-  return m_pShaderProgram;
 }
 
 SharedPtr<IOGLVertexArray> YukiMesh::GetVertexArray() const
@@ -176,7 +171,6 @@ void YukiMesh::Create()
 {
   try
   {
-    m_pShaderProgram->Require();
     m_pMaterial->Require();
     m_pVertexBuffer->Require();
     m_pElementBuffer->Require();
@@ -223,7 +217,6 @@ void YukiMesh::Destroy()
 {
   try
   {
-    m_pShaderProgram->Release();
     m_pMaterial->Release();
     m_pVertexBuffer->Release();
     m_pElementBuffer->Release();
@@ -289,9 +282,10 @@ void YukiMesh::ScaleMesh(const Vec3F& scaleVector)
   m_tReNormalMatrix = glm::inverse(m_tMeshMatrix);
 }
 
-void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
+void YukiMesh::RenderMesh(SharedPtr<ICamera> camera, SharedPtr<IScene> pScene)
+    const
 {
-  m_pShaderProgram->BindObject();
+  AutoType shader = pScene->GetMeshRenderShader();
   // m_pElementBuffer->BindObject();
   m_pVertexArray->BindObject();
 
@@ -307,46 +301,19 @@ void YukiMesh::RenderMesh(SharedPtr<ICamera> camera) const
   }
 
   // Uniform sampler
-  m_pShaderProgram->UniformValue("U_MeshTextures", 0);
-  m_pShaderProgram->UniformValue("U_MeshAmbient", 1);
-  m_pShaderProgram->UniformValue("U_MeshSpecular", 2);
-  m_pShaderProgram->UniformValue("U_MeshDiffMap", 3);
+  shader->UniformValue("U_MeshTextures", 0);
+  shader->UniformValue("U_MeshAmbient", 1);
+  shader->UniformValue("U_MeshSpecular", 2);
+  shader->UniformValue("U_MeshDiffMap", 3);
 
   // Uniform mesh stuffs
-  m_pShaderProgram->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
-  m_pShaderProgram->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
-  m_pShaderProgram->UniformMatrix(
-      "U_ViewMatrix", camera->GetCameraViewMatrix()
-  );
-  m_pShaderProgram->UniformMatrix(
+  shader->UniformMatrix("U_ReNormalMatrix", m_tReNormalMatrix, true);
+  shader->UniformMatrix("U_ModelMatrix", m_tMeshMatrix);
+  shader->UniformMatrix("U_ViewMatrix", camera->GetCameraViewMatrix());
+  shader->UniformMatrix(
       "U_ProjectionMatrix", camera->GetCameraProjectionMatrix()
   );
-  m_pShaderProgram->UniformVector(
-      "U_ViewPosition", camera->GetCameraPosition()
-  );
-  // m_pShaderProgram->UniformValue("U_AmbientStrength",
-  // m_pMaterial->GetAmbientStrength());
-  // m_pShaderProgram->UniformValue("U_SpecularStrength",
-  // m_pMaterial->GetSpecularStrength());
-
-  // Some hard coding
-  m_pShaderProgram->UniformValue("U_PointLightData[0].intensity", 1.00f);
-  m_pShaderProgram->UniformVector(
-      "U_PointLightData[0].position", Vec3F {4.00f, 1.30f, 2.00f}
-  );
-  m_pShaderProgram->UniformVector(
-      "U_PointLightData[0].color", Vec3F {1.00f, 0.00f, 0.00f}
-  );
-
-  m_pShaderProgram->UniformValue("U_PointLightData[1].intensity", 1.00f);
-  m_pShaderProgram->UniformVector(
-      "U_PointLightData[1].position", Vec3F {-3.00f, -1.30f, -2.00f}
-  );
-  m_pShaderProgram->UniformVector(
-      "U_PointLightData[1].color", Vec3F {0.00f, 1.00f, 0.00f}
-  );
-
-  m_pShaderProgram->UniformValue("U_PointLightCount", 2);
+  shader->UniformVector("U_ViewPosition", camera->GetCameraPosition());
 
   m_pElementBuffer->DrawAllElements(m_tIndexFormat.topology);
 }

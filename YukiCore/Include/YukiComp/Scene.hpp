@@ -9,6 +9,7 @@
 #pragma once
 
 #include "YukiComp/Camera.hpp"
+#include "YukiComp/Light.hpp"
 #include "YukiCore/Headers.hpp"
 #include "YukiCore/Objects.hpp"
 #include "YukiEntity/Entity.hpp"
@@ -17,16 +18,19 @@ namespace Yuki::Comp
 {
 
 using Comp::ICamera;
+using Core::IOGLShaderProgram;
 using Core::ISharedObject;
 using Entity::TemplateEntity;
 
 class IScene : virtual public ISharedObject
 {
 public:
-  virtual void AddEntity(SharedPtr<TemplateEntity> entity) = 0;
-  virtual void SetCamera(SharedPtr<ICamera> pCamera)       = 0;
+  virtual void AddEntity(SharedPtr<TemplateEntity> entity)               = 0;
+  virtual void SetCamera(SharedPtr<ICamera> pCamera)                     = 0;
+  virtual void SetMeshRenderShader(SharedPtr<IOGLShaderProgram> pShader) = 0;
 
-  virtual SharedPtr<ICamera> GetCamera() = 0;
+  virtual SharedPtr<ICamera>           GetCamera()           = 0;
+  virtual SharedPtr<IOGLShaderProgram> GetMeshRenderShader() = 0;
   virtual UnorderedMap<String, SharedPtr<TemplateEntity>>&
                                     GetEntitiesManager()   = 0;
   virtual SharedPtr<TemplateEntity> GetEntity(String name) = 0;

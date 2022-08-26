@@ -378,11 +378,19 @@ public:
   virtual void DrawAllElements(PrimitiveTopology topology)                 = 0;
 };
 
+class IOGLUniformBuffer : virtual public IOGLObject
+{
+public:
+};
+
 // OpenGL Object:
 // Shader Program abstraction.
 class IOGLShaderProgram : virtual public IOGLObject
 {
 public:
+  virtual unsigned GetUniformBlockIndex(const String& block) = 0;
+  virtual unsigned GetUniformLocation(const String& prop)    = 0;
+
   virtual void UniformMatrix(
       const String& prop, const Mat2F& mat, bool transopse = false
   ) = 0;
